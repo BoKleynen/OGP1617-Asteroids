@@ -5,10 +5,6 @@ import be.kuleuven.cs.som.annotate.*;
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
  *
- * @invar   The speed of the space ship will always be less then or equal to the maximum speed,
- *          wich in turn will always be less then or equal to the speed of light.
- *          | getVelocity() <= getMaxSpeed() <= getSpeedOfLight()
- *
  * @invar   The orientation of the ship is an angle between 0 and 2PI radians.
  *          0 <= getOrientation() <= 2PI
  *
@@ -214,7 +210,7 @@ public class Ship {
      * @param angle
      */
     public void turn(double angle) {
-        setOrientation((getOrientation() + angle) % 2 * Math.PI);
+        setOrientation((getOrientation() + angle) % (2 * Math.PI));
     }
 
     private final double radius;        // defensively
