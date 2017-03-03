@@ -17,30 +17,38 @@ public class Facade implements IFacade {
 
     public Ship createShip() throws ModelException
     {
-       return null;
+        try {
+            return new Ship(new Vector(0,0), new Vector(0,0), 0, 1);
+
+        } catch (IllegalArgumentException e) {
+            throw new ModelException(e);
+        }
     }
 
     public Ship createShip(double x, double y, double xVelocity, double yVelocity, double radius, double orientation)
             throws ModelException
     {
-        return new Ship( new Vector(x, y), new Vector(xVelocity, yVelocity), orientation, radius);
+        try {
+            return new Ship( new Vector(x, y), new Vector(xVelocity, yVelocity), orientation, radius);
+
+        } catch (IllegalArgumentException e) {
+            throw new ModelException(e);
+        }
     }
 
     public double[] getShipPosition(Ship ship) throws ModelException
     {
-        double returnPosition[] = new double[2];
         Vector position = ship.getPosition();
-        returnPosition[0] = position.getX();
-        returnPosition[1] = position.getY();
+        double[] returnPosition = {position.getX(), position.getY()};
+
         return returnPosition;
     }
 
     public double[] getShipVelocity(Ship ship) throws ModelException
     {
-    	double returnVelocity[] = new double[2];
-        Vector speed = ship.getVelocity();
-        returnVelocity[0] = speed.getX();
-        returnVelocity[1] = speed.getY();
+        Vector velocity = ship.getVelocity();
+        double[] returnVelocity = {velocity.getX(), velocity.getY()};
+
         return returnVelocity;
     }
 

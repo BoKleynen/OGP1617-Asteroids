@@ -12,20 +12,20 @@ import static org.junit.Assert.*;
  * Created by Yrjo Koyen on 28/02/2017.
  * 
  * TODO:	- Add tests for every method
- * 			- Add documentation
+ * TODO:	- Add documentation
  * 	
  */
 public class ShipTests {
 
     private static Ship defaultShip;
-    
+
     private Ship mutableTestShip1;
-	
+
 	@BeforeClass
 	public static void setupImmutableTestFixtures() {
 		defaultShip = new Ship();
 	}
-	
+
 	@Before
 	public void setupMutableTestFictures() {
 		mutableTestShip1 = new Ship(new Vector(100, 100), new Vector(0, 0) ,0 , 10, 10);
@@ -34,7 +34,7 @@ public class ShipTests {
     @Test
     public void testGetPosition()
     {
-        assertTrue(defaultShip.getPosition().equals(new Vector(0, 0)));        
+        assertTrue(defaultShip.getPosition().equals(new Vector(0, 0)));
         assertTrue(mutableTestShip1.getPosition().equals(new Vector(100, 100)));
     }
 
@@ -45,7 +45,7 @@ public class ShipTests {
     	mutableTestShip1.setPosition(tempPosition);
     	assertTrue(mutableTestShip1.getPosition().equals(tempPosition));
     }
-    
+
     @Test
     public void testCanHaveAsOrientation_IllegalCase() {
     	double tooBig = 7.123;
@@ -55,7 +55,7 @@ public class ShipTests {
     	assertTrue(Ship.canHaveAsOrientation(valid));
     	assertFalse(Ship.canHaveAsOrientation(tooSmall));
     }
-    
+
 
     @Test
     public void testGetVelocity()
@@ -79,5 +79,21 @@ public class ShipTests {
     public void testTurn()
     {
 
+    }
+
+    @Test
+    public void testMove() {
+	    Vector u = new Vector(3,4);
+	    Vector v = new Vector(2,5);
+	    assertTrue(u.add(v.multiply(4)).getX() == 11);
+
+	    Ship ship1 = new Ship(new Vector(100, 100), new Vector(30, -15), 0, 20);
+	    ship1.setPosition(u);
+	    assertTrue(ship1.getPosition().equals(new Vector(3,4)));
+
+        Ship ship2 = new Ship(new Vector(100, 100), new Vector(30, -15), 0, 20);
+	    ship2.move(1);
+        assertTrue(130 == ship2.getPosition().getX());
+        assertTrue(85 == ship2.getPosition().getY());
     }
 }

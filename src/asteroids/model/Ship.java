@@ -27,11 +27,11 @@ public class Ship {
         if (! canHaveAsRadius(radius))
             throw new IllegalArgumentException();
 
+        this.maxSpeed = getSpeedOfLight();
         setPosition(position);
         setVelocity(velocity);
         setOrientation(orientation);
         this.radius = radius;
-        this.maxSpeed = speedOfLight;
     }
 
     /**
@@ -54,11 +54,11 @@ public class Ship {
         if (! canHaveAsRadius(radius))
             throw new IllegalArgumentException();
 
+        this.maxSpeed = maxSpeed;
         setPosition(position);
         setVelocity(velocity);
         setOrientation(orientation);
         this.radius = radius;
-        this.maxSpeed = maxSpeed;
     }
 
     private Vector position;    // defensively
@@ -78,7 +78,7 @@ public class Ship {
      * @param newPosition
      */
     @Basic
-    public void setPosition(Vector newPosition) throws NullPointerException {
+    public void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException {
         if (newPosition == null) {
             throw new NullPointerException();
         }

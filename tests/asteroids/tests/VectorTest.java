@@ -14,11 +14,20 @@ public class VectorTest {
 
     Vector u = new Vector(2, 5);
     Vector v = new Vector(3,4);
+    Vector w = new Vector(3,4);
 
     @Test
     public final void testVector() {
         assertTrue(2 == u.getX());
         assertTrue(5 == u.getY());
+    }
+
+    @Test
+    public final void testEquals() {
+        assertTrue(u.equals(u));
+        assertTrue(v.equals(v));
+        assertTrue(v.equals(w));
+        assertFalse(u.equals(v));
     }
 
     @Test
@@ -48,8 +57,6 @@ public class VectorTest {
     @Test
     public final void testNormalize() {
 //        assertTrue(new Vector(0.6, 0.8).equals(v.normalize()));       // => fails due to java rounding errors -> how to solve this??
-//        System.out.println(v.normalize().getX());
-//        System.out.println(v.normalize().getY());
 
         assertTrue(1 == v.normalize().getMagnitude());
     }
