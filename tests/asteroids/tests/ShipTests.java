@@ -150,4 +150,36 @@ public class ShipTests {
         assertTrue(130 == ship2.getPosition().getX());
         assertTrue(85 == ship2.getPosition().getY());
     }
+
+    @Test
+	public void testGetTimeToCollision_parallel() {
+		Ship ship1 = new Ship(new Vector(0,50), new Vector(20,0),0,20);
+		Ship ship2 = new Ship(new Vector(0,-50), new Vector(-20,0),0,20);
+
+		assertTrue(ship1.getTimeToCollision(ship2) == Double.POSITIVE_INFINITY);
+	}
+
+	@Test
+	public void testGetTimeToCollision_following() {
+		Ship ship1 = new Ship(new Vector(50,0), new Vector(20,0),0,20);
+		Ship ship2 = new Ship(new Vector(-50,0), new Vector(20,0),0,20);
+
+		assertTrue(ship1.getTimeToCollision(ship2) == Double.POSITIVE_INFINITY);
+	}
+
+	@Test
+	public void testGetTimeToCollision_colliding() {
+		Ship ship1 = new Ship(new Vector(-40,0), new Vector(20,0),0,20);
+		Ship ship2 = new Ship(new Vector(40,0), new Vector(0,0),0,20);
+
+		assertTrue(ship1.getTimeToCollision(ship2) == 2);
+	}
+
+	@Test
+	public void testGetTimeToCollision_perpendicularCollision() {
+		Ship ship1 = new Ship(new Vector(-30,0), new Vector(10,0),0,20);
+		Ship ship2 = new Ship(new Vector(0,-40), new Vector(0,10),0,20);
+
+		assertEquals(ship1.getTimeToCollision(ship2), 7.0/2.0 - Math.sqrt(31)/2, 0.0001);
+	}
 }
