@@ -241,7 +241,8 @@ public class Ship {
      * @param angle
      */
     public void turn(double angle) {
-        setOrientation((getOrientation() + angle) % (2 * Math.PI));
+    	double newOrientation = (getOrientation() + angle) % (2 * Math.PI);
+        setOrientation( (newOrientation>=0 ? newOrientation : newOrientation + 2*Math.PI));
     }
 
     private final double radius;        // defensively

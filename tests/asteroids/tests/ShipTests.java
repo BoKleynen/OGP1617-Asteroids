@@ -4,7 +4,6 @@ import asteroids.model.Ship;
 import asteroids.model.Vector;
 import org.junit.*;
 
-import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -21,21 +20,23 @@ import static org.junit.Assert.*;
 public class ShipTests {
 
     private static Ship defaultShip;
-
+    
+    private Ship oppositeVelocityAndOrientation;
+    private Ship sameVelocityAndOrientation;
+    private Ship perpendicularOriantationAndVelocity;;
     private Ship mutableTestShip1;
     
-    private static Random RNG;
-
 	@BeforeClass
-	public static void setupImmutableTestFixtures() {
-		RNG = new Random(System.currentTimeMillis());
-		
+	public static void setupImmutableTestFixtures() {		
 		defaultShip = new Ship();
 	}
 
 	@Before
 	public void setupMutableTestFictures() {
 		mutableTestShip1 = new Ship(new Vector(100, 100), new Vector(0, 0) ,0 , 10, 300000);
+		oppositeVelocityAndOrientation = new Ship(new Vector(0, 0), new Vector(100, 0), Math.PI, 10, 300000);
+		sameVelocityAndOrientation = new Ship(new Vector(0, 0), new Vector(100, 100), 0.25*Math.PI, 10, 300000);
+		perpendicularOriantationAndVelocity = new Ship(new Vector(0, 0), new Vector(4, 0), 0.5*Math.PI, 10, 300000);
 	}
 
     @Test
@@ -64,7 +65,7 @@ public class ShipTests {
     }
 
     @Test
-    public void testSetVelocity()
+    public void testSetVelocity_LegalCase()
     {
     	Vector firstVelocity = new Vector(8462, 635);
     	mutableTestShip1.setVelocity(firstVelocity);
@@ -73,7 +74,10 @@ public class ShipTests {
     	Vector secondVelocity = new Vector(-320, -5000);
     	mutableTestShip1.setVelocity(secondVelocity);
     	assertTrue(mutableTestShip1.getVelocity().equals(secondVelocity));
+    }
     
+    @Test
+    public void testSetVelocity_ExceedsMaxSpeed() {
     	Vector overSpeedOfLight = new Vector(500000, -750000);
     	mutableTestShip1.setVelocity(overSpeedOfLight);
     	assertFalse(mutableTestShip1.getVelocity().equals(overSpeedOfLight));
@@ -81,39 +85,54 @@ public class ShipTests {
     }
 
     @Test
-    public void testThrust()
+    public void testThrust_SameDirection()
     {
-    	// Thrust in X direction only
-    	double acceleration = 10;
-    	Vector tempSpeed = mutableTestShip1.getVelocity();
-    	mutableTestShip1.thrust(acceleration);
-    	assertEquals(mutableTestShip1.getVelocity().getX(), tempSpeed.getX()+acceleration, 0.0001);
-    	
-//    	// Thrust in a random direction
-//    	acceleration = 20*RNG.nextFloat();
-//    	double newOrientation = 2*Math.PI*RNG.nextFloat();
-//    	mutableTestShip1.setOrientation(newOrientation);
-//    	tempSpeed = mutableTestShip1.getVelocity();
-//    	mutableTestShip1.thrust(acceleration);
-//    	System.out.println(mutableTestShip1.getVelocity().getMagnitude());
-//    	System.out.println(tempSpeed.getMagnitude() + acceleration);
-//
-//    	assertEquals(mutableTestShip1.getVelocity().getMagnitude(), tempSpeed.getMagnitude() + acceleration, 0.0001);
+    	double acceleration = 5200;
+    	Vector tempSpeed = sameVelocityAndOrientation.getVelocity();
+    	sameVelocityAndOrientation.thrust(acceleration);
+    	assertEquals(sameVelocityAndOrientation.getVelocity().getMagnitude(), tempSpeed.getMagnitude() + acceleration, 0.0001);
+    }
+    
+    @Test
+    public void testThrust_OppositeDirection()
+    {
+    	double acceleration = 50;
+    	Vector tempSpeed = oppositeVelocityAndOrientation.getVelocity();
+    	oppositeVelocityAndOrientation.thrust(acceleration);
+    	assertEquals(oppositeVelocityAndOrientation.getVelocity().getMagnitude(),
+    			tempSpeed.getMagnitude()-acceleration, 0.0001);
+    }
+    
+    @Test
+    public void testThrust_Perpendicular() {
+    	double acceleration = 3;
+    	Vector tempSpeed = perpendicularOriantationAndVelocity.getVelocity();
+    	perpendicularOriantationAndVelocity.thrust(acceleration);
+    	assertEquals(perpendicularOriantationAndVelocity.getVelocity().getMagnitude(),
+    			Math.sqrt(Math.pow(acceleration, 2) + Math.pow(tempSpeed.getMagnitude(), 2)), 0.0001);    	
     }
 
     @Test
-    public void testTurn()
+    public void testTurn_PositiveAngle()
     {
-    	double newOrientation = Math.PI;
-    	mutableTestShip1.setOrientation(newOrientation);
     	mutableTestShip1.turn(Math.PI/2);
-    	assertEquals(mutableTestShip1.getOrientation(), Math.PI*1.5, 0.0001);
-    	
+    	assertEquals(mutableTestShip1.getOrientation(), Math.PI*0.5, 0.0001);
+    }
+    
+    @Test
+    public void testTurn_NegativeAngle()
+    {	
     	mutableTestShip1.turn(-Math.PI);
-    	assertEquals(mutableTestShip1.getOrientation(), Math.PI*0.5, 0.0001);
-    	
+    	assertEquals(mutableTestShip1.getOrientation(), Math.PI, 0.0001);
+    }
+    
+    @Test
+    public void testTurn_OverflowAngle() {   	
     	mutableTestShip1.turn(4*Math.PI);
-    	assertEquals(mutableTestShip1.getOrientation(), Math.PI*0.5, 0.0001);
+    	System.out.println(mutableTestShip1.getOrientation());
+    	System.out.println(Math.PI*2);
+
+    	assertEquals(mutableTestShip1.getOrientation(), 0, 0.0001);
     }
 
     @Test
