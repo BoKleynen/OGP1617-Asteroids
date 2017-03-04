@@ -129,8 +129,6 @@ public class ShipTests {
     @Test
     public void testTurn_OverflowAngle() {   	
     	mutableTestShip1.turn(4*Math.PI);
-    	System.out.println(mutableTestShip1.getOrientation());
-    	System.out.println(Math.PI*2);
 
     	assertEquals(mutableTestShip1.getOrientation(), 0, 0.0001);
     }
@@ -182,4 +180,21 @@ public class ShipTests {
 
 		assertEquals(ship1.getTimeToCollision(ship2), 7.0/2.0 - Math.sqrt(31)/2, 0.0001);
 	}
+
+	@Test
+	public void testGetCollisionPosition_noCollision() {
+		Ship ship1 = new Ship(new Vector(-40,0), new Vector(20,0),0,20);
+		Ship ship2 = new Ship(new Vector(40,0), new Vector(20,0),0,20);
+
+		assertEquals(ship1.getCollisionPosition(ship2), null);
+	}
+
+	@Test
+	public void testGetCollisionPosition_Collision() {
+		Ship ship1 = new Ship(new Vector(-40,0), new Vector(20,0),0,20);
+		Ship ship2 = new Ship(new Vector(40,0), new Vector(0,0),0,20);
+
+		assertTrue(ship1.getCollisionPosition(ship2).equals(new Vector(20,0)));
+	}
+
 }
