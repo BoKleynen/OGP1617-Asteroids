@@ -14,23 +14,41 @@ import be.kuleuven.cs.som.annotate.*;
 public class Ship {
 
     /**
-     *
+     * Creates a new ship and initializes its position and velocity to the zero vector,
+     * its orientation to zero, its radius to the smallest possible radius and its maximum
+     * speed to the speed of light
+     * 
+     * @Post	The new position of this ship is equal to the zero vector.
+     * 			| new.getPosition().equals(new Vector(0, 0))
+     * @Post	The new velocity of this ship is equal to the zero vector.
+     * 			| new.getVelocity().equals(new Vector(0, 0))
+     * @Post	The new orientation of this ship is equal to zero
+     * 			| new.getOrientation() == 0
+     * @Post	The new radius for this ship is equal to the smallest possible radius.
+     * 			| new.getRadius() == getMinRadius()
+     * @Post	The new maximum speed for this ship is equal to the speed of light
+     * 			| new.getMaxSpeed() == getSpeedOfLight()
      */
     public Ship() {
-        maxSpeed = getSpeedOfLight();
-        radius = getMinRadius();
-
-        setPosition(new Vector(0, 0));
-        setVelocity(new Vector(0, 0));
-        setOrientation(0);
+    	this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight());
+//        maxSpeed = getSpeedOfLight();
+//        radius = getMinRadius();
+//
+//        setPosition(new Vector(0, 0));
+//        setVelocity(new Vector(0, 0));
+//        setOrientation(0);
     }
 
     /**
-     *
+     * Creates a new ship and initializes its position to the given position vector,
+     * its velocity to the given velocity vector, its orientation to the given orientation
+     * and its radius to the given radius.
+     * 
      * @param position
      * @param velocity
      * @param orientation
      * @param radius
+     * 
      * @throws IllegalArgumentException
      * @throws NullPointerException
      */
@@ -52,7 +70,10 @@ public class Ship {
     }
 
     /**
-     *
+     * Creates a new ship and initializes its position to the given position vector,
+     * its velocity to the given velocity vector, its orientation to the given orientation, 
+     * its radius to the given radius and its maxSpeed to the given maxSpeed.
+     * 
      * @param position
      * @param velocity
      * @param orientation
@@ -90,9 +111,10 @@ public class Ship {
     private Vector position;    // defensively
 
     /**
-     *
+     * Returns the current position vector of this ship.
+     * 
      * @return  The current position of this ship.
-     *          | this.position
+     *          | result == this.position
      */
     @Basic
     public Vector getPosition() {
@@ -138,7 +160,7 @@ public class Ship {
     }
 
     /**
-     * Moves the ship in the direction of it's current velocity. The distance traveled is
+     * Moves the ship in the direction of its current velocity. The distance traveled is
      * equal to the current velocity multiplied with the time it should travel in that direction.
      * 
      * @post	The new position is equal the the sum of the old position and the product of
@@ -195,7 +217,7 @@ public class Ship {
     }
 
     /**
-     * Thrusts the ship forward in the direction of the current orientation, and changes it's
+     * Thrusts the ship forward in the direction of the current orientation, and changes its
      * current velocity
      * 
      * @param a The magnitude of the thrust
