@@ -92,13 +92,16 @@ public class Facade implements IFacade {
         return ship1.getTimeToCollision(ship2);
     }
 
-    public double[] getCollisionPosition(Ship ship1, Ship ship2) throws ModelException
-    {
-        double returnPosition[] = new double[2];
+    public double[] getCollisionPosition(Ship ship1, Ship ship2) throws ModelException {
         Vector collisionPosition = ship1.getCollisionPosition(ship2);
-        returnPosition[0] = collisionPosition.getX();
-        returnPosition[1] = collisionPosition.getY();
-        return returnPosition;
+
+        if (collisionPosition != null) {
+            double[] returnPosition = {collisionPosition.getX(), collisionPosition.getY()};
+            return returnPosition;
+        }
+
+        return null;
+
     }
 
 }
