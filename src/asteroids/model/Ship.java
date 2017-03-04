@@ -13,14 +13,27 @@ import be.kuleuven.cs.som.annotate.*;
  */
 public class Ship {
 
+    /**
+     *
+     */
     public Ship() {
+        maxSpeed = getSpeedOfLight();
+        radius = getMinRadius();
+
         setPosition(new Vector(0, 0));
         setVelocity(new Vector(0, 0));
         setOrientation(0);
-        this.radius = getMinRadius();
-        maxSpeed = getSpeedOfLight();
     }
-    
+
+    /**
+     *
+     * @param position
+     * @param velocity
+     * @param orientation
+     * @param radius
+     * @throws IllegalArgumentException
+     * @throws NullPointerException
+     */
     public Ship(Vector position, Vector velocity, double orientation, double radius)
             throws  IllegalArgumentException, NullPointerException {
 
@@ -28,6 +41,7 @@ public class Ship {
             throw new IllegalArgumentException();
 
         this.maxSpeed = getSpeedOfLight();
+        
         setPosition(position);
         setVelocity(velocity);
         setOrientation(orientation);
@@ -54,11 +68,17 @@ public class Ship {
         if (! canHaveAsRadius(radius))
             throw new IllegalArgumentException();
 
-        this.maxSpeed = maxSpeed;
+        this.radius = radius;
+
+        if (maxSpeed > getSpeedOfLight())
+            this.maxSpeed = getSpeedOfLight();
+
+        else
+            this.maxSpeed = maxSpeed;
+
         setPosition(position);
         setVelocity(velocity);
         setOrientation(orientation);
-        this.radius = radius;
     }
 
     private Vector position;    // defensively
@@ -92,19 +112,6 @@ public class Ship {
      */
     public void move(double time) {
         setPosition(getPosition().add(getVelocity().multiply(time)));
-    }
-
-    private static final double speedOfLight = 300000;
-
-    @Basic @Immutable
-    private static double getSpeedOfLight() {
-        return speedOfLight;
-    }
-
-    private final double maxSpeed;
-
-    public double getMaxSpeed() {
-        return maxSpeed;
     }
 
     private Vector velocity;    // total
@@ -165,6 +172,30 @@ public class Ship {
         if (a > 0) {
             setVelocity(getVelocity().add(new Vector(a * Math.cos(getOrientation()), a * Math.sin(getOrientation()))));
         }
+    }
+
+    private static final double speedOfLight = 300000;
+
+    /**
+     *
+     * @return  The speed of light (approximated to 300000km/s)
+     *          | this.speedOfLight
+     */
+    @Basic @Immutable
+    private static double getSpeedOfLight() {
+        return speedOfLight;
+    }
+
+    private final double maxSpeed;
+
+    /**
+     *
+     * @return  The maximum speed of this ship.
+     *          | this.maxSpeed
+     */
+    @Basic @Immutable
+    public double getMaxSpeed() {
+        return maxSpeed;
     }
 
     private double orientation;     // nominal
@@ -265,7 +296,7 @@ public class Ship {
      * @return
      */
     public boolean overlap(Ship spaceship){
-        return getDistanceBetween(spaceship) < 0;
+        return getDistanceBetween(spaceship) <= 0;
     }
 
     /**
@@ -313,8 +344,12 @@ public class Ship {
         if (time == Double.POSITIVE_INFINITY)
             return null;
 
-        else
-            return getPosition().add(getVelocity().multiply(time));
+        else {
+            Vector position1 = getPosition().add(getVelocity().multiply(time));
+            Vector position2 = spaceship.getPosition().add(spaceship.getVelocity().multiply(time));
 
+            return position1.getDifference(position2).normalize().multiply(getRadius()).add(position1);
+
+        }
     }
 }
