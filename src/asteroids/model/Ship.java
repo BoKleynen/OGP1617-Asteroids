@@ -100,30 +100,50 @@ public class Ship {
     }
 
     /**
-     *
-     * @param newPosition
+     * Sets the position of the ship to the specified position newPosition if it is a 
+     * valid position for a ship.
+     * 
+     * @param newPosition The new position for the ship.
+     * 
+     * @Post	The new position of this ship is equal to the given vector newPosition if
+     * 			newPosition is a valid position for a ship
+     * 			| if canHaveAsPosition(newPosition) then
+     * 			|	new.getPosition() == newPosition
+     * 
+     * @throws	NullPointerException if newPosition is null.
      */
     @Basic
-    public void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException {
-        if (newPosition == null) {
-            throw new NullPointerException();
-        }
-
-        position = newPosition;
+    public void setPosition(Vector newPosition) throws NullPointerException {
+        if ( canHaveAsPosition(newPosition) )
+        	position = newPosition;
     }
 
     /**
-     *
+     * Checks whether the vector position is a valid position for a ship.
+     * 
      * @param position
-     * @return
+     * 
+     * @return	True if and only if the components of the vector position are smaller then
+     * 			the maximum value for the type double.
+     * 			| result == ( (Math.abs(position.getX()) <= Double.MAX_VALUE)
+     * 			|	&& (Math.abs(position.getY()) <= Double.MAX_VALUE) )
+     * @throws NullPointerException if position is null
      */
-    private boolean canHaveAsPosition(Vector position) {
+    private boolean canHaveAsPosition(Vector position) throws NullPointerException {
+    	if (position == null)
+    		throw new NullPointerException();
+    	
         return -Double.MAX_VALUE <= position.getX() && position.getX() <= Double.MAX_VALUE &&
                 -Double.MAX_VALUE <= position.getY() && position.getY() <= Double.MAX_VALUE;
     }
 
     /**
-     *
+     * Moves the ship in the direction of it's current velocity. The distance traveled is
+     * equal to the current velocity multiplied with the time it should travel in that direction.
+     * 
+     * @post	The new position is equal the the sum of the old position and the product of
+     * 			the current velocity and time.
+     * 			| new.getPosition() == getPosition().add(getVelocity().multiply(time)))
      * @param time
      */
     public void move(double time) {
@@ -135,7 +155,8 @@ public class Ship {
     /**
      * Returns the current velocity of this ship.
      *
-     * @return The velocity of this ship
+     * @return 	The velocity of this ship
+     * 			| result == this.velocity
      */
     @Basic
     public Vector getVelocity() {
@@ -174,15 +195,20 @@ public class Ship {
     }
 
     /**
-     *
-     * @param a
+     * Thrusts the ship forward in the direction of the current orientation, and changes it's
+     * current velocity
+     * 
+     * @param a The magnitude of the thrust
      *
      * @post    If a is less then or equal to 0, nothing will happen.
      *          | if a <= 0 then
      *          |   new.getVelocity == getVelocity
-     * @post    ...
+     * @post    If a is strictly positive, the velocity of the ship will change. A vector
+     * 			with a magnitude of 'a' and in the direction of the current orientation
+     * 			will be added to the current velocity.
      *          | if a > 0 then
-     *          |   new.getVelocity == setVelocity(getVelocity().add(new Vector(a * Math.cos(getOrientation()), a * Math.sin(getOrientation()))));
+     *          |   new.getVelocity == getVelocity().add(
+     *          |		new Vector(a * Math.cos(getOrientation()), a * Math.sin(getOrientation())));
      */
     public void thrust(double a) {
         if (a > 0) {
@@ -193,7 +219,7 @@ public class Ship {
     private static final double speedOfLight = 300000;
 
     /**
-     *
+     * Returns an approximation for the speed of light.
      * @return  The speed of light (approximated to 300000km/s)
      *          | this.speedOfLight
      */
@@ -217,9 +243,11 @@ public class Ship {
     private double orientation;     // nominal
 
     /**
-     * Returns a boolean to check whether the given value of orientation is a valid value for the orientation of a ship.
+     * Returns a boolean to check whether the given value of orientation is a valid value
+     * for the orientation of a ship.
      *
-     * @return  True if and only if the given orientation is nonnegative and if the given orientation is smaller the 2*PI.
+     * @return  True if and only if the given orientation is nonnegative and
+     * 			if the given orientation is smaller the 2*PI.
      *          | result == ((0.0 <= orientation) && (orientation <= 2.0 * Math.PI))
      */
     public static boolean canHaveAsOrientation(double orientation) {
@@ -253,8 +281,21 @@ public class Ship {
     }
 
     /**
-     *
+     * Turns the ship clockwise over the specified angle
+     * 
      * @param angle
+     * 
+     * @post	If the sum of the current orientation and the specified angle is positive
+     * 			or equal to zero, the new orientation will be the an equivalent orientation
+     * 			to the old orientation incremented with the specified angle.
+     * 			| if this.getOrientation() + angle >= 0 then
+     * 			|	new.getOrientation == (this.getOrientation + angle) % (2*PI)
+     * @Post	If the sum of the current orientation and the specified angle is negative,
+     * 			the new orientation will be equal to the smallest positive orientation that
+     * 			is equivalent to the sum of current orientation and the specified angle.
+     * 			| if this.getOrientation() + angle < 0 then
+     * 			|	new.getOrientation == (this.getOrientation() + angle) % (2*PI) + 2*PI
+     *  
      */
     public void turn(double angle) {
     	double newOrientation = (getOrientation() + angle) % (2 * Math.PI);
