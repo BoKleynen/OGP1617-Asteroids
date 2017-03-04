@@ -329,12 +329,12 @@ public class Ship {
 
         Vector deltaR = spaceship.getPosition().getDifference(this.getPosition());
         Vector deltaV = spaceship.getVelocity().getDifference(this.getVelocity());
-
+        
         if (deltaR.dotProduct(deltaV) >= 0) {
             return Double.POSITIVE_INFINITY;
         }
 
-        double d = Math.pow(deltaR.dotProduct(deltaV), 2) - deltaV.dotProduct(deltaV) * (deltaR.dotProduct(deltaR) - (getRadius() + spaceship.getRadius()));
+        double d = Math.pow(deltaR.dotProduct(deltaV), 2) - deltaV.dotProduct(deltaV) * (deltaR.dotProduct(deltaR) - Math.pow(getRadius() + spaceship.getRadius(), 2));
 
         if (d <= 0) {
             return Double.POSITIVE_INFINITY;

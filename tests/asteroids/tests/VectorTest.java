@@ -7,8 +7,7 @@ import asteroids.model.Vector;
 
 /**
  * Created by Bo on 28/02/2017.
- * 
- * TODO: Add tests for Vector.equals
+ *
  */
 public class VectorTest {
 
@@ -56,7 +55,7 @@ public class VectorTest {
 
     @Test
     public final void testNormalize() {
-//        assertTrue(new Vector(0.6, 0.8).equals(v.normalize()));       // => fails due to java rounding errors -> how to solve this??
+//        assertTrue(new Vector(0.6, 0.8).equals(v.normalize()));       // => fails due to java rounding errors
 
         assertTrue(1 == v.normalize().getMagnitude());
     }
