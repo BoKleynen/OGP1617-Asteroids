@@ -329,7 +329,7 @@ public class Ship {
 
         Vector deltaR = spaceship.getPosition().getDifference(this.getPosition());
         Vector deltaV = spaceship.getVelocity().getDifference(this.getVelocity());
-        
+
         if (deltaR.dotProduct(deltaV) >= 0) {
             return Double.POSITIVE_INFINITY;
         }
@@ -365,7 +365,7 @@ public class Ship {
             Vector position1 = getPosition().add(getVelocity().multiply(time));
             Vector position2 = spaceship.getPosition().add(spaceship.getVelocity().multiply(time));
 
-            return position1.getDifference(position2).normalize().multiply(getRadius()).add(position1);
+            return position2.getDifference(position1).normalize().multiply(getRadius()).add(position1);
 
         }
     }
