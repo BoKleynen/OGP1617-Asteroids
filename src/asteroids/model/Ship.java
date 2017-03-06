@@ -14,20 +14,14 @@ import be.kuleuven.cs.som.annotate.*;
 public class Ship {
 
     /**
-     * Creates a new ship and initializes its position and velocity to the zero vector,
-     * its orientation to zero, its radius to the smallest possible radius and its maximum
-     * speed to the speed of light
+     * Creates a new ship with default values.
      * 
-     * @Post	The new position of this ship is equal to the zero vector.
-     * 			| new.getPosition().equals(new Vector(0, 0))
-     * @Post	The new velocity of this ship is equal to the zero vector.
-     * 			| new.getVelocity().equals(new Vector(0, 0))
-     * @Post	The new orientation of this ship is equal to zero
-     * 			| new.getOrientation() == 0
-     * @Post	The new radius for this ship is equal to the smallest possible radius.
-     * 			| new.getRadius() == getMinRadius()
-     * @Post	The new maximum speed for this ship is equal to the speed of light
-     * 			| new.getMaxSpeed() == getSpeedOfLight()
+     * @Effect	Creates a new ship with default values. The velocity and position are equal
+     * 			to the zero vector, the orientation is equal to zero, the radius is equal 
+     * 			to the smallest possible radius and the maximum speed is equal to the speed
+     * 			of light.
+     * 			| this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight())
+     * 
      */
     public Ship() {
     	this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight());
@@ -49,24 +43,17 @@ public class Ship {
      * @param orientation
      * @param radius
      * 
+     * @Effect	Creates a new ship with all the specified values and initializes the ships
+     * 			maximum speed to the speed of light.
+     * 			| this(position, velocity, orientation, radius, getSpeedOfLight())
+     * 
      * @throws IllegalArgumentException
      * @throws NullPointerException
      */
     public Ship(Vector position, Vector velocity, double orientation, double radius)
             throws  IllegalArgumentException, NullPointerException {
 
-        if (! canHaveAsRadius(radius))
-            throw new IllegalArgumentException();
-
-        if (! canHaveAsPosition(position))
-            throw new IllegalArgumentException();
-
-        this.maxSpeed = getSpeedOfLight();
-        
-        setPosition(position);
-        setVelocity(velocity);
-        setOrientation(orientation);
-        this.radius = radius;
+    	this(position, velocity, orientation, radius, getSpeedOfLight());
     }
 
     /**
@@ -79,8 +66,24 @@ public class Ship {
      * @param orientation
      * @param radius
      * @param maxSpeed
+     * 
+     * @Post	The new position of this ship is equal to the specified vector position.
+     * 			| new.getPosition().equals(position)
+     * @Post	The new velocity of this ship is equal to the specified vector velocity.
+     * 			| new.getVelocity().equals(velocity)
+     * @Post	The new orientation of this ship is equal to the specified orientation.
+     * 			| new.getOrientation() == orientation
+     * @Post	The new radius for this ship is equal to the specified radius.
+     * 			| new.getRadius() == radius
+     * @Post	If the specified maxSpeed is smaller the the speed of light, the maximum speed
+     * 			is equal to maxSpeed, otherwise the maximum speed is equal to the speed of light.
+     * 			| if maxSpeed > getSpeedOfLight() then
+     * 			|	new.getMaxSpeed() == getSpeedOfLight()
+     * 			| else
+     * 			|	new.getMaxSpeed() == maxSpeed
+     * 
      * @throws  IllegalArgumentException
-     *          ...
+     *          If the specified radius is not valid for a ship.
      *          | ! canHaveAsRadius(radius)
      * @throws  NullPointerException
      *          ...
@@ -99,7 +102,6 @@ public class Ship {
 
         if (maxSpeed > getSpeedOfLight())
             this.maxSpeed = getSpeedOfLight();
-
         else
             this.maxSpeed = maxSpeed;
 
