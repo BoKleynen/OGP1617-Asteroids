@@ -25,12 +25,6 @@ public class Ship {
      */
     public Ship() {
     	this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight());
-//        maxSpeed = getSpeedOfLight();
-//        radius = getMinRadius();
-//
-//        setPosition(new Vector(0, 0));
-//        setVelocity(new Vector(0, 0));
-//        setOrientation(0);
     }
 
     /**
@@ -47,8 +41,12 @@ public class Ship {
      * 			maximum speed to the speed of light.
      * 			| this(position, velocity, orientation, radius, getSpeedOfLight())
      * 
-     * @throws IllegalArgumentException
-     * @throws NullPointerException
+     * @throws 	IllegalArgumentException
+     * 			If the specified radius is not valid for a ship.
+     *          | ! canHaveAsRadius(radius)
+     * @throws 	NullPointerException
+     * 			If the specified position is null.
+     *          | position == null
      */
     public Ship(Vector position, Vector velocity, double orientation, double radius)
             throws  IllegalArgumentException, NullPointerException {
