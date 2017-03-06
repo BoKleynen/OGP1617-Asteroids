@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 /**
  * A class containing tests for the class asteroids.model.Ship
  *
- * Created by Yrjo Koyen on 28/02/2017.
+ * @author Bo Kleynen and Yrjo Koyen
  * 
  * TODO:	- Add tests for every method
  * TODO:	- Add documentation
@@ -39,12 +39,12 @@ public class ShipTests {
 		perpendicularOriantationAndVelocity = new Ship(new Vector(0, 0), new Vector(4, 0), 0.5*Math.PI, 10, 300000);
 	}
 
-    @Test
-    public void testGetPosition()
-    {
-        assertTrue(defaultShip.getPosition().equals(new Vector(0, 0)));
-        assertTrue(mutableTestShip1.getPosition().equals(new Vector(100, 100)));
-    }
+//    @Test
+//    public void testGetPosition()
+//    {
+//        assertTrue(defaultShip.getPosition().equals(new Vector(0, 0)));
+//        assertTrue(mutableTestShip1.getPosition().equals(new Vector(100, 100)));
+//    }
 
     @Test
     public void testSetPosition()
