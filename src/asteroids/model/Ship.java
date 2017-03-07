@@ -7,6 +7,9 @@ import be.kuleuven.cs.som.annotate.*;
  *
  * TODO class invariants, @param
  *
+ * @invar The speed shall never exceed the maximum speed, wich in turn shall never exceed the speed of light.
+ *          getVelocity.dotProduct(getVelocity()) <= getMaxSpeed() <= getSpeedOfLight
+ *
  * @invar   The orientation of the ship is an angle between 0 and 2PI radians.
  *          | 0 <= getOrientation() <= 2PI
  *
@@ -42,7 +45,7 @@ public class Ship {
      * 			If the specified radius is not valid for a ship.
      *          | ! canHaveAsRadius(radius)
      * @throws 	NullPointerException
-     * 			If the specified position is null.
+     * 			If the specified position refers a null object.
      *          | position == null
      */
     public Ship(Vector position, Vector velocity, double orientation, double radius)
@@ -75,8 +78,8 @@ public class Ship {
      * 			|	new.getMaxSpeed() == maxSpeed
      * 
      * @throws  IllegalArgumentException
-     *          If the specified radius is not valid for a ship.
-     *          | ! canHaveAsRadius(radius)
+     *          If the specified radius is not valid for a ship, or the specified position contains NaN as one of its components.
+     *          | ! canHaveAsRadius(radius) || ! canHaveAsPosition(position)
      * @throws  NullPointerException
      *          If the specified position refers a null object
      *          | position == null
@@ -91,7 +94,7 @@ public class Ship {
             throw new IllegalArgumentException();
 
         this.radius = radius;
-        // this.maxSpeed will never contain NaN as one of its vector components
+        // this.maxSpeed will never be NaN
         this.maxSpeed = maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight();
         setPosition(position);
         setVelocity(velocity);
@@ -185,6 +188,9 @@ public class Ship {
      * @post    If newVelocity references a null object, the velocity is set to 0 in both the x and y direction.
      *          | if newVelocity == null then
      *          |   new.getVelocity() == Vector(0, 0)
+     * @post    If one of the components of newVelocity is NaN, the velocity is set to 0.
+     *          | if Double.isNaN(newVelocity.getX()) || Double.isNaN(newVelocity.getY()) then
+     *          |   new.getVelocity == Vector(0, 0)
      * @post    If the magnitude of newVelocity is smaller then the maximum value for the velocity, this ships velocity
      *          is equal to the given vector newVelocity.
      *          | if newVelocity.getMagnitude() =< getMaxSpeed() then new.getVelocity() == newVelocity
@@ -196,7 +202,7 @@ public class Ship {
      */
     @Basic
     private void setVelocity(Vector newVelocity) {   // private
-        if (newVelocity == null || ! (newVelocity.getMagnitude() >= 0)) {
+        if (newVelocity == null || Double.isNaN(newVelocity.getX()) || Double.isNaN(newVelocity.getY())) {
             newVelocity = new Vector(0, 0);
         }
 
@@ -369,6 +375,9 @@ public class Ship {
     /**
      *
      * @return
+     *          | this.move(result).getPosition().getDistance(spaceship.move(result).getPosition) == getRadius() + ship.getRadius()
+
+     *
      * @throws IllegalArgumentException
      */
     public double getTimeToCollision(Ship spaceship) throws IllegalArgumentException {
@@ -395,6 +404,7 @@ public class Ship {
      * @param spaceship
      * @return  The position of the point of impact between this ship and the ship spaceship, if they will ever collide
      *          at their current heading, null otherwise.
+     *          | result.getDistance(getPosition().move(getTimeToCollision(spaceship))) == getRadius && result.getDistance(spaceship.getPosition().move(getTimeToCollision(this))) == space.getRadius()
      * @throws IllegalArgumentException
      *          If both ships overlap
      *          | overlap(spaceship)

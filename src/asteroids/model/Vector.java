@@ -5,7 +5,7 @@ import be.kuleuven.cs.som.annotate.*;
 import java.util.Objects;
 
 /**
- * A class of immutable 2-dimensional vectors featuring an x and y value.
+ * A class of immutable 2-dimensional vectors featuring an x and y component of type double.
  *
  * Created by Bo on 28/02/2017.
  */
@@ -109,7 +109,6 @@ public class Vector extends Object{
 
     /**
      *
-     * @param v
      * @return
      *          | (getX() - v.getX(), getY() - v.getY())
      */
