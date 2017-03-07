@@ -196,7 +196,7 @@ public class Ship {
      */
     @Basic
     private void setVelocity(Vector newVelocity) {   // private
-        if (newVelocity == null || newVelocity.getMagnitude() < 0) {
+        if (newVelocity == null || ! (newVelocity.getMagnitude() >= 0)) {
             newVelocity = new Vector(0, 0);
         }
 
