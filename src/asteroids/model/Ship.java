@@ -196,13 +196,15 @@ public class Ship {
      */
     @Basic
     private void setVelocity(Vector newVelocity) {   // private
-        if (newVelocity == null) {
-            velocity = new Vector(0, 0);
+        if (newVelocity == null || newVelocity.getMagnitude() < 0) {
+            newVelocity = new Vector(0, 0);
         }
 
         else if (newVelocity.dotProduct(newVelocity) > Math.pow(getMaxSpeed(), 2)) {
-            velocity = newVelocity.normalize().multiply(getMaxSpeed());
+            newVelocity = newVelocity.normalize().multiply(getMaxSpeed());
         }
+
+        velocity = newVelocity;
     }
 
     /**
