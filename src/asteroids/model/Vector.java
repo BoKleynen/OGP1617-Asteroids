@@ -2,12 +2,14 @@ package asteroids.model;
 
 import be.kuleuven.cs.som.annotate.*;
 
+import java.util.Objects;
+
 /**
  * A class of immutable 2-dimensional vectors featuring an x and y value.
  *
  * Created by Bo on 28/02/2017.
  */
-public class Vector {
+public class Vector extends Object{
 
     /**
      * Creates a new vector with a given x and y.
@@ -19,7 +21,7 @@ public class Vector {
     
     /**
      * Compares two vectors, two vectors are equal if both their x- and y-components are equal.
-     * 
+     *
      * @param other
      * @return	True is and only if the two vectors are equal
      * 			| result == ( (this.getX() == other.getX()) && (this.getY() == other.getY()) );
@@ -27,6 +29,7 @@ public class Vector {
     public boolean equals(Vector other) {
     	return getX() == other.getX() && getY() == other.getY();
     }
+
 
     private final double x;
 

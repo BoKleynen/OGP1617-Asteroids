@@ -5,6 +5,8 @@ import be.kuleuven.cs.som.annotate.*;
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
  *
+ * TODO class invariants, @param
+ *
  * @invar   The orientation of the ship is an angle between 0 and 2PI radians.
  *          | 0 <= getOrientation() <= 2PI
  *
@@ -53,6 +55,9 @@ public class Ship {
      * Creates a new ship and initializes its position to the given position vector,
      * its velocity to the given velocity vector, its orientation to the given orientation, 
      * its radius to the given radius and its maxSpeed to the given maxSpeed.
+     *
+     * @Pre     The orientation of this ship must be a valid orientation.
+     *          | canHaveAsOrientation(orientation)
      * 
      * @Post	The new position of this ship is equal to the specified vector position.
      * 			| new.getPosition().equals(position)
@@ -86,9 +91,8 @@ public class Ship {
             throw new IllegalArgumentException();
 
         this.radius = radius;
-
-        this.maxSpeed = maxSpeed > getSpeedOfLight() ? getSpeedOfLight() : maxSpeed;
-
+        // this.maxSpeed will never contain NaN as one of its vector components
+        this.maxSpeed = maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight();
         setPosition(position);
         setVelocity(velocity);
         setOrientation(orientation);
@@ -189,7 +193,6 @@ public class Ship {
      *          | if newVelocity.getMagnitude() > getMaxSpeed() then
      *          |   new.getVelocity() == newVelocity.normalize().multiply(getMaxSpeed())
      *
-     * TODO what with Double.NaN?
      */
     @Basic
     private void setVelocity(Vector newVelocity) {   // private
@@ -198,10 +201,8 @@ public class Ship {
         }
 
         else if (newVelocity.dotProduct(newVelocity) > Math.pow(getMaxSpeed(), 2)) {
-            newVelocity = newVelocity.normalize().multiply(getMaxSpeed());
+            velocity = newVelocity.normalize().multiply(getMaxSpeed());
         }
-
-        velocity = newVelocity;
     }
 
     /**
@@ -210,7 +211,7 @@ public class Ship {
      * 
      * @param a The magnitude of the thrust
      *
-     * @post    If a is less then or equal to 0, nothing will happen.
+     * @post    If a is less then, equal to 0 or NaN, nothing will happen.
      *          | if a <= 0 then
      *          |   new.getVelocity == getVelocity
      * @post    If a is strictly positive, the velocity of the ship will change. A vector
@@ -227,7 +228,7 @@ public class Ship {
     }
 
     /**
-     * Returns an approximation for the speed of light.
+     * Returns the speed of light.
      * @return  The speed of light (exactly 299792.458 km/s)
      *          | this.speedOfLight
      */
@@ -365,7 +366,6 @@ public class Ship {
 
     /**
      *
-     * @param spaceship
      * @return
      * @throws IllegalArgumentException
      */

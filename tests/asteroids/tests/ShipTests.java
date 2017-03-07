@@ -39,20 +39,12 @@ public class ShipTests {
 		perpendicularOriantationAndVelocity = new Ship(new Vector(0, 0), new Vector(4, 0), 0.5*Math.PI, 10, 300000);
 	}
 
-//    @Test
-//    public void testGetPosition()
-//    {
-//        assertTrue(defaultShip.getPosition().equals(new Vector(0, 0)));
-//        assertTrue(mutableTestShip1.getPosition().equals(new Vector(100, 100)));
-//    }
-
-//    @Test
-//    public void testSetPosition()
-//    {
-//    	Vector tempPosition = new Vector(250, -50);
-//    	mutableTestShip1.setPosition(tempPosition);
-//    	assertTrue(mutableTestShip1.getPosition().equals(tempPosition));
-//    }
+    @Test
+    public void testGetPosition()
+    {
+        assertTrue(defaultShip.getPosition().equals(new Vector(0, 0)));
+        assertTrue(mutableTestShip1.getPosition().equals(new Vector(100, 100)));
+    }
 
     @Test
     public void testCanHaveAsOrientation() {
@@ -63,26 +55,6 @@ public class ShipTests {
     	assertTrue(Ship.canHaveAsOrientation(valid));
     	assertFalse(Ship.canHaveAsOrientation(tooSmall));
     }
-
-//    @Test
-//    public void testSetVelocity_LegalCase()
-//    {
-//    	Vector firstVelocity = new Vector(8462, 635);
-//    	mutableTestShip1.setVelocity(firstVelocity);
-//    	assertTrue(mutableTestShip1.getVelocity().equals(firstVelocity));
-//
-//    	Vector secondVelocity = new Vector(-320, -5000);
-//    	mutableTestShip1.setVelocity(secondVelocity);
-//    	assertTrue(mutableTestShip1.getVelocity().equals(secondVelocity));
-//    }
-//
-//    @Test
-//    public void testSetVelocity_ExceedsMaxSpeed() {
-//    	Vector overSpeedOfLight = new Vector(500000, -750000);
-//    	mutableTestShip1.setVelocity(overSpeedOfLight);
-//    	assertFalse(mutableTestShip1.getVelocity().equals(overSpeedOfLight));
-//    	assertEquals(mutableTestShip1.getVelocity().getMagnitude(), 300000, 0.0001);
-//    }
 
     @Test
     public void testThrust_SameDirection()
