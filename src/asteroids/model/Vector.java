@@ -25,7 +25,7 @@ public class Vector {
      * 			| result == ( (this.getX() == other.getX()) && (this.getY() == other.getY()) );
      */
     public boolean equals(Vector other) {
-    	return ( (getX() == other.getX()) && (getY() == other.getY()) );
+    	return getX() == other.getX() && getY() == other.getY();
     }
 
     private final double x;

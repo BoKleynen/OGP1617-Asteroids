@@ -38,18 +38,12 @@ public class Facade implements IFacade {
 
     public double[] getShipPosition(Ship ship) throws ModelException
     {
-        Vector position = ship.getPosition();
-        double[] returnPosition = {position.getX(), position.getY()};
-
-        return returnPosition;
+        return new double[] {ship.getPosition().getX(), ship.getPosition().getY()};
     }
 
     public double[] getShipVelocity(Ship ship) throws ModelException
     {
-        Vector velocity = ship.getVelocity();
-        double[] returnVelocity = {velocity.getX(), velocity.getY()};
-
-        return returnVelocity;
+        return new double[] {ship.getVelocity().getX(), ship.getVelocity().getY()};
     }
 
     public double getShipRadius(Ship ship) throws ModelException
@@ -95,13 +89,6 @@ public class Facade implements IFacade {
     public double[] getCollisionPosition(Ship ship1, Ship ship2) throws ModelException {
         Vector collisionPosition = ship1.getCollisionPosition(ship2);
 
-        if (collisionPosition != null) {
-            double[] returnPosition = {collisionPosition.getX(), collisionPosition.getY()};
-            return returnPosition;
-        }
-
-        return null;
-
+        return collisionPosition == null ? null : new double[] {collisionPosition.getX(), collisionPosition.getY()};
     }
-
 }

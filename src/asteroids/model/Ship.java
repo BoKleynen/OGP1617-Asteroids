@@ -6,7 +6,7 @@ import be.kuleuven.cs.som.annotate.*;
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
  *
  * @invar   The orientation of the ship is an angle between 0 and 2PI radians.
- *          0 <= getOrientation() <= 2PI
+ *          | 0 <= getOrientation() <= 2PI
  *
  * @author Yrjo Koyen and Bo Kleynen
  *
@@ -32,11 +32,6 @@ public class Ship {
      * its velocity to the given velocity vector, its orientation to the given orientation
      * and its radius to the given radius.
      * 
-     * @param position
-     * @param velocity
-     * @param orientation
-     * @param radius
-     * 
      * @Effect	Creates a new ship with all the specified values and initializes the ships
      * 			maximum speed to the speed of light.
      * 			| this(position, velocity, orientation, radius, getSpeedOfLight())
@@ -59,12 +54,6 @@ public class Ship {
      * its velocity to the given velocity vector, its orientation to the given orientation, 
      * its radius to the given radius and its maxSpeed to the given maxSpeed.
      * 
-     * @param position
-     * @param velocity
-     * @param orientation
-     * @param radius
-     * @param maxSpeed
-     * 
      * @Post	The new position of this ship is equal to the specified vector position.
      * 			| new.getPosition().equals(position)
      * @Post	The new velocity of this ship is equal to the specified vector velocity.
@@ -84,7 +73,7 @@ public class Ship {
      *          If the specified radius is not valid for a ship.
      *          | ! canHaveAsRadius(radius)
      * @throws  NullPointerException
-     *          ...
+     *          If the specified position refers a null object
      *          | position == null
      */
     public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed)
@@ -98,10 +87,7 @@ public class Ship {
 
         this.radius = radius;
 
-        if (maxSpeed > getSpeedOfLight())
-            this.maxSpeed = getSpeedOfLight();
-        else
-            this.maxSpeed = maxSpeed;
+        this.maxSpeed = maxSpeed > getSpeedOfLight() ? getSpeedOfLight() : maxSpeed;
 
         setPosition(position);
         setVelocity(velocity);
@@ -135,7 +121,7 @@ public class Ship {
      * @throws	NullPointerException if newPosition is null.
      */
     @Basic
-    public void setPosition(Vector newPosition) throws NullPointerException {
+    private void setPosition(Vector newPosition) throws NullPointerException {   //private
         if ( canHaveAsPosition(newPosition) )
         	position = newPosition;
     }
@@ -151,7 +137,7 @@ public class Ship {
      * 			|	&& (Math.abs(position.getY()) <= Double.MAX_VALUE) )
      * @throws NullPointerException if position is null
      */
-    private boolean canHaveAsPosition(Vector position) throws NullPointerException {
+    private boolean canHaveAsPosition(Vector position) throws NullPointerException {    // public
     	if (position == null)
     		throw new NullPointerException();
     	
@@ -202,14 +188,16 @@ public class Ship {
      *          vector pointing in the direction of newVelocity with a magnitude equal to the maximum velocity.
      *          | if newVelocity.getMagnitude() > getMaxSpeed() then
      *          |   new.getVelocity() == newVelocity.normalize().multiply(getMaxSpeed())
+     *
+     * TODO what with Double.NaN?
      */
     @Basic
-    public void setVelocity(Vector newVelocity) {
+    private void setVelocity(Vector newVelocity) {   // private
         if (newVelocity == null) {
             velocity = new Vector(0, 0);
         }
 
-        if (newVelocity.getMagnitude() > getMaxSpeed()) {
+        else if (newVelocity.dotProduct(newVelocity) > Math.pow(getMaxSpeed(), 2)) {
             newVelocity = newVelocity.normalize().multiply(getMaxSpeed());
         }
 
@@ -238,16 +226,14 @@ public class Ship {
         }
     }
 
-    private static final double speedOfLight = 300000;
-
     /**
      * Returns an approximation for the speed of light.
-     * @return  The speed of light (approximated to 300000km/s)
+     * @return  The speed of light (exactly 299792.458 km/s)
      *          | this.speedOfLight
      */
-    @Basic @Immutable
-    private static double getSpeedOfLight() {
-        return speedOfLight;
+    @Immutable
+    public static double getSpeedOfLight() {
+        return 299792.458;
     }
 
     private final double maxSpeed;
@@ -268,12 +254,12 @@ public class Ship {
      * Returns a boolean to check whether the given value of orientation is a valid value
      * for the orientation of a ship.
      *
-     * @return  True if and only if the given orientation is nonnegative and
+     * @return  True if and only if the given orientation is non negative and
      * 			if the given orientation is smaller the 2*PI.
      *          | result == ((0.0 <= orientation) && (orientation <= 2.0 * Math.PI))
      */
     public static boolean canHaveAsOrientation(double orientation) {
-        return ((0.0 <= orientation) && (orientation <= 2.0 * Math.PI));
+        return (0.0 <= orientation) && (orientation <= 2.0 * Math.PI);
     }
 
     /**
@@ -298,7 +284,7 @@ public class Ship {
      *          | new.getOrientation() == newOrientation
      */
     @Basic
-    public void setOrientation(double newOrientation) {
+    private void setOrientation(double newOrientation) {     // private
         orientation = newOrientation;
     }
 
@@ -321,7 +307,8 @@ public class Ship {
      */
     public void turn(double angle) {
     	double newOrientation = (getOrientation() + angle) % (2 * Math.PI);
-        setOrientation( (newOrientation>=0 ? newOrientation : newOrientation + 2*Math.PI));
+
+        setOrientation(newOrientation >= 0 ? newOrientation : newOrientation + 2 * Math.PI);
     }
 
     private final double radius;        // defensively
@@ -354,7 +341,7 @@ public class Ship {
      * @return 	True if and only if radius is a valid radius for a ship
      * 			| result == (radius >= this.getMinRadius())
      */
-    private boolean canHaveAsRadius(double radius) {
+    private boolean canHaveAsRadius(double radius) {    // public
         return (radius >= getMinRadius());
     }
 
@@ -364,10 +351,7 @@ public class Ship {
      * @return  The distance between the edges of this ship and the ship spaceship.
      */
     public double getDistanceBetween(Ship spaceship) {
-        if (this == spaceship)
-            return 0;
-
-        return getPosition().getDistance(spaceship.getPosition()) - getRadius() - spaceship.getRadius();
+        return this == spaceship ? 0 : getPosition().getDistance(spaceship.getPosition()) - getRadius() - spaceship.getRadius();
     }
 
     /**
@@ -397,22 +381,21 @@ public class Ship {
             return Double.POSITIVE_INFINITY;
         }
 
-        double d = Math.pow(deltaR.dotProduct(deltaV), 2) - deltaV.dotProduct(deltaV) * (deltaR.dotProduct(deltaR) - Math.pow(getRadius() + spaceship.getRadius(), 2));
+        double d = Math.pow(deltaR.dotProduct(deltaV), 2) - deltaV.dotProduct(deltaV) *
+                (deltaR.dotProduct(deltaR) - Math.pow(getRadius() + spaceship.getRadius(), 2));
 
-        if (d <= 0) {
-            return Double.POSITIVE_INFINITY;
-        }
-
-        else
-            return -((deltaV.dotProduct(deltaR) + Math.sqrt(d)) / deltaV.dotProduct(deltaV));
+        return d <= 0 ? Double.POSITIVE_INFINITY : -(deltaV.dotProduct(deltaR) + Math.sqrt(d)) / deltaV.dotProduct(deltaV);
 
     }
 
     /**
      *
      * @param spaceship
-     * @return
+     * @return  The position of the point of impact between this ship and the ship spaceship, if they will ever collide
+     *          at their current heading, null otherwise.
      * @throws IllegalArgumentException
+     *          If both ships overlap
+     *          | overlap(spaceship)
      */
     public Vector getCollisionPosition(Ship spaceship) throws IllegalArgumentException {
         if (overlap(spaceship)) {
