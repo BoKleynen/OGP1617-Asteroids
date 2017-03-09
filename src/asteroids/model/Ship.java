@@ -5,13 +5,16 @@ import be.kuleuven.cs.som.annotate.*;
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
  *
- * TODO class invariants, @param
+ * TODO class invariants
  * TODO add asserts to nominal methods
  *
- * @invar The speed shall never exceed the maximum speed, wich in turn shall never exceed the speed of light.
- *          | getVelocity.dotProduct(getVelocity()) <= getMaxSpeed() <= getSpeedOfLight
- * @invar   The orientation of the ship is an angle between 0 and 2PI radians.
- *          | 0 <= getOrientation() <= 2PI
+ * @Invar 	The speed shall never exceed the maximum speed, which in turn shall never exceed the speed of light.
+ *          | getVelocity().getMagnitude() <= getMaxSpeed() && getMaxSpeed() <= getSpeedOfLight
+ * @Invar   The orientation of a ship is always a valid orientation.
+ *          | Ship.anHaveAsOrientation(this.getOrientation)
+ * @Invar	The radius of a ship is always greater the the smallest allowed radius.
+ * 			| getRadius() >= getMinRadius()
+ * 
  *
  * @author Yrjo Koyen and Bo Kleynen
  *
@@ -86,7 +89,6 @@ public class Ship {
      */
     public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed)
             throws  IllegalArgumentException, NullPointerException {
-
         if (! canHaveAsRadius(radius))
             throw new IllegalArgumentException();
 
@@ -124,11 +126,12 @@ public class Ship {
      * 			newPosition is a valid position for a ship
      * 			| if canHaveAsPosition(newPosition) then
      * 			|	new.getPosition() == newPosition
-     * 
-     * @throws	NullPointerException if newPosition is null.
+     * @throws	NullPointerException 
+     * 			If the vector newPosition is null.
+     * 			| newPosition == null;
      */
     @Basic
-    private void setPosition(Vector newPosition) throws NullPointerException {   //private
+    private void setPosition(Vector newPosition) throws NullPointerException { 
         if ( canHaveAsPosition(newPosition) )
         	position = newPosition;
     }
@@ -136,32 +139,39 @@ public class Ship {
     /**
      * Checks whether the vector position is a valid position for a ship.
      * 
-     * @param position
-     * 
+     * @param 	position
+     * 			The position to be tested.
      * @return	True if and only if the components of the vector position are smaller then
      * 			the maximum value for the type double.
      * 			| result == ( (Math.abs(position.getX()) <= Double.MAX_VALUE)
      * 			|	&& (Math.abs(position.getY()) <= Double.MAX_VALUE) )
      * @throws NullPointerException if position is null
      */
-    private boolean canHaveAsPosition(Vector position) throws NullPointerException {    // public
+    @Basic
+    private boolean canHaveAsPosition(Vector position) throws NullPointerException { 
     	if (position == null)
     		throw new NullPointerException();
     	
-        return -Double.MAX_VALUE <= position.getX() && position.getX() <= Double.MAX_VALUE &&
-                -Double.MAX_VALUE <= position.getY() && position.getY() <= Double.MAX_VALUE;
+        return ( ( ! Double.isNaN(position.getX()) ) && ( ! Double.isNaN(position.getY()) ) );
     }
 
     /**
      * Moves the ship in the direction of its current velocity. The distance traveled is
      * equal to the current velocity multiplied with the time it should travel in that direction.
      * 
+     * @param 	time
+     * 			The time to move in the direction of the velocity vector.
      * @post	The new position is equal the the sum of the old position and the product of
      * 			the current velocity and time.
      * 			| new.getPosition() == getPosition().add(getVelocity().multiply(time)))
-     * @param time
+     * @throws 	IllegalArgumentException
+     * 			If the specified time is negative.
+     * 			| time < 0
      */
-    public void move(double time) {
+    public void move(double time) throws IllegalArgumentException {
+    	if( time < 0 )
+    		throw new IllegalArgumentException();
+    	
         setPosition(getPosition().add(getVelocity().multiply(time)));
     }
 
@@ -302,10 +312,12 @@ public class Ship {
     }
 
     /**
-     * Turns the ship clockwise over the specified angle
+     * Turns the ship counterclockwise over the specified angle.
      * 
-     * @param angle
-     * 
+     * @param 	angle
+     * 			The angle to turn the ship around its center.
+     * @Pre 	Angle is a valid real number.
+     * 			| ( angle.isNaN(angle) ) && ( ! Double.isInfinite(angle) )
      * @post	If the sum of the current orientation and the specified angle is positive
      * 			or equal to zero, the new orientation will be the an equivalent orientation
      * 			to the old orientation incremented with the specified angle.
@@ -319,6 +331,7 @@ public class Ship {
      *  
      */
     public void turn(double angle) {
+    	assert( ( ! Double.isNaN(angle) ) && ( ! Double.isInfinite(angle) ) );
     	double newOrientation = (getOrientation() + angle) % (2 * Math.PI);
 
         setOrientation(newOrientation >= 0 ? newOrientation : newOrientation + 2 * Math.PI);
