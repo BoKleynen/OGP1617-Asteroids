@@ -2,6 +2,8 @@ package asteroids.tests;
 
 import asteroids.model.Ship;
 import asteroids.model.Vector;
+import asteroids.util.ModelException;
+
 import org.junit.*;
 
 
@@ -139,6 +141,17 @@ public class ShipTests {
     	mutableTestShip1.turn(4*Math.PI);
 
     	assertEquals(mutableTestShip1.getOrientation(), 0, 0.0001);
+    }
+    
+    @Test(expected = AssertionError.class)
+    public void testTurn_IllegalArgumentNaN() {
+    	mutableTestShip1.turn(Double.NaN);
+    }
+    
+    
+    @Test(expected = AssertionError.class)
+    public void testTurn_IllegalArgumentInfinity() {
+    	mutableTestShip1.turn(Double.POSITIVE_INFINITY);
     }
     
     /**
