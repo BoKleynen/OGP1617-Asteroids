@@ -25,6 +25,8 @@ public class ShipTests {
     private Ship sameVelocityAndOrientation;
     private Ship perpendicularOriantationAndVelocity;;
     private Ship mutableTestShip1;
+    private Ship collisionShip1;
+    private Ship collisionShip2;
     
 	@BeforeClass
 	public static void setupImmutableTestFixtures() {		
@@ -37,6 +39,8 @@ public class ShipTests {
 		oppositeVelocityAndOrientation = new Ship(new Vector(0, 0), new Vector(100, 0), Math.PI, 10, 300000);
 		sameVelocityAndOrientation = new Ship(new Vector(0, 0), new Vector(100, 100), 0.25*Math.PI, 10, 300000);
 		perpendicularOriantationAndVelocity = new Ship(new Vector(0, 0), new Vector(4, 0), 0.5*Math.PI, 10, 300000);
+		collisionShip1 = new Ship(new Vector(-100, -100), new Vector(10, 10), 0, 20, 300000);
+		collisionShip2 = new Ship(new Vector(100, 100), new Vector(-10, -10), 0, 20, 300000);
 	}
 
     @Test
@@ -55,7 +59,21 @@ public class ShipTests {
     	assertTrue(Ship.canHaveAsOrientation(valid));
     	assertFalse(Ship.canHaveAsOrientation(tooSmall));
     }
+    
+    /**
+     * Tests for the boundary values of the canHaveAsOrientation method.
+     */
+    @Test
+    public void testCanHaveAsOrientation_BoundaryValues() {
+    	assertTrue(Ship.canHaveAsOrientation((double) 0));
+    	assertTrue(Ship.canHaveAsOrientation(2*Math.PI - 0.0001));
+    	assertFalse(Ship.canHaveAsOrientation(2*Math.PI));
+    	assertFalse(Ship.canHaveAsOrientation(2*Math.PI + 0.0001));
+    }
 
+    /**
+     * Test for thrusting in the same direction as the ships velocity.
+     */
     @Test
     public void testThrust_SameDirection()
     {
@@ -65,6 +83,9 @@ public class ShipTests {
     	assertEquals(sameVelocityAndOrientation.getVelocity().getMagnitude(), tempSpeed.getMagnitude() + acceleration, 0.0001);
     }
     
+    /**
+     * Test for thrusting in a direction opposite to the ships velocity.
+     */
     @Test
     public void testThrust_OppositeDirection()
     {
@@ -75,6 +96,9 @@ public class ShipTests {
     			tempSpeed.getMagnitude()-acceleration, 0.0001);
     }
     
+    /**
+     * Test for thrusting in a direction perpendicular to the ships velocity.
+     */
     @Test
     public void testThrust_Perpendicular() {
     	double acceleration = 3;
@@ -82,6 +106,18 @@ public class ShipTests {
     	perpendicularOriantationAndVelocity.thrust(acceleration);
     	assertEquals(perpendicularOriantationAndVelocity.getVelocity().getMagnitude(),
     			Math.sqrt(Math.pow(acceleration, 2) + Math.pow(tempSpeed.getMagnitude(), 2)), 0.0001);    	
+    }
+    
+    /**
+     * Test trying to thrust with a negative acceleration. The velocity should remain the same 
+     * after thrusting.
+     */
+    @Test
+    public void testThrust_NegativeAcceleration() {
+    	double acceleration = -256;
+    	Vector tempSpeed = sameVelocityAndOrientation.getVelocity();
+    	sameVelocityAndOrientation.thrust(acceleration);
+    	assertTrue(sameVelocityAndOrientation.getVelocity().equals(tempSpeed));   	
     }
 
     @Test
@@ -103,6 +139,18 @@ public class ShipTests {
     	mutableTestShip1.turn(4*Math.PI);
 
     	assertEquals(mutableTestShip1.getOrientation(), 0, 0.0001);
+    }
+    
+    /**
+     * Test to see whether the first postcondition of getTimeToCollision holds true.
+     */
+    @Test
+    public void testGetTimeToCollision_postCondition1() {
+    	double t = collisionShip1.getTimeToCollision(collisionShip2);
+    	assertTrue ( (t > 0) && (t<Double.POSITIVE_INFINITY) );
+    	collisionShip1.move(t);
+    	collisionShip2.move(t);
+    	assertEquals(collisionShip1.getDistanceBetween(collisionShip2), 0, 0.0001);	
     }
 
     @Test

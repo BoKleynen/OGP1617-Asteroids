@@ -266,12 +266,12 @@ public class Ship {
      * for the orientation of a ship.
      *
      * @return  True if and only if the given orientation is non negative and
-     * 			if the given orientation is smaller the 2*PI.
-     *          | result == ((0.0 <= orientation) && (orientation <= 2.0 * Math.PI))
+     * 			if the given orientation is smaller then 2*PI.
+     *          | result == ((0.0 <= orientation) && (orientation < 2.0 * Math.PI))
      */
     @Basic 
     public static boolean canHaveAsOrientation(double orientation) {
-        return (0.0 <= orientation) && (orientation <= 2.0 * Math.PI);
+        return (0.0 <= orientation) && (orientation < 2.0 * Math.PI);
     }
 
     /**
@@ -389,11 +389,25 @@ public class Ship {
     }
 
     /**
-     *
-     * @return
-     *          | this.move(result).getPosition().getDistance(spaceship.move(result).getPosition) == getRadius() + ship.getRadius()
+     * Returns the amount of time until this ship will collide with the specified spaceship. 
+     * If both ships are on a collision course, the time returned by this method will be the
+     * finite amount of time it will take for both ships to hit each other if they keep moving 
+     * in the same direction and with the same velocity. If the ships are not currently on a
+     * collision course, if they move away from each other or if they will just pass each other 
+     * without the hulls touching, the time returned will be positive infinity.
+     * 
+     * @return	The time until the collision will happen if the ships keep moving in the exact
+     * 			same way as they are currently moving.  If no collision will occur within a 
+     * 			finite amount of time, this method will return positive infinity.
+     * 
+     * @Post	If both ships keep moving in the exact same way they are currently moving, then
+     * 			they will collide after the returned amount of time. This means their hulls will 
+     * 			touch after exactly the returned amount of time.
+     * 			| this.getDistanceBetween(spaceship) == 0
+     *          
      *
      * @throws IllegalArgumentException
+     * 			If the supplied spaceship is this ship.
      */
     public double getTimeToCollision(Ship spaceship) throws IllegalArgumentException {
         if (overlap(spaceship)) {
