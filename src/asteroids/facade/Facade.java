@@ -20,7 +20,7 @@ public class Facade implements IFacade {
         try {
             return new Ship(new Vector(0,0), new Vector(0,0), 0, 1);
 
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new ModelException(e);
         }
     }
@@ -31,51 +31,79 @@ public class Facade implements IFacade {
         try {
             return new Ship( new Vector(x, y), new Vector(xVelocity, yVelocity), orientation, radius);
 
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new ModelException(e);
         }
     }
 
     public double[] getShipPosition(Ship ship) throws ModelException
     {
-        return new double[] {ship.getPosition().getX(), ship.getPosition().getY()};
+        try {
+            return new double[]{ship.getPosition().getX(), ship.getPosition().getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public double[] getShipVelocity(Ship ship) throws ModelException
     {
-        return new double[] {ship.getVelocity().getX(), ship.getVelocity().getY()};
+        try {
+            return new double[]{ship.getVelocity().getX(), ship.getVelocity().getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public double getShipRadius(Ship ship) throws ModelException
     {
-        return ship.getRadius();
+        try {
+            return ship.getRadius();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public double getShipOrientation(Ship ship) throws ModelException
     {
-        return ship.getOrientation();
+        try {
+            return ship.getOrientation();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public void move(Ship ship, double dt) throws ModelException
     {
-    	ship.move(dt);
+        try {
+            ship.move(dt);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public void thrust(Ship ship, double amount) throws ModelException
     {
-    	ship.thrust(amount);
+        try {
+            ship.thrust(amount);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public void turn(Ship ship, double angle) throws ModelException
     {
-    	ship.turn(angle);
+        try {
+            ship.turn(angle);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public double getDistanceBetween(Ship ship1, Ship ship2) throws ModelException
     {
         try {
-        return ship1.getDistanceBetween(ship2);
-        } catch (NullPointerException e) {
+            return ship1.getDistanceBetween(ship2);
+        } catch (Exception e) {
             throw new ModelException(e);
         }
     }
@@ -83,20 +111,27 @@ public class Facade implements IFacade {
     public boolean overlap(Ship ship1, Ship ship2) throws ModelException
     {
         try {
-        return ship1.overlap(ship2);
-        } catch (NullPointerException e) {
+            return ship1.overlap(ship2);
+        } catch (Exception e) {
             throw new ModelException(e);
         }
     }
 
     public double getTimeToCollision(Ship ship1, Ship ship2) throws ModelException
     {
-        return ship1.getTimeToCollision(ship2);
+        try {
+            return ship1.getTimeToCollision(ship2);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public double[] getCollisionPosition(Ship ship1, Ship ship2) throws ModelException {
-        Vector collisionPosition = ship1.getCollisionPosition(ship2);
-
-        return collisionPosition == null ? null : new double[] {collisionPosition.getX(), collisionPosition.getY()};
+        try {
+            Vector collisionPosition = ship1.getCollisionPosition(ship2);
+            return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 }
