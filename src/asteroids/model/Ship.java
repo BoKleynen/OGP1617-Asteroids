@@ -120,8 +120,8 @@ public class Ship {
      * Sets the position of the ship to the specified position newPosition if it is a 
      * valid position for a ship.
      * 
-     * @param newPosition The new position for the ship.
-     * 
+     * @param 	newPosition
+     * 			The new position for the ship.
      * @Post	The new position of this ship is equal to the given vector newPosition if
      * 			newPosition is a valid position for a ship
      * 			| if canHaveAsPosition(newPosition) then
@@ -141,11 +141,10 @@ public class Ship {
      * 
      * @param 	position
      * 			The position to be tested.
-     * @return	True if and only if the components of the vector position are smaller then
-     * 			the maximum value for the type double.
-     * 			| result == ( (Math.abs(position.getX()) <= Double.MAX_VALUE)
-     * 			|	&& (Math.abs(position.getY()) <= Double.MAX_VALUE) )
-     * @throws NullPointerException if position is null
+     * @return	True if and only if the components of the vector position are valid real numbers.
+     * 			| result == ((! Double.isNaN(position.getX())) && (! Double.isNaN(position.getY())))
+     * @throws 	NullPointerException
+     * 			If position is null
      */
     @Basic
     private boolean canHaveAsPosition(Vector position) throws NullPointerException { 
@@ -225,23 +224,23 @@ public class Ship {
 
     /**
      * Thrusts the ship forward in the direction of the current orientation, and changes its
-     * current velocity
+     * current velocity according to the given acceleration a.
      * 
-     * @param 	a The magnitude of the thrust
-     *
-     * @post    If a is less then, equal to 0 or NaN, nothing will happen.
-     *          | if a <= 0 then
+     * @param 	acceleration
+     * 			The magnitude of the thrust
+     * @post    If acceleration is less then, equal to 0 or NaN, nothing will happen.
+     *          | if acceleration <= 0 then
      *          |   new.getVelocity == getVelocity
-     * @post    If a is strictly positive, the velocity of the ship will change. A vector
-     * 			with a magnitude of 'a' and in the direction of the current orientation
+     * @post    If acceleration is strictly positive, the velocity of the ship will change. A vector
+     * 			with a magnitude of acceleration and in the direction of the current orientation
      * 			will be added to the current velocity.
-     *          | if a > 0 then
+     *          | if acceleration > 0 then
      *          |   new.getVelocity == getVelocity().add(
-     *          |		new Vector(a * Math.cos(getOrientation()), a * Math.sin(getOrientation())));
+     *          |		new Vector(acceleration * Math.cos(getOrientation()), acceleration * Math.sin(getOrientation())));
      */
-    public void thrust(double a) {
-        if (a > 0) {
-            setVelocity(getVelocity().add(new Vector(a * Math.cos(getOrientation()), a * Math.sin(getOrientation()))));
+    public void thrust(double acceleration) {
+        if (acceleration > 0) {
+            setVelocity(getVelocity().add(new Vector(acceleration * Math.cos(getOrientation()), acceleration * Math.sin(getOrientation()))));
         }
     }
 
@@ -296,7 +295,7 @@ public class Ship {
     }
 
     /**
-     * Sets the orientation for this asteroids.model.Ship to newOrientation
+     * Sets the orientation for this ship to newOrientation
      *
      * @param   newOrientation
      *          The new orientation for this ship.
@@ -306,7 +305,7 @@ public class Ship {
      *          | new.getOrientation() == newOrientation
      */
     @Basic
-    private void setOrientation(double newOrientation) {     // private
+    private void setOrientation(double newOrientation) {
         assert canHaveAsOrientation(newOrientation);
         orientation = newOrientation;
     }
@@ -342,7 +341,8 @@ public class Ship {
     /**
      * Returns the radius of this ship.
      * 
-     * @return The radius of this ship
+     * @return 	The radius of this ship
+     * 			| result == this.radius
      */
     @Basic @Immutable
     public double getRadius() {
@@ -394,7 +394,7 @@ public class Ship {
      *
      * @param	spaceship
      * 			The ship that might overlap this ship
-     * @return	True if and only if both ships overlap.
+     * @return	True if and only if both ships overlap or if the specified spaceship is this ship.
      * 			| result == ( getDistanceBetween(spaceship) <= 0 ) 
      */
     public boolean overlap(Ship spaceship){
@@ -412,15 +412,14 @@ public class Ship {
      * @return	The time until the collision will happen if the ships keep moving in the exact
      * 			same way as they are currently moving.  If no collision will occur within a 
      * 			finite amount of time, this method will return positive infinity.
-     * 
      * @Post	If both ships keep moving in the exact same way they are currently moving, then
      * 			they will collide after the returned amount of time. This means their hulls will 
      * 			touch after exactly the returned amount of time.
      * 			| this.getDistanceBetween(spaceship) == 0
-     *          
-     *
-     * @throws IllegalArgumentException
-     * 			If the supplied spaceship is this ship.
+     * @throws 	IllegalArgumentException
+     * 			If the supplied spaceship is this ship or if the supplied ship already overlaps
+     * 			this ship.
+     * 			| this.overlap(spaceship)
      */
     public double getTimeToCollision(Ship spaceship) throws IllegalArgumentException {
         if (overlap(spaceship)) {
