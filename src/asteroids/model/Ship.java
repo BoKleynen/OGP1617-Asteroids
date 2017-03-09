@@ -217,7 +217,7 @@ public class Ship {
      * Thrusts the ship forward in the direction of the current orientation, and changes its
      * current velocity
      * 
-     * @param a The magnitude of the thrust
+     * @param 	a The magnitude of the thrust
      *
      * @post    If a is less then, equal to 0 or NaN, nothing will happen.
      *          | if a <= 0 then
@@ -236,7 +236,8 @@ public class Ship {
     }
 
     /**
-     * Returns the speed of light.
+     * Returns an approximation for the speed of light.
+     * 
      * @return  The speed of light (approximately 300000 km/s)
      *          | this.speedOfLight
      */
@@ -248,7 +249,8 @@ public class Ship {
     private final double maxSpeed;
 
     /**
-     *
+     * Returns the maximum allowed speed for this ship.
+     * 
      * @return  The maximum speed of this ship.
      *          | this.maxSpeed
      */
@@ -267,6 +269,7 @@ public class Ship {
      * 			if the given orientation is smaller the 2*PI.
      *          | result == ((0.0 <= orientation) && (orientation <= 2.0 * Math.PI))
      */
+    @Basic 
     public static boolean canHaveAsOrientation(double orientation) {
         return (0.0 <= orientation) && (orientation <= 2.0 * Math.PI);
     }
@@ -336,8 +339,10 @@ public class Ship {
     private static final double minRadius = 10;
 
     /**
-     *
-     * @return
+     * Returns the smallest allowed radius for a ship.
+     * 
+     * @return	The smallest allowed radius.
+     * 			| result == this.minRadius
      */
     @Basic @Immutable
     private static double getMinRadius() {
@@ -347,7 +352,8 @@ public class Ship {
     /**
      * Checks whether the supplied radius is a valid radius for a ship.
      *
-     * @param 	radius The radius that needs to be validated
+     * @param 	radius 
+     * 			The radius that needs to be validated
      * @return 	True if and only if radius is a valid radius for a ship
      * 			| result == (radius >= this.getMinRadius())
      */
@@ -356,18 +362,27 @@ public class Ship {
     }
 
     /**
+     *	Returns the distance between the edges of this ship and the specified ship spaceship.
      *
-     * @param spaceship
+     * @param 	spaceship
+     * 			The distance will be calculated between this spaceship and the current ship.
      * @return  The distance between the edges of this ship and the ship spaceship.
+     * 			| if spaceship == this then
+     * 			|	result == 0
+     * 			| else
+     * 			|	result == getPosition().getDistance(spaceship.getPosition) - ( getRadius() + spaceship.getRadius() )
      */
     public double getDistanceBetween(Ship spaceship) {
         return this == spaceship ? 0 : getPosition().getDistance(spaceship.getPosition()) - getRadius() - spaceship.getRadius();
     }
 
     /**
+     *	Returns true if the specified ship spaceship and this ship overlap.
      *
-     * @param spaceship
-     * @return
+     * @param	spaceship
+     * 			The ship that might overlap this ship
+     * @return	True if and only if both ships overlap.
+     * 			| result == ( getDistanceBetween(spaceship) <= 0 ) 
      */
     public boolean overlap(Ship spaceship){
         return getDistanceBetween(spaceship) <= 0;
@@ -400,11 +415,15 @@ public class Ship {
     }
 
     /**
-     *
-     * @param spaceship
-     * @return  The position of the point of impact between this ship and the ship spaceship, if they will ever collide
+     * Returns the position where this ship and the specified ship will collide, if they will collide. 
+     * The collision position is the point where the hulls of both ships will touch.
+     * 
+     * @param 	spaceship
+     * 			The spaceship that this ship will collide with.
+     * @return  The position vector of the point of impact between this ship and the ship spaceship, if they will ever collide
      *          at their current heading, null otherwise.
-     *          | result.getDistance(getPosition().move(getTimeToCollision(spaceship))) == getRadius && result.getDistance(spaceship.getPosition().move(getTimeToCollision(this))) == space.getRadius()
+     *          | result.getDistance(getPosition().move(getTimeToCollision(spaceship))) == getRadius && 
+     *          	result.getDistance(spaceship.getPosition().move(getTimeToCollision(this))) == spaceship.getRadius()
      * @throws IllegalArgumentException
      *          If both ships overlap
      *          | overlap(spaceship)
