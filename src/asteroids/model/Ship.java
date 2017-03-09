@@ -6,10 +6,10 @@ import be.kuleuven.cs.som.annotate.*;
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
  *
  * TODO class invariants, @param
+ * TODO add asserts to nominal methods
  *
  * @invar The speed shall never exceed the maximum speed, wich in turn shall never exceed the speed of light.
- *          getVelocity.dotProduct(getVelocity()) <= getMaxSpeed() <= getSpeedOfLight
- *
+ *          | getVelocity.dotProduct(getVelocity()) <= getMaxSpeed() <= getSpeedOfLight
  * @invar   The orientation of the ship is an angle between 0 and 2PI radians.
  *          | 0 <= getOrientation() <= 2PI
  *
@@ -201,7 +201,7 @@ public class Ship {
      *
      */
     @Basic
-    private void setVelocity(Vector newVelocity) {   // private
+    private void setVelocity(Vector newVelocity) {
         if (newVelocity == null || Double.isNaN(newVelocity.getX()) || Double.isNaN(newVelocity.getY())) {
             newVelocity = new Vector(0, 0);
         }
@@ -237,12 +237,12 @@ public class Ship {
 
     /**
      * Returns the speed of light.
-     * @return  The speed of light (exactly 299792.458 km/s)
+     * @return  The speed of light (approximately 300000 km/s)
      *          | this.speedOfLight
      */
     @Immutable
     public static double getSpeedOfLight() {
-        return 299792.458;
+        return 300000;
     }
 
     private final double maxSpeed;
@@ -294,6 +294,7 @@ public class Ship {
      */
     @Basic
     private void setOrientation(double newOrientation) {     // private
+        assert canHaveAsOrientation(newOrientation);
         orientation = newOrientation;
     }
 
@@ -376,7 +377,6 @@ public class Ship {
      *
      * @return
      *          | this.move(result).getPosition().getDistance(spaceship.move(result).getPosition) == getRadius() + ship.getRadius()
-
      *
      * @throws IllegalArgumentException
      */
