@@ -73,12 +73,20 @@ public class Facade implements IFacade {
 
     public double getDistanceBetween(Ship ship1, Ship ship2) throws ModelException
     {
+        try {
         return ship1.getDistanceBetween(ship2);
+        } catch (NullPointerException e) {
+            throw new ModelException(e);
+        }
     }
 
     public boolean overlap(Ship ship1, Ship ship2) throws ModelException
     {
+        try {
         return ship1.overlap(ship2);
+        } catch (NullPointerException e) {
+            throw new ModelException(e);
+        }
     }
 
     public double getTimeToCollision(Ship ship1, Ship ship2) throws ModelException
