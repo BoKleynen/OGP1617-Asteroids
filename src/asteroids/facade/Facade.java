@@ -18,7 +18,7 @@ public class Facade implements IFacade {
     public Ship createShip() throws ModelException
     {
         try {
-            return new Ship(new Vector(0,0), new Vector(0,0), 0, 1);
+            return new Ship();
 
         } catch (Exception e) {
             throw new ModelException(e);
