@@ -13,6 +13,10 @@ public class Vector extends Object{
 
     /**
      * Creates a new vector with a given x and y.
+     *
+     * @Post    The x and y value of the new Vector are set to x and y respectively
+     *          |new.x == x
+     *          |new.y == y
      */
     public Vector(double x, double y) {
         this.x = x;
@@ -20,9 +24,9 @@ public class Vector extends Object{
     }
     
     /**
-     * Compares two vectors, two vectors are equal if both their x- and y-components are equal.
+     * Compares two vectors, two vectors are equal if and only if both their x- and y-components are equal.
      *
-     * @param other
+     * @param other The Vector with which this Vector has to be compared.
      * @return	True is and only if the two vectors are equal
      * 			| result == ( (this.getX() == other.getX()) && (this.getY() == other.getY()) );
      */
@@ -56,12 +60,22 @@ public class Vector extends Object{
     }
 
 
+    /**
+     * Computes the sum of this Vector and the specified Vector and returns the result as a new Vector.
+     *
+     * @param u The Vector which has to be added to this Vector
+     * @return  The sum of this vector with u
+     *          | result.getX() == this.getX() + u.getX()
+     *          | result.getY() == this.getY() + u.getY()
+     */
     public Vector add(Vector u) {
         return new Vector(getX() + u.getX(), getY() + u.getY());
     }
 
     /**
+     * Computes the product of this Vector with the given double value and returns the result as a new Vector
      *
+     * @param a The value with which this Vector has to be multiplied.
      * @return  The product of this vector with a given double as a new vector.
      *          | new.getX() == a * this.getX()
      *          | new.getY() == a * this.getY()
@@ -71,6 +85,7 @@ public class Vector extends Object{
     }
 
     /**
+     * Computes the dot product of this Vector with the given Vector u and returns the result as a double.
      *
      * @param u
      * @return  The dot product of this vector with a given vector as a double.
@@ -81,10 +96,11 @@ public class Vector extends Object{
     }
 
     /**
+     * Computes the magnitude of this Vector and returns the result as a double.
      *
-     * @return  The magnitude of this vector, computed as the square root of the dot produce of this vector
+     * @return  The magnitude of this vector, computed as the square root of the dot product of this vector
      *          with itself.
-     *          | Math.sqrt(this.dotProduct(this))
+     *          | result == Math.sqrt(this.dotProduct(this))
      */
     public double getMagnitude() {
         return Math.sqrt(this.dotProduct(this));
@@ -92,6 +108,8 @@ public class Vector extends Object{
     }
 
     /**
+     * Normalizes this Vector and returns the result as a new Vector. This new Vector is a Vector with magnitude 1
+     * and with the same orientation as this Vector.
      *
      * @return  A new vector with magnitude 1, with the same orientation as this vector.
      *          | new.getMagnitude() = 1
@@ -103,13 +121,22 @@ public class Vector extends Object{
         return multiply(1 / getMagnitude());
     }
 
+    /**
+     * Computes the Distance between this Vector and the given Vector.
+     *
+     * @param v The Vector between which and this the distance has to be computed
+     * @return  The distance between this Vector and the given Vector.
+     *          | result == Math.sqrt(Math.pow(getX() - v.getX(), 2) + Math.pow(getY() - v.getY(),2))
+     */
     public double getDistance(Vector v) {
         return Math.sqrt(Math.pow(getX() - v.getX(), 2) + Math.pow(getY() - v.getY(),2));
     }
 
     /**
+     * Computes the difference of the respective components of this Vector and the given Vector
      *
-     * @return
+     * @return  The difference of the x coordinates of this Vector and the given Vector and the difference of the
+     *          y coordinates of this Vector and the given Vector
      *          | (getX() - v.getX(), getY() - v.getY())
      */
     public Vector getDifference(Vector v) {
