@@ -5,7 +5,7 @@ import be.kuleuven.cs.som.annotate.*;
 /**
  * A class of immutable 2-dimensional vectors featuring an x and y component of type double.
  *
- * Created by Bo on 28/02/2017.
+ * Created by Bo Kleynen and Yrjo Koyen.
  */
 public class Vector extends Object{
 

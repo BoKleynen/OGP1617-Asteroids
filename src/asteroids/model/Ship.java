@@ -5,11 +5,6 @@ import be.kuleuven.cs.som.annotate.*;
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
  *
-<<<<<<< HEAD
-=======
- * TODO class invariants
- *
->>>>>>> 05248c64b6c5036c6ee3b9d5055534cc9cf2264c
  * @Invar 	The speed shall never exceed the maximum speed, which in turn shall never exceed the speed of light.
  *          | getVelocity().getMagnitude() <= getMaxSpeed() && getMaxSpeed() <= getSpeedOfLight
  * @Invar   The orientation of a ship is always a valid orientation.
@@ -17,7 +12,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar	The radius of a ship is always greater the the smallest allowed radius.
  * 			| getRadius() >= getMinRadius()
  * 
- * @author Yrjo Koyen and Bo Kleynen
+ * Created by Bo Kleynen and Yrjo Koyen.
  *
  */
 public class Ship {

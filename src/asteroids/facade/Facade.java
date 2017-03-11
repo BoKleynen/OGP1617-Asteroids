@@ -6,7 +6,7 @@ import asteroids.model.Ship;
 import asteroids.model.Vector;
 
 /**
- * Created by Yrjo Koyen on 28/02/2017.
+ * Created by Bo Kleynen and Yrjo Koyen.
  */
 public class Facade implements IFacade {
 
