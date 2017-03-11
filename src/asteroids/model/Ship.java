@@ -5,9 +5,6 @@ import be.kuleuven.cs.som.annotate.*;
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
  *
- * TODO class invariants
- * TODO add asserts to nominal methods
- *
  * @Invar 	The speed shall never exceed the maximum speed, which in turn shall never exceed the speed of light.
  *          | getVelocity().getMagnitude() <= getMaxSpeed() && getMaxSpeed() <= getSpeedOfLight
  * @Invar   The orientation of a ship is always a valid orientation.
@@ -15,7 +12,6 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar	The radius of a ship is always greater the the smallest allowed radius.
  * 			| getRadius() >= getMinRadius()
  * 
- *
  * @author Yrjo Koyen and Bo Kleynen
  *
  */
@@ -29,7 +25,6 @@ public class Ship {
      * 			to the smallest possible radius and the maximum speed is equal to the speed
      * 			of light.
      * 			| this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight())
-     * 
      */
     public Ship() {
     	this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight());
@@ -40,10 +35,11 @@ public class Ship {
      * its velocity to the given velocity vector, its orientation to the given orientation
      * and its radius to the given radius.
      * 
+     * @Pre     The orientation of this ship must be a valid orientation.
+     *          | canHaveAsOrientation(orientation)
      * @Effect	Creates a new ship with all the specified values and initializes the ships
      * 			maximum speed to the speed of light.
      * 			| this(position, velocity, orientation, radius, getSpeedOfLight())
-     * 
      * @throws 	IllegalArgumentException
      * 			If the specified radius is not valid for a ship.
      *          | ! canHaveAsRadius(radius)
@@ -129,11 +125,16 @@ public class Ship {
      * @throws	NullPointerException 
      * 			If the vector newPosition is null.
      * 			| newPosition == null;
+     * @throws	IllegalArgumentException
+     * 			If the the vector newPosition is not a valid position
+     * 			| ! canHaveAsPosition(newPosition)
      */
     @Basic
-    private void setPosition(Vector newPosition) throws NullPointerException { 
+    private void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException { 
         if ( canHaveAsPosition(newPosition) )
         	position = newPosition;
+        else
+        	throw new IllegalArgumentException();
     }
 
     /**
@@ -370,7 +371,7 @@ public class Ship {
      * @return 	True if and only if radius is a valid radius for a ship
      * 			| result == (radius >= this.getMinRadius())
      */
-    private boolean canHaveAsRadius(double radius) {    // public
+    private boolean canHaveAsRadius(double radius) {
         return (radius >= getMinRadius());
     }
 
