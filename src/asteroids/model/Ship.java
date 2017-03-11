@@ -5,6 +5,11 @@ import be.kuleuven.cs.som.annotate.*;
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
  *
+<<<<<<< HEAD
+=======
+ * TODO class invariants
+ *
+>>>>>>> 05248c64b6c5036c6ee3b9d5055534cc9cf2264c
  * @Invar 	The speed shall never exceed the maximum speed, which in turn shall never exceed the speed of light.
  *          | getVelocity().getMagnitude() <= getMaxSpeed() && getMaxSpeed() <= getSpeedOfLight
  * @Invar   The orientation of a ship is always a valid orientation.
@@ -60,11 +65,14 @@ public class Ship {
      *
      * @Pre     The orientation of this ship must be a valid orientation.
      *          | canHaveAsOrientation(orientation)
-     * 
      * @Post	The new position of this ship is equal to the specified vector position.
      * 			| new.getPosition().equals(position)
-     * @Post	The new velocity of this ship is equal to the specified vector velocity.
-     * 			| new.getVelocity().equals(velocity)
+     * @Post	The new velocity of this ship is equal to the specified vector velocity if it does not reference a null object,
+     *          if it does, the velocity is set to 0 in x and y direction.
+     *          | if velocity != null then
+     * 			|   new.getVelocity().equals(velocity)
+     * 		    | else
+     * 		    |    new.getVelocity().equals(new Vector(0, 0))
      * @Post	The new orientation of this ship is equal to the specified orientation.
      * 			| new.getOrientation() == orientation
      * @Post	The new radius for this ship is equal to the specified radius.
@@ -75,7 +83,6 @@ public class Ship {
      * 			|	new.getMaxSpeed() == getSpeedOfLight()
      * 			| else
      * 			|	new.getMaxSpeed() == maxSpeed
-     * 
      * @throws  IllegalArgumentException
      *          If the specified radius is not valid for a ship, or the specified position contains NaN as one of its components.
      *          | ! canHaveAsRadius(radius) || ! canHaveAsPosition(position)
@@ -122,8 +129,8 @@ public class Ship {
      * 			newPosition is a valid position for a ship
      * 			| if canHaveAsPosition(newPosition) then
      * 			|	new.getPosition() == newPosition
-     * @throws	NullPointerException 
-     * 			If the vector newPosition is null.
+     * @throws	NullPointerException
+     * 			If the vector newPosition refers a null object.
      * 			| newPosition == null;
      * @throws	IllegalArgumentException
      * 			If the the vector newPosition is not a valid position
@@ -145,7 +152,8 @@ public class Ship {
      * @return	True if and only if the components of the vector position are valid real numbers.
      * 			| result == ((! Double.isNaN(position.getX())) && (! Double.isNaN(position.getY())))
      * @throws 	NullPointerException
-     * 			If position is null
+     * 			If the specified position refers a null object.
+     * 		    | position == null
      */
     @Basic
     private boolean canHaveAsPosition(Vector position) throws NullPointerException { 
@@ -157,13 +165,14 @@ public class Ship {
 
     /**
      * Moves the ship in the direction of its current velocity. The distance traveled is
-     * equal to the current velocity multiplied with the time it should travel in that direction.
+     * equal to the current velocity multiplied with the specified time it should travel in that direction.
      * 
      * @param 	time
      * 			The time to move in the direction of the velocity vector.
      * @post	The new position is equal the the sum of the old position and the product of
      * 			the current velocity and time.
      * 			| new.getPosition() == getPosition().add(getVelocity().multiply(time)))
+     *
      * @throws 	IllegalArgumentException
      * 			If the specified time is negative.
      * 			| time < 0
@@ -246,8 +255,8 @@ public class Ship {
     }
 
     /**
-     * Returns an approximation for the speed of light.
-     * 
+     * Returns the speed of light.
+     *
      * @return  The speed of light (approximately 300000 km/s)
      *          | this.speedOfLight
      */
@@ -259,8 +268,7 @@ public class Ship {
     private final double maxSpeed;
 
     /**
-     * Returns the maximum allowed speed for this ship.
-     * 
+     *
      * @return  The maximum speed of this ship.
      *          | this.maxSpeed
      */
@@ -279,7 +287,6 @@ public class Ship {
      * 			if the given orientation is smaller then 2*PI.
      *          | result == ((0.0 <= orientation) && (orientation < 2.0 * Math.PI))
      */
-    @Basic 
     public static boolean canHaveAsOrientation(double orientation) {
         return (0.0 <= orientation) && (orientation < 2.0 * Math.PI);
     }
@@ -296,7 +303,8 @@ public class Ship {
     }
 
     /**
-     * Sets the orientation for this ship to newOrientation
+     * Sets the orientation for this ship to newOrientation. The specified orientation must be a valid orientation
+     * for a ship.
      *
      * @param   newOrientation
      *          The new orientation for this ship.
@@ -353,10 +361,8 @@ public class Ship {
     private static final double minRadius = 10;
 
     /**
-     * Returns the smallest allowed radius for a ship.
-     * 
-     * @return	The smallest allowed radius.
-     * 			| result == this.minRadius
+     *
+     * @return
      */
     @Basic @Immutable
     private static double getMinRadius() {
@@ -366,9 +372,8 @@ public class Ship {
     /**
      * Checks whether the supplied radius is a valid radius for a ship.
      *
-     * @param 	radius 
-     * 			The radius that needs to be validated
-     * @return 	True if and only if radius is a valid radius for a ship
+     * @param 	radius The radius that needs to be validated.
+     * @return 	True if and only if radius is a valid radius for a ship.
      * 			| result == (radius >= this.getMinRadius())
      */
     private boolean canHaveAsRadius(double radius) {
@@ -376,26 +381,23 @@ public class Ship {
     }
 
     /**
-     *	Returns the distance between the edges of this ship and the specified ship spaceship.
+     * Returns the distance between this ship and the specified ship. The distance between a ship and itself is equal to 0.
      *
-     * @param 	spaceship
-     * 			The distance will be calculated between this spaceship and the current ship.
+     * @param spaceship The ship between which and this the distance needs to be calculated.
      * @return  The distance between the edges of this ship and the ship spaceship.
-     * 			| if spaceship == this then
-     * 			|	result == 0
-     * 			| else
-     * 			|	result == getPosition().getDistance(spaceship.getPosition) - ( getRadius() + spaceship.getRadius() )
      */
     public double getDistanceBetween(Ship spaceship) {
         return this == spaceship ? 0 : getPosition().getDistance(spaceship.getPosition()) - getRadius() - spaceship.getRadius();
     }
 
     /**
-     *	Returns true if the specified ship spaceship and this ship overlap.
+     * Returns a boolean to check if this ship overlaps with the specified ship.
+     * Two ships overlap if and only if they are the same ship or the distance between their centers is negative.
+     * | spaceship == this || this.getDistanceBetween(spaceship) < 0
      *
      * @param	spaceship
      * 			The ship that might overlap this ship
-     * @return	True if and only if both ships overlap or if the specified spaceship is this ship.
+     * @return	True if and only if both ships overlap.
      * 			| result == ( getDistanceBetween(spaceship) <= 0 ) 
      */
     public boolean overlap(Ship spaceship){
@@ -442,18 +444,24 @@ public class Ship {
     }
 
     /**
-     * Returns the position where this ship and the specified ship will collide, if they will collide. 
-     * The collision position is the point where the hulls of both ships will touch.
-     * 
-     * @param 	spaceship
-     * 			The spaceship that this ship will collide with.
-     * @return  The position vector of the point of impact between this ship and the ship spaceship, if they will ever collide
-     *          at their current heading, null otherwise.
-     *          | result.getDistance(getPosition().move(getTimeToCollision(spaceship))) == getRadius && 
-     *          	result.getDistance(spaceship.getPosition().move(getTimeToCollision(this))) == spaceship.getRadius()
+     * Returns the position at which this ship will collide with the specified ship, if ever, assuming both
+     * ships maintain their velocity and direction from the time this method is called, otherwise null is returned.
+     *
+     * @return  The position of the point of impact between this ship and the specified ship if they maintain their
+     *          velocity and direction from the time this method is called.
+     *          If no collision will occur, in case the time to collision is positive infinity, this method returns null.
+     *          | if getTimeToCollision(spaceship) == Double.POSITIVE_INFINITY then
+     *          |   null
+     *          If the time to collision is a finite value this method returns the point of impact between both ships.
+     *          | if getTimeToCollision(spaceship) != Double.POSITIVE_INFINITY
+     *          This point is located at a distance equal to the radius of this ship from the center of this ship and at
+     *          a distance equal to the radius of the specified ship from the center of the specified ship after a time
+     *          ∆t == getTimeToCollision(spaceship) has passed since the invocation of this method.
+     *          | new == this.move(∆t) && (new spaceship) == spaceship.move(∆t)
+     *          | new.getPosition().getDistance(result) == new.getRadius() && (new spaceship).getPosition().getDistance(result)
      * @throws IllegalArgumentException
-     *          If both ships overlap
-     *          | overlap(spaceship)
+     *          If this ship overlaps with the specified ship.
+     *          | this.overlap(spaceship)
      */
     public Vector getCollisionPosition(Ship spaceship) throws IllegalArgumentException {
         if (overlap(spaceship)) {
