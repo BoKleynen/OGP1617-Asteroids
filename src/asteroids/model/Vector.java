@@ -2,8 +2,6 @@ package asteroids.model;
 
 import be.kuleuven.cs.som.annotate.*;
 
-import java.util.Objects;
-
 /**
  * A class of immutable 2-dimensional vectors featuring an x and y component of type double.
  *
