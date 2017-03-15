@@ -7,9 +7,12 @@ import be.kuleuven.cs.som.annotate.*;
 
 public abstract class Entity {
 
+    Entity(Vector position, Vector velocity, double maxSpeed, double radius, double minRadius, double mass, double minMassDensity){
+        this(position, velocity, maxSpeed, radius, minRadius, mass, minMassDensity, null);
+    }
 
-    Entity(Vector position, Vector velocity, double maxSpeed, double radius, double minRadius) {
 
+    Entity(Vector position, Vector velocity, double maxSpeed, double radius, double minRadius, double mass, double minMassDensity, World world) {
         if (! canHaveAsPosition(position))
             throw new IllegalArgumentException();
 
@@ -17,10 +20,82 @@ public abstract class Entity {
             throw new IllegalArgumentException();
 
         this.radius = radius;
+
         setPosition(position);
+
         // this.maxSpeed will never be NaN
         this.maxSpeed = maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight();
         setVelocity(velocity);
+
+        double minMass = getMinMass(getRadius(), minMassDensity);
+        this.mass = mass >= minMass ? mass : minMass;
+    }
+
+    /**
+     * Checks whether the supplied radius is a valid radius for a ship.
+     *
+     * @param 	radius The radius that needs to be validated.
+     * @return 	True if and only if radius is a valid radius for a ship.
+     * 			| result == (radius >= this.getMinRadius())
+     */
+    public boolean canHaveAsRadius(double radius, double minRadius) {
+        return (radius >= minRadius);
+    }
+
+    private static final double speedOfLight = 300000;
+
+    /**
+     * Returns the speed of light.
+     *
+     * @return  The speed of light (approximately 300000 km/s)
+     *          | this.speedOfLight
+     */
+    @Immutable
+    public static double getSpeedOfLight() {
+        return speedOfLight;
+    }
+
+    private final double radius;        // defensively
+
+    /**
+     * Returns the radius of this ship.
+     *
+     * @return 	The radius of this ship
+     * 			| result == this.radius
+     */
+    @Basic @Immutable
+    public double getRadius() {
+        return radius;
+    }
+
+    private double mass;    // total
+
+    @Basic
+    public double getMass() {
+        return mass;
+    }
+
+    public double getMinMass(double radius, double minMassDensity) {
+        return 4/3 * Math.PI * Math.pow(radius, 3) * minMassDensity;
+    }
+
+    private World world;
+
+    /**
+     * Returns the world this Entity belongs to, if this Entity belongs to no world this method will return null.
+     *
+     * @return
+     */
+    public World getWorld() {
+        return world;
+    }
+
+    /**
+     *
+     * @param world
+     */
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     private Vector position;    // defensively
@@ -54,7 +129,7 @@ public abstract class Entity {
      * 			| ! canHaveAsPosition(newPosition)
      */
     @Basic
-    protected void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException {
+    void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException {
         if ( canHaveAsPosition(newPosition) )
             position = newPosition;
         else
@@ -137,7 +212,7 @@ public abstract class Entity {
      *
      */
     @Basic
-    protected void setVelocity(Vector newVelocity) {
+    void setVelocity(Vector newVelocity) {
         if (newVelocity == null || Double.isNaN(newVelocity.getX()) || Double.isNaN(newVelocity.getY())) {
             newVelocity = new Vector(0, 0);
         }
@@ -149,62 +224,17 @@ public abstract class Entity {
         velocity = newVelocity;
     }
 
-    /**
-     * Returns the speed of light.
-     *
-     * @return  The speed of light (approximately 300000 km/s)
-     *          | this.speedOfLight
-     */
-    @Immutable
-    public static double getSpeedOfLight() {
-        return 300000;
-    }
-
     private final double maxSpeed;
 
     /**
+     * Returns the maximum speed of this Entity.
      *
-     * @return  The maximum speed of this ship.
+     * @return  The maximum speed of this Entity.
      *          | this.maxSpeed
      */
     @Basic @Immutable
     public double getMaxSpeed() {
         return maxSpeed;
-    }
-
-
-    private World world;
-
-    public World getWorld() {
-        return world;
-    }
-
-    public void setWorld(World world) {
-        this.world = world;
-    }
-
-    private final double radius;        // defensively
-
-    /**
-     * Returns the radius of this ship.
-     *
-     * @return 	The radius of this ship
-     * 			| result == this.radius
-     */
-    @Basic @Immutable
-    public double getRadius() {
-        return radius;
-    }
-
-    /**
-     * Checks whether the supplied radius is a valid radius for a ship.
-     *
-     * @param 	radius The radius that needs to be validated.
-     * @return 	True if and only if radius is a valid radius for a ship.
-     * 			| result == (radius >= this.getMinRadius())
-     */
-    public boolean canHaveAsRadius(double radius, double minRadius) {
-        return (radius >= minRadius);
     }
 
     /**

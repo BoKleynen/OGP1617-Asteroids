@@ -23,7 +23,7 @@ public class Ship extends Entity {
     /**
      * Creates a new ship with default values.
      * 
-     * @Effect	Creates a new ship with default values. The velocity and position are equal
+      * @Effect	Creates a new ship with default values. The velocity and position are equal
      * 			to the zero vector, the orientation is equal to zero, the radius is equal 
      * 			to the smallest possible radius and the maximum speed is equal to the speed
      * 			of light.
@@ -50,10 +50,10 @@ public class Ship extends Entity {
      * 			If the specified position refers a null object.
      *          | position == null
      */
-    public Ship(Vector position, Vector velocity, double orientation, double radius)
+    public Ship(Vector position, Vector velocity, double orientation, double radius, double mass)
             throws  IllegalArgumentException, NullPointerException {
 
-    	this(position, velocity, orientation, radius, getSpeedOfLight());
+    	this(position, velocity, orientation, radius, getSpeedOfLight(), mass);
     }
 
     /**
@@ -88,21 +88,42 @@ public class Ship extends Entity {
      *          If the specified position refers a null object
      *          | position == null
      */
-    public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed)
+    public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed, double mass)
             throws  IllegalArgumentException, NullPointerException {
-
-        super(position, velocity, maxSpeed, radius, getMinRadius());
+        super(position, velocity, maxSpeed, radius, getMinRadius(), mass, 0);
 
         setOrientation(orientation);
     }
 
-    private double mass;    // total
+    private static final double minMassDensity = 1.42 * Math.pow(10, 12);
 
-    @Basic
-    public double getMass() {
-        return mass;
+    /**
+     * Returns the minimal mass density for a Ship.
+     *
+     * @return
+     */
+    @Basic @Raw
+    public static double getMinMassDensity() {
+        return minMassDensity;
     }
 
+    private static final double minRadius = 10;
+
+    /**
+     *
+     * @return
+     */
+    @Basic @Immutable
+    private static double getMinRadius() {
+        return minRadius;
+    }
+
+    /**
+     * Returns the total mass of a ship.
+     * The total mass is the mass of the ship itself plus the mass of all the bullets.
+     *
+     * @return
+     */
     public double getTotalMass() {
         double totalMass = getMass();
 
@@ -111,26 +132,6 @@ public class Ship extends Entity {
         }
 
         return totalMass;
-    }
-
-    private void setMass(double newMass) {
-        double minMass = 4/3 * Math.PI * Math.pow(getRadius(), 3) * getMassDensity();
-
-        mass = newMass < minMass ? minMass : newMass;
-    }
-
-    private double massDensity;
-
-    @Basic
-    public double getMassDensity() {
-        return massDensity;
-    }
-
-    private static final double minMassDensity = 1.42 * Math.pow(10, 12);
-
-    @Basic @Raw
-    public static double getMinMassDensity() {
-        return minMassDensity;
     }
 
     private boolean thrusterOn;
@@ -256,17 +257,6 @@ public class Ship extends Entity {
     	double newOrientation = (getOrientation() + angle) % (2 * Math.PI);
 
         setOrientation(newOrientation >= 0 ? newOrientation : newOrientation + 2 * Math.PI);
-    }
-
-    private static final double minRadius = 10;
-
-    /**
-     *
-     * @return
-     */
-    @Basic @Immutable
-    private static double getMinRadius() {
-        return minRadius;
     }
 
     private HashSet<Bullet> bullets = new HashSet<>();
