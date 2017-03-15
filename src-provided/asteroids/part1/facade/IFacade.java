@@ -1,6 +1,6 @@
 package asteroids.part1.facade;
 
-import asteroids.model.Ship;
+import asteroids.model.entities.Ship;
 import asteroids.util.ModelException;
 
 /**

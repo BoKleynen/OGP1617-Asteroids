@@ -1,6 +1,11 @@
-package asteroids.model;
+package asteroids.model.world;
 
+import vector.Vector;
+import asteroids.model.entities.Bullet;
+import asteroids.model.entities.Entity;
+import asteroids.model.entities.Ship;
 import be.kuleuven.cs.som.annotate.*;
+
 import java.util.HashMap;
 
 
@@ -55,11 +60,23 @@ public class World {
 
     private HashMap<Vector, Entity> entities = new HashMap<>();
 
+    private HashMap<Vector, Ship> ships = new HashMap<>();
+
+    private HashMap<Vector, Bullet> bullets = new HashMap<>();
+
     public Entity getEntityAtPosition(Vector position){
         return entities.get(position);
     }
 
     public void addEntity(Entity entity) {
-        entities.put(entity.getPosition(), entity);
+        entities.putIfAbsent(entity.getPosition(), entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        entities.remove(entity.getPosition());
+    }
+
+    public void evolve(double time) {
+
     }
 }

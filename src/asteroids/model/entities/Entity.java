@@ -1,5 +1,7 @@
-package asteroids.model;
+package asteroids.model.entities;
 
+import vector.Vector;
+import asteroids.model.world.World;
 import be.kuleuven.cs.som.annotate.*;
 
 
@@ -175,6 +177,10 @@ public abstract class Entity {
 
     public World getWorld() {
         return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     private final double radius;        // defensively

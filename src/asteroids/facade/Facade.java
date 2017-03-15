@@ -2,8 +2,8 @@ package asteroids.facade;
 
 import asteroids.part1.facade.IFacade;
 import asteroids.util.ModelException;
-import asteroids.model.Ship;
-import asteroids.model.Vector;
+import asteroids.model.entities.Ship;
+import vector.Vector;
 
 /**
  * Created by Bo Kleynen and Yrjo Koyen.

@@ -1,8 +1,9 @@
-package asteroids.model;
+package asteroids.model.entities;
 
+import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 
-import java.util.DoubleSummaryStatistics;
+import java.util.HashSet;
 
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
@@ -100,6 +101,16 @@ public class Ship extends Entity {
     @Basic
     public double getMass() {
         return mass;
+    }
+
+    public double getTotalMass() {
+        double totalMass = getMass();
+
+        for (Bullet bullet: bullets) {
+            totalMass += bullet.getMass();
+        }
+
+        return totalMass;
     }
 
     private void setMass(double newMass) {
@@ -258,4 +269,5 @@ public class Ship extends Entity {
         return minRadius;
     }
 
+    private HashSet<Bullet> bullets = new HashSet<>();
 }

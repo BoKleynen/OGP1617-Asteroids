@@ -1,8 +1,7 @@
 package asteroids.tests;
 
-import asteroids.model.Ship;
-import asteroids.model.Vector;
-import asteroids.util.ModelException;
+import asteroids.model.entities.Ship;
+import vector.Vector;
 
 import org.junit.*;
 
@@ -11,7 +10,7 @@ import static org.junit.Assert.*;
 
 
 /**
- * A class containing tests for the class asteroids.model.Ship
+ * A class containing tests for the class asteroids.model.entities.Ship
  *
  * @author Bo Kleynen and Yrjo Koyen
  * 

@@ -3,7 +3,7 @@ package asteroids.part2.internal;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import asteroids.model.Bullet;
+import asteroids.model.entities.Bullet;
 import asteroids.part2.facade.IFacade;
 import asteroids.util.ModelException;
 
