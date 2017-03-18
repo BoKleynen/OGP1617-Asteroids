@@ -133,7 +133,15 @@ public class Ship extends Entity {
 
         return totalMass;
     }
-
+    
+    public boolean isValidMass(double mass) {
+    	return mass >= ( (4.0/3.0) * Math.pow(getRadius(), 3) * Math.PI * getMinMassDensity() );
+    }
+    
+    public double getMassDensity() {
+    	return ( getTotalMass() / (4.0/3.0) * Math.pow(getRadius(), 3) * Math.PI );
+    }  
+    
     private boolean thrusterOn;
 
     @Basic
