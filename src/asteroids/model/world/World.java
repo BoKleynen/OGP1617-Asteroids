@@ -67,12 +67,30 @@ public class World {
         return entities.get(position);
     }
 
-    public void addEntity(Entity entity) {
-
+    /**
+     * 
+     * @param entity
+     * @throws 	IllegalArgumentException
+     * 			...
+     * 			if entity == null
+     */
+    public void addEntity(Entity entity) throws IllegalArgumentException {
+    	if ( entity == null )
+    		throw new IllegalArgumentException();
         entities.putIfAbsent(entity.getPosition(), entity);
     }
 
+    /**
+     * @param entity
+     * @throws	IllegalArgumentException
+     * 			...
+     * 			Triviaal
+     */
     public void removeEntity(Entity entity) {
+    	if ( entity == null )
+    		throw new IllegalArgumentException();
+    	if ( ! entities.containsKey(entity.getPosition())) 
+    		throw new IllegalArgumentException();
         entities.remove(entity.getPosition());
         entity.setWorld(null);
     }
