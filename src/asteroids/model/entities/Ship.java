@@ -291,4 +291,9 @@ public class Ship extends Entity {
     public void resolveCollisionWithBoundry() {
 
     }
+
+    @Override
+    public void resolveCollisionWithSameEntity(Entity entity) {
+
+    }
 }

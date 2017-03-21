@@ -394,4 +394,8 @@ public abstract class Entity {
     public void die() {
         this.getWorld().removeEntity(this);
     }
+
+    public abstract void resolveCollisionWithSameEntity(Entity entity);
+
+//    public abstract void resolveCollisionWithOtherEntity(Entity entity);
 }

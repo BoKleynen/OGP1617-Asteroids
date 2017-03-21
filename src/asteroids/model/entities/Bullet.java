@@ -81,4 +81,10 @@ public class Bullet extends Entity {
         incrementWallHits();
     }
 
+    @Override
+    public void resolveCollisionWithSameEntity(Entity entity) {
+        this.die();
+        entity.die();
+    }
+
 }

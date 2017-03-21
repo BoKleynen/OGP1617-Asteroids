@@ -1,6 +1,7 @@
 package asteroids.model.world;
 
 import asteroids.model.entities.Entity;
+import asteroids.model.entities.Ship;
 
 /**
  * A class of collisions
@@ -23,7 +24,7 @@ public class Collision {
     }
 
     private final Entity entity1;
-    private final Entity entity2;       // enitit2 == null, entity 1 hits a wall
+    private final Entity entity2;       // entity2 == null, entity 1 hits a wall
     private final double timeToCollision;
 
     Entity getEntity1() {
@@ -41,7 +42,19 @@ public class Collision {
     public void resolve() {
         // entity1 hits a wall
         if (getEntity2() == null) {
+            getEntity1().resolveCollisionWithBoundry();
+        }
 
+        else {
+            if (getEntity1() instanceof Ship){
+                if (getEntity2() instanceof Ship) {
+
+                }
+
+                else {
+
+                }
+            }
         }
     }
 }
