@@ -96,7 +96,7 @@ public class World {
     }
 
     public HashSet<Entity> getAllEntities() {
-        return (HashSet<Entity>) entities.values();
+        return new HashSet<Entity>(entities.values());
     }
 
     public HashSet<Ship> getAllShips() {
@@ -130,7 +130,9 @@ public class World {
         for (Entity entity1: entities) {
             entities.remove(entity1);
 
-            // TODO: 21/03/2017 check for collision with walls. 
+            double wallCollisionTime = entity1.getTimeToWallCollision();
+            if ( wallCollisionTime < earliestCollision.getTimeToCollision() )
+            	earliestCollision = new Collision(entity1, wallCollisionTime);
 
             for (Entity entity2 : entities) {
                 double collisionTime = entity1.getTimeToCollision(entity2);
@@ -145,11 +147,13 @@ public class World {
         return earliestCollision;
     }
 
+    
     public void evolve(double time) {
         Collision firstCollision = getFirstCollision();
         double timeToFirstCollision = firstCollision.getTimeToCollision();
 
-        if (timeToFirstCollision < time) {
+        
+        if (timeToFirstCollision > time) {
             for (Entity entity : getAllEntities()) {
                 entity.move(time);
             }

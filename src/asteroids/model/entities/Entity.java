@@ -388,6 +388,38 @@ public abstract class Entity {
 
         }
     }
+    
+    /**
+         * TODO: Make betterder
+         * 
+         * Returns the time until this entity collides with a 'wall' of the world it is in.
+         * If this entity is not currently in a finite world, returns positive infinity.
+         * 
+         * @return The time until the first collision with a wall of the word this entity is in.
+         */
+        public double getTimeToWallCollision() {
+        	if ( getWorld() == null )
+        		return Double.POSITIVE_INFINITY;
+        	
+        	double xCollisionTime, yCollisionTime;
+        	
+        	if ( getVelocity().getX() == 0 )
+        		xCollisionTime = Double.POSITIVE_INFINITY;
+        	else if ( getVelocity().getX() < 0 )
+        		xCollisionTime = -getPosition().getX() / getVelocity().getX();
+        	else 
+        		xCollisionTime = (getWorld().getWidth() - getPosition().getX()) / getVelocity().getX();
+        	
+        	if ( getVelocity().getY() == 0 )
+        		yCollisionTime = Double.POSITIVE_INFINITY;
+        	else if ( getVelocity().getY() < 0 )
+        		yCollisionTime = -getPosition().getY() / getVelocity().getY();
+        	else 
+        		yCollisionTime = (getWorld().getHeight() - getPosition().getY()) / getVelocity().getY();  
+        	
+        	return Math.min(xCollisionTime, yCollisionTime);
+        }
+
 
     public abstract void resolveCollisionWithBoundry();
 
