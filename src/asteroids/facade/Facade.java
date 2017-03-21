@@ -15,6 +15,10 @@ public class Facade implements IFacade {
 
     }
 
+    /**************
+     * SHIP: Basic methods
+     *************/
+
     public Ship createShip() throws ModelException
     {
         try {
@@ -29,8 +33,17 @@ public class Facade implements IFacade {
             throws ModelException
     {
         try {
-            return new Ship( new Vector(x, y), new Vector(xVelocity, yVelocity), orientation, radius);
+            return new Ship( new Vector(x, y), new Vector(xVelocity, yVelocity), orientation, radius, 0);
 
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
+    }
+
+    public Ship createShip(double x, double y, double xVelocity, double yVelocity, double radius, double direction,
+                           double mass) throws ModelException {
+        try {
+            return new Ship(new Vector(x, y), new Vector(xVelocity, yVelocity), direction, radius, mass);
         } catch (Exception e) {
             throw new ModelException(e);
         }

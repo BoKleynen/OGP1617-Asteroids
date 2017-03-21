@@ -2,12 +2,55 @@
 <Diagram>
   <ID>JAVA</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="0.0" y="468.0">asteroids.model.entities.Ship</node>
+    <node x="130.64999999999998" y="0.0">asteroids.model.world.World</node>
+    <node x="138.0" y="702.0">asteroids.model.entities.Bullet</node>
+    <node x="73.25" y="190.0">asteroids.model.entities.Entity</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="0.0" />
+  <edges>
+    <edge source="asteroids.model.entities.Entity" target="asteroids.model.world.World">
+      <point x="-85.25" y="-114.0" />
+      <point x="158.5" y="165.0" />
+      <point x="190.64999999999998" y="165.0" />
+      <point x="-60.0" y="70.0" />
+    </edge>
+    <edge source="asteroids.model.entities.Ship" target="asteroids.model.entities.Bullet">
+      <point x="79.5" y="92.0" />
+      <point x="0.0" y="-48.0" />
+    </edge>
+    <edge source="asteroids.model.entities.Bullet" target="asteroids.model.entities.Entity">
+      <point x="67.0" y="-48.0" />
+      <point x="305.5" y="677.0" />
+      <point x="328.5" y="677.0" />
+      <point x="85.25" y="114.0" />
+    </edge>
+    <edge source="asteroids.model.entities.Ship" target="asteroids.model.entities.Entity">
+      <point x="0.0" y="-92.0" />
+      <point x="-85.25" y="114.0" />
+    </edge>
+    <edge source="asteroids.model.world.World" target="asteroids.model.entities.Entity">
+      <point x="60.0" y="70.0" />
+      <point x="310.65" y="165.0" />
+      <point x="329.0" y="165.0" />
+      <point x="85.25" y="-114.0" />
+    </edge>
+    <edge source="asteroids.model.entities.Bullet" target="asteroids.model.entities.Ship">
+      <point x="-67.0" y="-48.0" />
+      <point x="171.5" y="677.0" />
+      <point x="79.5" y="677.0" />
+      <point x="-79.5" y="92.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="440.5" />
   <SelectedNodes />
-  <Categories />
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Properties</Category>
+    <Category>Fields</Category>
+  </Categories>
   <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
 </Diagram>
 

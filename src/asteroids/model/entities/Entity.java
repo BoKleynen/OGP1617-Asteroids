@@ -7,11 +7,34 @@ import be.kuleuven.cs.som.annotate.*;
 
 public abstract class Entity {
 
+    /**
+     * Initializes a new entity with given position, velocity, maximum speed, radius mass. This entity is not associated with a World.
+     *
+     * @param position
+     * @param velocity
+     * @param maxSpeed
+     * @param radius
+     * @param minRadius
+     * @param mass
+     * @param minMassDensity
+     */
     Entity(Vector position, Vector velocity, double maxSpeed, double radius, double minRadius, double mass, double minMassDensity){
         this(position, velocity, maxSpeed, radius, minRadius, mass, minMassDensity, null);
     }
 
 
+    /**
+     * Initializes a new entity with given position, velocity, maximum speed, radius mass and associates this entity with the given world.
+     *
+     * @param position
+     * @param velocity
+     * @param maxSpeed
+     * @param radius
+     * @param minRadius
+     * @param mass
+     * @param minMassDensity
+     * @param world
+     */
     Entity(Vector position, Vector velocity, double maxSpeed, double radius, double minRadius, double mass, double minMassDensity, World world) {
         if (! canHaveAsPosition(position))
             throw new IllegalArgumentException();
@@ -27,8 +50,7 @@ public abstract class Entity {
         this.maxSpeed = maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight();
         setVelocity(velocity);
 
-        double minMass = getMinMass(getRadius(), minMassDensity);
-        this.mass = mass >= minMass ? mass : minMass;
+        setMass(mass, minMassDensity);
     }
 
     /**
@@ -75,6 +97,24 @@ public abstract class Entity {
         return mass;
     }
 
+    /**
+     * Sets the mass of this entity to the given newMass, unless this would result in this entity having a mass that is
+     * lower then the minimal allowed mass, then it is set to this minimal value.
+     *
+     * @param newMass
+     * @param minMassDensity
+     */
+    private void setMass(double newMass, double minMassDensity) {
+        double minMass = getMinMass(getRadius(), minMassDensity);
+        this.mass = newMass >= minMass ? newMass : minMass;
+    }
+
+    /**
+     * Returns the minimal mass of a spherical object given a radius and a minimal mass density
+     * @param radius
+     * @param minMassDensity
+     * @return
+     */
     public double getMinMass(double radius, double minMassDensity) {
         return 4/3 * Math.PI * Math.pow(radius, 3) * minMassDensity;
     }
@@ -91,6 +131,7 @@ public abstract class Entity {
     }
 
     /**
+     * Associates this entity with the given World.
      *
      * @param world
      */
@@ -169,12 +210,7 @@ public abstract class Entity {
      * 			If the specified time is negative.
      * 			| time < 0
      */
-    public void move(double time) throws IllegalArgumentException {
-        if( time < 0 )
-            throw new IllegalArgumentException();
-
-        setPosition(getPosition().add(getVelocity().multiply(time)));
-    }
+    public abstract void move(double time);
 
     private Vector velocity;    // total
 
@@ -238,7 +274,7 @@ public abstract class Entity {
     }
 
     /**
-     * Returns the distance between this ship and the specified ship. The distance between a ship and itself is equal to 0.
+     * Returns the distance between the edges of this entity and the specified entity. The distance between a ship and itself is equal to 0.
      *
      * @param entity The ship between which and this the distance needs to be calculated.
      * @return  The distance between the edges of this ship and the ship entity.
@@ -248,7 +284,18 @@ public abstract class Entity {
     }
 
     /**
+     * Returns the distance between the center of this entity and the specified entity.
+     *
+     * @param entity
+     * @return
+     */
+    public double getDistanceBetweenCenters(Entity entity) {
+        return getPosition().getDistance(entity.getPosition());
+    }
+
+    /**
      * Returns a boolean to check if this ship overlaps with the specified ship.
+     *
      * Two ships overlap if and only if they are the same ship or the distance between their centers is negative.
      * | spaceship == this || this.getDistanceBetween(spaceship) < 0
      *
@@ -258,7 +305,10 @@ public abstract class Entity {
      * 			| result == ( getDistanceBetween(spaceship) <= 0 )
      */
     public boolean overlap(Entity entity){
-        return getDistanceBetween(entity) <= 0;
+        double distanceBetweenCentres = getDistanceBetweenCenters(entity);
+        double radiusSum = getRadius() + entity.getRadius();
+
+        return radiusSum * 0.99 <= distanceBetweenCentres && distanceBetweenCentres <= radiusSum * 1.01 ;
     }
 
     /**
@@ -337,5 +387,11 @@ public abstract class Entity {
             return position2.getDifference(position1).normalize().multiply(getRadius()).add(position1);
 
         }
+    }
+
+    public abstract void resolveCollisionWithBoundry();
+
+    public void die() {
+        this.getWorld().removeEntity(this);
     }
 }

@@ -12,6 +12,17 @@ public class Bullet extends Entity {
     public Bullet(Vector position, Vector velocity, double maxSpeed,double radius) {
         super(position, velocity, maxSpeed, radius, getMinRadius(), 0, getMassDensity());
 
+        maxWallHits = 2;
+        wallHits = 0;
+
+    }
+
+    @Override
+    public void move(double time) {
+        if( time < 0 )
+            throw new IllegalArgumentException();
+
+        setPosition(getPosition().add(getVelocity().multiply(time)));
     }
 
     private static final double minRadius = 1;
@@ -44,6 +55,30 @@ public class Bullet extends Entity {
      */
     public Ship getParrentShip() {
         return parrentShip;
+    }
+
+    private char wallHits;
+
+    public char getWallHits() {
+        return wallHits;
+    }
+
+    private void incrementWallHits() {
+        wallHits += 1;
+    }
+
+    private char maxWallHits;
+
+    public char getMaxWallHits() {
+        return maxWallHits;
+    }
+
+    @Override
+    public void resolveCollisionWithBoundry() {
+        if (getWallHits() == getMaxWallHits())
+            die();
+
+        incrementWallHits();
     }
 
 }

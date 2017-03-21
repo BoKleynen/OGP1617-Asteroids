@@ -30,7 +30,7 @@ public class Ship extends Entity {
      * 			| this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight())
      */
     public Ship() {
-    	this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight());
+    	this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight(), 0, 1.1 * Math.pow(10, 21));
     }
 
     /**
@@ -53,7 +53,7 @@ public class Ship extends Entity {
     public Ship(Vector position, Vector velocity, double orientation, double radius, double mass)
             throws  IllegalArgumentException, NullPointerException {
 
-    	this(position, velocity, orientation, radius, getSpeedOfLight(), mass);
+    	this(position, velocity, orientation, radius, getSpeedOfLight(), mass, 1.1 * Math.pow(10, 21));
     }
 
     /**
@@ -88,11 +88,14 @@ public class Ship extends Entity {
      *          If the specified position refers a null object
      *          | position == null
      */
-    public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed, double mass)
+    public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed, double mass, double thrust)
             throws  IllegalArgumentException, NullPointerException {
-        super(position, velocity, maxSpeed, radius, getMinRadius(), mass, 0);
+        super(position, velocity, maxSpeed, radius, getMinRadius(), mass, getMinMassDensity());
 
         setOrientation(orientation);
+        setThrust(thrust);
+        thrustOff();
+
     }
 
     private static final double minMassDensity = 1.42 * Math.pow(10, 12);
@@ -156,6 +159,10 @@ public class Ship extends Entity {
         return thrust;
     }
 
+    public void setThrust(double newThrust) {
+        thrust = newThrust;
+    }
+
     /**
      *
      * @param time
@@ -166,6 +173,17 @@ public class Ship extends Entity {
 
             setVelocity(getVelocity().add(new Vector(acceleration * Math.cos(getOrientation()) * time, acceleration * Math.sin(getOrientation()) * time)));
         }
+    }
+
+    @Override
+    public void move(double time) {
+        if( time < 0 )
+            throw new IllegalArgumentException();
+
+        setPosition(getPosition().add(getVelocity().multiply(time)));
+
+        if (thrusterOn())
+            accelerate(time);
     }
 
     /**
@@ -260,4 +278,9 @@ public class Ship extends Entity {
     }
 
     private HashSet<Bullet> bullets = new HashSet<>();
+
+    @Override
+    public void resolveCollisionWithBoundry() {
+
+    }
 }
