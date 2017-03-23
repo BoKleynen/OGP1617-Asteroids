@@ -7,6 +7,7 @@ import be.kuleuven.cs.som.annotate.*;
  *
  * Created by Bo Kleynen and Yrjo Koyen.
  */
+@Value
 public class Vector extends Object{
 
     /**
@@ -19,17 +20,6 @@ public class Vector extends Object{
     public Vector(double x, double y) {
         this.x = x;
         this.y = y;
-    }
-    
-    /**
-     * Compares two vectors, two vectors are equal if and only if both their x- and y-components are equal.
-     *
-     * @param other The Vector with which this Vector has to be compared.
-     * @return	True is and only if the two vectors are equal
-     * 			| result == ( (this.getX() == other.getX()) && (this.getY() == other.getY()) );
-     */
-    public boolean equals(Vector other) {
-    	return getX() == other.getX() && getY() == other.getY();
     }
 
 
@@ -140,4 +130,39 @@ public class Vector extends Object{
     public Vector getDifference(Vector v) {
         return new Vector(getX() - v.getX(), getY() - v.getY());
     }
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+
+	/**
+    * Compares two vectors, two vectors are equal if and only if both their x- and y-components are equal.
+    *
+    * @param other The Vector with which this Vector has to be compared.
+    * @return	True is and only if the two vectors are equal
+    * 			| result == ( (this.getX() == other.getX()) && (this.getY() == other.getY()) );
+    */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Vector))
+			return false;
+		Vector other = (Vector) obj;
+		if ( (this.getX() == other.getX()) && (this.getY() == other.getY()) )
+			return true;
+		return false;
+	}
 }
