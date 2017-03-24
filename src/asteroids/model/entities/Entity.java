@@ -390,7 +390,7 @@ public abstract class Entity {
     }
     
     /**
-         * TODO: Make betterder
+         * TODO: Make this code great again!
          * 
          * Returns the time until this entity collides with a 'wall' of the world it is in.
          * If this entity is not currently in a finite world, returns positive infinity.
@@ -402,13 +402,8 @@ public abstract class Entity {
         		return Double.POSITIVE_INFINITY;
         	
         	double xCollisionTime, yCollisionTime;
-        	
-        	if ( getVelocity().getX() == 0 )
-        		xCollisionTime = Double.POSITIVE_INFINITY;
-        	else if ( getVelocity().getX() < 0 )
-        		xCollisionTime = -getPosition().getX() / getVelocity().getX();
-        	else 
-        		xCollisionTime = (getWorld().getWidth() - getPosition().getX()) / getVelocity().getX();
+
+        	xCollisionTime = getVelocity().getX() < 0 ? -getPosition().getX() / getVelocity().getX() : (getWorld().getWidth() - getPosition().getX()) / getVelocity().getX();
         	
         	if ( getVelocity().getY() == 0 )
         		yCollisionTime = Double.POSITIVE_INFINITY;
@@ -421,13 +416,14 @@ public abstract class Entity {
         }
 
 
-    public abstract void resolveCollisionWithBoundry();
 
     public void die() {
         this.getWorld().removeEntity(this);
     }
 
-    public abstract void resolveCollisionWithSameEntity(Entity entity);
+    public abstract void resolveCollisionWithBoundry();
 
-//    public abstract void resolveCollisionWithOtherEntity(Entity entity);
+    public abstract void resolveCollisionWithShip(Ship ship);
+
+    public abstract void resolveCollisionWithBullet(Bullet bullet);
 }

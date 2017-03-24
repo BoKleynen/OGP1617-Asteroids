@@ -149,24 +149,34 @@ public class World {
 
     
     public void evolve(double time) {
-        Collision firstCollision = getFirstCollision();
-        double timeToFirstCollision = firstCollision.getTimeToCollision();
+        if (time < 0)
+            throw new IllegalArgumentException();
+
+        if (time > 0) {
+            Collision firstCollision = getFirstCollision();
+            double timeToFirstCollision = firstCollision.getTimeToCollision();
 
         
-        if (timeToFirstCollision > time) {
-            for (Entity entity : getAllEntities()) {
-                entity.move(time);
+            if (timeToFirstCollision > time) {
+                for (Entity entity : getAllEntities()) {
+                    entity.move(time);
+                }
+            }
+
+            else {
+                for (Entity entity : getAllEntities()) {
+                    entity.move(timeToFirstCollision);
+                }
+
+                firstCollision.resolve();
+                evolve(time - timeToFirstCollision);
             }
         }
+    }
 
-        else {
-
-            for (Entity entity : getAllEntities()) {
-                entity.move(timeToFirstCollision);
-            }
-
-            firstCollision.resolve();
-            evolve(time - timeToFirstCollision);
+    public void destroy() {
+        for (Entity entity : getAllEntities()) {
+            removeEntity(entity);
         }
     }
 

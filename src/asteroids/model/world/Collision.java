@@ -1,7 +1,9 @@
 package asteroids.model.world;
 
-import asteroids.model.entities.Entity;
-import asteroids.model.entities.Ship;
+import asteroids.model.entities.*;
+
+
+import java.util.Base64;
 
 /**
  * A class of collisions
@@ -46,14 +48,12 @@ public class Collision {
         }
 
         else {
-            if (getEntity1() instanceof Ship){
-                if (getEntity2() instanceof Ship) {
+            if (getEntity2() instanceof Ship){
+                getEntity1().resolveCollisionWithShip((Ship) getEntity2());
+            }
 
-                }
-
-                else {
-
-                }
+            else {
+                getEntity1().resolveCollisionWithBullet((Bullet) getEntity2());
             }
         }
     }

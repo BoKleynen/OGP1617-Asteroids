@@ -8,7 +8,7 @@ import be.kuleuven.cs.som.annotate.*;
  * Created by Bo Kleynen and Yrjo Koyen.
  */
 @Value
-public class Vector extends Object{
+public class Vector extends Object {
 
     /**
      * Creates a new vector with a given x and y.
@@ -21,7 +21,6 @@ public class Vector extends Object{
         this.x = x;
         this.y = y;
     }
-
 
     private final double x;
 
@@ -132,6 +131,18 @@ public class Vector extends Object{
     }
 
 
+    /**
+     * Compares two vectors, two vectors are equal if and only if both their x- and y-components are equal.
+     *
+     * @param obj The Vector with which this Vector has to be compared.
+     * @return	True is and only if the two vectors are equal
+     * 			| result == ( (this.getX() == other.getX()) && (this.getY() == other.getY()) );
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || (obj instanceof Vector && getX() == ((Vector) obj).getX() && getY() == ((Vector)obj).getY());
+    }
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -142,27 +153,5 @@ public class Vector extends Object{
 		temp = Double.doubleToLongBits(y);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
-	}
-
-
-	/**
-    * Compares two vectors, two vectors are equal if and only if both their x- and y-components are equal.
-    *
-    * @param other The Vector with which this Vector has to be compared.
-    * @return	True is and only if the two vectors are equal
-    * 			| result == ( (this.getX() == other.getX()) && (this.getY() == other.getY()) );
-    */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Vector))
-			return false;
-		Vector other = (Vector) obj;
-		if ( (this.getX() == other.getX()) && (this.getY() == other.getY()) )
-			return true;
-		return false;
 	}
 }
