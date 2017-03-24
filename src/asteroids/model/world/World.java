@@ -1,11 +1,8 @@
 package asteroids.model.world;
 
 import vector.Vector;
-import asteroids.model.entities.Bullet;
-import asteroids.model.entities.Entity;
-import asteroids.model.entities.Ship;
+import asteroids.model.entities.*;
 import be.kuleuven.cs.som.annotate.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,6 +32,11 @@ public class World {
 
     private static final double maxWidth = Double.MAX_VALUE;
 
+    /**
+     * Returns the maximum width of this World.
+     *
+     * @return  | @see implementation
+     */
     @Basic @Immutable
     public static double getMaxWidth() {
         return maxWidth;
@@ -42,6 +44,11 @@ public class World {
 
     private static final double maxHeight = Double.MAX_VALUE;
 
+    /**
+     * Returns the maximum height of this World.
+     *
+     * @return  | @see implementation
+     */
     @Basic @Immutable
     public static double getMaxHeight() {
         return maxHeight;
@@ -49,6 +56,11 @@ public class World {
 
     private final double width;
 
+    /**
+     * Returns the width of this World.
+     *
+     * @return  | @see implementation
+     */
     @Basic @Immutable
     public double getWidth() {
         return width;
@@ -56,6 +68,11 @@ public class World {
 
     private final double height;
 
+    /**
+     * Returns the height of this World.
+     *
+     * @return  | @see implementation
+     */
     @Basic @Immutable
     public double getHeight() {
         return height;
@@ -131,6 +148,7 @@ public class World {
             entities.remove(entity1);
 
             double wallCollisionTime = entity1.getTimeToWallCollision();
+
             if ( wallCollisionTime < earliestCollision.getTimeToCollision() )
             	earliestCollision = new Collision(entity1, wallCollisionTime);
 

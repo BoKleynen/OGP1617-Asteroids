@@ -1,9 +1,7 @@
 package asteroids.model.world;
 
 import asteroids.model.entities.*;
-
-
-import java.util.Base64;
+import be.kuleuven.cs.som.annotate.*;
 
 /**
  * A class of collisions
@@ -11,7 +9,7 @@ import java.util.Base64;
  */
 public class Collision {
 
-    public Collision() {
+    Collision() {
         this(null, null, Double.POSITIVE_INFINITY);
     }
 
@@ -29,14 +27,29 @@ public class Collision {
     private final Entity entity2;       // entity2 == null, entity 1 hits a wall
     private final double timeToCollision;
 
+    /**
+     * Returns the first entity involved in this Collision.
+     * @return  | @see implementation
+     */
+    @Basic @Immutable
     Entity getEntity1() {
         return entity1;
     }
 
+    /**
+     * Returns the second entity involved in this Collision.
+     * @return  | @see implementation
+     */
+    @Basic @Immutable
     Entity getEntity2() {
         return entity2;
     }
 
+    /**
+     * Returns the time before this Collision will happen.
+     * @return  | @see implementation
+     */
+    @Basic @Immutable
     double getTimeToCollision() {
         return timeToCollision;
     }
