@@ -1,7 +1,6 @@
 package asteroids.model.entities;
 
 
-import com.sun.xml.internal.bind.v2.TODO;
 import vector.Vector;
 
 public class Bullet extends Entity {
@@ -54,7 +53,7 @@ public class Bullet extends Entity {
      *
      * @return
      */
-    public Ship getParrentShip() {
+    public Ship getParentShip() {
         return parrentShip;
     }
 
@@ -75,12 +74,12 @@ public class Bullet extends Entity {
     }
 
     @Override
-    public void resolveCollisionWithBoundry() {
+    public void resolveCollisionWithBoundary() {
         if (getWallHits() == getMaxWallHits())
             die();
 
         else {
-            // TODO implement this part of the method
+            super.resolveCollisionWithBoundary();
             incrementWallHits();
         }
     }

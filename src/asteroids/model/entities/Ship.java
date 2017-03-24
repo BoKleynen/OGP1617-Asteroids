@@ -288,12 +288,8 @@ public class Ship extends Entity {
     private HashSet<Bullet> bullets = new HashSet<>();
 
     public void reloadBullet(Bullet bullet) {
-        // TODO: 24/03/2017 implement this function
-    }
-
-    @Override
-    public void resolveCollisionWithBoundry() {
-        // TODO implement this method
+        bullet.setWorld(null);
+        bullets.add(bullet);
     }
 
     @Override
@@ -313,7 +309,7 @@ public class Ship extends Entity {
 
     @Override
     public void resolveCollisionWithBullet(Bullet bullet) {
-        if (bullet.getParrentShip() == this) {
+        if (bullet.getParentShip() == this) {
             reloadBullet(bullet);
         }
 

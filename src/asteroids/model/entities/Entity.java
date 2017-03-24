@@ -421,7 +421,16 @@ public abstract class Entity {
         this.getWorld().removeEntity(this);
     }
 
-    public abstract void resolveCollisionWithBoundry();
+    public void resolveCollisionWithBoundary() {
+        if (getPosition().getX() == 0 || getPosition().getX() == getWorld().getWidth()){
+            setVelocity(new Vector(-getVelocity().getX(), getVelocity().getY()));
+        }
+
+        else {
+            setVelocity(new Vector(getVelocity().getX(), -getVelocity().getY()));
+
+        }
+    }
 
     public abstract void resolveCollisionWithShip(Ship ship);
 

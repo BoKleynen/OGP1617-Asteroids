@@ -57,7 +57,7 @@ public class Collision {
     public void resolve() {
         // entity1 hits a wall
         if (getEntity2() == null) {
-            getEntity1().resolveCollisionWithBoundry();
+            getEntity1().resolveCollisionWithBoundary();
         }
 
         else {
