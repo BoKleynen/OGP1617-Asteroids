@@ -105,7 +105,7 @@ public class Ship extends Entity {
      *
      * @return
      */
-    @Basic @Raw
+    @Basic @Immutable
     public static double getMinMassDensity() {
         return minMassDensity;
     }
@@ -152,16 +152,28 @@ public class Ship extends Entity {
         return thrusterOn;
     }
 
-    private void thrustOn() {
+    /**
+     * Turns the thrusters of this ship on.
+     * @Post    | new.thrusterOn == true
+     */
+    public void thrustOn() {
         thrusterOn = true;
     }
 
-    private void thrustOff() {
+    /**
+     * Turns the thrusters of this ship off
+     * @Post    | new.thrusterOn == false
+     */
+    public void thrustOff() {
         thrusterOn = false;
     }
 
     private double thrust;
 
+    /**
+     * Returns the amount of thrust this ships thrusters can generate.
+     * @return
+     */
     @Basic
     public double getThrust() {
         return thrust;
@@ -174,6 +186,8 @@ public class Ship extends Entity {
     /**
      *
      * @param time
+     * @Post    | new.getVelocity().getX() == getThrust() / getMass() * Math.cos(getOrientation()) * time
+     *          | new.getVelocity().getY() == getThrust() / getMass() * Math.sin(getOrientation()) * time
      */
     public void accelerate(double time) {
         if (thrusterOn()) {
@@ -183,6 +197,11 @@ public class Ship extends Entity {
         }
     }
 
+    /**
+     *
+     * @param 	time
+     * 			The time to move in the direction of the velocity vector.
+     */
     @Override
     public void move(double time) {
         if( time < 0 )
@@ -287,6 +306,11 @@ public class Ship extends Entity {
 
     private HashSet<Bullet> bullets = new HashSet<>();
 
+    /**
+     * Reloads the given bullet onto this ship
+     *
+     * @param bullet
+     */
     public void reloadBullet(Bullet bullet) {
         bullet.setWorld(null);
         bullets.add(bullet);

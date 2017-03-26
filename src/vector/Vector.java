@@ -8,7 +8,7 @@ import be.kuleuven.cs.som.annotate.*;
  * Created by Bo Kleynen and Yrjo Koyen.
  */
 @Value
-public class Vector extends Object {
+public class Vector {
 
     /**
      * Creates a new vector with a given x and y.

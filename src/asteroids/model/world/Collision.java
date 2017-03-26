@@ -13,11 +13,11 @@ public class Collision {
         this(null, null, Double.POSITIVE_INFINITY);
     }
 
-    public Collision(Entity entity, double timeToCollision) {
+    Collision(Entity entity, double timeToCollision) {
         this(entity, null, timeToCollision);
     }
 
-    public Collision(Entity entity1, Entity entity2, double timeToCollision) {
+    Collision(Entity entity1, Entity entity2, double timeToCollision) {
         this.entity1 = entity1;
         this.entity2 = entity2;
         this.timeToCollision = timeToCollision;
@@ -55,18 +55,20 @@ public class Collision {
     }
 
     public void resolve() {
-        // entity1 hits a wall
-        if (getEntity2() == null) {
-            getEntity1().resolveCollisionWithBoundary();
-        }
-
-        else {
-            if (getEntity2() instanceof Ship){
-                getEntity1().resolveCollisionWithShip((Ship) getEntity2());
+        if (getEntity1() != null) {
+            // entity1 hits a wall
+            if (getEntity2() == null) {
+                getEntity1().resolveCollisionWithBoundary();
             }
 
             else {
-                getEntity1().resolveCollisionWithBullet((Bullet) getEntity2());
+                if (getEntity2() instanceof Ship) {
+                    getEntity1().resolveCollisionWithShip((Ship) getEntity2());
+                }
+
+                else {
+                    getEntity1().resolveCollisionWithBullet((Bullet) getEntity2());
+                }
             }
         }
     }

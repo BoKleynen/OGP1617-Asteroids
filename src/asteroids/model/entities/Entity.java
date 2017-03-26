@@ -53,11 +53,21 @@ public abstract class Entity {
         setMass(mass, minMassDensity);
     }
 
+    private boolean isTerminated = false;
+
+    public boolean isTerminated() {
+        return isTerminated;
+    }
+
+    public void terminate() {
+        isTerminated = true;
+    }
+
     /**
-     * Checks whether the supplied radius is a valid radius for a ship.
+     * Checks whether the supplied radius is a valid radius for a entity.
      *
      * @param 	radius The radius that needs to be validated.
-     * @return 	True if and only if radius is a valid radius for a ship.
+     * @return 	True if and only if radius is a valid radius for a entity.
      * 			| result == (radius >= this.getMinRadius())
      */
     public boolean canHaveAsRadius(double radius, double minRadius) {
@@ -80,9 +90,9 @@ public abstract class Entity {
     private final double radius;        // defensively
 
     /**
-     * Returns the radius of this ship.
+     * Returns the radius of this entity.
      *
-     * @return 	The radius of this ship
+     * @return 	The radius of this entity
      * 			| result == this.radius
      */
     @Basic @Immutable
@@ -142,9 +152,9 @@ public abstract class Entity {
     private Vector position;    // defensively
 
     /**
-     * Returns the current position vector of this ship.
+     * Returns the current position vector of this entity.
      *
-     * @return  The current position of this ship.
+     * @return  The current position of this entity.
      *          | result == this.position
      */
     @Basic
@@ -153,13 +163,13 @@ public abstract class Entity {
     }
 
     /**
-     * Sets the position of the ship to the specified position newPosition if it is a
-     * valid position for a ship.
+     * Sets the position of the entity to the specified position newPosition if it is a
+     * valid position for a entity.
      *
      * @param 	newPosition
-     * 			The new position for the ship.
-     * @Post	The new position of this ship is equal to the given vector newPosition if
-     * 			newPosition is a valid position for a ship
+     * 			The new position for the entity.
+     * @Post	The new position of this entity is equal to the given vector newPosition if
+     * 			newPosition is a valid position for a entity
      * 			| if canHaveAsPosition(newPosition) then
      * 			|	new.getPosition() == newPosition
      * @throws	NullPointerException
@@ -178,7 +188,7 @@ public abstract class Entity {
     }
 
     /**
-     * Checks whether the vector position is a valid position for a ship.
+     * Checks whether the vector position is a valid position for a entity.
      *
      * @param 	position
      * 			The position to be tested.
@@ -197,7 +207,7 @@ public abstract class Entity {
     }
 
     /**
-     * Moves the ship in the direction of its current velocity. The distance traveled is
+     * Moves the entity in the direction of its current velocity. The distance traveled is
      * equal to the current velocity multiplied with the specified time it should travel in that direction.
      *
      * @param 	time
@@ -215,9 +225,9 @@ public abstract class Entity {
     private Vector velocity;    // total
 
     /**
-     * Returns the current velocity of this ship.
+     * Returns the current velocity of this entity.
      *
-     * @return 	The velocity of this ship
+     * @return 	The velocity of this entity
      * 			| result == this.velocity
      */
     @Basic
@@ -226,22 +236,22 @@ public abstract class Entity {
     }
 
     /**
-     * Sets the velocity of the given ship to the specified velocity vector newVelocity. If the magnitude of newVelocity
-     * exceeds the maximum value for a ship's velocity, the velocity of the ship is set to a new vector pointing in the
+     * Sets the velocity of the given entity to the specified velocity vector newVelocity. If the magnitude of newVelocity
+     * exceeds the maximum value for a entity's velocity, the velocity of the entity is set to a new vector pointing in the
      * same direction as the vector newVelocity but with a magnitude of the maximum velocity.
      *
      * @param   newVelocity
-     *          The new velocity vector for this ship.
+     *          The new velocity vector for this entity.
      * @post    If newVelocity references a null object, the velocity is set to 0 in both the x and y direction.
      *          | if newVelocity == null then
      *          |   new.getVelocity() == Vector(0, 0)
      * @post    If one of the components of newVelocity is NaN, the velocity is set to 0.
      *          | if Double.isNaN(newVelocity.getX()) || Double.isNaN(newVelocity.getY()) then
      *          |   new.getVelocity == Vector(0, 0)
-     * @post    If the magnitude of newVelocity is smaller then the maximum value for the velocity, this ships velocity
+     * @post    If the magnitude of newVelocity is smaller then the maximum value for the velocity, this entities velocity
      *          is equal to the given vector newVelocity.
      *          | if newVelocity.getMagnitude() =< getMaxSpeed() then new.getVelocity() == newVelocity
-     * @post    If the magnitude of newVelocity exceeds the maximum velocity, the new velocity for this ship is set to a
+     * @post    If the magnitude of newVelocity exceeds the maximum velocity, the new velocity for this entity is set to a
      *          vector pointing in the direction of newVelocity with a magnitude equal to the maximum velocity.
      *          | if newVelocity.getMagnitude() > getMaxSpeed() then
      *          |   new.getVelocity() == newVelocity.normalize().multiply(getMaxSpeed())
@@ -274,10 +284,10 @@ public abstract class Entity {
     }
 
     /**
-     * Returns the distance between the edges of this entity and the specified entity. The distance between a ship and itself is equal to 0.
+     * Returns the distance between the edges of this entity and the specified entity. The distance between a entity and itself is equal to 0.
      *
-     * @param entity The ship between which and this the distance needs to be calculated.
-     * @return  The distance between the edges of this ship and the ship entity.
+     * @param entity The entity between which and this the distance needs to be calculated.
+     * @return  The distance between the edges of this entity and the entity entity.
      */
     public double getDistanceBetween(Entity entity) {
         return this == entity ? 0 : getPosition().getDistance(entity.getPosition()) - getRadius() - entity.getRadius();
@@ -294,15 +304,15 @@ public abstract class Entity {
     }
 
     /**
-     * Returns a boolean to check if this ship overlaps with the specified ship.
+     * Returns a boolean to check if this entity overlaps with the specified entity.
      *
-     * Two ships overlap if and only if they are the same ship or the distance between their centers is negative.
-     * | spaceship == this || this.getDistanceBetween(spaceship) < 0
+     * Two entities overlap if and only if they are the same entity or the distance between their centers is negative.
+     * | spaceentity == this || this.getDistanceBetween(spaceentity) < 0
      *
      * @param	entity
-     * 			The ship that might overlap this ship
-     * @return	True if and only if both ships overlap.
-     * 			| result == ( getDistanceBetween(spaceship) <= 0 )
+     * 			The entity that might overlap this entity
+     * @return	True if and only if both entities overlap.
+     * 			| result == ( getDistanceBetween(spaceentity) <= 0 )
      */
     public boolean overlap(Entity entity){
         double distanceBetweenCentres = getDistanceBetweenCenters(entity);
@@ -312,23 +322,23 @@ public abstract class Entity {
     }
 
     /**
-     * Returns the amount of time until this ship will collide with the specified entity.
-     * If both ships are on a collision course, the time returned by this method will be the
-     * finite amount of time it will take for both ships to hit each other if they keep moving
-     * in the same direction and with the same velocity. If the ships are not currently on a
+     * Returns the amount of time until this entity will collide with the specified entity.
+     * If both entities are on a collision course, the time returned by this method will be the
+     * finite amount of time it will take for both entities to hit each other if they keep moving
+     * in the same direction and with the same velocity. If the entities are not currently on a
      * collision course, if they move away from each other or if they will just pass each other
      * without the hulls touching, the time returned will be positive infinity.
      *
-     * @return	The time until the collision will happen if the ships keep moving in the exact
+     * @return	The time until the collision will happen if the entities keep moving in the exact
      * 			same way as they are currently moving.  If no collision will occur within a
      * 			finite amount of time, this method will return positive infinity.
-     * @Post	If both ships keep moving in the exact same way they are currently moving, then
+     * @Post	If both entities keep moving in the exact same way they are currently moving, then
      * 			they will collide after the returned amount of time. This means their hulls will
      * 			touch after exactly the returned amount of time.
      * 			| this.getDistanceBetween(entity) == 0
      * @throws 	IllegalArgumentException
-     * 			If the supplied entity is this ship or if the supplied ship already overlaps
-     * 			this ship.
+     * 			If the supplied entity is this entity or if the supplied entity already overlaps
+     * 			this entity.
      * 			| this.overlap(entity)
      */
     public double getTimeToCollision(Entity entity) throws IllegalArgumentException {
@@ -351,23 +361,23 @@ public abstract class Entity {
     }
 
     /**
-     * Returns the position at which this ship will collide with the specified ship, if ever, assuming both
-     * ships maintain their velocity and direction from the time this method is called, otherwise null is returned.
+     * Returns the position at which this entity will collide with the specified entity, if ever, assuming both
+     * entities maintain their velocity and direction from the time this method is called, otherwise null is returned.
      *
-     * @return  The position of the point of impact between this ship and the specified ship if they maintain their
+     * @return  The position of the point of impact between this entity and the specified entity if they maintain their
      *          velocity and direction from the time this method is called.
      *          If no collision will occur, in case the time to collision is positive infinity, this method returns null.
      *          | if getTimeToCollision(entity) == Double.POSITIVE_INFINITY then
      *          |   null
-     *          If the time to collision is a finite value this method returns the point of impact between both ships.
+     *          If the time to collision is a finite value this method returns the point of impact between both entities.
      *          | if getTimeToCollision(entity) != Double.POSITIVE_INFINITY
-     *          This point is located at a distance equal to the radius of this ship from the center of this ship and at
-     *          a distance equal to the radius of the specified ship from the center of the specified ship after a time
+     *          This point is located at a distance equal to the radius of this entity from the center of this entity and at
+     *          a distance equal to the radius of the specified entity from the center of the specified entity after a time
      *          ∆t == getTimeToCollision(entity) has passed since the invocation of this method.
      *          | new == this.move(∆t) && (new entity) == entity.move(∆t)
      *          | new.getPosition().getDistance(result) == new.getRadius() && (new entity).getPosition().getDistance(result)
      * @throws IllegalArgumentException
-     *          If this ship overlaps with the specified ship.
+     *          If this entity overlaps with the specified entity.
      *          | this.overlap(entity)
      */
     public Vector getCollisionPosition(Entity entity) throws IllegalArgumentException {
@@ -390,37 +400,40 @@ public abstract class Entity {
     }
     
     /**
-         * TODO: Make this code great again!
-         * 
-         * Returns the time until this entity collides with a 'wall' of the world it is in.
-         * If this entity is not currently in a finite world, returns positive infinity.
-         * 
-         * @return The time until the first collision with a wall of the word this entity is in.
-         */
-        public double getTimeToWallCollision() {
-        	if ( getWorld() == null )
-        		return Double.POSITIVE_INFINITY;
-        	
-        	double xCollisionTime, yCollisionTime;
+     * Returns the time until this entity collides with a 'wall' of the world it is in.
+     * If this entity is not currently in a finite world, returns positive infinity.
+     *
+     * @return The time until the first collision with a wall of the world this entity is in.
+     */
+    public double getTimeToWallCollision() {
+        if ( getWorld() == null )
+            return Double.POSITIVE_INFINITY;
 
-        	xCollisionTime = getVelocity().getX() < 0 ? -getPosition().getX() / getVelocity().getX() : (getWorld().getWidth() - getPosition().getX()) / getVelocity().getX();
-        	
-        	if ( getVelocity().getY() == 0 )
-        		yCollisionTime = Double.POSITIVE_INFINITY;
-        	else if ( getVelocity().getY() < 0 )
-        		yCollisionTime = -getPosition().getY() / getVelocity().getY();
-        	else 
-        		yCollisionTime = (getWorld().getHeight() - getPosition().getY()) / getVelocity().getY();  
+        double xCollisionTime, yCollisionTime;
+
+        xCollisionTime = getVelocity().getX() > 0 ? (getWorld().getWidth() - getPosition().getX()) / getVelocity().getX()
+                : -getPosition().getX() / getVelocity().getX();
+
+        yCollisionTime = getVelocity().getY() > 0 ? (getWorld().getHeight() - getPosition().getY()) / getVelocity().getY()
+                : -getPosition().getY() / getVelocity().getY();
         	
         	return Math.min(xCollisionTime, yCollisionTime);
         }
 
 
-
+    /**
+     * kills off an entity.
+     * When an entity dies it is removed from the world it belongs to.
+     */
     public void die() {
         this.getWorld().removeEntity(this);
     }
 
+    /**
+     * Resolves the collision of this entity with a boundary of the world it belongs to.
+     * The velocity of this entity in the x or y direction is negated for a collision with a vertical or horizontal
+     * boundary respectively.
+     */
     public void resolveCollisionWithBoundary() {
         if (getPosition().getX() == 0 || getPosition().getX() == getWorld().getWidth()){
             setVelocity(new Vector(-getVelocity().getX(), getVelocity().getY()));
@@ -432,7 +445,15 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Resolves the collision of this Entity with the given Ship.
+     * @param ship
+     */
     public abstract void resolveCollisionWithShip(Ship ship);
 
+    /**
+     * Resolves the collision of this Entity with the given Bullet
+     * @param bullet
+     */
     public abstract void resolveCollisionWithBullet(Bullet bullet);
 }

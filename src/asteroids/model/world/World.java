@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+// TODO: 25/03/2017
 
 public class World {
 
@@ -28,6 +29,16 @@ public class World {
 
         else
             this.height = height;
+    }
+
+    private boolean isTerminated = false;
+
+    public boolean isTerminated() {
+        return isTerminated;
+    }
+
+    public void terminate() {
+        isTerminated = true;
     }
 
     private static final double maxWidth = Double.MAX_VALUE;
@@ -110,6 +121,7 @@ public class World {
     		throw new IllegalArgumentException();
         entities.remove(entity.getPosition());
         entity.setWorld(null);
+        entity.terminate();
     }
 
     public HashSet<Entity> getAllEntities() {
@@ -165,7 +177,7 @@ public class World {
         return earliestCollision;
     }
 
-    
+
     public void evolve(double time) {
         if (time < 0)
             throw new IllegalArgumentException();
@@ -192,10 +204,14 @@ public class World {
         }
     }
 
+    /**
+     * Destroys this world, removing all entities from this world
+     */
     public void destroy() {
         for (Entity entity : getAllEntities()) {
             removeEntity(entity);
         }
+        terminate();
     }
 
 }
