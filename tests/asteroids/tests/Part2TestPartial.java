@@ -9,7 +9,7 @@ import org.junit.Test;
 import asteroids.model.entities.Bullet;
 import asteroids.model.entities.Ship;
 import asteroids.model.world.World;
-import asteroids.part2.facade.Facade;
+import asteroids.facade.Facade;
 import asteroids.part2.facade.IFacade;
 import asteroids.util.ModelException;
 

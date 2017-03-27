@@ -1,6 +1,7 @@
 package asteroids.model.world;
 
 import asteroids.model.entities.*;
+import asteroids.part2.CollisionListener;
 import be.kuleuven.cs.som.annotate.*;
 
 /**
@@ -54,20 +55,20 @@ public class Collision {
         return timeToCollision;
     }
 
-    public void resolve() {
+    public void resolve(CollisionListener collisionListener) {
         if (getEntity1() != null) {
             // entity1 hits a wall
             if (getEntity2() == null) {
-                getEntity1().resolveCollisionWithBoundary();
+                getEntity1().resolveCollisionWithBoundary(collisionListener);
             }
 
             else {
                 if (getEntity2() instanceof Ship) {
-                    getEntity1().resolveCollisionWithShip((Ship) getEntity2());
+                    getEntity1().resolveCollisionWithShip((Ship) getEntity2(), collisionListener);
                 }
 
                 else {
-                    getEntity1().resolveCollisionWithBullet((Bullet) getEntity2());
+                    getEntity1().resolveCollisionWithBullet((Bullet) getEntity2(), collisionListener);
                 }
             }
         }
