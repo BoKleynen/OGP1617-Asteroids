@@ -10,11 +10,11 @@ public class Bullet extends Entity {
 	
 
     public Bullet(Vector position, Vector velocity, double radius) {
-        this(position, velocity, getSpeedOfLight() ,radius);
+        this(null, position, velocity, getSpeedOfLight() ,radius);
     }
 
-    public Bullet(Vector position, Vector velocity, double maxSpeed,double radius) {
-        super(position, velocity, maxSpeed, radius, getMinRadius(), 0, getMassDensity());
+    public Bullet(World world, Vector position, Vector velocity, double maxSpeed,double radius) {
+        super(world, position, maxSpeed, velocity, radius, getMinRadius(), 0, getMassDensity());
 
         maxWallHits = 2;
         wallHits = 0;
