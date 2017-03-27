@@ -2,8 +2,8 @@ package asteroids.model.entities;
 
 import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
-
 import java.util.HashSet;
+import java.util.Collection;
 
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
@@ -91,7 +91,8 @@ public class Ship extends Entity {
     public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed, double mass, double thrust)
             throws  IllegalArgumentException, NullPointerException {
         super(position, velocity, maxSpeed, radius, getMinRadius(), mass, getMinMassDensity());
-
+        
+        loadBullets(15);
         setOrientation(orientation);
         setThrust(thrust);
         thrustOff();
@@ -311,9 +312,27 @@ public class Ship extends Entity {
      *
      * @param bullet
      */
-    public void reloadBullet(Bullet bullet) {
-        bullet.setWorld(null);
+    private void addBullet(Bullet bullet) {
+    	bullet.setParentShip(this);
         bullets.add(bullet);
+    }
+    
+    public void loadBullets(int amount) {
+    	if ( amount <= 0 )
+    		throw new IllegalArgumentException();
+    	
+    	for (int i = 0; i < amount; i++) {
+    		Bullet b = new Bullet(getPosition(), getVelocity(), getRadius()/5.0);
+    		addBullet(b);
+    	}
+    }
+    
+    public int getNbBullets() {
+    	return bullets.size();
+    }
+    
+    public HashSet<Bullet> getBullets() {
+    	return new HashSet<Bullet>(bullets);
     }
 
     @Override
@@ -334,7 +353,7 @@ public class Ship extends Entity {
     @Override
     public void resolveCollisionWithBullet(Bullet bullet) {
         if (bullet.getParentShip() == this) {
-            reloadBullet(bullet);
+            addBullet(bullet);
         }
 
         else {
