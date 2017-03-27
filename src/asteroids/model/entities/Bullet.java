@@ -2,6 +2,7 @@ package asteroids.model.entities;
 
 
 import vector.Vector;
+import asteroids.model.world.*;
 
 public class Bullet extends Entity {
 
@@ -46,7 +47,7 @@ public class Bullet extends Entity {
         return massDensity;
     }
 
-    private Ship parrentShip;
+    private Ship parentShip = null;
 
     /**
      * Returns the ship to which this bullet belongs or that fired it.
@@ -54,8 +55,18 @@ public class Bullet extends Entity {
      * @return
      */
     public Ship getParentShip() {
-        return parrentShip;
+        return parentShip;
     }
+    
+    public void setParentShip(Ship ship) {
+    	if ( (ship == null) || (ship.getBullets().contains(this)) )
+    		throw new IllegalArgumentException();
+    	
+    	if ( (parentShip == null) && (world == null) )
+    		parentShip = ship;
+    }
+    
+    private World world = null;
 
     private char wallHits;
 
