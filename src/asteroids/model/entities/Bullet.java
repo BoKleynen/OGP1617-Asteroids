@@ -3,8 +3,10 @@ package asteroids.model.entities;
 
 import vector.Vector;
 import asteroids.model.world.*;
+import be.kuleuven.cs.som.annotate.Basic;
 
 public class Bullet extends Entity {
+	
 
     public Bullet(Vector position, Vector velocity, double radius) {
         this(position, velocity, getSpeedOfLight() ,radius);
@@ -16,6 +18,14 @@ public class Bullet extends Entity {
         maxWallHits = 2;
         wallHits = 0;
 
+    }
+
+    @Override
+    public void move(double time) {
+        if( time < 0 )
+            throw new IllegalArgumentException();
+
+        setPosition(getPosition().add(getVelocity().multiply(time)));
     }
 
     private static final double minRadius = 1;
@@ -39,26 +49,60 @@ public class Bullet extends Entity {
         return massDensity;
     }
 
-    private Ship parentShip = null;
 
     /**
      * Returns the ship to which this bullet belongs or that fired it.
      *
      * @return
      */
+    @Basic
     public Ship getParentShip() {
         return parentShip;
     }
     
-    public void setParentShip(Ship ship) {
-    	if ( (ship == null) || (ship.getBullets().contains(this)) )
-    		throw new IllegalArgumentException();
-    	
-    	if ( (parentShip == null) && (world == null) )
-    		parentShip = ship;
+    @Basic
+    public World getParentWorld() {
+    	return parentWorld;
     }
     
-    private World world = null;
+    public void setParentShip(Ship ship) {
+    	if ( (ship == null) || (ship.getAllBullets().contains(this)) )
+    		throw new IllegalArgumentException();
+    	if ( hasParentShip() || hasParentWorld() )
+    		throw new IllegalArgumentException();
+    	
+    	parentShip = ship;
+    }
+    
+    public boolean hasParentShip() {
+    	return !(parentShip == null);
+    }
+    
+    public void removeParentShip() {
+    	if (parentShip instanceof Ship)
+    		parentShip = null;
+    }
+    
+    public void setParentWorld(World world) {
+    	if ( (world == null) || (world.getAllBullets().contains(this)))
+    		throw new IllegalArgumentException();
+    	if ( hasParentShip() || hasParentWorld() )
+    		throw new IllegalArgumentException();
+    	
+    	parentWorld = world;
+    }
+    
+    public boolean hasParentWorld() {
+    	return !(parentWorld == null);
+    }
+    
+    public void removeParentWorld() {
+    	if (parentWorld instanceof World)
+    		parentWorld = null;
+    }
+    
+    private Ship parentShip = null; 
+    private World parentWorld = null;
 
     private char wallHits;
 

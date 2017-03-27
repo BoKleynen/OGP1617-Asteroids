@@ -205,7 +205,10 @@ public class Ship extends Entity {
      */
     @Override
     public void move(double time) {
-        super.move(time);
+        if( time < 0 )
+            throw new IllegalArgumentException();
+
+        setPosition(getPosition().add(getVelocity().multiply(time)));
 
         if (thrusterOn())
             accelerate(time);
@@ -309,7 +312,7 @@ public class Ship extends Entity {
      *
      * @param bullet
      */
-    private void addBullet(Bullet bullet) {
+    public void addBullet(Bullet bullet) {
     	bullet.setParentShip(this);
         bullets.add(bullet);
     }
@@ -324,11 +327,20 @@ public class Ship extends Entity {
     	}
     }
     
+    public void loadBullets() {
+    	addBullet(new Bullet(getPosition(), getVelocity(), getRadius()/5.0));
+    }
+    
+    public void removeBullet(Bullet bullet) {
+    	bullets.remove(bullet);
+    	bullet.removeParentShip();
+    }
+    
     public int getNbBullets() {
     	return bullets.size();
     }
     
-    public HashSet<Bullet> getBullets() {
+    public HashSet<Bullet> getAllBullets() {
     	return new HashSet<Bullet>(bullets);
     }
 

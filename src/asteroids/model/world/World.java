@@ -120,7 +120,7 @@ public class World {
     	if ( ! entities.containsKey(entity.getPosition())) 
     		throw new IllegalArgumentException();
         entities.remove(entity.getPosition());
-        entity.setWorld(null);
+        entity.setParentWorld(null);
         entity.terminate();
     }
 
@@ -150,6 +150,13 @@ public class World {
         }
 
         return bullets;
+    }
+    
+    public void removeBullet(Bullet bullet) {
+    	if ( entities.containsKey(bullet.getPosition()) ) {
+    		entities.remove(bullet.getPosition(), bullet);
+    		bullet.setParentWorld(null);
+    	}
     }
 
     public Collision getFirstCollision() {

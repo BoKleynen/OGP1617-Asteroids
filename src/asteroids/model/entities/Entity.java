@@ -145,7 +145,7 @@ public abstract class Entity {
      *
      * @param world
      */
-    public void setWorld(World world) {
+    public void setParentWorld(World world) {
         this.world = world;
     }
 
