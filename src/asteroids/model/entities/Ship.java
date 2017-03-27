@@ -32,7 +32,7 @@ public class Ship extends Entity {
      * 			| this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight())
      */
     public Ship() {
-    	this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight(), 0, 1.1 * Math.pow(10, 21));
+    	this(null, new Vector(0, 0), getSpeedOfLight(), new Vector(0, 0), 0, getMinRadius(), 0, 1.1 * Math.pow(10, 21));
     }
 
     /**
@@ -55,7 +55,7 @@ public class Ship extends Entity {
     public Ship(Vector position, Vector velocity, double orientation, double radius, double mass)
             throws  IllegalArgumentException, NullPointerException {
 
-    	this(position, velocity, orientation, radius, getSpeedOfLight(), mass, 1.1 * Math.pow(10, 21));
+    	this(null,position, getSpeedOfLight(), velocity, orientation, radius, mass, 1.1 * Math.pow(10, 21));
     }
 
     /**

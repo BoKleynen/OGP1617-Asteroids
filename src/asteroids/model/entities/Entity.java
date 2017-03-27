@@ -120,7 +120,7 @@ public abstract class Entity {
      *
      * @param world
      */
-    public void setCurrentWorld(World world) {
+    public void setWorld(World world) {
         this.world = world;
     }
 
