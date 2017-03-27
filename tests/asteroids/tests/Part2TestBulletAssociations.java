@@ -31,7 +31,7 @@ public class Part2TestBulletAssociations {
 		
 		assertTrue(s1.getNbBullets() == 16);
 		assertTrue(s1.getAllBullets().contains(b));
-		assertTrue(b.getParentShip() == s1);
+		assertTrue(b.getCurrentShip() == s1);
 		
 		s1.removeBullet(b);
 		assertTrue(s1.getNbBullets() == 15);

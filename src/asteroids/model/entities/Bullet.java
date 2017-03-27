@@ -58,52 +58,61 @@ public class Bullet extends Entity {
      */
     @Basic
     public Ship getParentShip() {
-        return parentShip;
+    	return parentShip;
     }
     
     @Basic
-    public World getParentWorld() {
-    	return parentWorld;
+    public Ship getCurrentShip() {
+        return currentShip;
     }
     
-    public void setParentShip(Ship ship) {
-    	if ( (ship == null) || (ship.getAllBullets().contains(this)) )
-    		throw new IllegalArgumentException();
-    	if ( hasParentShip() || hasParentWorld() )
-    		throw new IllegalArgumentException();
-    	
-    	parentShip = ship;
+    public boolean hasCurrentShip() {
+    	return !(currentShip == null);
     }
     
-    public boolean hasParentShip() {
-    	return !(parentShip == null);
-    }
-    
-    public void removeParentShip() {
+    public void removeCurrentShip() {
     	if (parentShip instanceof Ship)
     		parentShip = null;
     }
     
-    public void setParentWorld(World world) {
+    public void setCurrentShip(Ship ship) {
+    	if ( (ship == null) || (ship.getAllBullets().contains(this)) )
+    		throw new IllegalArgumentException();
+    	if ( hasCurrentShip() || hasCurrentWorld() )
+    		throw new IllegalArgumentException();
+
+    	this.currentShip = ship;
+    	parentShip = ship;
+    }
+    
+    private Ship currentShip = null;
+    private Ship parentShip = null; 
+    
+    @Basic
+    public World getCurrentWorld() {
+    	return currentWorld;
+    }
+    
+    
+    public boolean hasCurrentWorld() {
+    	return !(currentWorld == null);
+    }
+    
+    public void removeCurrentWorld() {
+    	if (currentWorld instanceof World)
+    		currentWorld = null;
+    }
+    
+    public void setCurrentWorld(World world) {
     	if ( (world == null) || (world.getAllBullets().contains(this)))
     		throw new IllegalArgumentException();
-    	if ( hasParentShip() || hasParentWorld() )
+    	if ( hasCurrentShip() || hasCurrentWorld() )
     		throw new IllegalArgumentException();
     	
-    	parentWorld = world;
+    	currentWorld = world;
     }
     
-    public boolean hasParentWorld() {
-    	return !(parentWorld == null);
-    }
-    
-    public void removeParentWorld() {
-    	if (parentWorld instanceof World)
-    		parentWorld = null;
-    }
-    
-    private Ship parentShip = null; 
-    private World parentWorld = null;
+    private World currentWorld = null;
 
     private char wallHits;
 

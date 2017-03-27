@@ -316,7 +316,7 @@ public class Ship extends Entity {
      * @param bullet
      */
     public void addBullet(Bullet bullet) {
-    	bullet.setParentShip(this);
+    	bullet.setCurrentShip(this);
         bullets.add(bullet);
     }
     
@@ -335,8 +335,8 @@ public class Ship extends Entity {
     }
     
     public void removeBullet(Bullet bullet) {
-    	bullets.remove(bullet);
-    	bullet.removeParentShip();
+    	if ( bullets.remove(bullet) );
+    		bullet.removeCurrentShip();
     }
     
     public int getNbBullets() {

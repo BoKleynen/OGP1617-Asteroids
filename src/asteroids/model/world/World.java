@@ -120,7 +120,7 @@ public class World {
     	if ( ! entities.containsKey(entity.getPosition())) 
     		throw new IllegalArgumentException();
         entities.remove(entity.getPosition());
-        entity.setParentWorld(null);
+        entity.setCurrentWorld(null);
         entity.terminate();
     }
 
@@ -155,7 +155,7 @@ public class World {
     public void removeBullet(Bullet bullet) {
     	if ( entities.containsKey(bullet.getPosition()) ) {
     		entities.remove(bullet.getPosition(), bullet);
-    		bullet.setParentWorld(null);
+    		bullet.setCurrentWorld(null);
     	}
     }
 

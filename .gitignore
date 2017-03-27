@@ -6,3 +6,5 @@ OGP1617-Asteroids\.iml
 src/META-INF/
 
 /bin/
+/.classpath
+/.project
