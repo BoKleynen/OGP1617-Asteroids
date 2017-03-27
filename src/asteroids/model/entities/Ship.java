@@ -205,10 +205,7 @@ public class Ship extends Entity {
      */
     @Override
     public void move(double time) {
-        if( time < 0 )
-            throw new IllegalArgumentException();
-
-        setPosition(getPosition().add(getVelocity().multiply(time)));
+        super.move(time);
 
         if (thrusterOn())
             accelerate(time);

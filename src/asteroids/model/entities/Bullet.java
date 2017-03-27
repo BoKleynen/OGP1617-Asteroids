@@ -18,14 +18,6 @@ public class Bullet extends Entity {
 
     }
 
-    @Override
-    public void move(double time) {
-        if( time < 0 )
-            throw new IllegalArgumentException();
-
-        setPosition(getPosition().add(getVelocity().multiply(time)));
-    }
-
     private static final double minRadius = 1;
 
     /**

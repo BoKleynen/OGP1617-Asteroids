@@ -220,7 +220,19 @@ public abstract class Entity {
      * 			If the specified time is negative.
      * 			| time < 0
      */
-    public abstract void move(double time);
+    public void move(double time) {
+        if( time < 0 )
+            throw new IllegalArgumentException();
+
+        if (getWorld() != null) {
+            getWorld().removeEntity(this);
+            setPosition(getPosition().add(getVelocity().multiply(time)));
+            getWorld().addEntity(this);
+        }
+
+        else
+            setPosition(getPosition().add(getVelocity().multiply(time)));
+    }
 
     private Vector velocity;    // total
 
