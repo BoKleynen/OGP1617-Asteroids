@@ -1,13 +1,12 @@
 package asteroids.model.world;
 
+import asteroids.part2.CollisionListener;
 import vector.Vector;
 import asteroids.model.entities.*;
 import be.kuleuven.cs.som.annotate.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-// TODO: 25/03/2017
 
 public class World {
 
@@ -105,7 +104,8 @@ public class World {
     public void addEntity(Entity entity) throws IllegalArgumentException {
     	if ( entity == null )
     		throw new IllegalArgumentException();
-        entities.putIfAbsent(entity.getPosition(), entity);
+        entities.put(entity.getPosition(), entity);
+        entity.setWorld(this);
     }
 
     /**
@@ -178,7 +178,7 @@ public class World {
     }
 
 
-    public void evolve(double time) {
+    public void evolve(double time, CollisionListener collisionListener) {
         if (time < 0)
             throw new IllegalArgumentException();
 
@@ -198,8 +198,8 @@ public class World {
                     entity.move(timeToFirstCollision);
                 }
 
-                firstCollision.resolve();
-                evolve(time - timeToFirstCollision);
+                firstCollision.resolve(collisionListener);
+                evolve(time - timeToFirstCollision, collisionListener);
             }
         }
     }

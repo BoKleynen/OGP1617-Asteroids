@@ -1,6 +1,7 @@
 package asteroids.model.entities;
 
 
+import asteroids.part2.CollisionListener;
 import vector.Vector;
 import asteroids.model.world.*;
 
@@ -95,12 +96,14 @@ public class Bullet extends Entity {
      * respectively. The amount of sustained wall hits for this bullet is incremented.
      */
     @Override
-    public void resolveCollisionWithBoundary() {
-        if (getWallHits() == getMaxWallHits())
+    public void resolveCollisionWithBoundary(CollisionListener collisionListener) {
+        if (getWallHits() == getMaxWallHits()) {
+            collisionListener.boundaryCollision(this, getPosition().getX(), getPosition().getY());
             die();
+        }
 
         else {
-            super.resolveCollisionWithBoundary();
+            super.resolveCollisionWithBoundary(collisionListener);
             incrementWallHits();
         }
     }
@@ -113,8 +116,8 @@ public class Bullet extends Entity {
      * @param ship
      */
     @Override
-    public void resolveCollisionWithShip(Ship ship) {
-        ship.resolveCollisionWithBullet(this);
+    public void resolveCollisionWithShip(Ship ship, CollisionListener collisionListener) {
+        ship.resolveCollisionWithBullet(this, collisionListener);
     }
 
     /**
@@ -123,7 +126,8 @@ public class Bullet extends Entity {
      * @param bullet
      */
     @Override
-    public void resolveCollisionWithBullet(Bullet bullet) {
+    public void resolveCollisionWithBullet(Bullet bullet, CollisionListener collisionListener) {
+        collisionListener.objectCollision(this, bullet, getPosition().getX(), getPosition().getY());
         die();
         bullet.die();
     }

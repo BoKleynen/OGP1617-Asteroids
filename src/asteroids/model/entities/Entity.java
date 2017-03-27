@@ -1,5 +1,6 @@
 package asteroids.model.entities;
 
+import asteroids.part2.CollisionListener;
 import vector.Vector;
 import asteroids.model.world.World;
 import be.kuleuven.cs.som.annotate.*;
@@ -51,6 +52,8 @@ public abstract class Entity {
         setVelocity(velocity);
 
         setMass(mass, minMassDensity);
+
+        setWorld(world);
     }
 
     private boolean isTerminated = false;
@@ -225,9 +228,13 @@ public abstract class Entity {
             throw new IllegalArgumentException();
 
         if (getWorld() != null) {
-            getWorld().removeEntity(this);
+            World world = getWorld();
+
+            world.removeEntity(this);
             setPosition(getPosition().add(getVelocity().multiply(time)));
-            getWorld().addEntity(this);
+            world.addEntity(this);
+
+
         }
 
         else
@@ -344,10 +351,6 @@ public abstract class Entity {
      * @return	The time until the collision will happen if the entities keep moving in the exact
      * 			same way as they are currently moving.  If no collision will occur within a
      * 			finite amount of time, this method will return positive infinity.
-     * @Post	If both entities keep moving in the exact same way they are currently moving, then
-     * 			they will collide after the returned amount of time. This means their hulls will
-     * 			touch after exactly the returned amount of time.
-     * 			| this.getDistanceBetween(entity) == 0
      * @throws 	IllegalArgumentException
      * 			If the supplied entity is this entity or if the supplied entity already overlaps
      * 			this entity.
@@ -446,8 +449,9 @@ public abstract class Entity {
      * The velocity of this entity in the x or y direction is negated for a collision with a vertical or horizontal
      * boundary respectively.
      */
-    public void resolveCollisionWithBoundary() {
+    public void resolveCollisionWithBoundary(CollisionListener collisionListener) {
         if (getPosition().getX() == 0 || getPosition().getX() == getWorld().getWidth()){
+            collisionListener.boundaryCollision(this, this.getPosition().getX(), this.getPosition().getY());
             setVelocity(new Vector(-getVelocity().getX(), getVelocity().getY()));
         }
 
@@ -461,11 +465,11 @@ public abstract class Entity {
      * Resolves the collision of this Entity with the given Ship.
      * @param ship
      */
-    public abstract void resolveCollisionWithShip(Ship ship);
+    public abstract void resolveCollisionWithShip(Ship ship, CollisionListener collisionListener);
 
     /**
      * Resolves the collision of this Entity with the given Bullet
      * @param bullet
      */
-    public abstract void resolveCollisionWithBullet(Bullet bullet);
+    public abstract void resolveCollisionWithBullet(Bullet bullet, CollisionListener collisionListener);
 }

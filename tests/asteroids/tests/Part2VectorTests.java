@@ -24,8 +24,9 @@ public class Part2VectorTests {
 	
 	@Before
 	public void setupMutableFixtures() {
-		ship = new Ship(new Vector(10, 10), new Vector(10, 0), 0, 10, 100);
 		world = new World(1000, 1000);
+		ship = new Ship(new Vector(10, 10), new Vector(10, 0), 0, 10, 100);
+
 	}
 	
 	@Test
@@ -57,6 +58,7 @@ public class Part2VectorTests {
 		// Ship is in the world.
 		world.addEntity(ship);
 		assertTrue(world.getAllEntities().contains(ship));
+		assertTrue(ship.getWorld() == world);
 		
 		// The ship has moved
 		ship.move(1);
@@ -65,9 +67,9 @@ public class Part2VectorTests {
 		// Ship is still in world
 		assertTrue(world.getAllEntities().contains(ship));
 		
-		// Is the ship still at the old position?
-		assertTrue(world.getEntityAtPosition(oldPosition).equals(ship));
-		
+//		// Is the ship still at the old position?
+//		assertTrue(world.getEntityAtPosition(oldPosition).equals(ship));
+
 		// Get the entity at the new position of the ship? Fails!
 		assertTrue(world.getEntityAtPosition(ship.getPosition()).equals(ship));
 		
