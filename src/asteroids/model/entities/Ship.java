@@ -1,6 +1,7 @@
 package asteroids.model.entities;
 
 import asteroids.part2.CollisionListener;
+import asteroids.model.world.World;
 import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
@@ -89,9 +90,10 @@ public class Ship extends Entity {
      *          If the specified position refers a null object
      *          | position == null
      */
-    public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed, double mass, double thrust)
+    public Ship(World world, Vector position, double maxSpeed, Vector velocity, double orientation, double radius, double mass, double thrust)
             throws  IllegalArgumentException, NullPointerException {
-        super(position, velocity, maxSpeed, radius, getMinRadius(), mass, getMinMassDensity());
+
+        super(world, position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
         
         loadBullets(15);
         setOrientation(orientation);

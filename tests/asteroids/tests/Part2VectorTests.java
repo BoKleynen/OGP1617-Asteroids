@@ -68,7 +68,7 @@ public class Part2VectorTests {
 		assertTrue(world.getAllEntities().contains(ship));
 		
 //		// Is the ship still at the old position?
-//		assertTrue(world.getEntityAtPosition(oldPosition).equals(ship));
+//		assertFalse(world.getEntityAtPosition(oldPosition).equals(ship));
 
 		// Get the entity at the new position of the ship? Fails!
 		assertTrue(world.getEntityAtPosition(ship.getPosition()).equals(ship));
