@@ -1,6 +1,7 @@
 package asteroids.model.entities;
 
 import asteroids.part2.CollisionListener;
+import asteroids.model.world.World;
 import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
@@ -89,9 +90,10 @@ public class Ship extends Entity {
      *          If the specified position refers a null object
      *          | position == null
      */
-    public Ship(Vector position, Vector velocity, double orientation, double radius, double maxSpeed, double mass, double thrust)
+    public Ship(World world, Vector position, double maxSpeed, Vector velocity, double orientation, double radius, double mass, double thrust)
             throws  IllegalArgumentException, NullPointerException {
-        super(position, velocity, maxSpeed, radius, getMinRadius(), mass, getMinMassDensity());
+
+        super(world, position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
         
         loadBullets(15);
         setOrientation(orientation);
@@ -206,7 +208,10 @@ public class Ship extends Entity {
      */
     @Override
     public void move(double time) {
-        super.move(time);
+        if( time < 0 )
+            throw new IllegalArgumentException();
+
+        setPosition(getPosition().add(getVelocity().multiply(time)));
 
         if (thrusterOn())
             accelerate(time);
@@ -310,7 +315,7 @@ public class Ship extends Entity {
      *
      * @param bullet
      */
-    private void addBullet(Bullet bullet) {
+    public void addBullet(Bullet bullet) {
     	bullet.setParentShip(this);
         bullets.add(bullet);
     }
@@ -325,11 +330,20 @@ public class Ship extends Entity {
     	}
     }
     
+    public void loadBullets() {
+    	addBullet(new Bullet(getPosition(), getVelocity(), getRadius()/5.0));
+    }
+    
+    public void removeBullet(Bullet bullet) {
+    	bullets.remove(bullet);
+    	bullet.removeParentShip();
+    }
+    
     public int getNbBullets() {
     	return bullets.size();
     }
     
-    public HashSet<Bullet> getBullets() {
+    public HashSet<Bullet> getAllBullets() {
     	return new HashSet<Bullet>(bullets);
     }
 

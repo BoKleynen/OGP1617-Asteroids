@@ -8,52 +8,24 @@ import be.kuleuven.cs.som.annotate.*;
 
 public abstract class Entity {
 
-    /**
-     * Initializes a new entity with given position, velocity, maximum speed, radius mass. This entity is not associated with a World.
-     *
-     * @param position
-     * @param velocity
-     * @param maxSpeed
-     * @param radius
-     * @param minRadius
-     * @param mass
-     * @param minMassDensity
-     */
-    Entity(Vector position, Vector velocity, double maxSpeed, double radius, double minRadius, double mass, double minMassDensity){
-        this(position, velocity, maxSpeed, radius, minRadius, mass, minMassDensity, null);
+
+    Entity(Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass){
+        this(null, position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
     }
 
-
-    /**
-     * Initializes a new entity with given position, velocity, maximum speed, radius mass and associates this entity with the given world.
-     *
-     * @param position
-     * @param velocity
-     * @param maxSpeed
-     * @param radius
-     * @param minRadius
-     * @param mass
-     * @param minMassDensity
-     * @param world
-     */
-    Entity(Vector position, Vector velocity, double maxSpeed, double radius, double minRadius, double mass, double minMassDensity, World world) {
+    Entity(World world, Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass) {
         if (! canHaveAsPosition(position))
             throw new IllegalArgumentException();
 
         if (! canHaveAsRadius(radius, minRadius))
             throw new IllegalArgumentException();
 
-        this.radius = radius;
-
+        setWorld(world);
         setPosition(position);
-
-        // this.maxSpeed will never be NaN
         this.maxSpeed = maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight();
         setVelocity(velocity);
-
+        this.radius = radius;
         setMass(mass, minMassDensity);
-
-        setWorld(world);
     }
 
     private boolean isTerminated = false;
@@ -148,7 +120,7 @@ public abstract class Entity {
      *
      * @param world
      */
-    public void setWorld(World world) {
+    public void setParentWorld(World world) {
         this.world = world;
     }
 
