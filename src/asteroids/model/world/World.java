@@ -90,6 +90,11 @@ public class World {
 
     private HashMap<Vector, Entity> entities = new HashMap<>();
 
+    /**
+     * 
+     * @param position	The position 
+     * @return
+     */
     public Entity getEntityAtPosition(Vector position){
         return entities.get(position);
     }
@@ -103,6 +108,8 @@ public class World {
      */
     public void addEntity(Entity entity) throws IllegalArgumentException {
     	if ( entity == null )
+    		throw new NullPointerException();
+    	if ( (entity.hasWorld()) || (entities.containsValue(entity)) )
     		throw new IllegalArgumentException();
         entities.put(entity.getPosition(), entity);
         entity.setWorld(this);
@@ -116,11 +123,11 @@ public class World {
      */
     public void removeEntity(Entity entity) {
     	if ( entity == null )
-    		throw new IllegalArgumentException();
+    		throw new NullPointerException();
     	if ( ! entities.containsKey(entity.getPosition())) 
     		throw new IllegalArgumentException();
         entities.remove(entity.getPosition());
-        entity.setCurrentWorld(null);
+        entity.setWorld(null);
         entity.terminate();
     }
 
@@ -155,7 +162,7 @@ public class World {
     public void removeBullet(Bullet bullet) {
     	if ( entities.containsKey(bullet.getPosition()) ) {
     		entities.remove(bullet.getPosition(), bullet);
-    		bullet.setCurrentWorld(null);
+    		bullet.removeWorld();
     	}
     }
 

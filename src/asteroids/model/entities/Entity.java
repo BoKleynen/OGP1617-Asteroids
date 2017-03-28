@@ -103,6 +103,14 @@ public abstract class Entity {
     public double getMinMass(double radius, double minMassDensity) {
         return 4/3 * Math.PI * Math.pow(radius, 3) * minMassDensity;
     }
+    
+    /**
+     * 
+     * @return True if and only if the entity is currently ssociated with a world.
+     */
+    public boolean hasWorld() {
+    	return !(getWorld() == null);
+    }
 
     private World world;
 

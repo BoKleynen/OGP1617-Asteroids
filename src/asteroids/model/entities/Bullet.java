@@ -63,59 +63,47 @@ public class Bullet extends Entity {
     }
     
     @Basic
-    public Ship getCurrentShip() {
-        return currentShip;
+    public Ship getShip() {
+        return ship;
     }
     
-    public boolean hasCurrentShip() {
-    	return !(currentShip == null);
+    public boolean hasShip() {
+    	return !(ship == null);
     }
     
-    public void removeCurrentShip() {
+    public void removeShip() {
     	if (parentShip != null)
     		parentShip = null;
     }
     
-    public void setCurrentShip(Ship ship) {
+    public void setShip(Ship ship) {
     	if ( (ship == null) || (ship.getAllBullets().contains(this)) )
     		throw new IllegalArgumentException();
-    	if ( hasCurrentShip() || hasCurrentWorld() )
+    	if ( hasShip() || hasWorld() )
     		throw new IllegalArgumentException();
 
-    	this.currentShip = ship;
+    	this.ship = ship;
     	parentShip = ship;
     }
     
-    private Ship currentShip = null;
+    private Ship ship = null;
     private Ship parentShip = null; 
-
+    
+    public void removeWorld() {
+    	if (getWorld() != null)
+    		setWorld(null);
+    }
+    
     @Override @Basic
     public void setWorld(World world) {
-        super.setWorld(world);
-
-        if (world != null)
-            removeCurrentShip();
-    }
-    
-    public boolean hasCurrentWorld() {
-    	return !(currentWorld == null);
-    }
-    
-    public void removeCurrentWorld() {
-    	if (currentWorld != null)
-    		currentWorld = null;
-    }
-    
-    public void setCurrentWorld(World world) {
     	if ( (world == null) || (world.getAllBullets().contains(this)))
     		throw new IllegalArgumentException();
-    	if ( hasCurrentShip() || hasCurrentWorld() )
+    	if ( hasShip() || hasWorld() )
     		throw new IllegalArgumentException();
     	
-    	currentWorld = world;
+    	super.setWorld(world);
     }
     
-    private World currentWorld = null;
 
     private char wallHits;
 
