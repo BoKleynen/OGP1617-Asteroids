@@ -253,6 +253,15 @@ public class Ship extends Entity {
     public static boolean canHaveAsOrientation(double orientation) {
         return (0.0 <= orientation) && (orientation < 2.0 * Math.PI);
     }
+    
+    /**
+     * Return the direction this ship is currently facing. The returned vector has unity length.
+     * 
+     * @return	
+     */
+    private Vector getDirection() {
+    	return new Vector(Math.cos(getOrientation()), Math.sin(getOrientation()));
+    }
 
     /**
      * Returns the current orientation of this ship.
@@ -311,12 +320,14 @@ public class Ship extends Entity {
     private HashSet<Bullet> bullets = new HashSet<>();
 
     /**
-     * Reloads the given bullet onto this ship
+     * Adds the given bullet to this ship
      *
-     * @param bullet
+     * @param bullet The bullet to be added to this ship.
+     * @Post	
      */
     public void addBullet(Bullet bullet) {
     	bullet.setShip(this);
+    	bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
         bullets.add(bullet);
     }
     
@@ -328,6 +339,11 @@ public class Ship extends Entity {
     		Bullet b = new Bullet(getPosition(), getVelocity(), getRadius()/5.0);
     		addBullet(b);
     	}
+    }
+    
+    public void loadBullets(Collection<Bullet> bulletList) {
+    	for (Bullet bullet : bulletList)
+    		addBullet(bullet);
     }
     
     public void loadBullets() {
@@ -346,6 +362,33 @@ public class Ship extends Entity {
     public HashSet<Bullet> getAllBullets() {
     	return new HashSet<Bullet>(bullets);
     }
+    
+    private Bullet getFirstBullet() {
+    	for (Bullet bullet : bullets) {
+			return bullet;
+		}
+    	return null;
+    }
+    
+    /**
+     * 
+     */
+    public void fireBullet() {				//Totally
+    	// TODO Complete
+		Bullet bullet = getFirstBullet();
+		if ( bullet != null ) {
+			bullet.setPosition(getDirection().multiply( (getRadius() + bullet.getRadius())/2 ));
+			bullet.setVelocity(getDirection().multiply(initialBulletSpeed));
+			removeBullet(bullet);
+			bullet.removeShip();
+			bullet.setWorld(getWorld());
+			
+			
+		}		
+	}
+    
+    private static final double initialBulletSpeed = 250;
+   
 
     @Override
     public void resolveCollisionWithShip(Ship ship, CollisionListener collisionListener) {
