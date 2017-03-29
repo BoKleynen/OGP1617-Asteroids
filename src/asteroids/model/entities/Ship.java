@@ -102,7 +102,7 @@ public class Ship extends Entity {
 
     }
 
-    private static final double minMassDensity = 1.42 * Math.pow(10, 12);
+    private static final double minMassDensity = 1.42 * 1e12;
 
     /**
      * Returns the minimal mass density for a Ship.
