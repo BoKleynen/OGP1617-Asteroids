@@ -171,11 +171,12 @@ public abstract class Entity {
     }
 
     /**
-     * Checks whether the vector position is a valid position for a entity.
+     * Checks whether the vector position is a valid position for an entity.
      *
      * @param 	position
      * 			The position to be tested.
-     * @return	True if and only if the components of the vector position are valid real numbers.
+     * @return	True if and only if the components of the vector position are valid real numbers, 
+     * 			and if the entity stays within the boundaries of the world it is in.
      * 			| result == ((! Double.isNaN(position.getX())) && (! Double.isNaN(position.getY())))
      * @throws 	NullPointerException
      * 			If the specified position refers a null object.
@@ -185,8 +186,14 @@ public abstract class Entity {
     public boolean canHaveAsPosition(Vector position) throws NullPointerException {
         if (position == null)
             throw new NullPointerException();
+        
+        boolean withinBoundaries = true;
+        if ( getWorld() != null ) {
+        	withinBoundaries = ( (position.getX() >= getRadius()) && (position.getX() <= getWorld().getWidth() - getRadius())
+        			&& (position.getY() >= getRadius()) && (position.getY() <= getWorld().getHeight() - getRadius()) );
+        }
 
-        return ( ( ! Double.isNaN(position.getX()) ) && ( ! Double.isNaN(position.getY()) ) );
+        return ( withinBoundaries && ( ! Double.isNaN(position.getX()) ) && ( ! Double.isNaN(position.getY()) ) );
     }
 
     /**
