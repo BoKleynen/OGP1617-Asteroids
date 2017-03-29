@@ -7,6 +7,8 @@ import asteroids.model.entities.*;
 import asteroids.model.world.*;
 import asteroids.util.ModelException;
 import vector.*;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class Part2TestBulletAssociations {
 	
@@ -32,9 +34,22 @@ public class Part2TestBulletAssociations {
 		assertTrue(s1.getAllBullets().contains(b));
 		assertTrue(b.getShip() == s1);
 		
+		// Test removing one bullet from the ship.
 		s1.removeBullet(b);
 		assertTrue(s1.getNbBullets() == 15);
-		assertFalse(s1.getAllBullets().contains(b));	
+		assertFalse(s1.getAllBullets().contains(b));
+		
+		// Test adding multiple bullets at the same time
+		Collection<Bullet> coll = new HashSet<Bullet>();
+		for ( int i = 0; i < 10; i++ ) {
+			coll.add(new Bullet(new Vector(0, 0), new Vector(0, 0), 2));
+		}
+		s2.loadBullets(coll);
+		assertTrue(s2.getNbBullets() == 25);
+		
+		// Test loading multiple new bullets onto a ship.
+		s1.loadBullets(100);
+		assertTrue(s1.getNbBullets() == 115);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
