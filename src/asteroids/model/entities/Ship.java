@@ -206,12 +206,16 @@ public class Ship extends Entity {
      * @param 	time
      * 			The time to move in the direction of the velocity vector.
      */
-    @Override
+    @Override	
     public void move(double time) {
         if( time < 0 )
             throw new IllegalArgumentException();
 
         setPosition(getPosition().add(getVelocity().multiply(time)));
+        
+        for (Bullet bullet : bullets) {
+        	bullet.setPosition(getPosition());
+        }
 
         if (thrusterOn())
             accelerate(time);
@@ -377,7 +381,8 @@ public class Ship extends Entity {
     	// TODO Complete
 		Bullet bullet = getFirstBullet();
 		if ( bullet != null ) {
-			bullet.setPosition(getDirection().multiply( (getRadius() + bullet.getRadius())/2 ));
+			Vector nextBulletPosition = getDirection().multiply( (getRadius() + bullet.getRadius())/2 );
+			bullet.setPosition(nextBulletPosition);
 			bullet.setVelocity(getDirection().multiply(initialBulletSpeed));
 			removeBullet(bullet);
 			bullet.removeShip();

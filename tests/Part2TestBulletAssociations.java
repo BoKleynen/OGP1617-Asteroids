@@ -1,4 +1,3 @@
-package asteroids.tests;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +30,7 @@ public class Part2TestBulletAssociations {
 		
 		assertTrue(s1.getNbBullets() == 16);
 		assertTrue(s1.getAllBullets().contains(b));
-		assertTrue(b.getCurrentShip() == s1);
+		assertTrue(b.getShip() == s1);
 		
 		s1.removeBullet(b);
 		assertTrue(s1.getNbBullets() == 15);
@@ -39,7 +38,7 @@ public class Part2TestBulletAssociations {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testAddBulletToShip_IllegalCase1() {
+	public void testAddBulletToShip_AddOneBulletTwice() {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
 		// Adding a bullet multiple times to one ship.
@@ -48,12 +47,29 @@ public class Part2TestBulletAssociations {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testAddBulletToShip_IllegalCase2() {
+	public void testAddBulletToShip_AddBulletToTwoShips() {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
 		// Adding one bullet to multiple ships.
 		s1.addBullet(b);
 		s2.addBullet(b);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddBulletToShip_addBulletToWorlAndShip() {
+		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
+		
+		// Adding one bullet to a world and a ship.
+		w1.addEntity(b);
+		s1.addBullet(b);
+	}
+	
+	@Test
+	public void testBulletPositionInShip() {
+		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
+		
+		s1.addBullet(b);
+		assertTrue(b.getPosition().getDistance(s1.getPosition()) == s1.getRadius()/2);
 	}
 	
 }

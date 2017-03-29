@@ -1,4 +1,4 @@
-package asteroids.tests;
+
 
 import vector.*;
 import asteroids.model.entities.*;

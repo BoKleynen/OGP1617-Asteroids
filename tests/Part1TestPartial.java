@@ -1,4 +1,4 @@
-package asteroids.tests;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -51,5 +51,6 @@ public class Part1TestPartial {
 		assertNotNull(position);
 		assertEquals(130, position[0], EPSILON);
 		assertEquals(85, position[1], EPSILON);
+		assertEquals(1e12, Math.pow(10,  12), 0.001);
 	}
 }
