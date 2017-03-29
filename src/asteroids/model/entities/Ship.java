@@ -1,11 +1,13 @@
 package asteroids.model.entities;
 
 import asteroids.part2.CollisionListener;
-import asteroids.model.world.World;
+import asteroids.model.world.*;
 import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
 import java.util.Collection;
+import asteroids.part2.CollisionListener;
+
 
 /**
  * A Class of space ships involving a position, a velocity, an orientation and a radius.
@@ -335,6 +337,10 @@ public class Ship extends Entity {
         bullets.add(bullet);
     }
     
+    /**
+     * Loads the given amount of new bullets onto this ship.
+     * @param amount
+     */
     public void loadBullets(int amount) {
     	if ( amount <= 0 )
     		throw new IllegalArgumentException();
@@ -345,52 +351,123 @@ public class Ship extends Entity {
     	}
     }
     
+    /**
+     * Loads all the bullets in the given collection of bullets onto this ship.
+     * @param bulletList
+     */
     public void loadBullets(Collection<Bullet> bulletList) {
     	for (Bullet bullet : bulletList)
     		addBullet(bullet);
     }
     
+    /**
+     * Loads one new bullet to this ship.
+     */
     public void loadBullets() {
     	addBullet(new Bullet(getPosition(), getVelocity(), getRadius()/5.0));
     }
     
+    /**
+     * Removes the given bullet from the set of bullets currently loaded on this ship.
+     * If the bullet is not loaded on this ship, nothing happens.
+     * @param bullet
+     */
     public void removeBullet(Bullet bullet) {
     	if ( bullets.remove(bullet) );
     		bullet.removeShip();
     }
     
+    /**
+     * Returns the amount of bullets currently loaded on this ship.
+     * 
+     * @return
+     */
     public int getNbBullets() {
     	return bullets.size();
     }
     
+    /**
+     * Returns a HashSet containing all the bullets loaded on this ship.
+     * 
+     * @return 
+     */
     public HashSet<Bullet> getAllBullets() {
     	return new HashSet<Bullet>(bullets);
     }
     
+    /**
+     * Returns the first bullet that is loaded on this ship. If there are no bullets loaded,
+     * returns null.
+     */
     private Bullet getFirstBullet() {
+    	if ( bullets.size() == 0 )
+    		return null;
+    	
     	for (Bullet bullet : bullets) {
-			return bullet;
+    		return bullet;
 		}
     	return null;
     }
     
     /**
+     * Fires a bullet from the current ship in the direction that the ship is facing with
+     * a velocity of 250km/s. If the ship is not in a world, it can't fire. If the position
+     * the bullet should spawn at is not valid, the bullet is destroyed immediately. If the
+     * bullet overlaps another entity in this world upon spawning, a collision is created
+	 * and resolved.
      * 
+     * @Post	The bullet is no longer loaded on this ship.
+     * 
+     *  TODO Complete method
+     *  TODO Add tests
      */
     public void fireBullet() {				//Totally
-    	// TODO Complete
+    	
 		Bullet bullet = getFirstBullet();
-		if ( bullet != null ) {
-			Vector nextBulletPosition = getDirection().multiply( (getRadius() + bullet.getRadius())/2 );
-			bullet.setPosition(nextBulletPosition);
-			bullet.setVelocity(getDirection().multiply(initialBulletSpeed));
-			removeBullet(bullet);
-			bullet.removeShip();
-			bullet.setWorld(getWorld());
+		if ( (bullet != null) && (getWorld() != null) ) {
+			Vector nextBulletPosition = getDirection().multiply( (getRadius() + bullet.getRadius())/2 + 1);
 			
-			
+			if ( ! bullet.canHaveAsPosition(nextBulletPosition) ) {
+				removeBullet(bullet);
+				bullet.terminate();
+			}
+			else {
+				bullet.setPosition(nextBulletPosition);
+				bullet.setVelocity(getDirection().multiply(initialBulletSpeed));
+				removeBullet(bullet);
+				
+				resolveInitialBulletCollisions(bullet);
+				
+				getWorld().addEntity(bullet);
+			}	
 		}		
 	}
+    
+    /**
+     * Resolves a collision caused by the firing of a bullet from a ship. This method only
+     * creates and resolves a collision if a fired bullet overlaps an entity in the current
+     * world upon spawning at its initial location.
+     * 
+     * @param bullet
+     * @return
+     */
+    private void resolveInitialBulletCollisions(Bullet bullet) {
+    	Collection<Entity> allEntities = getWorld().getAllEntities();
+    	Collision collision = null;
+    	
+    	for (Entity entity : allEntities) {
+    		if ( entity.overlap(bullet) ) {
+    			collision = new Collision(bullet, entity, 0);
+    			break;
+    		}		
+    	}
+    	
+    	if ( collision != null ) {
+    		// @TODO
+        	// This is where the collision should be resolved.
+    		// collision.resolve();
+    	}
+    }
     
     private static final double initialBulletSpeed = 250;
    
