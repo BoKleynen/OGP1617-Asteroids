@@ -10,15 +10,15 @@ import be.kuleuven.cs.som.annotate.*;
  */
 public class Collision {
 
-    Collision() {
+    public Collision() {
         this(null, null, Double.POSITIVE_INFINITY);
     }
 
-    Collision(Entity entity, double timeToCollision) {
+    public Collision(Entity entity, double timeToCollision) {
         this(entity, null, timeToCollision);
     }
 
-    Collision(Entity entity1, Entity entity2, double timeToCollision) {
+    public Collision(Entity entity1, Entity entity2, double timeToCollision) {
         this.entity1 = entity1;
         this.entity2 = entity2;
         this.timeToCollision = timeToCollision;
