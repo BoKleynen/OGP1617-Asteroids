@@ -96,15 +96,12 @@ public class Bullet extends Entity {
     
     @Override @Basic
     public void setWorld(World world) {
-    	if ( (world != null) && (world.getAllBullets().contains(this)) )
-    		throw new IllegalArgumentException();
     	if ( hasShip() || hasWorld() )
     		throw new IllegalStateException();
     	
     	super.setWorld(world);
     }
     
-
     private char wallHits;
 
     /**
