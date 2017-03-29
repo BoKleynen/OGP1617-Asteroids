@@ -15,7 +15,7 @@ public class Bullet extends Entity {
 
     public Bullet(World world, Vector position, Vector velocity, double maxSpeed,double radius) {
 
-        super(world, position, maxSpeed, velocity, radius, getMinRadius(), 0, getMassDensity());
+        super(world, position, maxSpeed, velocity, getMinRadius(), radius, 0, getMassDensity());
 
         maxWallHits = 2;
         wallHits = 0;
@@ -72,8 +72,8 @@ public class Bullet extends Entity {
     }
     
     public void removeShip() {
-    	if (parentShip != null)
-    		parentShip = null;
+    	if (ship != null)
+    		ship = null;
     }
     
     public void setShip(Ship ship) {
@@ -91,15 +91,15 @@ public class Bullet extends Entity {
     
     public void removeWorld() {
     	if (getWorld() != null)
-    		setWorld(null);
+    		super.setWorld(null);
     }
     
     @Override @Basic
     public void setWorld(World world) {
-    	if ( (world == null) || (world.getAllBullets().contains(this)))
+    	if ( (world != null) && (world.getAllBullets().contains(this)) )
     		throw new IllegalArgumentException();
     	if ( hasShip() || hasWorld() )
-    		throw new IllegalArgumentException();
+    		throw new IllegalStateException();
     	
     	super.setWorld(world);
     }

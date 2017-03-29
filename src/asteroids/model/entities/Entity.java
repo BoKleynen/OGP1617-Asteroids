@@ -106,7 +106,7 @@ public abstract class Entity {
     
     /**
      * 
-     * @return True if and only if the entity is currently ssociated with a world.
+     * @return True if and only if the entity is currently associated with a world.
      */
     public boolean hasWorld() {
     	return !(getWorld() == null);
