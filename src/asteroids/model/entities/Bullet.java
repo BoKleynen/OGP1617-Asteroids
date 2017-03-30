@@ -115,62 +115,40 @@ public class Bullet extends Entity {
     /**
      * Increments the amount of wall hits for this bullet by 1.
      */
-    private void incrementWallHits() {
+   public void incrementWallHits() {
         wallHits += 1;
-    }
+   }
 
-    private char maxWallHits;
+   private char maxWallHits;
 
-    /**
-     * Returns the maximum amount of wall hits for this bullet.
-     *
-     * @return  this.maxWallHits
-     */
-    public char getMaxWallHits() {
+   /**
+    * Returns the maximum amount of wall hits for this bullet.
+    *
+    * @return  this.maxWallHits
+    */
+   public char getMaxWallHits() {
         return maxWallHits;
-    }
+   }
 
-    /**
-     * Resolves the collision of this bullet with a boundary of the world this bullet belongs to.
-     * If this bullet has reached its maximum amount of wall hits, it will die and be removed from this bullets world.
-     * Otherwise the velocity in the x or y direction is negated for a collision with a vertical or horizontal boundary
-     * respectively. The amount of sustained wall hits for this bullet is incremented.
-     */
-    @Override
-    public void resolveCollisionWithBoundary(CollisionListener collisionListener) {
-        if (getWallHits() == getMaxWallHits()) {
-            collisionListener.boundaryCollision(this, getPosition().getX(), getPosition().getY());
-            die();
-        }
-
-        else {
-            super.resolveCollisionWithBoundary(collisionListener);
-            incrementWallHits();
-        }
-    }
-
-    /**
-     * Resolves the collision of this bullet with a Ship that belongs to the same world as this bullet.
-     * If the ship is this bullets parent ship, the bullet is reloaded onto the ship.
-     * Else both this bullet and the ship are destroyed.
-     *
-     * @param ship
-     */
-    @Override
-    public void resolveCollisionWithShip(Ship ship, CollisionListener collisionListener) {
-        ship.resolveCollisionWithBullet(this, collisionListener);
-    }
-
-    /**
-     * Resolves the collision of this bullet with another bullet that belongs to the same world as this bullet.
-     * Both this bullet and the bullet are destroyed.
-     * @param bullet
-     */
-    @Override
-    public void resolveCollisionWithBullet(Bullet bullet, CollisionListener collisionListener) {
-        collisionListener.objectCollision(this, bullet, getPosition().getX(), getPosition().getY());
+   /**
+    * Resolves the collision of this bullet with a Ship that belongs to the same world as this bullet.
+    * If the ship is this bullets parent ship, the bullet is reloaded onto the ship.
+    * Else both this bullet and the ship are destroyed.
+    *
+    * @param ship
+    */
+   @Override
+   public void resolveCollisionWithShip(Ship ship) {
+        ship.resolveCollisionWithBullet(this);
+   }
+   /**
+    * Resolves the collision of this bullet with another bullet that belongs to the same world as this bullet.
+    * Both this bullet and the bullet are destroyed.
+    * @param bullet
+    */
+   @Override
+   public void resolveCollisionWithBullet(Bullet bullet) {
         die();
         bullet.die();
-    }
-
+   }
 }

@@ -1,9 +1,14 @@
 package asteroids.model.world;
 
+import asteroids.model.collisions.Collision;
+import asteroids.model.collisions.EntityCollision;
+import asteroids.model.collisions.BoundaryCollision;
 import asteroids.part2.CollisionListener;
 import vector.Vector;
 import asteroids.model.entities.*;
 import be.kuleuven.cs.som.annotate.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -167,8 +172,8 @@ public class World {
     }
 
     public Collision getFirstCollision() {
-        HashSet<Entity> entities = getAllEntities();
-        Collision earliestCollision = new Collision();
+        ArrayList<Entity> entities = new ArrayList<>(getAllEntities());
+        Collision earliestCollision = new BoundaryCollision();
 
         for (Entity entity1: entities) {
             entities.remove(entity1);
@@ -176,18 +181,19 @@ public class World {
             double wallCollisionTime = entity1.getTimeToWallCollision();
 
             if ( wallCollisionTime < earliestCollision.getTimeToCollision() )
-            	earliestCollision = new Collision(entity1, wallCollisionTime);
+            	earliestCollision = new BoundaryCollision(entity1, wallCollisionTime);
 
             for (Entity entity2 : entities) {
                 double collisionTime = entity1.getTimeToCollision(entity2);
 
                 if (collisionTime < earliestCollision.getTimeToCollision()) {
-                     earliestCollision = new Collision(entity1, entity2, collisionTime);
+                     earliestCollision = new EntityCollision(entity1, entity2, collisionTime);
 
                 }
             }
         }
-        
+
+        earliestCollision.setCollisionPosition(earliestCollision.calculateCollisionPosition());
         return earliestCollision;
     }
 
@@ -198,10 +204,8 @@ public class World {
 
         if (time > 0) {
             Collision firstCollision = getFirstCollision();
-            double timeToFirstCollision = firstCollision.getTimeToCollision();
-
         
-            if (timeToFirstCollision > time) {
+            if (firstCollision.getTimeToCollision() > time) {
                 for (Entity entity : getAllEntities()) {
                     entity.move(time);
                 }
@@ -209,11 +213,12 @@ public class World {
 
             else {
                 for (Entity entity : getAllEntities()) {
-                    entity.move(timeToFirstCollision);
+                    entity.move(firstCollision.getTimeToCollision());
                 }
 
-                firstCollision.resolve(collisionListener);
-                evolve(time - timeToFirstCollision, collisionListener);
+                firstCollision.collisionListener(collisionListener);
+                firstCollision.resolve();
+                evolve(time - firstCollision.getTimeToCollision(), collisionListener);
             }
         }
     }

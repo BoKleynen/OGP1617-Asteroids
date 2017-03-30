@@ -264,7 +264,7 @@ public abstract class Entity {
      *
      */
     @Basic
-    void setVelocity(Vector newVelocity) {
+    public void setVelocity(Vector newVelocity) {
         if (newVelocity == null || Double.isNaN(newVelocity.getX()) || Double.isNaN(newVelocity.getY())) {
             newVelocity = new Vector(0, 0);
         }
@@ -419,8 +419,19 @@ public abstract class Entity {
         yCollisionTime = getVelocity().getY() > 0 ? (getWorld().getHeight() - getPosition().getY()) / getVelocity().getY()
                 : -getPosition().getY() / getVelocity().getY();
         	
-        	return Math.min(xCollisionTime, yCollisionTime);
+        return Math.min(xCollisionTime, yCollisionTime);
+    }
+
+    public Vector getWallCollisionPosition() {
+        if (getWorld() == null)
+            return new Vector(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+
+        else {
+            double timeToWallCollision = getTimeToWallCollision();
+
+            return getPosition().add(getVelocity().multiply(timeToWallCollision));
         }
+    }
 
 
     /**
@@ -432,31 +443,14 @@ public abstract class Entity {
     }
 
     /**
-     * Resolves the collision of this entity with a boundary of the world it belongs to.
-     * The velocity of this entity in the x or y direction is negated for a collision with a vertical or horizontal
-     * boundary respectively.
-     */
-    public void resolveCollisionWithBoundary(CollisionListener collisionListener) {
-        if (getPosition().getX() == 0 || getPosition().getX() == getWorld().getWidth()){
-            collisionListener.boundaryCollision(this, this.getPosition().getX(), this.getPosition().getY());
-            setVelocity(new Vector(-getVelocity().getX(), getVelocity().getY()));
-        }
-
-        else {
-            setVelocity(new Vector(getVelocity().getX(), -getVelocity().getY()));
-
-        }
-    }
-
-    /**
      * Resolves the collision of this Entity with the given Ship.
      * @param ship
      */
-    public abstract void resolveCollisionWithShip(Ship ship, CollisionListener collisionListener);
+    public abstract void resolveCollisionWithShip(Ship ship);
 
     /**
      * Resolves the collision of this Entity with the given Bullet
      * @param bullet
      */
-    public abstract void resolveCollisionWithBullet(Bullet bullet, CollisionListener collisionListener);
+    public abstract void resolveCollisionWithBullet(Bullet bullet);
 }

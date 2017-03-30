@@ -1,12 +1,12 @@
 package asteroids.model.entities;
 
-import asteroids.part2.CollisionListener;
+import asteroids.model.collisions.Collision;
+import asteroids.model.collisions.EntityCollision;
 import asteroids.model.world.*;
 import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
 import java.util.Collection;
-import asteroids.part2.CollisionListener;
 
 
 /**
@@ -97,11 +97,17 @@ public class Ship extends Entity {
 
         super(world, position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
         
-        loadBullets(15);
+        loadBullets(getInitialBulletAmount());
         setOrientation(orientation);
         setThrust(thrust);
         thrustOff();
 
+    }
+
+    private final static char initialBulletAmount = 0;
+
+    public static char getInitialBulletAmount() {
+        return initialBulletAmount;
     }
 
     private static final double minMassDensity = 1.42 * 1e12;
@@ -187,6 +193,10 @@ public class Ship extends Entity {
 
     public void setThrust(double newThrust) {
         thrust = newThrust;
+    }
+
+    public double getAcceleration() {
+        return getThrust() / getTotalMass();
     }
 
     /**
@@ -342,7 +352,7 @@ public class Ship extends Entity {
      * @param amount
      */
     public void loadBullets(int amount) {
-    	if ( amount <= 0 )
+    	if ( amount < 0 )
     		throw new IllegalArgumentException();
     	
     	for (int i = 0; i < amount; i++) {
@@ -457,7 +467,7 @@ public class Ship extends Entity {
     	
     	for (Entity entity : allEntities) {
     		if ( entity.overlap(bullet) ) {
-    			collision = new Collision(bullet, entity, 0);
+    			collision = new EntityCollision(bullet, entity, 0);
     			break;
     		}		
     	}
@@ -473,7 +483,7 @@ public class Ship extends Entity {
    
 
     @Override
-    public void resolveCollisionWithShip(Ship ship, CollisionListener collisionListener) {
+    public void resolveCollisionWithShip(Ship ship) {
         double sigma = getRadius() + ship.getRadius();
         double J = (2.0 * getMass() * ship.getMass() * getVelocity().getDifference(ship.getVelocity()).dotProduct(getPosition().getDifference(ship.getPosition()))) /
                 (sigma * (getMass() + ship.getMass()));
@@ -481,7 +491,6 @@ public class Ship extends Entity {
         double Jx = J * (getPosition().getX() - ship.getPosition().getX()) / sigma;
         double Jy = J * (getPosition().getY() - ship.getPosition().getY()) / sigma;
 
-        collisionListener.objectCollision(this, ship, getPosition().getX(), getPosition().getY());
         setVelocity(new Vector(getVelocity().getX() + Jx/getMass(),getVelocity().getY() + Jy/getMass()));
         ship.setVelocity(new Vector(ship.getVelocity().getX() - Jx/ship.getMass(),ship.getVelocity().getY() - Jy/ship.getMass()));
 
@@ -489,14 +498,12 @@ public class Ship extends Entity {
     }
 
     @Override
-    public void resolveCollisionWithBullet(Bullet bullet, CollisionListener collisionListener) {
+    public void resolveCollisionWithBullet(Bullet bullet) {
         if (bullet.getParentShip() == this) {
-            collisionListener.objectCollision(this, bullet, getPosition().getX(), getPosition().getY());
             addBullet(bullet);
         }
 
         else {
-            collisionListener.objectCollision(this, bullet, getPosition().getX(), getPosition().getY());
             die();
             bullet.die();
         }
