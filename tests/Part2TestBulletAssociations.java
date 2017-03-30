@@ -27,16 +27,16 @@ public class Part2TestBulletAssociations {
 	public void testAddBulletToShip_LegalCase() {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
-		assertTrue(s1.getNbBullets() == 15);
+		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount());
 		s1.addBullet(b);
 		
-		assertTrue(s1.getNbBullets() == 16);
+		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount() + 1);
 		assertTrue(s1.getAllBullets().contains(b));
 		assertTrue(b.getShip() == s1);
 		
 		// Test removing one bullet from the ship.
 		s1.removeBullet(b);
-		assertTrue(s1.getNbBullets() == 15);
+		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount());
 		assertFalse(s1.getAllBullets().contains(b));
 		
 		// Test adding multiple bullets at the same time
@@ -45,11 +45,11 @@ public class Part2TestBulletAssociations {
 			coll.add(new Bullet(new Vector(0, 0), new Vector(0, 0), 2));
 		}
 		s2.loadBullets(coll);
-		assertTrue(s2.getNbBullets() == 25);
+		assertTrue(s2.getNbBullets() == Ship.getInitialBulletAmount() + 10);
 		
 		// Test loading multiple new bullets onto a ship.
 		s1.loadBullets(100);
-		assertTrue(s1.getNbBullets() == 115);
+		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount() + 100);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
