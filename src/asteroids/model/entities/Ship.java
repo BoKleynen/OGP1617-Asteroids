@@ -223,7 +223,7 @@ public class Ship extends Entity {
         if( time < 0 )
             throw new IllegalArgumentException();
 
-        setPosition(getPosition().add(getVelocity().multiply(time)));
+        super.move(time);
         
         for (Bullet bullet : bullets) {
         	bullet.setPosition(getPosition());
