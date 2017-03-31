@@ -408,15 +408,15 @@ public abstract class Entity {
      * @return The time until the first collision with a wall of the world this entity is in.
      */
     public double getTimeToWallCollision() {
-        if ( getWorld() == null )
+        if ( getWorld() == null || getVelocity().dotProduct(getVelocity()) == 0)
             return Double.POSITIVE_INFINITY;
 
         double xCollisionTime, yCollisionTime;
 
-        xCollisionTime = getVelocity().getX() > 0 ? (getWorld().getWidth() - getPosition().getX()) / getVelocity().getX()
+        xCollisionTime = getVelocity().getX() >= 0 ? (getWorld().getWidth() - getPosition().getX()) / getVelocity().getX()
                 : -getPosition().getX() / getVelocity().getX();
 
-        yCollisionTime = getVelocity().getY() > 0 ? (getWorld().getHeight() - getPosition().getY()) / getVelocity().getY()
+        yCollisionTime = getVelocity().getY() >= 0 ? (getWorld().getHeight() - getPosition().getY()) / getVelocity().getY()
                 : -getPosition().getY() / getVelocity().getY();
         	
         return Math.min(xCollisionTime, yCollisionTime);

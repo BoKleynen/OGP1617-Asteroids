@@ -88,8 +88,8 @@ public class Bullet extends Entity {
     
     @Override @Basic
     public void setWorld(World world) {
-    	if ( hasShip() || hasWorld() )
-    		throw new IllegalStateException();
+//    	if ( hasShip() || hasWorld() )
+//    		throw new IllegalStateException();
     	
     	super.setWorld(world);
     }

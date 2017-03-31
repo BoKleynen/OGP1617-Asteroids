@@ -23,3 +23,5 @@ tests/asteroids/VectorTest\.java
 tests/ShipTests\.java
 
 tests/asteroids/tests/ShipTests\.java
+
+*.uml

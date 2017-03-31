@@ -8,9 +8,7 @@ import vector.Vector;
 import asteroids.model.entities.*;
 import be.kuleuven.cs.som.annotate.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 
 public class World {
@@ -172,18 +170,18 @@ public class World {
     }
 
     public Collision getFirstCollision() {
-        ArrayList<Entity> entities = new ArrayList<>(getAllEntities());
+        Entity[] entities = getAllEntities().toArray(new Entity[0]);
         Collision earliestCollision = new BoundaryCollision();
 
-        for (Entity entity1: entities) {
-            entities.remove(entity1);
-
+        for (int i = 0; i < entities.length; i++) {
+            Entity entity1 = entities[i];
             double wallCollisionTime = entity1.getTimeToWallCollision();
 
             if ( wallCollisionTime < earliestCollision.getTimeToCollision() )
             	earliestCollision = new BoundaryCollision(entity1, wallCollisionTime);
 
-            for (Entity entity2 : entities) {
+            for (int j = i + 1; j < entities.length; j++) {
+                Entity entity2 = entities[j];
                 double collisionTime = entity1.getTimeToCollision(entity2);
 
                 if (collisionTime < earliestCollision.getTimeToCollision()) {
@@ -191,6 +189,7 @@ public class World {
 
                 }
             }
+
         }
 
         earliestCollision.setCollisionPosition(earliestCollision.calculateCollisionPosition());
@@ -204,7 +203,7 @@ public class World {
 
         if (time > 0) {
             Collision firstCollision = getFirstCollision();
-        
+
             if (firstCollision.getTimeToCollision() > time) {
                 for (Entity entity : getAllEntities()) {
                     entity.move(time);
