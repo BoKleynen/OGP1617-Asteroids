@@ -19,8 +19,7 @@ public class Facade implements asteroids.part2.facade.IFacade {
 
     }
 
-    public Ship createShip() throws ModelException
-    {
+    public Ship createShip() throws ModelException {
         try {
             return new Ship();
 
@@ -30,8 +29,7 @@ public class Facade implements asteroids.part2.facade.IFacade {
     }
 
     public Ship createShip(double x, double y, double xVelocity, double yVelocity, double radius, double orientation)
-            throws ModelException
-    {
+            throws ModelException {
         try {
             return new Ship( new Vector(x, y), new Vector(xVelocity, yVelocity), orientation, radius, 0);
 
@@ -40,8 +38,7 @@ public class Facade implements asteroids.part2.facade.IFacade {
         }
     }
 
-    public Ship createShip(double x, double y, double xVelocity, double yVelocity, double radius, double direction,
-                           double mass) throws ModelException {
+    public Ship createShip(double x, double y, double xVelocity, double yVelocity, double radius, double direction, double mass) throws ModelException {
         try {
             return new Ship(new Vector(x, y), new Vector(xVelocity, yVelocity), direction, radius, mass);
         } catch (Exception e) {
@@ -51,40 +48,68 @@ public class Facade implements asteroids.part2.facade.IFacade {
 
     @Override
     public void terminateShip(Ship ship) throws ModelException {
-        ship.terminate();
+        try {
+            ship.terminate();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public boolean isTerminatedShip(Ship ship) throws ModelException {
-        return ship.isTerminated();
+        try {
+            return ship.isTerminated();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public double getShipMass(Ship ship) throws ModelException {
-        return ship.getMass();
+        try {
+            return ship.getMass();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public World getShipWorld(Ship ship) throws ModelException {
-        return ship.getWorld();
+        try {
+            return ship.getWorld();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public boolean isShipThrusterActive(Ship ship) throws ModelException {
-        return ship.thrusterOn();
+        try {
+            return ship.thrusterOn();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void setThrusterActive(Ship ship, boolean active) throws ModelException {
-        if (active)
-            ship.thrustOn();
-        else
-            ship.thrustOff();
+        try {
+            if (active)
+                ship.thrustOn();
+            else
+                ship.thrustOff();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public double getShipAcceleration(Ship ship) throws ModelException {
-        return ship.getAcceleration();
+        try {
+            return ship.getAcceleration();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public double[] getShipPosition(Ship ship) throws ModelException {
@@ -143,12 +168,20 @@ public class Facade implements asteroids.part2.facade.IFacade {
 
     @Override
     public void terminateBullet(Bullet bullet) throws ModelException {
-        bullet.terminate();
+        try {
+            bullet.terminate();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public boolean isTerminatedBullet(Bullet bullet) throws ModelException {
-        return bullet.isTerminated();
+        try {
+            return bullet.isTerminated();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
@@ -171,42 +204,74 @@ public class Facade implements asteroids.part2.facade.IFacade {
 
     @Override
     public double getBulletRadius(Bullet bullet) throws ModelException {
-        return bullet.getRadius();
+        try {
+            return bullet.getRadius();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public double getBulletMass(Bullet bullet) throws ModelException {
-        return bullet.getMass();
+        try {
+            return bullet.getMass();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public World getBulletWorld(Bullet bullet) throws ModelException {
-        return bullet.getWorld();
+        try {
+            return bullet.getWorld();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public Ship getBulletShip(Bullet bullet) throws ModelException {
-        return null;
+        try {
+            return bullet.getShip();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public Ship getBulletSource(Bullet bullet) throws ModelException {
-        return bullet.getParentShip();
+        try {
+            return bullet.getParentShip();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public World createWorld(double width, double height) throws ModelException {
-        return new World(width, height);
+        try {
+            return new World(width, height);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void terminateWorld(World world) throws ModelException {
-        world.terminate();
+        try {
+            world.terminate();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public boolean isTerminatedWorld(World world) throws ModelException {
-        return world.isTerminated();
+        try {
+            return world.isTerminated();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
@@ -220,73 +285,129 @@ public class Facade implements asteroids.part2.facade.IFacade {
 
     @Override
     public Set<? extends Ship> getWorldShips(World world) throws ModelException {
-        return world.getAllShips();
+        try {
+            return world.getAllShips();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public Set<? extends Bullet> getWorldBullets(World world) throws ModelException {
-        return world.getAllBullets();
+        try {
+            return world.getAllBullets();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void addShipToWorld(World world, Ship ship) throws ModelException {
-        world.addEntity(ship);
+        try {
+            world.addEntity(ship);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void removeShipFromWorld(World world, Ship ship) throws ModelException {
-        world.removeEntity(ship);
+        try {
+            world.removeEntity(ship);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void addBulletToWorld(World world, Bullet bullet) throws ModelException {
-        world.addEntity(bullet);
+        try {
+            world.addEntity(bullet);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void removeBulletFromWorld(World world, Bullet bullet) throws ModelException {
-        world.removeEntity(bullet);
+        try {
+            world.removeEntity(bullet);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public Set<? extends Bullet> getBulletsOnShip(Ship ship) throws ModelException {
-        return ship.getAllBullets();
+        try {
+            return ship.getAllBullets();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public int getNbBulletsOnShip(Ship ship) throws ModelException {
-        return ship.getNbBullets();
+        try {
+            return ship.getNbBullets();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void loadBulletOnShip(Ship ship, Bullet bullet) throws ModelException {
-        ship.addBullet(bullet);
+        try {
+            ship.addBullet(bullet);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void loadBulletsOnShip(Ship ship, Collection<Bullet> bullets) throws ModelException {
-        ship.loadBullets(bullets);
+        try {
+            ship.loadBullets(bullets);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void removeBulletFromShip(Ship ship, Bullet bullet) throws ModelException {
-        ship.removeBullet(bullet);
+        try {
+            ship.removeBullet(bullet);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void fireBullet(Ship ship) throws ModelException {
-        ship.fireBullet();
+        try {
+            ship.fireBullet();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public double getTimeCollisionBoundary(Object object) throws ModelException {
-        return ((Entity) object).getTimeToWallCollision();
+        try {
+            return ((Entity) object).getTimeToWallCollision();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public double[] getPositionCollisionBoundary(Object object) throws ModelException {
-        Vector collisionPosition = ((Entity) object).getWallCollisionPosition();
-        return new double[]{collisionPosition.getX(), collisionPosition.getY()};
+        try {
+            Vector collisionPosition = ((Entity) object).getWallCollisionPosition();
+            return new double[]{collisionPosition.getX(), collisionPosition.getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
@@ -300,34 +421,58 @@ public class Facade implements asteroids.part2.facade.IFacade {
 
     @Override
     public double[] getPositionCollisionEntity(Object entity1, Object entity2) throws ModelException {
-        Vector collisionPosition = ((Entity) entity1).getCollisionPosition((Entity) entity2);
-        return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
+        try {
+            Vector collisionPosition = ((Entity) entity1).getCollisionPosition((Entity) entity2);
+            return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public double getTimeNextCollision(World world) throws ModelException {
-        return world.getFirstCollision().getTimeToCollision();
+        try {
+            return world.getFirstCollision().getTimeToCollision();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public double[] getPositionNextCollision(World world) throws ModelException {
-        Vector collisionPosition = world.getFirstCollision().getCollisionPosition();
-        return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
+        try {
+            Vector collisionPosition = world.getFirstCollision().getCollisionPosition();
+            return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public void evolve(World world, double dt, CollisionListener collisionListener) throws ModelException {
-        world.evolve(dt, collisionListener);
+        try {
+            world.evolve(dt, collisionListener);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public Object getEntityAt(World world, double x, double y) throws ModelException {
-        return world.getEntityAtPosition(new Vector(x,y));
+        try {
+            return world.getEntityAtPosition(new Vector(x,y));
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     @Override
     public Set<? extends Object> getEntities(World world) throws ModelException {
-        return world.getAllEntities();
+        try {
+            return world.getAllEntities();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     public void thrust(Ship ship, double amount) throws ModelException

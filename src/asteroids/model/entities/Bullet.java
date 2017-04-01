@@ -1,11 +1,14 @@
 package asteroids.model.entities;
 
 
-import asteroids.part2.CollisionListener;
+import be.kuleuven.cs.som.annotate.*;
 import vector.Vector;
 import asteroids.model.world.*;
-import be.kuleuven.cs.som.annotate.Basic;
 
+/**
+ * @Invar A bullet is associated with at most one world or one ship at once
+ *
+ */
 public class Bullet extends Entity {
 	
 
@@ -43,6 +46,12 @@ public class Bullet extends Entity {
         return massDensity;
     }
 
+    private Ship parentShip = null;
+
+    @Basic
+    void setParentShip(Ship ship) {
+        this.parentShip = ship;
+    }
 
     /**
      * Returns the ship to which this bullet belongs or that fired it.
@@ -53,34 +62,33 @@ public class Bullet extends Entity {
     public Ship getParentShip() {
     	return parentShip;
     }
-    
+
+    private Ship ship = null;
+
     @Basic
     public Ship getShip() {
         return ship;
     }
     
     public boolean hasShip() {
-    	return !(ship == null);
+    	return (getShip() != null);
     }
-    
-    public void removeShip() {
-    	if (ship != null)
+
+    @Raw
+    void removeShip() {
+    	if (hasShip())
     		ship = null;
     }
-    
-    public void setShip(Ship ship) {
-    	if ( (ship == null) || (ship.getAllBullets().contains(this)) )
-    		throw new IllegalArgumentException();
-    	if ( hasShip() || hasWorld() )
+
+    @Raw
+    void setShip(Ship ship) {
+    	if (ship.getAllBullets().contains(this) || hasShip())
     		throw new IllegalArgumentException();
 
     	this.ship = ship;
-    	parentShip = ship;
     }
-    
-    private Ship ship = null;
-    private Ship parentShip = null; 
-    
+
+    @Raw
     public void removeWorld() {
     	if (getWorld() != null)
     		super.setWorld(null);
@@ -88,9 +96,6 @@ public class Bullet extends Entity {
     
     @Override @Basic
     public void setWorld(World world) {
-//    	if ( hasShip() || hasWorld() )
-//    		throw new IllegalStateException();
-    	
     	super.setWorld(world);
     }
     

@@ -163,14 +163,15 @@ public class World {
     }
     
     public void removeBullet(Bullet bullet) {
-    	if ( entities.containsKey(bullet.getPosition()) ) {
+    	if (entities.containsKey(bullet.getPosition()) ) {
     		entities.remove(bullet.getPosition(), bullet);
     		bullet.removeWorld();
     	}
     }
 
     public Collision getFirstCollision() {
-        Entity[] entities = getAllEntities().toArray(new Entity[0]);
+        HashSet<Entity> entitiesSet = getAllEntities();
+        Entity[] entities = entitiesSet.toArray(new Entity[entitiesSet.size()]);
         Collision earliestCollision = new BoundaryCollision();
 
         for (int i = 0; i < entities.length; i++) {

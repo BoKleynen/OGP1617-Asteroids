@@ -6,6 +6,9 @@ import asteroids.model.world.World;
 import be.kuleuven.cs.som.annotate.*;
 
 
+/**
+ * @Invar an entity is associated with at most one world at once
+ */
 public abstract class Entity {
 
 
@@ -320,11 +323,8 @@ public abstract class Entity {
      * @return	True if and only if both entities overlap.
      * 			| result == ( getDistanceBetween(spaceentity) <= 0 )
      */
-    public boolean overlap(Entity entity){
-        double distanceBetweenCentres = getDistanceBetweenCenters(entity);
-        double radiusSum = getRadius() + entity.getRadius();
-
-        return radiusSum * 0.99 <= distanceBetweenCentres && distanceBetweenCentres <= radiusSum * 1.01 ;
+    public boolean overlap(Entity entity) {
+        return getDistanceBetweenCenters(entity) <= (getRadius() + entity.getRadius()) * 0.99;
     }
 
     /**

@@ -220,8 +220,9 @@ public class Ship extends Entity {
      */
     @Override	
     public void move(double time) {
-        if( time < 0 )
+        if( time < 0 ) {
             throw new IllegalArgumentException();
+        }
 
         super.move(time);
         
@@ -343,8 +344,9 @@ public class Ship extends Entity {
      */
     public void addBullet(Bullet bullet) {
     	bullet.setShip(this);
-    	bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
+    	bullet.setParentShip(this);
         bullets.add(bullet);
+    	bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
     }
     
     /**
@@ -383,8 +385,9 @@ public class Ship extends Entity {
      * @param bullet
      */
     public void removeBullet(Bullet bullet) {
-    	if ( bullets.remove(bullet) );
-    		bullet.removeShip();
+        if (bullet.getShip() == this)
+            bullets.remove(bullet);
+            bullet.removeShip();
     }
     
     /**
@@ -412,7 +415,7 @@ public class Ship extends Entity {
     private Bullet getFirstBullet() {
     	if ( bullets.size() == 0 )
     		return null;
-    	
+
     	for (Bullet bullet : bullets) {
     		return bullet;
 		}
@@ -435,21 +438,20 @@ public class Ship extends Entity {
     	
 		Bullet bullet = getFirstBullet();
 		if ( (bullet != null) && (getWorld() != null) ) {
-			Vector nextBulletPosition = getDirection().multiply( (getRadius() + bullet.getRadius())/2 + 1);
+			Vector nextBulletPosition = getPosition().add(getDirection().multiply((getRadius() + bullet.getRadius())));
 			
-			if ( ! bullet.canHaveAsPosition(nextBulletPosition) ) {
+			if (! bullet.canHaveAsPosition(nextBulletPosition)) {
 				removeBullet(bullet);
 				bullet.terminate();
 			}
 			else {
-				bullet.setPosition(nextBulletPosition);
-				bullet.setVelocity(getDirection().multiply(initialBulletSpeed));
-				removeBullet(bullet);
-				
-				resolveInitialBulletCollisions(bullet);
-				
-				getWorld().addEntity(bullet);
-			}	
+                removeBullet(bullet);
+                getWorld().addEntity(bullet);
+                bullet.setPosition(nextBulletPosition);
+                resolveInitialBulletCollisions(bullet);
+                bullet.setVelocity(getDirection().multiply(initialBulletSpeed));
+
+			}
 		}		
 	}
     
