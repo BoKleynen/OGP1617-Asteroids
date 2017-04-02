@@ -112,8 +112,10 @@ public class World {
     public void addEntity(Entity entity) throws IllegalArgumentException {
     	if ( entity == null )
     		throw new NullPointerException();
-    	if ( (entity.hasWorld()) || (entities.containsValue(entity)) )
-    		throw new IllegalArgumentException();
+    	if ( entity.hasWorld() )
+    		throw new IllegalArgumentException("Entity already has a world.");
+    	if ( entities.containsValue(entity) )
+    		throw new IllegalArgumentException("Entity is already in this world");
         entities.put(entity.getPosition(), entity);
         entity.setWorld(this);
     }
@@ -127,7 +129,7 @@ public class World {
     public void removeEntity(Entity entity) {
     	if ( entity == null )
     		throw new NullPointerException();
-    	if ( ! entities.containsKey(entity.getPosition())) 
+    	if ( ! entities.containsValue(entity))
     		throw new IllegalArgumentException();
         entities.remove(entity.getPosition());
         entity.setWorld(null);
@@ -201,6 +203,7 @@ public class World {
     public void evolve(double time, CollisionListener collisionListener) {
         if (time < 0)
             throw new IllegalArgumentException();
+            throw new IllegalArgumentException(Double.toString(time));
 
         if (time > 0) {
             Collision firstCollision = getFirstCollision();
