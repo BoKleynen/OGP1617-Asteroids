@@ -150,7 +150,15 @@ public class Ship extends Entity {
     }
     
     public boolean isValidMass(double mass) {
-    	return mass >= ( (4.0/3.0) * Math.pow(getRadius(), 3) * Math.PI * getMinMassDensity() );
+    	return mass >= ( (4.0/3.0) * Math.pow(getRadius(), 3) * Math.PI * Ship.getMinMassDensity() );
+    }
+    
+    public static boolean isValidMass(double mass, double radius) {
+    	return mass >= ( (4.0/3.0) * Math.pow(radius, 3) * Math.PI * Ship.getMinMassDensity() );
+    }
+    
+    public static double getMinMass(double radius) {
+    	return ( (4.0/3.0) * Math.pow(radius, 3) * Math.PI * Ship.getMinMassDensity() );
     }
     
     public double getMassDensity() {
@@ -221,7 +229,7 @@ public class Ship extends Entity {
     @Override	
     public void move(double time) {
         if( time < 0 ) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(Double.toString(time));
         }
 
         super.move(time);
