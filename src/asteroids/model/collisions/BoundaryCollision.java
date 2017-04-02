@@ -46,7 +46,7 @@ public class BoundaryCollision extends Collision {
     }
 
     private void resolveCollisionWithBoundary() {
-        if (getCollisionPosition().getX() == 0 ||getCollisionPosition().getX() == getEntity1().getWorld().getWidth()){
+        if (getCollisionPosition().getX() == 0 || getCollisionPosition().getX() == getEntity1().getWorld().getWidth()){
             getEntity1().setVelocity(new Vector(-getEntity1().getVelocity().getX(), getEntity1().getVelocity().getY()));
         }
 
@@ -59,5 +59,10 @@ public class BoundaryCollision extends Collision {
     @Override
     public void collisionListener(CollisionListener collisionListener) {
         collisionListener.boundaryCollision(getEntity1(), getCollisionPosition().getX(), getCollisionPosition().getY());
+    }
+
+    @Override
+    public String toString() {
+        return "Entity collision (" + getEntity1() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision();
     }
 }

@@ -50,4 +50,9 @@ public class EntityCollision extends Collision {
     public void collisionListener(CollisionListener collisionListener) {
         collisionListener.objectCollision(getEntity1(), getEntity2(), getCollisionPosition().getX(), getCollisionPosition().getY());
     }
+
+    @Override
+    public String toString() {
+        return "Entity collision (" + getEntity1() + ", " + getEntity2() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision();
+    }
 }
