@@ -24,6 +24,8 @@ public class BoundaryCollision extends Collision {
 
     @Override
     public Vector calculateCollisionPosition() {
+//    	if (getEntity1() == null)
+//    		throw new IllegalArgumentException();
         return getEntity1().getPosition().add(getEntity1().getVelocity().multiply(getTimeToCollision()));
     }
 
