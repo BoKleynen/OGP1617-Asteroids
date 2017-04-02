@@ -2,6 +2,9 @@ package asteroids.model.entities;
 
 import asteroids.part2.CollisionListener;
 import vector.Vector;
+
+import java.util.HashSet;
+
 import asteroids.model.world.World;
 import be.kuleuven.cs.som.annotate.*;
 
@@ -23,8 +26,12 @@ public abstract class Entity {
         if (! canHaveAsRadius(radius, minRadius))
             throw new IllegalArgumentException();
 
+        
         setWorld(world);
         setPosition(position);
+        
+        checkValidPositionInWorld();
+
         this.maxSpeed = maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight();
         setVelocity(velocity);
         this.radius = radius;
@@ -126,13 +133,37 @@ public abstract class Entity {
         return world;
     }
 
+    
     /**
-     * Associates this entity with the given World.
+     * Checks whether this entity is at a valid position in its current world. If the
+     * position of this entity is already partially occupied or if the position is outside of
+     * the boundaries of the world, it is removed from the world and terminated.
+     */
+    private void checkValidPositionInWorld() {
+    	if ( getWorld() != null ) {
+    		HashSet<Entity> entities = getWorld().getAllEntities();
+    		entities.remove(this);
+    	
+    		if ( ! canHaveAsPosition(getPosition()))
+    			world.removeEntity(this);
+    		for ( Entity entity : entities ) {
+    			if ( overlap(entity) )
+    				world.removeEntity(this);
+    		}
+    	}
+    }
+
+    
+    /**
+     * Associates this entity with the given World. If the given world is null, the entity is
+     * no longer associated with a world. If the position in the target world is already
+     * occupied by another entity, the world of the entity will be ste to null.
      *
      * @param world
      */
-    public void setWorld(World world) {
-        this.world = world;
+    public void setWorld(World world) throws IllegalStateException {
+    	this.world = world;
+    	checkValidPositionInWorld();
     }
 
     private Vector position;    // defensively
@@ -215,7 +246,7 @@ public abstract class Entity {
      */
     public void move(double time) {
         if( time < 0 )
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(Double.toString(time));
 
         if (getWorld() != null) {
             World world = getWorld();
@@ -344,8 +375,10 @@ public abstract class Entity {
      * 			| this.overlap(entity)
      */
     public double getTimeToCollision(Entity entity) throws IllegalArgumentException {
+    	if ( entity.equals(this) )
+    		throw new IllegalArgumentException("Can't get time to collision with same entity");
         if (overlap(entity)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Overlapping Entities");
         }
 
         Vector deltaR = entity.getPosition().getDifference(this.getPosition());
