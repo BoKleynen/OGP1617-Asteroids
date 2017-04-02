@@ -174,12 +174,13 @@ public class World {
     public Collision getFirstCollision() {
         HashSet<Entity> entitiesSet = getAllEntities();
         Entity[] entities = entitiesSet.toArray(new Entity[entitiesSet.size()]);
-        Collision earliestCollision = new BoundaryCollision();
+        Collision earliestCollision = new BoundaryCollision(entities[0], entities[0].getTimeToWallCollision());
 
         for (int i = 0; i < entities.length; i++) {
             Entity entity1 = entities[i];
+            
             double wallCollisionTime = entity1.getTimeToWallCollision();
-
+            
             if ( wallCollisionTime < earliestCollision.getTimeToCollision() )
             	earliestCollision = new BoundaryCollision(entity1, wallCollisionTime);
 
@@ -202,13 +203,14 @@ public class World {
 
     public void evolve(double time, CollisionListener collisionListener) {
         if (time < 0)
-            throw new IllegalArgumentException();
             throw new IllegalArgumentException(Double.toString(time));
 
         if (time > 0) {
             Collision firstCollision = getFirstCollision();
-
-            if (firstCollision.getTimeToCollision() > time) {
+            double collisionTime = firstCollision.getTimeToCollision();
+            if ( collisionTime < 1e-5 )
+            	collisionTime = 0;
+            if (collisionTime > time) {
                 for (Entity entity : getAllEntities()) {
                     entity.move(time);
                 }
@@ -216,12 +218,13 @@ public class World {
 
             else {
                 for (Entity entity : getAllEntities()) {
-                    entity.move(firstCollision.getTimeToCollision());
+                    entity.move(collisionTime);
                 }
 
                 firstCollision.collisionListener(collisionListener);
                 firstCollision.resolve();
-                evolve(time - firstCollision.getTimeToCollision(), collisionListener);
+                if (time - collisionTime > 1e-2)
+                	evolve(time - collisionTime, collisionListener);
             }
         }
     }
