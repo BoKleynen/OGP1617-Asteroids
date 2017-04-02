@@ -446,11 +446,18 @@ public abstract class Entity {
 
         double xCollisionTime, yCollisionTime;
 
-        xCollisionTime = getVelocity().getX() >= 0 ? (getWorld().getWidth() - getPosition().getX()) / getVelocity().getX()
-                : -getPosition().getX() / getVelocity().getX();
-
-        yCollisionTime = getVelocity().getY() >= 0 ? (getWorld().getHeight() - getPosition().getY()) / getVelocity().getY()
-                : -getPosition().getY() / getVelocity().getY();
+        if ( getVelocity().getX() == 0 )
+        	xCollisionTime = Double.POSITIVE_INFINITY;
+        else if ( getVelocity().getX() > 0 )
+        	xCollisionTime = (getWorld().getWidth() - getPosition().getX() - getRadius()) / getVelocity().getX();
+        else
+        	xCollisionTime = Math.abs((getPosition().getX() - getRadius()) / getVelocity().getX());
+        if ( getVelocity().getY()  == 0 )
+        	yCollisionTime = Double.POSITIVE_INFINITY;
+        else if ( getVelocity().getY()  > 0 )
+        	yCollisionTime = (getWorld().getHeight() - getPosition().getY() - getRadius()) / getVelocity().getY();
+        else
+        	yCollisionTime = Math.abs((getPosition().getY() - getRadius()) / getVelocity().getY());
         	
         return Math.min(xCollisionTime, yCollisionTime);
     }
