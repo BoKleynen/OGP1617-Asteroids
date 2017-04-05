@@ -2,6 +2,7 @@ package asteroids.model.collisions;
 
 import asteroids.model.entities.Bullet;
 import asteroids.model.entities.Entity;
+import asteroids.model.entities.Ship;
 import asteroids.part2.CollisionListener;
 import vector.Vector;
 
@@ -32,25 +33,27 @@ public class BoundaryCollision extends Collision {
     @Override
     public void resolve() {
         if (getEntity1() instanceof Bullet) {
-            if (((Bullet) getEntity1()).getWallHits() >= ((Bullet) getEntity1()).getMaxWallHits())
-                getEntity1().die();
-
+        	Bullet bullet = (Bullet) getEntity1();
+            if ( bullet.getWallHits() >= bullet.getMaxWallHits())
+                bullet.die();
             else
                 resolveCollisionWithBoundary();
-                ((Bullet) getEntity1()).incrementWallHits();
+                bullet.incrementWallHits();
         }
 
-        else {
+        else if (getEntity1() instanceof Ship) {
             resolveCollisionWithBoundary();
         }
     }
 
     private void resolveCollisionWithBoundary() {
-        if (getCollisionPosition().getX() == 0 || getCollisionPosition().getX() == getEntity1().getWorld().getWidth()){
+        if (getCollisionPosition().getX() <= getEntity1().getRadius() 
+        		|| getCollisionPosition().getX() >= getEntity1().getWorld().getWidth() - getEntity1().getRadius()) {
             getEntity1().setVelocity(new Vector(-getEntity1().getVelocity().getX(), getEntity1().getVelocity().getY()));
         }
 
-        else {
+        else if ( (getCollisionPosition().getY() <= getEntity1().getRadius())
+        		|| (getCollisionPosition().getY() >= getEntity1().getWorld().getHeight() - getEntity1().getRadius()) ) {
             getEntity1().setVelocity(new Vector(getEntity1().getVelocity().getX(), -getEntity1().getVelocity().getY()));
 
         }
