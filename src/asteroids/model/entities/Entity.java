@@ -252,6 +252,7 @@ public abstract class Entity {
             World world = getWorld();
 
             world.removeEntity(this);
+            assert ( ! world.getAllEntities().contains(this) );
             setPosition(getPosition().add(getVelocity().multiply(time)));
             world.addEntity(this);
 
