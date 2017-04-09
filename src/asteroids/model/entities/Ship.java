@@ -34,7 +34,7 @@ public class Ship extends Entity {
      * 			| this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight())
      */
     public Ship() {
-    	this(null, new Vector(0, 0), getSpeedOfLight(), new Vector(0, 0), 0, getMinRadius(), 0, 1.1 * Math.pow(10, 21));
+    	this(null, new Vector(50, 50), getSpeedOfLight(), new Vector(0, 0), 0, getMinRadius(), 0, 1.1 * Math.pow(10, 21));
     }
 
     /**
@@ -104,7 +104,7 @@ public class Ship extends Entity {
 
     }
 
-    private final static char initialBulletAmount = 0;
+    private final static char initialBulletAmount = 15;
 
     public static char getInitialBulletAmount() {
         return initialBulletAmount;
@@ -446,7 +446,7 @@ public class Ship extends Entity {
     	
 		Bullet bullet = getFirstBullet();
 		if ( (bullet != null) && (getWorld() != null) ) {
-			Vector nextBulletPosition = getPosition().add(getDirection().multiply((getRadius() + bullet.getRadius())));
+			Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.5*(getRadius() + bullet.getRadius())));
 			
 			if (! bullet.canHaveAsPosition(nextBulletPosition)) {
 				removeBullet(bullet);
@@ -456,8 +456,9 @@ public class Ship extends Entity {
                 removeBullet(bullet);
                 getWorld().addEntity(bullet);
                 bullet.setPosition(nextBulletPosition);
-                resolveInitialBulletCollisions(bullet);
                 bullet.setVelocity(getDirection().multiply(initialBulletSpeed));
+                resolveInitialBulletCollisions(bullet);
+                
 
 			}
 		}		
@@ -503,8 +504,6 @@ public class Ship extends Entity {
 
         setVelocity(new Vector(getVelocity().getX() + Jx/getMass(),getVelocity().getY() + Jy/getMass()));
         ship.setVelocity(new Vector(ship.getVelocity().getX() - Jx/ship.getMass(),ship.getVelocity().getY() - Jy/ship.getMass()));
-
-
     }
 
     @Override
@@ -512,7 +511,6 @@ public class Ship extends Entity {
         if (bullet.getParentShip() == this) {
             addBullet(bullet);
         }
-
         else {
             die();
             bullet.die();
