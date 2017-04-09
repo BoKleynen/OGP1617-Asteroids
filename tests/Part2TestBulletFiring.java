@@ -22,8 +22,8 @@ public class Part2TestBulletFiring {
 
 	
 	@Test
-	public void testFireBullet() {
-		assertEquals(ship.getPosition(), new Vector(0,0));
+	public void testFireBullet_LegalCase() {
+		assertEquals(ship.getPosition(), new Vector(50, 50));
 		assertEquals(ship.getOrientation(), 0.0, eps);
 		
 		world.addEntity(ship);
@@ -31,10 +31,19 @@ public class Part2TestBulletFiring {
 		assertEquals(world.getEntityAtPosition(ship.getPosition()), ship);
 		
 		ship.fireBullet();
+		ship.turn(Math.PI/3);
+		ship.fireBullet();
+		ship.turn(Math.PI/5);
+		ship.fireBullet();
+		
 		for (Bullet bullet : world.getAllBullets()) {
+			// The velocity of a bullet is always equal to 250
 			assertEquals(bullet.getVelocity().getMagnitude(), 250, eps);
+			// The distance between the ship and the bullet is smaller then (radius1 + radius2)/2
 			assertTrue(bullet.getPosition().getDistance(ship.getPosition())-ship.getRadius()-bullet.getRadius()
 					<= (ship.getRadius() + bullet.getRadius())/2);
+			// The ship that fired the bullet is the parent ship, even after firing
+			assertTrue(bullet.getParentShip().equals(ship));
 		}
 		
 		
