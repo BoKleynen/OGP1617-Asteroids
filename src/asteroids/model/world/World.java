@@ -130,10 +130,11 @@ public class World {
     	if ( entity == null )
     		throw new NullPointerException();
     	if ( ! entities.containsValue(entity))
-    		throw new IllegalArgumentException();
-        entities.remove(entity.getPosition());
+    		throw new IllegalArgumentException("Entity is not in the world");
+        entities.remove(entity.getPosition(), entity);
+        assert ( ! entities.containsValue(entity) );
         entity.setWorld(null);
-        entity.terminate();
+        //entity.terminate();
     }
 
     public HashSet<Entity> getAllEntities() {

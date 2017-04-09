@@ -41,7 +41,6 @@ public class EntityCollision extends Collision {
     public void resolve() {
         if (getEntity2() instanceof Ship)
             getEntity1().resolveCollisionWithShip((Ship) getEntity2());
-
         else
             getEntity1().resolveCollisionWithBullet((Bullet) getEntity2());
     }
