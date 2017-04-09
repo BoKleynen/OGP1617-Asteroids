@@ -25,6 +25,12 @@ public class Bullet extends Entity {
 
     }
 
+    private static final double initialSpeed = 250;
+
+    public static double getInitialSpeed() {
+        return initialSpeed;
+    }
+
     private static final double minRadius = 1;
 
     /**
@@ -125,27 +131,5 @@ public class Bullet extends Entity {
     */
    public char getMaxWallHits() {
         return maxWallHits;
-   }
-
-   /**
-    * Resolves the collision of this bullet with a Ship that belongs to the same world as this bullet.
-    * If the ship is this bullets parent ship, the bullet is reloaded onto the ship.
-    * Else both this bullet and the ship are destroyed.
-    *
-    * @param ship
-    */
-   @Override
-   public void resolveCollisionWithShip(Ship ship) {
-        ship.resolveCollisionWithBullet(this);
-   }
-   /**
-    * Resolves the collision of this bullet with another bullet that belongs to the same world as this bullet.
-    * Both this bullet and the bullet are destroyed.
-    * @param bullet
-    */
-   @Override
-   public void resolveCollisionWithBullet(Bullet bullet) {
-        die();
-        bullet.die();
    }
 }

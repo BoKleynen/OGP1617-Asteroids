@@ -481,17 +481,7 @@ public abstract class Entity {
      */
     public void die() {
         this.getWorld().removeEntity(this);
+        this.terminate();
     }
 
-    /**
-     * Resolves the collision of this Entity with the given Ship.
-     * @param ship
-     */
-    public abstract void resolveCollisionWithShip(Ship ship);
-
-    /**
-     * Resolves the collision of this Entity with the given Bullet
-     * @param bullet
-     */
-    public abstract void resolveCollisionWithBullet(Bullet bullet);
 }

@@ -104,7 +104,7 @@ public class Ship extends Entity {
 
     }
 
-    private final static char initialBulletAmount = 15;
+    private final static char initialBulletAmount = 0;
 
     public static char getInitialBulletAmount() {
         return initialBulletAmount;
@@ -456,7 +456,7 @@ public class Ship extends Entity {
                 removeBullet(bullet);
                 getWorld().addEntity(bullet);
                 bullet.setPosition(nextBulletPosition);
-                bullet.setVelocity(getDirection().multiply(initialBulletSpeed));
+                bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
                 resolveInitialBulletCollisions(bullet);
                 
 
@@ -490,31 +490,4 @@ public class Ship extends Entity {
     	}
     }
     
-    private static final double initialBulletSpeed = 250;
-   
-
-    @Override
-    public void resolveCollisionWithShip(Ship ship) {
-        double sigma = getRadius() + ship.getRadius();
-        double J = (2.0 * getMass() * ship.getMass() * getVelocity().getDifference(ship.getVelocity()).dotProduct(getPosition().getDifference(ship.getPosition()))) /
-                (sigma * (getMass() + ship.getMass()));
-
-        double Jx = J * (getPosition().getX() - ship.getPosition().getX()) / sigma;
-        double Jy = J * (getPosition().getY() - ship.getPosition().getY()) / sigma;
-
-        setVelocity(new Vector(getVelocity().getX() + Jx/getMass(),getVelocity().getY() + Jy/getMass()));
-        ship.setVelocity(new Vector(ship.getVelocity().getX() - Jx/ship.getMass(),ship.getVelocity().getY() - Jy/ship.getMass()));
-    }
-
-    @Override
-    public void resolveCollisionWithBullet(Bullet bullet) {
-        if (bullet.getParentShip() == this) {
-            addBullet(bullet);
-        }
-        else {
-            die();
-            bullet.die();
-        }
-
-    }
 }

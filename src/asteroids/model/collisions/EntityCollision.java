@@ -39,11 +39,11 @@ public class EntityCollision extends Collision {
 
     @Override
     public void resolve() {
-        if (getEntity2() instanceof Ship) {
-            Ship ship2 = (Ship)getEntity2();
+        if (getEntity1() instanceof Ship) {
+            Ship ship1 = (Ship)getEntity1();
 
-            if (getEntity1() instanceof Ship) {
-                Ship ship1 = (Ship)getEntity1();
+            if (getEntity2() instanceof Ship) {
+                Ship ship2 = (Ship)getEntity2();
                 double sigma = ship1.getRadius() + ship2.getRadius();
                 double J = (2.0 * ship1.getTotalMass() * ship2.getTotalMass() * ship2.getVelocity().getDifference(ship1.getVelocity()).dotProduct(ship2.getPosition().getDifference(ship1.getPosition()))) /
                         (sigma * (ship1.getTotalMass()+ ship2.getTotalMass()));
@@ -54,35 +54,28 @@ public class EntityCollision extends Collision {
                 ship1.setVelocity(new Vector(ship1.getVelocity().getX() + Jx/ship1.getTotalMass(),ship1.getVelocity().getY() + Jy/ship1.getTotalMass()));
                 ship2.setVelocity(new Vector(ship2.getVelocity().getX() - Jx/ship2.getTotalMass(),ship2.getVelocity().getY() - Jy/ship2.getTotalMass()));
             }
+            else
+                resolveShipBulletCollision(ship1, (Bullet) getEntity2());
+        }
+        else {
+
+            if (getEntity2() instanceof Ship)
+                resolveShipBulletCollision((Ship) getEntity2(), (Bullet)getEntity1());
+
             else {
-                if (getEntity1() instanceof  Ship) {
-                    Bullet bullet = (Bullet) getEntity1();
-                    if (bullet.getParentShip() == ship2) {
-                        ship2.addBullet(bullet);
-                    } else {
-                        ship2.die();
-                        bullet.die();
-                    }
-                }
-                else {
-                    getEntity1().die();
-                    getEntity2().die();
-                }
+                getEntity1().die();
+                getEntity2().die();
             }
         }
-//            getEntity1().resolveCollisionWithShip((Ship) getEntity2());
-        else {
-            Bullet bullet = (Bullet) getEntity2();
-            Ship ship = (Ship) getEntity1();
-            if (bullet.getParentShip() == ship) {
-                ship.addBullet(bullet);
-            }
-            else {
-                ship.die();
-                bullet.die();
-            }
+    }
 
-//            getEntity1().resolveCollisionWithBullet((Bullet) getEntity2());
+    private void resolveShipBulletCollision(Ship ship, Bullet bullet) {
+        if (bullet.getParentShip() == ship) {
+            ship.addBullet(bullet);
+        }
+        else {
+            ship.die();
+            bullet.die();
         }
     }
 
