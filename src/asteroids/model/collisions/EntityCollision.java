@@ -55,13 +55,18 @@ public class EntityCollision extends Collision {
                 ship2.setVelocity(new Vector(ship2.getVelocity().getX() - Jx/ship2.getTotalMass(),ship2.getVelocity().getY() - Jy/ship2.getTotalMass()));
             }
             else {
-                Bullet bullet = (Bullet) getEntity1();
-                if (bullet.getParentShip() == ship2) {
-                    ship2.addBullet(bullet);
+                if (getEntity1() instanceof  Ship) {
+                    Bullet bullet = (Bullet) getEntity1();
+                    if (bullet.getParentShip() == ship2) {
+                        ship2.addBullet(bullet);
+                    } else {
+                        ship2.die();
+                        bullet.die();
+                    }
                 }
                 else {
-                    ship2.die();
-                    bullet.die();
+                    getEntity1().die();
+                    getEntity2().die();
                 }
             }
         }
