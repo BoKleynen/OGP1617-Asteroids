@@ -392,7 +392,7 @@ public abstract class Entity {
         double d = Math.pow(deltaR.dotProduct(deltaV), 2) - deltaV.dotProduct(deltaV) *
                 (deltaR.dotProduct(deltaR) - Math.pow(getRadius() + entity.getRadius(), 2));
 
-        return d <= 0 ? Double.POSITIVE_INFINITY : -(deltaV.dotProduct(deltaR) + Math.sqrt(d)) / deltaV.dotProduct(deltaV);
+        return d <= 0 ? Double.POSITIVE_INFINITY : Math.max(-(deltaV.dotProduct(deltaR) + Math.sqrt(d)) / deltaV.dotProduct(deltaV), 0);
 
     }
 
@@ -460,7 +460,7 @@ public abstract class Entity {
         else
         	yCollisionTime = Math.abs((getPosition().getY() - getRadius()) / getVelocity().getY());
         	
-        return Math.min(xCollisionTime, yCollisionTime);
+        return Math.max(Math.min(xCollisionTime, yCollisionTime), 0);
     }
 
     public Vector getWallCollisionPosition() {

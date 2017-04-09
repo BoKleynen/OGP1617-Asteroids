@@ -175,7 +175,7 @@ public class World {
     public Collision getFirstCollision() {
         HashSet<Entity> entitiesSet = getAllEntities();
         Entity[] entities = entitiesSet.toArray(new Entity[entitiesSet.size()]);
-        Collision earliestCollision = new BoundaryCollision(entities[0], entities[0].getTimeToWallCollision());
+        Collision earliestCollision = new BoundaryCollision();
 
         for (int i = 0; i < entities.length; i++) {
             Entity entity1 = entities[i];
@@ -208,9 +208,8 @@ public class World {
 
         if (time > 0) {
             Collision firstCollision = getFirstCollision();
+
             double collisionTime = firstCollision.getTimeToCollision();
-            if ( collisionTime < 1e-5 )
-            	collisionTime = 0;
             if (collisionTime > time) {
                 for (Entity entity : getAllEntities()) {
                     entity.move(time);
@@ -224,7 +223,7 @@ public class World {
 
                 firstCollision.collisionListener(collisionListener);
                 firstCollision.resolve();
-                if (time - collisionTime > 1e-2)
+                if (time - collisionTime > 0)
                 	evolve(time - collisionTime, collisionListener);
             }
         }
