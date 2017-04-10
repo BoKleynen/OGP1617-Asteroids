@@ -15,10 +15,69 @@ import be.kuleuven.cs.som.annotate.*;
 public abstract class Entity {
 
 
+	/**
+	 * Creates a new Entity with all the given parameters
+	 * 
+	 * @param position	The position at which to create the entity
+	 * @param maxSpeed	The highest allowed speed for this entity
+	 * @param velocity	The current velocity of this Entity
+	 * @param minRadius The smallest allowed radius for this Entity
+	 * @param radius	The current radius for this entity
+	 * @param minMassDensity	The smallest allowed mass density for this Entity
+	 * @param mass		The current mass for this Entity
+	 * 
+	 * @Effect see implementation
+	 */
     Entity(Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass){
         this(null, position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
     }
 
+    
+    /**
+     * Creates a new Entity with all the given parameters and adds it to the given world if this is possible.
+     * The initial position will be equal to the vector position. The initial velocity will be equal to the vector velocity.
+     * The maximum speed will be equal to maxSpeed. The initial radius will be equal to radius and the smallest allowed radius
+     * will be equal to minRadius. The initial mass will be equal to mass and the smallest allowed mass density will be
+     * equal to minMassDensity. If this entity overlaps another entity in the given world, it will not be added to that world.
+     * 
+     * @param world		The world to add this entity to.
+     * @param position	The position at which to create the entity
+	 * @param maxSpeed	The highest allowed speed for this entity
+	 * @param velocity	The current velocity of this Entity
+	 * @param minRadius The smallest allowed radius for this Entity
+	 * @param radius	The current radius for this entity
+	 * @param minMassDensity	The smallest allowed mass density for this Entity
+	 * @param mass		The current mass for this Entity
+	 * 
+	 * @throws 	IllegalArgumentException
+	 * 			When the given position is not valid.
+	 * 			! canHaveAsPosition(position)
+	 * @throws IllegalArgumentException
+	 * 			When the radius is not a valid radius for this entity.
+	 * 			! canHaveAsRadius(radius, minRadius)
+	 * 
+	 * @Post	If the given position is a valid position for this entity in the given world, its position will
+	 * 			be equal to the given position.
+	 * 			| if canHaveAsPosition(position) then
+	 * 			| this.getPosition() == position
+	 * @Post	If the entity has a valid position within the given world, and it does not overlap any other entities
+	 * 			in that world, this entity will be added to the given world.
+	 * 			| if checkValidPositionInWorld() then
+	 * 			|	this.getWorld() == world
+	 * 			|else this.getWorld() == null
+	 * @Post	If the given maximum speed does not exceed the speed of light, the maximum speed of this entity will be equal to the
+	 * 			given maximum speed, otherwise it will be equal to the speed of light.
+	 * 			| this.getMaxSpeed == ( maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight() )
+	 * @Post	The velocity of this entity is equal to the given velocity if it is a valid velocity for this entity.
+	 * 			|
+	 * @Post	The radius of this entity is equal to the given radius if it is a valid radius for this entity.
+	 * 			|
+	 * @Post	The mass of this entity is equal to the given mass if it is a valid mass for this entity.
+	 * 			|
+	 * 
+	 * 
+	 * 
+     */
     Entity(World world, Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass) {
         if (! canHaveAsPosition(position))
             throw new IllegalArgumentException();
@@ -142,7 +201,7 @@ public abstract class Entity {
     /**
      * Checks whether this entity is at a valid position in its current world. If the
      * position of this entity is already partially occupied or if the position is outside of
-     * the boundaries of the world, it is removed from the world and terminated.
+     * the boundaries of the world, it is removed from the world.
      */
     private void checkValidPositionInWorld() {
     	if ( getWorld() != null ) {
@@ -168,7 +227,6 @@ public abstract class Entity {
      */
     public void setWorld(World world) throws IllegalStateException {
     	this.world = world;
-    	checkValidPositionInWorld();
     }
 
     private Vector position;    // defensively
@@ -257,8 +315,8 @@ public abstract class Entity {
             World world = getWorld();
 
             world.removeEntity(this);
-            assert ( ! world.getAllEntities().contains(this) );
             setPosition(getPosition().add(getVelocity().multiply(time)));
+            assert ( ! world.getAllEntities().contains(this) );
             world.addEntity(this);
 
 
