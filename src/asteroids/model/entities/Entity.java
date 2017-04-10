@@ -38,15 +38,20 @@ public abstract class Entity {
         setMass(mass, minMassDensity);
     }
 
-    private boolean isTerminated = false;
+    protected boolean isTerminated = false;
 
+    /**
+     * Returns true if and only if this entity is in a terminated state.
+     * @see implementation
+     */
     public boolean isTerminated() {
         return isTerminated;
     }
 
-    public void terminate() {
-        isTerminated = true;
-    }
+    /**
+     * Terminates this entity. When an entity is terminated it no longer interacts with any other entity.
+     */
+    public abstract void terminate();
 
     /**
      * Checks whether the supplied radius is a valid radius for a entity.

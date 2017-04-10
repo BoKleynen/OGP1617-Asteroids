@@ -132,4 +132,23 @@ public class Bullet extends Entity {
    public char getMaxWallHits() {
         return maxWallHits;
    }
+
+   /**
+    * Terminates this bullet. A terminated bullet no longer belongs to a ship or a world.
+    * 
+    * @Post	This bullet does not belong to a world.
+    * 		| this.getWorld() == null
+    * @Post This bullet does not belong to a ship.
+    * 		| this.getShip() == null
+    * @Post This bullet is in a terminated state.
+    * 		| this.isTerminated() == true
+    */
+   @Override
+   public void terminate() {
+	   if ( hasShip() )
+		   getShip().removeBullet(this);
+	   if ( hasWorld() )
+		   getWorld().removeEntity(this);
+	   isTerminated = true;
+   }
 }

@@ -489,5 +489,27 @@ public class Ship extends Entity {
     		// collision.resolve();
     	}
     }
+
+    
+    /** Terminates this ship. A terminated ship no longer belongs to a world and no longer has any bullets.
+     * 	All bullets currently in this ship will be terminated as well.
+     * 
+     * @Post 	All bullets currently in this ship will be terminated.
+     * 			| for bullet in this.getAllBullets()
+     * 			|	bullet.isTerminated == true
+     * @Post	This ship no longer has any bullets.
+     * 			| (new this).getAllBullets().size() == 0
+     * @Post	This ship does not belong to a world.
+     * 			| (new this).getWorld() == null
+     */
+	@Override
+	public void terminate() {
+		if( hasWorld() )
+			getWorld().removeEntity(this);
+		for (Bullet bullet : getAllBullets() ) {
+			bullet.terminate();
+		}
+		bullets = new HashSet<Bullet>();
+	}
     
 }
