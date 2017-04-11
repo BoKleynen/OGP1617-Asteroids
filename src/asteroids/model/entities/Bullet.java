@@ -10,7 +10,13 @@ import asteroids.model.world.*;
 import java.util.Collection;
 
 /**
- * @Invar A bullet is associated with at most one world or one ship at once
+ * @Invar   A bullet is associated with at most one world or one ship at once
+ *          | getWorld() == null || getShip() == null
+ * @Invar   A bullet associated with a ship, is associated with its parent ship
+ *          | if getShip() instanceof Ship
+ *          |   then getShip() == getParentShip()
+ * @Invar   A bullet will never collide with a wall more then the maximum amount of wall hits
+ *          | getWallHits() <= getMaxWallHits()
  *
  */
 public class Bullet extends Entity {

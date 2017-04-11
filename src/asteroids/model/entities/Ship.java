@@ -15,7 +15,7 @@ import java.util.Collection;
  * @Invar 	The speed shall never exceed the maximum speed, which in turn shall never exceed the speed of light.
  *          | getVelocity().getMagnitude() <= getMaxSpeed() && getMaxSpeed() <= getSpeedOfLight
  * @Invar   The orientation of a ship is always a valid orientation.
- *          | Ship.anHaveAsOrientation(this.getOrientation)
+ *          | Ship.canHaveAsOrientation(this.getOrientation)
  * @Invar	The radius of a ship is always greater the the smallest allowed radius.
  * 			| getRadius() >= getMinRadius()
  * 
@@ -444,12 +444,11 @@ public class Ship extends Entity {
 	 * and resolved.
      * 
      * @Post	The bullet is no longer loaded on this ship.
-     * 
-     *  TODO Complete method
-     *  TODO Add tests
+     *          | new.getAllBullets().contains(this.getFirstBullet()) == false
+     *
      */
     public void fireBullet() {				//Totally
-    	
+
 		Bullet bullet = getFirstBullet();
 		if ( (bullet != null) && (getWorld() != null) ) {
 			Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.02*(getRadius() + bullet.getRadius())));

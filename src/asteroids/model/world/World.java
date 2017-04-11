@@ -116,6 +116,11 @@ public class World {
     		throw new IllegalArgumentException("Entity already has a world.");
     	if ( entities.containsValue(entity) )
     		throw new IllegalArgumentException("Entity is already in this world");
+    	if (isTerminated())
+    	    throw new IllegalStateException("This world is terminated");
+    	if (entity.isTerminated())
+    	    throw new IllegalStateException("The entity is terminated");
+
         entities.put(entity.getPosition(), entity);
         entity.setWorld(this);
     }
@@ -219,7 +224,6 @@ public class World {
                     entity.move(collisionTime);
                 }
 
-                firstCollision.collisionListener(collisionListener);
                 firstCollision.resolve();
                 if (time - collisionTime > 0)
                 	evolve(time - collisionTime, collisionListener);

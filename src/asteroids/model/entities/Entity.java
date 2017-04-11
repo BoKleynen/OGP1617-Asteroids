@@ -15,7 +15,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar 	An entity always has a valid position as its position.
  * 			| canHaveAsPosition(getPosition())
  * @Invar 	An entity always has a valid radius as its radius.
- * 			| canHaveAsRadius(getRadius()
+ * 			| canHaveAsRadius(getRadius())
  */
 public abstract class Entity {
 
@@ -257,9 +257,11 @@ public abstract class Entity {
      * no longer associated with a world. If the position in the target world is already
      * occupied by another entity or this entity is at a position that is invalid in the given
      * world, the world of this entity will be set to null.
+     * This method should only be used inside the method addEntity of the World Class.
      *
      * @param world	The world to add this entity to.
      */
+    @Raw
     public void setWorld(World world) throws IllegalStateException {
     	this.world = world;
     	checkValidPositionInWorld();
