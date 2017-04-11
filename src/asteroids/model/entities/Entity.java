@@ -298,7 +298,7 @@ public abstract class Entity {
      * 			| ! canHaveAsPosition(newPosition)
      */
     @Basic
-    void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException {
+    public void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException {
         if ( canHaveAsPosition(newPosition) )
             position = newPosition;
         else
@@ -350,14 +350,7 @@ public abstract class Entity {
             throw new IllegalArgumentException(Double.toString(time));
 
         if (getWorld() != null) {
-            World world = getWorld();
-
-            world.removeEntity(this);
-            setPosition(getPosition().add(getVelocity().multiply(time)));
-            assert ( ! world.getAllEntities().contains(this) );
-            world.addEntity(this);
-
-
+            getWorld().updateEntityPosition(this, getPosition().add(getVelocity().multiply(time)));
         }
 
         else

@@ -175,6 +175,12 @@ public class World {
     	}
     }
 
+    public void updateEntityPosition(Entity entity, Vector newPosition) {
+        entities.remove(entity.getPosition());
+        entity.setPosition(newPosition);
+        entities.put(entity.getPosition(), entity);
+    }
+
     public Collision getFirstCollision() {
         HashSet<Entity> entitiesSet = getAllEntities();
         Entity[] entities = entitiesSet.toArray(new Entity[entitiesSet.size()]);
@@ -224,6 +230,7 @@ public class World {
                     entity.move(collisionTime);
                 }
 
+                firstCollision.collisionListener(collisionListener);
                 firstCollision.resolve();
                 if (time - collisionTime > 0)
                 	evolve(time - collisionTime, collisionListener);
