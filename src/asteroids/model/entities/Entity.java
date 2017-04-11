@@ -10,7 +10,12 @@ import be.kuleuven.cs.som.annotate.*;
 
 
 /**
- * @Invar an entity is associated with at most one world at once
+ * @Invar 	An entity is associated with at most one world at once.
+ * 			| getWorld() instanceof World || getWorld() == null
+ * @Invar 	An entity always has a valid position as its position.
+ * 			| canHaveAsPosition(getPosition())
+ * @Invar 	An entity always has a valid radius as its radius.
+ * 			| canHaveAsRadius(getRadius()
  */
 public abstract class Entity {
 
@@ -69,11 +74,15 @@ public abstract class Entity {
 	 * 			given maximum speed, otherwise it will be equal to the speed of light.
 	 * 			| this.getMaxSpeed == ( maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight() )
 	 * @Post	The velocity of this entity is equal to the given velocity if it is a valid velocity for this entity.
-	 * 			|
+	 * 			| ...
 	 * @Post	The radius of this entity is equal to the given radius if it is a valid radius for this entity.
-	 * 			|
+	 * 			| if canHaveAsRadius(radius, minRadius) then
+	 * 			| 	this.getRadius() == radius
 	 * @Post	The mass of this entity is equal to the given mass if it is a valid mass for this entity.
-	 * 			|
+	 * 			| if mass < getMinMass(getRadius(), minMassDensity) then
+	 * 			|	this.mass = getMinMass(getRadius(), minMassDensity)
+	 * 			| else
+	 * 			|	this.mass = mass
 	 * 
 	 * 
 	 * 
@@ -129,7 +138,7 @@ public abstract class Entity {
      * Returns the speed of light.
      *
      * @return  The speed of light (approximately 300000 km/s)
-     *          | this.speedOfLight
+     *          | result == this.speedOfLight
      */
     @Immutable
     public static double getSpeedOfLight() {
@@ -151,6 +160,12 @@ public abstract class Entity {
 
     private double mass;    // total
 
+    /**
+     * Returns the mass of this entity.
+     * 
+     * @return 	The mass of this entity
+     * 			| result == this.mass
+     */
     @Basic
     public double getMass() {
         return mass;
@@ -162,7 +177,11 @@ public abstract class Entity {
      *
      * @param newMass
      * @param minMassDensity
+     * 
+     * @Post	The new mass for this entity is equal to newMass if newMass is greater then the smallest allowed mass.
+     * 			| @see implementation
      */
+     @Basic
     private void setMass(double newMass, double minMassDensity) {
         double minMass = getMinMass(getRadius(), minMassDensity);
         this.mass = newMass >= minMass ? newMass : minMass;
@@ -174,14 +193,17 @@ public abstract class Entity {
      * @param minMassDensity
      * @return
      */
+     @Basic
     public double getMinMass(double radius, double minMassDensity) {
         return 4/3 * Math.PI * Math.pow(radius, 3) * minMassDensity;
     }
     
     /**
+     * Returns true if this entity currently is in a world.
      * 
      * @return True if and only if the entity is currently associated with a world.
      */
+     @Basic
     public boolean hasWorld() {
     	return !(getWorld() == null);
     }
@@ -191,8 +213,10 @@ public abstract class Entity {
     /**
      * Returns the world this Entity belongs to, if this Entity belongs to no world this method will return null.
      *
-     * @return
+     * @return 	The world that this entity currently is in.
+     * 			| result == this.world
      */
+    @Basic
     public World getWorld() {
         return world;
     }
@@ -202,6 +226,16 @@ public abstract class Entity {
      * Checks whether this entity is at a valid position in its current world. If the
      * position of this entity is already partially occupied or if the position is outside of
      * the boundaries of the world, it is removed from the world.
+     * 
+     * @Post 	If this entity overlaps another entity in its current world, it is removed from the world.
+     * 			| for entity in getWorld.getAllEntities() do
+     * 			| 	if this.overlap(entity) then
+     * 			|		( ! world.getAllEntities().contains(new this) ) and
+     * 			|		( (new this).getWorld() == null )
+     * @Post	If the position is invalid for the current world, the entity is removed.
+     * 			| if ! canHaveAsPosition(getPosition()) then
+     * 			|	( ! getWorld.getAllEntities().contains(new this) ) and
+     * 			|	( (new this).getWorld() == null )
      */
     private void checkValidPositionInWorld() {
     	if ( getWorld() != null ) {
@@ -221,9 +255,10 @@ public abstract class Entity {
     /**
      * Associates this entity with the given World. If the given world is null, the entity is
      * no longer associated with a world. If the position in the target world is already
-     * occupied by another entity, the world of the entity will be ste to null.
+     * occupied by another entity or this entity is at a position that is invalid in the given
+     * world, the world of this entity will be set to null.
      *
-     * @param world
+     * @param world	The world to add this entity to.
      */
     public void setWorld(World world) throws IllegalStateException {
     	this.world = world;
