@@ -7,7 +7,7 @@ import vector.Vector;
 
 /**
  * A class of collisions
- * Created by Bo on 21/03/2017.
+ * Created by Bo Kleynen and Yrjo Koyen.
  */
 public abstract class Collision {
 
@@ -43,11 +43,22 @@ public abstract class Collision {
 
     private Vector collisionPosition;
 
+    /**
+     * Returns the position where this collision will happen.
+     * @return | @see implementation
+     */
     @Basic
     public Vector getCollisionPosition() {
         return collisionPosition;
     }
 
+    /**
+     * Sets the position where this collision will happen to the specified position.
+     * 
+     * @param collisionPosition
+     * 
+     * @Post | @see implementation
+     */
     @Basic
     public void setCollisionPosition(Vector collisionPosition) {
         if (getCollisionPosition() == null) {

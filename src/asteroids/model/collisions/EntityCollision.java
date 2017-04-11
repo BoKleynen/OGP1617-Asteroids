@@ -7,14 +7,40 @@ import vector.Vector;
 
 
 /**
- * Created by Bo on 29/03/2017.
+ * Created by Bo Kleynen and Yrjo Koyen.
  */
 public class EntityCollision extends Collision {
 
+	/**
+	 * Creates a new collision between the two given entities. The collision will happen after the given timeToCollision.
+	 * 
+	 * @param entity1	The first entity involved in this collision
+	 * @param entity2	The second entity involved in this collision
+	 * @param timeToCollision	The time until this collision will happen.
+	 * 
+	 * @Effect	this(entity1, entity2, timeToCollision, null)
+	 */
     public EntityCollision(Entity entity1, Entity entity2, double  timeToCollision) {
         this(entity1, entity2, timeToCollision, null);
     }
 
+    /**
+	 * Creates a new collision between the two given entities. The collision will happen after the given timeToCollision.
+	 * 
+	 * @param entity1	The first entity involved in this collision
+	 * @param entity2	The second entity involved in this collision
+	 * @param timeToCollision	The time until this collision will happen.
+	 * @param collisionPosition	The position where this collision will happen.
+	 * 
+	 * @Post	The entity first entity involved in this collision is the given entity1.
+	 * 			| this.getEntity1() == entity1
+	 * @Post	The entity second entity involved in this collision is the given entity2.
+	 * 			| this.getEntity1() == entity2
+	 * @Post	The time until this collision will happen is equal to the given timeToCollision.
+	 * 			| this.getTimeToCollision() == timeToCollision
+	 * @Post	The position where this collision will happen is equal to collisionPosition.
+	 * 			| this.getCollisionPosition() == collisionPosition
+	 */
     public EntityCollision(Entity entity1, Entity entity2, double  timeToCollision, Vector collisionPosition) {
         super(entity1, timeToCollision, collisionPosition);
         this.entity2 = entity2;
@@ -32,11 +58,22 @@ public class EntityCollision extends Collision {
         return entity2;
     }
 
+    /**
+     * Calculates where the two entities involved in this collision will collide.
+     * 
+     * @return | @see implementation
+     */
     @Override
     public Vector calculateCollisionPosition() {
         return getEntity1().getCollisionPosition(getEntity2());
     }
 
+    /**
+     * Resolves this collision of two entities. If both entities are ships, the bounce of each other.
+     * If one of the involved entities is a bullet, the ship is destroyed if the bullet was not fired 
+     * by that ship. If it was fired by that ship, it is instead reloaded to the ship. If both entities
+     * are bullets, they both die.
+     */
     @Override
     public void resolve() {
         if (getEntity1() instanceof Ship) {
