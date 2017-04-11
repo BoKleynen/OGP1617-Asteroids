@@ -351,11 +351,23 @@ public class Ship extends Entity {
      * @Post	
      */
     public void addBullet(Bullet bullet) {
+        bullet.setParentShip(this);
         bullet.setWorld(null);
         bullet.setShip(this);
-    	bullet.setParentShip(this);
         bullets.add(bullet);
     	bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
+    }
+
+    public void loadBullet(Bullet bullet) {
+        if (bullet.getParentShip() != this)
+            throw new IllegalArgumentException();
+
+        getWorld().removeEntity(bullet);
+        bullet.setShip(this);
+        bullets.add(bullet);
+        bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
+
+
     }
     
     /**
@@ -379,13 +391,6 @@ public class Ship extends Entity {
     public void loadBullets(Collection<Bullet> bulletList) {
     	for (Bullet bullet : bulletList)
     		addBullet(bullet);
-    }
-    
-    /**
-     * Loads one new bullet to this ship.
-     */
-    public void loadBullets() {
-    	addBullet(new Bullet(getPosition(), getVelocity(), getRadius()/5.0));
     }
     
     /**

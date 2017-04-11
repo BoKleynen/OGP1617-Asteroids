@@ -58,7 +58,6 @@ public class EntityCollision extends Collision {
                 resolveShipBulletCollision(ship1, (Bullet) getEntity2());
         }
         else {
-
             if (getEntity2() instanceof Ship)
                 resolveShipBulletCollision((Ship) getEntity2(), (Bullet)getEntity1());
 
@@ -71,7 +70,7 @@ public class EntityCollision extends Collision {
 
     private void resolveShipBulletCollision(Ship ship, Bullet bullet) {
         if (bullet.getParentShip() == ship) {
-            ship.addBullet(bullet);
+            ship.loadBullet(bullet);
         }
         else {
             ship.die();

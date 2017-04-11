@@ -132,9 +132,7 @@ public class World {
     	if ( ! entities.containsValue(entity))
     		throw new IllegalArgumentException("Entity is not in the world");
         entities.remove(entity.getPosition(), entity);
-        assert ( ! entities.containsValue(entity) );
         entity.setWorld(null);
-        //entity.terminate();
     }
 
     public HashSet<Entity> getAllEntities() {

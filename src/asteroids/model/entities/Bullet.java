@@ -94,6 +94,8 @@ public class Bullet extends Entity {
     void setShip(Ship ship) {
     	if (ship.getAllBullets().contains(this) || hasShip())
     		throw new IllegalArgumentException();
+    	if (this.getParentShip() != ship)
+    	    throw new IllegalArgumentException();
 
     	this.ship = ship;
     }
@@ -102,11 +104,6 @@ public class Bullet extends Entity {
     public void removeWorld() {
     	if (getWorld() != null)
     		super.setWorld(null);
-    }
-    
-    @Override @Basic
-    public void setWorld(World world) {
-    	super.setWorld(world);
     }
     
     private char wallHits;
