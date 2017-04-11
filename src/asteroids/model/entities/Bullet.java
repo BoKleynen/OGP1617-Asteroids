@@ -1,9 +1,13 @@
 package asteroids.model.entities;
 
 
+import asteroids.model.collisions.Collision;
+import asteroids.model.collisions.EntityCollision;
 import be.kuleuven.cs.som.annotate.*;
 import vector.Vector;
 import asteroids.model.world.*;
+
+import java.util.Collection;
 
 /**
  * @Invar A bullet is associated with at most one world or one ship at once
@@ -151,4 +155,27 @@ public class Bullet extends Entity {
 		   getWorld().removeEntity(this);
 	   isTerminated = true;
    }
+
+    /**
+     * Resolves a collision caused by the firing of this bullet from its parent ship. This method only
+     * creates and resolves a collision if a fired bullet overlaps an entity in the current
+     * world upon spawning at its initial location.
+     */
+    void resolveInitialCollisions() {
+        Collection<Entity> allEntities = getWorld().getAllEntities();
+        allEntities.remove(this);
+        allEntities.remove(getParentShip());
+        Collision initialBulletCollision = null;
+
+        for (Entity entity : allEntities) {
+            if ( entity.overlap(this) ) {
+                initialBulletCollision = new EntityCollision(this, entity, 0);
+                break;
+            }
+        }
+
+        if ( initialBulletCollision != null ) {
+            initialBulletCollision.resolve();
+        }
+    }
 }

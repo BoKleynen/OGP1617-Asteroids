@@ -351,7 +351,8 @@ public class Ship extends Entity {
      * @Post	
      */
     public void addBullet(Bullet bullet) {
-    	bullet.setShip(this);
+        bullet.setWorld(null);
+        bullet.setShip(this);
     	bullet.setParentShip(this);
         bullets.add(bullet);
     	bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
@@ -446,7 +447,7 @@ public class Ship extends Entity {
     	
 		Bullet bullet = getFirstBullet();
 		if ( (bullet != null) && (getWorld() != null) ) {
-			Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.5*(getRadius() + bullet.getRadius())));
+			Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.02*(getRadius() + bullet.getRadius())));
 			
 			if (! bullet.canHaveAsPosition(nextBulletPosition)) {
 				removeBullet(bullet);
@@ -454,42 +455,13 @@ public class Ship extends Entity {
 			}
 			else {
                 removeBullet(bullet);
-                getWorld().addEntity(bullet);
                 bullet.setPosition(nextBulletPosition);
+                getWorld().addEntity(bullet);
+                bullet.resolveInitialCollisions();
                 bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
-                resolveInitialBulletCollisions(bullet);
-                
-
-			}
+            }
 		}		
 	}
-    
-    /**
-     * Resolves a collision caused by the firing of a bullet from a ship. This method only
-     * creates and resolves a collision if a fired bullet overlaps an entity in the current
-     * world upon spawning at its initial location.
-     * 
-     * @param bullet
-     * @return
-     */
-    private void resolveInitialBulletCollisions(Bullet bullet) {
-    	Collection<Entity> allEntities = getWorld().getAllEntities();
-    	Collision collision = null;
-    	
-    	for (Entity entity : allEntities) {
-    		if ( entity.overlap(bullet) ) {
-    			collision = new EntityCollision(bullet, entity, 0);
-    			break;
-    		}		
-    	}
-    	
-    	if ( collision != null ) {
-    		// @TODO
-        	// This is where the collision should be resolved.
-    		// collision.resolve();
-    	}
-    }
-
     
     /** Terminates this ship. A terminated ship no longer belongs to a world and no longer has any bullets.
      * 	All bullets currently in this ship will be terminated as well.
