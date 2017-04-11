@@ -262,6 +262,7 @@ public abstract class Entity {
      */
     public void setWorld(World world) throws IllegalStateException {
     	this.world = world;
+    	checkValidPositionInWorld();
     }
 
     private Vector position;    // defensively
