@@ -210,11 +210,16 @@ public class Ship extends Entity {
     /**
      *
      * @param time
-     * @Post    | new.getVelocity().getX() == getThrust() / getMass() * Math.cos(getOrientation()) * time
-     *          | new.getVelocity().getY() == getThrust() / getMass() * Math.sin(getOrientation()) * time
+     * @Post    If this ship is terminated nothing happens
+     *          | if isTerminated then
+     *          |   new == this
+     * @Post    If the ships thruster is turned on the ships velocity changes as specified in the formal specification
+     *          | if thrusterOn() then
+     *          |   new.getVelocity().getX() == getThrust() / getMass() * Math.cos(getOrientation()) * time
+     *          |   new.getVelocity().getY() == getThrust() / getMass() * Math.sin(getOrientation()) * time
      */
     public void accelerate(double time) {
-        if (thrusterOn()) {
+        if (!isTerminated() && thrusterOn()) {
             double acceleration = getThrust() / getMass();
 
             setVelocity(getVelocity().add(new Vector(acceleration * Math.cos(getOrientation()) * time, acceleration * Math.sin(getOrientation()) * time)));
@@ -305,6 +310,8 @@ public class Ship extends Entity {
      *
      * @param   newOrientation
      *          The new orientation for this ship.
+     * @Pre     This ship isn't terminated
+     *          | ! isTerminated()
      * @Pre     newOrientation is a valid orientation for a ship
      *          | isValidOrientation(newOrientation)
      * @post    The new orientation of this ship is equal to newOrientation
@@ -312,6 +319,7 @@ public class Ship extends Entity {
      */
     @Basic
     private void setOrientation(double newOrientation) {
+        assert ! isTerminated();
         assert canHaveAsOrientation(newOrientation);
         orientation = newOrientation;
     }
@@ -358,9 +366,17 @@ public class Ship extends Entity {
     	bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
     }
 
-    public void loadBullet(Bullet bullet) {
+    /**
+     * Loads the given bullet onto this ship.
+     * @param bullet
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     */
+    public void loadBullet(Bullet bullet) throws IllegalStateException, IllegalArgumentException {
+        if (isTerminated())
+            throw new IllegalStateException("This ship is terminated");
         if (bullet.getParentShip() != this)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("A bullet can only be loaded onto its parent ship");
 
         getWorld().removeEntity(bullet);
         bullet.setShip(this);
@@ -373,9 +389,17 @@ public class Ship extends Entity {
     /**
      * Loads the given amount of new bullets onto this ship.
      * @param amount
+     * @throws IllegalArgumentException
+     *          If the amount of bullets is negative
+     *          | amount < 0
+     * @throws IllegalStateException
+     *          If this ship is terminated
+     *          | isTerminated()
      */
-    public void loadBullets(int amount) {
-    	if ( amount < 0 )
+    public void loadBullets(int amount) throws IllegalStateException, IllegalArgumentException {
+    	if (isTerminated())
+    	    throw new IllegalStateException("This ship is terminated");
+        if ( amount < 0 )
     		throw new IllegalArgumentException();
     	
     	for (int i = 0; i < amount; i++) {
@@ -448,23 +472,24 @@ public class Ship extends Entity {
      *
      */
     public void fireBullet() {				//Totally
+        if (! isTerminated()) {
+            Bullet bullet = getFirstBullet();
+            if ( (bullet != null) && (getWorld() != null) ) {
+                Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.02*(getRadius() + bullet.getRadius())));
 
-		Bullet bullet = getFirstBullet();
-		if ( (bullet != null) && (getWorld() != null) ) {
-			Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.02*(getRadius() + bullet.getRadius())));
-			
-			if (! bullet.canHaveAsPosition(nextBulletPosition)) {
-				removeBullet(bullet);
-				bullet.terminate();
-			}
-			else {
-                removeBullet(bullet);
-                bullet.setPosition(nextBulletPosition);
-                getWorld().addEntity(bullet);
-                bullet.resolveInitialCollisions();
-                bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
+                if (! bullet.canHaveAsPosition(nextBulletPosition)) {
+                    removeBullet(bullet);
+                    bullet.terminate();
+                }
+                else {
+                    removeBullet(bullet);
+                    bullet.setPosition(nextBulletPosition);
+                    getWorld().addEntity(bullet);
+                    bullet.resolveInitialCollisions();
+                    bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
+                }
             }
-		}		
+        }
 	}
     
     /** Terminates this ship. A terminated ship no longer belongs to a world and no longer has any bullets.
@@ -480,12 +505,13 @@ public class Ship extends Entity {
      */
 	@Override
 	public void terminate() {
-		if( hasWorld() )
+		if(hasWorld())
 			getWorld().removeEntity(this);
 		for (Bullet bullet : getAllBullets() ) {
 			bullet.terminate();
 		}
 		bullets = new HashSet<Bullet>();
+		isTerminated = true;
 	}
     
 }

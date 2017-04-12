@@ -263,7 +263,9 @@ public abstract class Entity {
      */
     @Raw
     public void setWorld(World world) throws IllegalStateException {
-    	this.world = world;
+    	if (isTerminated())
+    	    throw new IllegalStateException("This entity is Terminated");
+        this.world = world;
     	checkValidPositionInWorld();
     }
 
@@ -296,13 +298,18 @@ public abstract class Entity {
      * @throws	IllegalArgumentException
      * 			If the the vector newPosition is not a valid position
      * 			| ! canHaveAsPosition(newPosition)
+     * @throws  IllegalStateException
+     *          If this entity is terminated
+     *          | isTerminated()
      */
     @Basic
-    public void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException {
-        if ( canHaveAsPosition(newPosition) )
-            position = newPosition;
-        else
-            throw new IllegalArgumentException();
+    public void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException, IllegalStateException {
+        if (isTerminated())
+            throw new IllegalStateException("This entity is terminated");
+        if (! canHaveAsPosition(newPosition))
+            throw new IllegalArgumentException("The new position is invalid");
+
+        position = newPosition;
     }
 
     /**
@@ -377,6 +384,9 @@ public abstract class Entity {
      *
      * @param   newVelocity
      *          The new velocity vector for this entity.
+     * @Post    If this entity is terminated nothing happens.
+     *          | if isTerminated() then
+     *          |   this == new
      * @post    If newVelocity references a null object, the velocity is set to 0 in both the x and y direction.
      *          | if newVelocity == null then
      *          |   new.getVelocity() == Vector(0, 0)
@@ -394,15 +404,15 @@ public abstract class Entity {
      */
     @Basic
     public void setVelocity(Vector newVelocity) {
-        if (newVelocity == null || Double.isNaN(newVelocity.getX()) || Double.isNaN(newVelocity.getY())) {
-            newVelocity = new Vector(0, 0);
-        }
+        if (!isTerminated()) {
+            if (newVelocity == null || Double.isNaN(newVelocity.getX()) || Double.isNaN(newVelocity.getY())) {
+                newVelocity = new Vector(0, 0);
+            } else if (newVelocity.dotProduct(newVelocity) > Math.pow(getMaxSpeed(), 2)) {
+                newVelocity = newVelocity.normalize().multiply(getMaxSpeed());
+            }
 
-        else if (newVelocity.dotProduct(newVelocity) > Math.pow(getMaxSpeed(), 2)) {
-            newVelocity = newVelocity.normalize().multiply(getMaxSpeed());
+            velocity = newVelocity;
         }
-
-        velocity = newVelocity;
     }
 
     private final double maxSpeed;

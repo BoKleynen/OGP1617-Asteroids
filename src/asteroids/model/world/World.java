@@ -40,6 +40,9 @@ public class World {
     }
 
     public void terminate() {
+        if (! entities.isEmpty())
+            throw new IllegalStateException("This world still contains entities");
+
         isTerminated = true;
     }
 
@@ -110,7 +113,9 @@ public class World {
      * 			if entity == null
      */
     public void addEntity(Entity entity) throws IllegalArgumentException {
-    	if ( entity == null )
+        if (entity.isTerminated())
+            throw new IllegalStateException("The entity is terminated");
+        if ( entity == null )
     		throw new NullPointerException();
     	if ( entity.hasWorld() )
     		throw new IllegalArgumentException("Entity already has a world.");
@@ -118,8 +123,7 @@ public class World {
     		throw new IllegalArgumentException("Entity is already in this world");
     	if (isTerminated())
     	    throw new IllegalStateException("This world is terminated");
-    	if (entity.isTerminated())
-    	    throw new IllegalStateException("The entity is terminated");
+
 
         entities.put(entity.getPosition(), entity);
         entity.setWorld(this);
