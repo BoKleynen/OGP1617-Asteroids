@@ -22,7 +22,8 @@ public abstract class Collision {
     /**
      * Returns the first entity involved in this Collision.
      *
-     * @return | @see implementation
+     * @return	The first entity of this collision
+     * 			| result == this.entity1
      */
     @Basic @Immutable
     public Entity getEntity1() {
@@ -34,7 +35,8 @@ public abstract class Collision {
     /**
      * Returns the time before this Collision will happen.
      *
-     * @return | @see implementation
+     * @return 	The time until this collision.
+     * 			| result == this.timeToCollision()
      */
     @Basic @Immutable
     public double getTimeToCollision() {
@@ -45,7 +47,8 @@ public abstract class Collision {
 
     /**
      * Returns the position where this collision will happen.
-     * @return | @see implementation
+     * @return	The position of this collision.
+     * 			| result == this.collisionPosition		
      */
     @Basic
     public Vector getCollisionPosition() {
@@ -53,11 +56,17 @@ public abstract class Collision {
     }
 
     /**
-     * Sets the position where this collision will happen to the specified position.
+     * Sets the position where this collision will happen to the specified position if the current
+     * position is still equal to null.
      * 
-     * @param collisionPosition
+     * @param collisionPosition	The position where this collision will happen.
      * 
-     * @Post | @see implementation
+     * @Post	If the current collision position is equal to null, the new collision position
+     * 			will be equal to the given collisionPosition
+     * 			| if this.getCollisionPosition() == null then
+     * 			|	(new this).getCollisionPosition() == collisionPosition
+     * 			| else
+     * 			|	(new this).getCollisionPosition() == this.getCollisionPosition()
      */
     @Basic
     public void setCollisionPosition(Vector collisionPosition) {

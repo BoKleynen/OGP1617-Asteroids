@@ -7,7 +7,8 @@ import asteroids.part2.CollisionListener;
 import vector.Vector;
 
 /**
- * Created by Bo on 29/03/2017.
+ * A class of collisions with the edge of a world.
+ * Created by Bo Kleynen and Yrjo Koyen.
  */
 public class BoundaryCollision extends Collision {
 
@@ -58,7 +59,7 @@ public class BoundaryCollision extends Collision {
 
     /**
      * Resolves this collision by changing the velocity of the involved entity.
-     * Or if the entity is an instance of the class Bullet and has achieved its maximum number of wall collisions, it
+     * Or if the entity is an instance of the class Bullet and it has achieved its maximum number of wall collisions, it
      * will be destroyed
      *
      * @Post    | @see implementation

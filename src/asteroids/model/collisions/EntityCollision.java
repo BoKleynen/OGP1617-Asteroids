@@ -68,10 +68,30 @@ public class EntityCollision extends Collision {
     }
 
     /**
-     * Resolves this collision of two entities. If both entities are ships, the bounce of each other.
+     * Resolves this collision of two entities. If both entities are ships, they bounce of each other.
      * If one of the involved entities is a bullet, the ship is destroyed if the bullet was not fired 
      * by that ship. If it was fired by that ship, it is instead reloaded to the ship. If both entities
      * are bullets, they both die.
+     * 
+     * @Post	If both involved entities are an instance of the Bullet class, both entities are destroyed.
+     * 			| if ( getEntity1() instanceof Bullet && getEntity2() instanceof Bullet ) then
+     * 			| 	(new this).getEntity1().isTerminated() && (new this).getEntity2().isTerminated()
+     * @Post	If one of both involved entities is a bullet and the other one is a ship, the ship is destroyed
+     * 			by the bullet unless the bullet was fired from the ship it collided with. If the bullet was fired
+     * 			from that ship, it is reloaded to that ship on collision.
+     * 			| if (getEntity1() instanceof Bullet && getEntity2() instanceof Ship ) then
+     * 			|	if getEntity1().getParentShip().equals(getEntity2()) then
+     * 			|		(new this).getEntity2().getAllBullets().contains(this.getEntity1())
+     * 			|	else
+     * 			|		(new this).getEntity1()isTerminated() && (new this).getEntity2()isTerminated()
+     * 			| else if (getEntity1() instanceof Ship && getEntity2() instanceof Bullet ) 
+     * 			|	if getEntity2().getParentShip().equals(getEntity1()) then
+     * 			|		(new this).getEntity1().getAllBullets().contains(this.getEntity2())
+     * 			|	else
+     * 			|		(new this).getEntity1()isTerminated() && (new this).getEntity2()isTerminated()
+     * @Post	If both involved entities are instances of the Ship class, both ships bounce of each other
+     * 			based on their current mass and velocity.
+     * 			| @see implementation
      */
     @Override
     public void resolve() {
@@ -104,6 +124,20 @@ public class EntityCollision extends Collision {
         }
     }
 
+    /**
+     * Resolves a collision between the Ship ship and the Bullet bullet. If The bullet was originally fired
+     * by the given ship, it is reloaded to that ship, otherwise both entities die.
+     * 
+     * @param ship	The ship involved in this collision
+     * @param bullet	The bullet involved in this collision
+     * 
+     * @Post	If The bullet was originally fired by the given ship, it is reloaded to that ship, otherwise both
+     * 			entities die.
+     * 			| if bullet.getParentShip().equals(ship) then
+     * 			|		(new ship).getAllBullets().contains(bullet)
+     * 			|	else
+     * 			|		(new ship).isTerminated() && (new bullet).isTerminated()
+     */
     private void resolveShipBulletCollision(Ship ship, Bullet bullet) {
         if (bullet.getParentShip() == ship) {
             ship.loadBullet(bullet);
