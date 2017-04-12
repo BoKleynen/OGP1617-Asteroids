@@ -124,7 +124,8 @@ public abstract class Entity {
     }
 
     /**
-     * Terminates this entity. When an entity is terminated it no longer interacts with any other entity.
+     * Terminates this entity. When an entity is terminated it no longer interacts with any other entity
+     * and no longer belongs to a world.
      */
     public abstract void terminate();
 
