@@ -11,8 +11,8 @@ import be.kuleuven.cs.som.annotate.*;
 
 /**
  * @Invar 	An entity is associated with at most one world at once.
- * 			| getWorld() instanceof World || getWorld() == null
- * @Invar 	An entity always has a valid position as its position.
+ * 			| ( (getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
+ * @Invar 	An entity always has a valid position as its position in its current world.
  * 			| canHaveAsPosition(getPosition())
  * @Invar 	An entity always has a valid radius as its radius.
  * 			| canHaveAsRadius(getRadius())
@@ -73,8 +73,13 @@ public abstract class Entity {
 	 * @Post	If the given maximum speed does not exceed the speed of light, the maximum speed of this entity will be equal to the
 	 * 			given maximum speed, otherwise it will be equal to the speed of light.
 	 * 			| this.getMaxSpeed == ( maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight() )
-	 * @Post	The velocity of this entity is equal to the given velocity if it is a valid velocity for this entity.
-	 * 			| ...
+	 * @Post	The velocity of this entity is equal to the given velocity if it is a valid velocity for this entity. If the given
+	 * 			velocity would make this entity exceed its maximal speed, its velocity will be equal to a vector pointing in the
+	 * 			direction of velocity with a magnitude of getMaxSpeed().
+	 * 			| if velocity.getMagnitude() <= getMaxSpeed() then
+	 * 			|	this.getVelocity() == velocity
+	 * 			| else
+	 * 			|	( (getVelocity().getMagnitude() == getMaxSpeed()) && (getVelocity.normailze().equals(velocity.normalize()))
 	 * @Post	The radius of this entity is equal to the given radius if it is a valid radius for this entity.
 	 * 			| if canHaveAsRadius(radius, minRadius) then
 	 * 			| 	this.getRadius() == radius
@@ -110,7 +115,9 @@ public abstract class Entity {
 
     /**
      * Returns true if and only if this entity is in a terminated state.
-     * @see implementation
+     *
+     *	@return	True if this entity is terminated.
+     *			| result == this.isTerminated
      */
     public boolean isTerminated() {
         return isTerminated;
@@ -122,10 +129,10 @@ public abstract class Entity {
     public abstract void terminate();
 
     /**
-     * Checks whether the supplied radius is a valid radius for a entity.
+     * Checks whether the supplied radius is a valid radius for an entity.
      *
      * @param 	radius The radius that needs to be validated.
-     * @return 	True if and only if radius is a valid radius for a entity.
+     * @return 	True if and only if radius is a valid radius for an entity.
      * 			| result == (radius >= this.getMinRadius())
      */
     public boolean canHaveAsRadius(double radius, double minRadius) {
@@ -175,8 +182,8 @@ public abstract class Entity {
      * Sets the mass of this entity to the given newMass, unless this would result in this entity having a mass that is
      * lower then the minimal allowed mass, then it is set to this minimal value.
      *
-     * @param newMass
-     * @param minMassDensity
+     * @param newMass	The new mass for this entity.
+     * @param minMassDensity	The smallest allowed mass density for this entity.
      * 
      * @Post	The new mass for this entity is equal to newMass if newMass is greater then the smallest allowed mass.
      * 			| @see implementation
@@ -188,20 +195,24 @@ public abstract class Entity {
     }
 
     /**
-     * Returns the minimal mass of a spherical object given a radius and a minimal mass density
-     * @param radius
-     * @param minMassDensity
-     * @return
+     * Returns the minimal mass of a spherical object given a radius and a minimal mass density.
+     * 
+     * @param radius	The radius of the entity.
+     * @param minMassDensity	The smallest allowed mass density for the entity.
+     * 
+     * @return	The smallest allowed mass for the entity.
+     * 			| @see implementation
      */
      @Basic
-    public double getMinMass(double radius, double minMassDensity) {
+    public static double getMinMass(double radius, double minMassDensity) {
         return 4/3 * Math.PI * Math.pow(radius, 3) * minMassDensity;
     }
     
     /**
      * Returns true if this entity currently is in a world.
      * 
-     * @return True if and only if the entity is currently associated with a world.
+     * @return 	True if and only if the entity is currently associated with a world.
+     * 			| result == ( getWorld() != null )
      */
      @Basic
     public boolean hasWorld() {
@@ -225,7 +236,10 @@ public abstract class Entity {
     /**
      * Checks whether this entity is at a valid position in its current world. If the
      * position of this entity is already partially occupied or if the position is outside of
-     * the boundaries of the world, it is removed from the world.
+     * the boundaries of the world, it is removed from the world. This method returns true if
+     * the entity can be at its current position in its current world, otherwise returns false.
+     * This method should only be used when adding new entities to a world, when creating new
+     * entities in a world or when moving entities between worlds.
      * 
      * @Post 	If this entity overlaps another entity in its current world, it is removed from the world.
      * 			| for entity in getWorld.getAllEntities() do
@@ -236,19 +250,31 @@ public abstract class Entity {
      * 			| if ! canHaveAsPosition(getPosition()) then
      * 			|	( ! getWorld.getAllEntities().contains(new this) ) and
      * 			|	( (new this).getWorld() == null )
+     * @return	True if the position was valid and the entity is not removed from the world. False if the
+     * 			position was already (partially) occupied and the entity was removed from the world.
+     * 			| if this.getworld() == null then
+     * 			|	result == true;
+     * 			| else
+     * 			| 	result == (new this).getWorld() != null
      */
-    private void checkValidPositionInWorld() {
+    @Raw
+    private boolean checkValidPositionInWorld() {
     	if ( getWorld() != null ) {
     		HashSet<Entity> entities = getWorld().getAllEntities();
     		entities.remove(this);
     	
-    		if ( ! canHaveAsPosition(getPosition()))
+    		if ( ! canHaveAsPosition(getPosition())) {
     			world.removeEntity(this);
+    			return false;
+    		}
     		for ( Entity entity : entities ) {
-    			if ( overlap(entity) )
+    			if ( overlap(entity) ) {
     				world.removeEntity(this);
+    				return false;
+    			}
     		}
     	}
+    	return true;
     }
 
     
@@ -257,7 +283,8 @@ public abstract class Entity {
      * no longer associated with a world. If the position in the target world is already
      * occupied by another entity or this entity is at a position that is invalid in the given
      * world, the world of this entity will be set to null.
-     * This method should only be used inside the method addEntity of the World Class.
+     * This method should only be used inside the method addEntity of the World Class to guarantee
+     * the integrity of the associations.
      *
      * @param world	The world to add this entity to.
      */
@@ -304,6 +331,8 @@ public abstract class Entity {
      */
     @Basic
     public void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException, IllegalStateException {
+    	if ( newPosition == null )
+    		throw new NullPointerException();
         if (isTerminated())
             throw new IllegalStateException("This entity is terminated");
         if (! canHaveAsPosition(newPosition))
@@ -421,7 +450,7 @@ public abstract class Entity {
      * Returns the maximum speed of this Entity.
      *
      * @return  The maximum speed of this Entity.
-     *          | this.maxSpeed
+     *          | result == this.maxSpeed
      */
     @Basic @Immutable
     public double getMaxSpeed() {
@@ -432,7 +461,9 @@ public abstract class Entity {
      * Returns the distance between the edges of this entity and the specified entity. The distance between a entity and itself is equal to 0.
      *
      * @param entity The entity between which and this the distance needs to be calculated.
+     * 
      * @return  The distance between the edges of this entity and the entity entity.
+     * 			| @see implementation
      */
     public double getDistanceBetween(Entity entity) {
         return this == entity ? 0 : getPosition().getDistance(entity.getPosition()) - getRadius() - entity.getRadius();
@@ -441,8 +472,10 @@ public abstract class Entity {
     /**
      * Returns the distance between the center of this entity and the specified entity.
      *
-     * @param entity
-     * @return
+     * @param entity	The entity to measure the distance to from this entity.
+     * 
+     * @return	The distance between this entity and the given entity.
+     * 			| @see implementation
      */
     public double getDistanceBetweenCenters(Entity entity) {
         return getPosition().getDistance(entity.getPosition());
@@ -513,8 +546,8 @@ public abstract class Entity {
      *          | if getTimeToCollision(entity) != Double.POSITIVE_INFINITY
      *          This point is located at a distance equal to the radius of this entity from the center of this entity and at
      *          a distance equal to the radius of the specified entity from the center of the specified entity after a time
-     *          ∆t == getTimeToCollision(entity) has passed since the invocation of this method.
-     *          | new == this.move(∆t) && (new entity) == entity.move(∆t)
+     *          collisionTime == getTimeToCollision(entity) has passed since the invocation of this method.
+     *          | new == this.move(collisionTime) && (new entity) == entity.move(collisionTime)
      *          | new.getPosition().getDistance(result) == new.getRadius() && (new entity).getPosition().getDistance(result)
      * @throws IllegalArgumentException
      *          If this entity overlaps with the specified entity.
@@ -540,10 +573,14 @@ public abstract class Entity {
     }
     
     /**
-     * Returns the time until this entity collides with a 'wall' of the world it is in.
+     * Returns the time until this entity collides with an edge of the world it is in.
      * If this entity is not currently in a finite world, returns positive infinity.
      *
+     * @return	If the entity is not in a world, returns positive infinity.
+     * 			| if getWorld() == null then
+     * 			|	result == Double.PPOSITIVE_INFINITY
      * @return The time until the first collision with a wall of the world this entity is in.
+     * 			| @see implementation
      */
     public double getTimeToWallCollision() {
         if ( getWorld() == null || getVelocity().dotProduct(getVelocity()) == 0)
@@ -567,6 +604,15 @@ public abstract class Entity {
         return Math.max(Math.min(xCollisionTime, yCollisionTime), 0);
     }
 
+    
+    /**
+     * Returns the position at which this entity will collide with an edge of the world it is in if it keeps
+     * moving with the same velocity vector. If the entity is not in a world, this method returns a vector 
+     * with positive infinity as its x and y value.
+     * 
+     * @return	The position vector where this entity will collide with the edge of the world it is in.
+     * 			| @see implementation
+     */
     public Vector getWallCollisionPosition() {
         if (getWorld() == null)
             return new Vector(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
@@ -580,8 +626,13 @@ public abstract class Entity {
 
 
     /**
-     * kills off an entity.
-     * When an entity dies it is removed from the world it belongs to.
+     * kills off an entity. When an entity dies it is removed from the world it belongs to and
+     * it is terminated.
+     * 
+     * @Post	If the entity dies, it no longer belongs to a world.
+     * 			| (new this).getWorld() == null
+     * @Post	If the entity dies, it is in a terminated state.
+     * 			| (new this).isTerminated()
      */
     public void die() {
         this.getWorld().removeEntity(this);
