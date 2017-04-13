@@ -50,6 +50,7 @@ public class EntityCollision extends Collision {
 
     /**
      * Returns the second entity involved in this Collision.
+     * 
      * @return  | @see implementation
      */
     @Basic @Immutable
