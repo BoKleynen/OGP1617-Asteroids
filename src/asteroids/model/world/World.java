@@ -10,7 +10,9 @@ import be.kuleuven.cs.som.annotate.*;
 
 import java.util.*;
 
-
+/**
+ * Created by Bo Kleynen and Yrjo Koyen
+ */
 public class World {
 
     public World(double width, double height) {
@@ -111,22 +113,22 @@ public class World {
      * @throws 	IllegalArgumentException
      * 			...
      * 			if entity == null
+     *@throws IllegalStateException
+     *          If this world is terminated
+     *          | isTerminated
      */
-    public void addEntity(Entity entity) throws IllegalArgumentException {
-        if (entity.isTerminated())
-            throw new IllegalStateException("The entity is terminated");
+    public void addEntity(Entity entity) throws IllegalArgumentException, IllegalStateException {
+        if (isTerminated())
+            throw new IllegalStateException("This world is terminated");
         if ( entity == null )
     		throw new NullPointerException();
     	if ( entity.hasWorld() )
     		throw new IllegalArgumentException("Entity already has a world.");
     	if ( entities.containsValue(entity) )
     		throw new IllegalArgumentException("Entity is already in this world");
-    	if (isTerminated())
-    	    throw new IllegalStateException("This world is terminated");
 
-
-        entities.put(entity.getPosition(), entity);
         entity.setWorld(this);
+        entities.put(entity.getPosition(), entity);
     }
 
     /**
@@ -134,12 +136,15 @@ public class World {
      * @throws	IllegalArgumentException
      * 			...
      * 			Triviaal
+     * @throws NullPointerException
+     *          ...
      */
-    public void removeEntity(Entity entity) {
+    public void removeEntity(Entity entity) throws NullPointerException, IllegalArgumentException {
     	if ( entity == null )
     		throw new NullPointerException();
     	if ( ! entities.containsValue(entity))
     		throw new IllegalArgumentException("Entity is not in the world");
+
         entities.remove(entity.getPosition(), entity);
         entity.setWorld(null);
     }
@@ -174,12 +179,30 @@ public class World {
     
     public void removeBullet(Bullet bullet) {
     	if (entities.containsKey(bullet.getPosition()) ) {
-    		entities.remove(bullet.getPosition(), bullet);
+
+    	    entities.remove(bullet.getPosition(), bullet);
     		bullet.removeWorld();
     	}
     }
 
-    public void updateEntityPosition(Entity entity, Vector newPosition) {
+    /**
+     * Updates the position of the given entity in this world to the given position.
+     * @param entity
+     *          The entity that is to be moved.
+     * @param newPosition
+     *          The position the entity is to be moved to.
+     * @Post    The specified entity will be at the specified position
+     *          | (new entity).getPosition() == newPosition
+     * @Post    The specified entity will be a part of this world.
+     *          | (new entity).getWorld() == new
+     * @throws IllegalArgumentException
+     *          ...
+     *          | entity.getWorld() != this
+     */
+    public void updateEntityPosition(Entity entity, Vector newPosition) throws IllegalArgumentException {
+        if (entity.getWorld() != this)
+            throw new IllegalArgumentException("The specified entity does not belong to this world");
+
         entities.remove(entity.getPosition());
         entity.setPosition(newPosition);
         entities.put(entity.getPosition(), entity);
