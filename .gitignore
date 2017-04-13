@@ -1,27 +1,9 @@
 
 \.idea/
 \out/
-
 OGP1617-Asteroids\.iml
 src/META-INF/
-
 /bin/
 /.classpath
 /.project
-tests/asteroids/Part1TestPartial\.java
-
-tests/asteroids/Part2TestBulletAssociations\.java
-
-tests/asteroids/Part2TestPartial\.java
-
-tests/asteroids/Part2VectorTests\.java
-
-tests/asteroids/ShipTests\.java
-
-tests/asteroids/VectorTest\.java
-
-tests/ShipTests\.java
-
-tests/asteroids/tests/ShipTests\.java
-
 *.uml

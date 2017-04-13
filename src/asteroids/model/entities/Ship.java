@@ -219,11 +219,8 @@ public class Ship extends Entity {
      *          |   new.getVelocity().getY() == getThrust() / getMass() * Math.sin(getOrientation()) * time
      */
     public void accelerate(double time) {
-        if (!isTerminated() && thrusterOn()) {
-            double acceleration = getThrust() / getMass();
-
-            setVelocity(getVelocity().add(new Vector(acceleration * Math.cos(getOrientation()) * time, acceleration * Math.sin(getOrientation()) * time)));
-        }
+        double acceleration = getThrust() / getMass();
+        setVelocity(getVelocity().add(new Vector(acceleration * Math.cos(getOrientation()) * time, acceleration * Math.sin(getOrientation()) * time)));
     }
 
     /**
@@ -472,22 +469,20 @@ public class Ship extends Entity {
      *
      */
     public void fireBullet() {				//Totally
-        if (! isTerminated()) {
-            Bullet bullet = getFirstBullet();
-            if ( (bullet != null) && (getWorld() != null) ) {
-                Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.02*(getRadius() + bullet.getRadius())));
+        Bullet bullet = getFirstBullet();
+        if ( (bullet != null) && (getWorld() != null) ) {
+            Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.02*(getRadius() + bullet.getRadius())));
 
-                if (! bullet.canHaveAsPosition(nextBulletPosition)) {
-                    removeBullet(bullet);
-                    bullet.terminate();
-                }
-                else {
-                    removeBullet(bullet);
-                    bullet.setPosition(nextBulletPosition);
-                    getWorld().addEntity(bullet);
-                    bullet.resolveInitialCollisions();
-                    bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
-                }
+            if (! bullet.canHaveAsPosition(nextBulletPosition)) {
+                removeBullet(bullet);
+                bullet.terminate();
+            }
+            else {
+                removeBullet(bullet);
+                bullet.setPosition(nextBulletPosition);
+                getWorld().addEntity(bullet);
+                bullet.resolveInitialCollisions();
+                bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
             }
         }
 	}

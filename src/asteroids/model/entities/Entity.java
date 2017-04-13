@@ -92,7 +92,8 @@ public abstract class Entity {
 	 * 
 	 * 
      */
-    Entity(World world, Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass) {
+    Entity(World world, Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass)
+            throws IllegalArgumentException {
         if (! canHaveAsPosition(position))
             throw new IllegalArgumentException();
 
@@ -179,6 +180,7 @@ public abstract class Entity {
         return mass;
     }
 
+
     /**
      * Sets the mass of this entity to the given newMass, unless this would result in this entity having a mass that is
      * lower then the minimal allowed mass, then it is set to this minimal value.
@@ -189,7 +191,7 @@ public abstract class Entity {
      * @Post	The new mass for this entity is equal to newMass if newMass is greater then the smallest allowed mass.
      * 			| @see implementation
      */
-     @Basic
+    @Basic
     private void setMass(double newMass, double minMassDensity) {
         double minMass = getMinMass(getRadius(), minMassDensity);
         this.mass = newMass >= minMass ? newMass : minMass;
@@ -204,7 +206,7 @@ public abstract class Entity {
      * @return	The smallest allowed mass for the entity.
      * 			| @see implementation
      */
-     @Basic
+    @Basic
     public static double getMinMass(double radius, double minMassDensity) {
         return 4/3 * Math.PI * Math.pow(radius, 3) * minMassDensity;
     }
@@ -215,7 +217,7 @@ public abstract class Entity {
      * @return 	True if and only if the entity is currently associated with a world.
      * 			| result == ( getWorld() != null )
      */
-     @Basic
+    @Basic
     public boolean hasWorld() {
     	return !(getWorld() == null);
     }
@@ -233,7 +235,7 @@ public abstract class Entity {
         return world;
     }
 
-    
+
     /**
      * Checks whether this entity is at a valid position in its current world. If the
      * position of this entity is already partially occupied or if the position is outside of
@@ -278,7 +280,7 @@ public abstract class Entity {
     	return true;
     }
 
-    
+
     /**
      * Associates this entity with the given World. If the given world is null, the entity is
      * no longer associated with a world. If the position in the target world is already
@@ -289,7 +291,7 @@ public abstract class Entity {
      *
      * @param world	The world to add this entity to.
      */
-    @Raw
+    @Basic @Raw
     public void setWorld(World world) throws IllegalStateException {
     	if (isTerminated())
     	    throw new IllegalStateException("This entity is Terminated");
@@ -347,7 +349,7 @@ public abstract class Entity {
      *
      * @param 	position
      * 			The position to be tested.
-     * @return	True if and only if the components of the vector position are valid real numbers, 
+     * @return	True if and only if the components of the vector position are valid real numbers,
      * 			and if the entity stays within the boundaries of the world it is in.
      * 			| result == ((! Double.isNaN(position.getX())) && (! Double.isNaN(position.getY())))
      * @throws 	NullPointerException
@@ -358,7 +360,7 @@ public abstract class Entity {
     public boolean canHaveAsPosition(Vector position) throws NullPointerException {
         if (position == null)
             throw new NullPointerException();
-        
+
         boolean withinBoundaries = true;
         if ( getWorld() != null ) {
         	withinBoundaries = ( (position.getX() >= getRadius()) && (position.getX() <= getWorld().getWidth() - getRadius())
@@ -386,7 +388,7 @@ public abstract class Entity {
         if( time < 0 )
             throw new IllegalArgumentException(Double.toString(time));
 
-        if (getWorld() != null) {
+        if (hasWorld()) {
             getWorld().updateEntityPosition(this, getPosition().add(getVelocity().multiply(time)));
         }
 
@@ -572,7 +574,7 @@ public abstract class Entity {
 
         }
     }
-    
+
     /**
      * Returns the time until this entity collides with an edge of the world it is in.
      * If this entity is not currently in a finite world, returns positive infinity.
@@ -601,7 +603,7 @@ public abstract class Entity {
         	yCollisionTime = (getWorld().getHeight() - getPosition().getY() - getRadius()) / getVelocity().getY();
         else
         	yCollisionTime = Math.abs((getPosition().getY() - getRadius()) / getVelocity().getY());
-        	
+
         return Math.max(Math.min(xCollisionTime, yCollisionTime), 0);
     }
 
