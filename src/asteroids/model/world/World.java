@@ -127,8 +127,8 @@ public class World {
     	if ( entities.containsValue(entity) )
     		throw new IllegalArgumentException("Entity is already in this world");
 
+    	entities.put(entity.getPosition(), entity);
         entity.setWorld(this);
-        entities.put(entity.getPosition(), entity);
     }
 
     /**
