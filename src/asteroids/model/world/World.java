@@ -255,9 +255,6 @@ public class World {
      * if all entities in it keep moving with the same velocities. If this world evolves for a time equal
      * to the time until the returned collision, no other collisions will occur this period. The only 
      * collision will be the returned collision at exactly the end of that period.
-     * 
-     * @return  The first collision that will happen in this world in its current state
-     * 			|
      */
     public Collision getFirstCollision() {
         HashSet<Entity> entitiesSet = getAllEntities();
