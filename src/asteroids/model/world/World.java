@@ -289,27 +289,6 @@ public class World {
     }
 
 
-    /**
-     * Lets this world evolve for the given amount of time. All entities in this world will have moved a
-     * certain distance according to their speed after this method is finished. All collisions encountered
-     * during the moving of the entities will be resolved and result in the changing of their velocities or
-     * in their destruction.
-     * 
-     * @param time	The amount of time this world should evolve.
-     * @param collisionListener	A collisionListener object.
-     * 
-     * @throws 	IllegalArgumentException
-     * 			If the given time is negative
-     * 			| time < 0
-     * 
-     * @Post	If no collisions are encountered during the given amount of time, all entities move 
-     * 			with their current velocities for that amount of time.
-     * 			| 
-     * @Post	If collisions are encountered during the given amount of time, all entities will move
-     * 			for the amount of time until the first collision. That first collision is resolved and
-     * 			the world will evolve further for the remainder of the given time.
-     * 			|
-     */
     public void evolve(double time, CollisionListener collisionListener) {
         if (time < 0)
             throw new IllegalArgumentException(Double.toString(time));
