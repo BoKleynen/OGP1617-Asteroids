@@ -106,6 +106,12 @@ public class Ship extends Entity {
 
     private final static char initialBulletAmount = 0;
 
+    /**
+     * Returns the amount of bullets loaded on a ship when it is created.
+     * 
+     * @return  The amount of bullets loaded on a ship when it is created.
+     * 			| result == this.initialBulletAmount
+     */
     public static char getInitialBulletAmount() {
         return initialBulletAmount;
     }
@@ -115,7 +121,8 @@ public class Ship extends Entity {
     /**
      * Returns the minimal mass density for a Ship.
      *
-     * @return
+     * @return 	The minimal mass density for a Ship.
+     * 			| result = Ship.minMassDensity
      */
     @Basic @Immutable
     public static double getMinMassDensity() {
@@ -125,8 +132,10 @@ public class Ship extends Entity {
     private static final double minRadius = 10;
 
     /**
+     * Returns the smallest allowed radius for a ship.
      *
-     * @return
+     * @return	The smallest allowed radius for a ship.
+     * 			| result == Ship.minRadius
      */
     @Basic @Immutable
     private static double getMinRadius() {
@@ -137,7 +146,8 @@ public class Ship extends Entity {
      * Returns the total mass of a ship.
      * The total mass is the mass of the ship itself plus the mass of all the bullets.
      *
-     * @return
+     * @return	The total mass of this ship.
+     * 			| @see implementation
      */
     public double getTotalMass() {
         double totalMass = getMass();
@@ -174,7 +184,7 @@ public class Ship extends Entity {
 
     /**
      * Turns the thrusters of this ship on.
-     * @Post    | new.thrusterOn == true
+     * @Post    | (new this).thrusterOn == true
      */
     public void thrustOn() {
         thrusterOn = true;
@@ -182,7 +192,7 @@ public class Ship extends Entity {
 
     /**
      * Turns the thrusters of this ship off
-     * @Post    | new.thrusterOn == false
+     * @Post    | (new this).thrusterOn == false
      */
     public void thrustOff() {
         thrusterOn = false;
