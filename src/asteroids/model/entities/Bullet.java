@@ -34,7 +34,22 @@ public class Bullet extends Entity {
     public Bullet(Vector position, Vector velocity, double radius) {
         this(null, position, velocity, getSpeedOfLight() ,radius);
     }
-
+    
+    /**
+	 * Creates a new bullet with all the given parameters and adds it to the given world if this is possible.
+	 * 
+	 * @param world		The world to add this bullet to.
+     * @param position	The position at which to create the bullet
+	 * @param maxSpeed	The highest allowed speed for this bullet
+	 * @param velocity	The current velocity of this bullet
+	 * @param radius	The current radius for this bullet
+	 * 
+	 * @Effect this((null, position, velocity, getSpeedOfLight() ,radius)
+	 */
+    public Bullet(World world, Vector position, Vector velocity, double maxSpeed, double radius) {
+    	this(world, position, velocity, maxSpeed, radius, 2);
+    }
+    
     /**
      * Creates a new bullet with all the given parameters and adds it to the given world if this is possible.
      * The initial position will be equal to the vector position. The initial velocity will be equal to the vector velocity.
@@ -46,6 +61,7 @@ public class Bullet extends Entity {
 	 * @param maxSpeed	The highest allowed speed for this bullet
 	 * @param velocity	The current velocity of this bullet
 	 * @param radius	The current radius for this bullet
+	 * @param maxWallHits	The amount of times a bullet can bounce off the edges of a world before it dies.
 	 * 
 	 * @throws 	IllegalArgumentException
 	 * 			When the given position is not valid.
@@ -76,16 +92,16 @@ public class Bullet extends Entity {
 	 * @Post	The radius of this bullet is equal to the given radius if it is a valid radius for this bullet.
 	 * 			| if canHaveAsRadius(radius, getMinRadius()) then
 	 * 			| 	this.getRadius() == radius
-	 * @Post	The maximal amount of times this bullet bounces off a wall is equal to two.
+	 * @Post	The maximal amount of times this bullet bounces off a wall is equal to the given amount maxWallHits.
 	 * 			| this.maxWallHits == 2
 	 * @Post	The initial amount of times this bullet has bounced off a wall will be equal to zero.
 	 * 			| this.wallHits == 0
 	 */
-    public Bullet(World world, Vector position, Vector velocity, double maxSpeed,double radius) {
+    public Bullet(World world, Vector position, Vector velocity, double maxSpeed, double radius, int maxWallHits) {
 
         super(world, position, maxSpeed, velocity, getMinRadius(), radius, getMassDensity(), getMassDensity()*4/3*Math.PI*Math.pow(radius, 3));
 
-        maxWallHits = 2;
+        this.maxWallHits = (char) maxWallHits;
         wallHits = 0;
 
     }
