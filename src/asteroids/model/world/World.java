@@ -99,9 +99,13 @@ public class World {
     private HashMap<Vector, Entity> entities = new HashMap<>();
 
     /**
+     * Returns the Entity at the given position in this world in near constant time.
      * 
-     * @param position	The position 
-     * @return
+     * @param position	The position where the entity should be
+     * 
+     * @return	If the given position is the position of the center of an entity in this world,
+     *  returns that entity, otherwise, returns null.
+     * 			| result == this.entities.get(position)
      */
     public Entity getEntityAtPosition(Vector position){
         return entities.get(position);
@@ -109,15 +113,26 @@ public class World {
 
     /**
      * 
-     * @param entity
+     * @param entity	The entity to be added to this world
+     * 
      * @throws 	IllegalArgumentException
      * 			...
-     * 			if entity == null
-     *@throws IllegalStateException
+     * 			| this.getAllEntities().contains(entity)
+     * @throws	IllegalArgumentException
+     * 			...
+     * 			| entity.hasWorld()
+     * @throws 	NullPointerException
+     * 			...
+     * 			| entity == null
+     * @throws IllegalStateException
      *          If this world is terminated
-     *          | isTerminated
+     *          | isTerminated()
+     *          
+     * @Post	...
+     * 			| (new this).getAllEntities().contains(entity) &&
+     * 			| 	entity.getWorld() == (new this)
      */
-    public void addEntity(Entity entity) throws IllegalArgumentException, IllegalStateException {
+    public void addEntity(Entity entity) throws IllegalArgumentException, IllegalStateException, NullPointerException {
         if (isTerminated())
             throw new IllegalStateException("This world is terminated");
         if ( entity == null )
@@ -132,12 +147,17 @@ public class World {
     }
 
     /**
-     * @param entity
+     * @param entity	The entity to be removed from this world
      * @throws	IllegalArgumentException
      * 			...
-     * 			Triviaal
+     * 			| ( ! this.getAllEntities().contains(entity) )
      * @throws NullPointerException
      *          ...
+     *          | entity == null
+     *          
+     * @Post	...
+     * 			| ( ! (new this).getAllEntities().contains(entity) ) &&
+     * 			|	entity.getWorld() != (new this)
      */
     public void removeEntity(Entity entity) throws NullPointerException, IllegalArgumentException {
     	if ( entity == null )
@@ -149,10 +169,22 @@ public class World {
         entity.setWorld(null);
     }
 
+    /**
+     * Returns a HashSet containing all entities in this world.
+     * 
+     * @return 	A HashSet containing all entities in this world.
+     * 			| result == entities.values()
+     */
     public HashSet<Entity> getAllEntities() {
         return new HashSet<Entity>(entities.values());
     }
 
+    /**
+     * Returns a HashSet containing all ships in this world.
+     * 
+     * @return 	A HashSet containing all ships in this world.
+     * 			| @see implementation
+     */
     public HashSet<Ship> getAllShips() {
         HashSet<Ship> ships = new HashSet<>();
 
@@ -165,6 +197,13 @@ public class World {
         return ships;
     }
 
+
+    /**
+     * Returns a HashSet containing all bullets in this world.
+     * 
+     * @return 	A HashSet containing all bullets in this world.
+     * 			| @see implementation
+     */
     public HashSet<Bullet> getAllBullets() {
         HashSet<Bullet> bullets = new HashSet<>();
 
@@ -177,13 +216,16 @@ public class World {
         return bullets;
     }
     
-    public void removeBullet(Bullet bullet) {
-    	if (entities.containsKey(bullet.getPosition()) ) {
-
-    	    entities.remove(bullet.getPosition(), bullet);
-    		bullet.removeWorld();
-    	}
-    }
+//    /**
+//     * Removes the given bullet from this world, if the bullet is in this world.
+//     */
+//    private void removeBullet(Bullet bullet) {
+//    	if (entities.containsKey(bullet.getPosition()) ) {
+//
+//    	    entities.remove(bullet.getPosition(), bullet);
+//    		bullet.removeWorld();
+//    	}
+//    }
 
     /**
      * Updates the position of the given entity in this world to the given position.
@@ -208,6 +250,15 @@ public class World {
         entities.put(entity.getPosition(), entity);
     }
 
+    /**
+     * Returns the collision that would happen first in this world if its state does not change. That is
+     * if all entities in it keep moving with the same velocities. If this world evolves for a time equal
+     * to the time until the returned collision, no other collisions will occur this period. The only 
+     * collision will be the returned collision at exactly the end of that period.
+     * 
+     * @return  The first collision that will happen in this world in its current state
+     * 			|
+     */
     public Collision getFirstCollision() {
         HashSet<Entity> entitiesSet = getAllEntities();
         Entity[] entities = entitiesSet.toArray(new Entity[entitiesSet.size()]);
@@ -238,6 +289,27 @@ public class World {
     }
 
 
+    /**
+     * Lets this world evolve for the given amount of time. All entities in this world will have moved a
+     * certain distance according to their speed after this method is finished. All collisions encountered
+     * during the moving of the entities will be resolved and result in the changing of their velocities or
+     * in their destruction.
+     * 
+     * @param time	The amount of time this world should evolve.
+     * @param collisionListener	A collisionListener object.
+     * 
+     * @throws 	IllegalArgumentException
+     * 			If the given time is negative
+     * 			| time < 0
+     * 
+     * @Post	If no collisions are encountered during the given amount of time, all entities move 
+     * 			with their current velocities for that amount of time.
+     * 			| 
+     * @Post	If collisions are encountered during the given amount of time, all entities will move
+     * 			for the amount of time until the first collision. That first collision is resolved and
+     * 			the world will evolve further for the remainder of the given time.
+     * 			|
+     */
     public void evolve(double time, CollisionListener collisionListener) {
         if (time < 0)
             throw new IllegalArgumentException(Double.toString(time));
@@ -266,7 +338,12 @@ public class World {
     }
 
     /**
-     * Destroys this world, removing all entities from this world
+     * Destroys this world, removing all entities from this world.
+     * 
+     * @Post	This world no longer contains any entities
+     * 			| (new this).getAllEntities().size() == 0
+     * @Post	This world is terminated
+     * 			| (new this).isTerminated()
      */
     public void destroy() {
         for (Entity entity : getAllEntities()) {
