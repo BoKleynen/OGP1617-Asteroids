@@ -296,8 +296,7 @@ public class World {
 
                 firstCollision.collisionListener(collisionListener);
                 firstCollision.resolve();
-                if (time - collisionTime > 0)
-                	evolve(time - collisionTime, collisionListener);
+                evolve(time - collisionTime, collisionListener);
             }
         }
     }
