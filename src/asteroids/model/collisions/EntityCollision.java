@@ -140,20 +140,27 @@ public class EntityCollision extends Collision {
      * 			|		(new ship).isTerminated() && (new bullet).isTerminated()
      */
     private void resolveShipBulletCollision(Ship ship, Bullet bullet) {
-        if (bullet.getParentShip() == ship) {
+        try {
             ship.loadBullet(bullet);
-        }
-        else {
+        } catch (IllegalArgumentException e) {
             ship.die();
             bullet.die();
         }
     }
 
+    /**
+     * @Effect  ...
+     *          | @see implementation
+     */
     @Override
     public void collisionListener(CollisionListener collisionListener) {
         collisionListener.objectCollision(getEntity1(), getEntity2(), getCollisionPosition().getX(), getCollisionPosition().getY());
     }
 
+    /**
+     * Returns a string object of this entity collision
+     * @return
+     */
     @Override
     public String toString() {
         return "Entity collision (" + getEntity1() + ", " + getEntity2() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision();

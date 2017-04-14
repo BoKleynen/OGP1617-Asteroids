@@ -65,20 +65,19 @@ public class BoundaryCollision extends Collision {
      * @Post    | @see implementation
      */
     @Override
-    public void resolve() {
+    public void resolve() throws IllegalStateException {
+        if (getTimeToCollision() == Double.POSITIVE_INFINITY)
+            throw new IllegalStateException("The entity won't collide with the boundary of its world");
+
         if (getEntity1() instanceof Bullet) {
         	Bullet bullet = (Bullet) getEntity1();
-
-            if ( bullet.getWallHits() >= bullet.getMaxWallHits())
+            if (bullet.getWallHits() >= bullet.getMaxWallHits())
                 bullet.die();
             else
-                resolveCollisionWithBoundary();
                 bullet.incrementWallHits();
         }
 
-        else if (getEntity1() instanceof Ship) {
-            resolveCollisionWithBoundary();
-        }
+        resolveCollisionWithBoundary();
     }
 
     /**
@@ -101,6 +100,9 @@ public class BoundaryCollision extends Collision {
         }
     }
 
+    /**
+     * @Effect  | @see implementation
+     */
     @Override
     public void collisionListener(CollisionListener collisionListener) {
         collisionListener.boundaryCollision(getEntity1(), getCollisionPosition().getX(), getCollisionPosition().getY());

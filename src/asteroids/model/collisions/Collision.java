@@ -75,9 +75,20 @@ public abstract class Collision {
         }
     }
 
+    /**
+     * Returns the position at which this collision will occur.
+     *
+     * @return The position at which this collision will occur
+     */
     public abstract Vector calculateCollisionPosition();
 
+    /**
+     * Resolves this collision
+     */
     public abstract void resolve();
 
+    /**
+     * invokes the collisionlistener against this collision.
+     */
     public abstract void collisionListener(CollisionListener collisionListener);
 }
