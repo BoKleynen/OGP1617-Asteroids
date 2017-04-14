@@ -112,6 +112,7 @@ public class Ship extends Entity {
      * @return  The amount of bullets loaded on a ship when it is created.
      * 			| result == this.initialBulletAmount
      */
+    @Basic @Immutable
     public static char getInitialBulletAmount() {
         return initialBulletAmount;
     }
@@ -146,7 +147,8 @@ public class Ship extends Entity {
      * Returns the total mass of a ship.
      * The total mass is the mass of the ship itself plus the mass of all the bullets.
      *
-     * @return	The total mass of this ship.
+     * @return	The total mass of this ship, that is the mass of the ship itself plus the mass of all bullets loaded
+     *          onto this ship.
      * 			| @see implementation
      */
     public double getTotalMass() {
@@ -158,25 +160,64 @@ public class Ship extends Entity {
 
         return totalMass;
     }
-    
+
+    /**
+     * Checks whether or not the specified mass is a valid mass for this ship.
+     *
+     * @param mass
+     *          The mass to be validated.
+     * @return  True if and only if the specified mass is greater then or equal to the minimal mass for this ship.
+     *          | isValidMass(mass, getRadius())
+     */
     public boolean isValidMass(double mass) {
     	return isValidMass(mass, getRadius());
     }
-    
+
+    /**
+     * Checks whether or not the specified mass is a valid mass for a ship with the specified radius.
+     *
+     * @param mass
+     *          The mass to be validated.
+     * @param radius
+     *          The radius for which the specified mass has to be validated
+     * @return  True if and only if the specified mass is greater then or equal to the minimal mass for a ship with
+     *          the specified radius.
+     *          | mass >= getMinMass(radius)
+     */
     public static boolean isValidMass(double mass, double radius) {
     	return mass >= getMinMass(radius);
     }
-    
+
+    /**
+     * Returns the minimal mass for this ship.
+     *
+     * @return  ...
+     *          | getMinMass(getRadius())
+     */
+    public double getMinMass() {
+        return getMinMass(getRadius());
+    }
+
+    /**
+     * Returns the minimal mass for a ship with the specified radius.
+     *
+     * @param radius
+     *          The radius for which the minimal mass has to be calculated.
+     * @return  ...
+     *          | (4.0/ 3.0) * radius^3 * PI * Ship.getMinMassDensity()
+     */
     public static double getMinMass(double radius) {
     	return ( (4.0/3.0) * Math.pow(radius, 3) * Math.PI * Ship.getMinMassDensity() );
     }
     
-    public double getMassDensity() {
-    	return ( getTotalMass() / (4.0/3.0) * Math.pow(getRadius(), 3) * Math.PI );
-    }  
-    
     private boolean thrusterOn;
 
+    /**
+     * Checks whether or not this ships thrusters are enabled.
+     *
+     * @return  True if and only if the thruster(s) of this ship are active.
+     *          | this.thrusterOn
+     */
     @Basic
     public boolean thrusterOn() {
         return thrusterOn;
@@ -184,7 +225,7 @@ public class Ship extends Entity {
 
     /**
      * Turns the thrusters of this ship on.
-     * @Post    | (new this).thrusterOn == true
+     * @Post    | new.thrusterOn == true
      */
     public void thrustOn() {
         thrusterOn = true;
@@ -192,7 +233,7 @@ public class Ship extends Entity {
 
     /**
      * Turns the thrusters of this ship off
-     * @Post    | (new this).thrusterOn == false
+     * @Post    | new.thrusterOn == false
      */
     public void thrustOff() {
         thrusterOn = false;
@@ -202,24 +243,43 @@ public class Ship extends Entity {
 
     /**
      * Returns the amount of thrust this ships thrusters can generate.
-     * @return
+     *
+     * @return  ...
+     *          | @see implementation
      */
     @Basic
     public double getThrust() {
         return thrust;
     }
 
+    /**
+     * Sets the thrust of this ship to the specified value.
+     *
+     * @param newThrust
+     *          The value of the new thrust
+     * @Post    ...
+     *          | @see implementation
+     */
+    @Basic
     public void setThrust(double newThrust) {
         thrust = newThrust;
     }
 
+    /**
+     * Returns the acceleration of this ship
+     *
+     * @return  ...
+     *          | @see implementation
+     */
     public double getAcceleration() {
         return getThrust() / getTotalMass();
     }
 
     /**
+     * Accelerates the ship for the specified amount of time.
      *
      * @param time
+     *          The time during which the ship has to accelerate.
      * @Post    If this ship is terminated nothing happens
      *          | if isTerminated then
      *          |   new == this
@@ -234,12 +294,24 @@ public class Ship extends Entity {
     }
 
     /**
+     * Moves the ship for the specified amount of time, if this ships thruster(s) is (are) active, this ship will be
+     * accelerated for the specified amount of time.
      *
      * @param 	time
      * 			The time to move in the direction of the velocity vector.
+     * @Post    This ship has moved for the specified amount of time.
+     *          | super.move(time)
+     * @Post    If this ships thruster(s) is (are) active this ship has accelerated for the specified amount of time.
+     *          | if thrusterOn() then
+     *          |   new.getVelocity() == this.accelerate(time)
+     * @Post    The bullets loaded onto this ship have moved with this ship.
+     *          | bullet.getPosition() == new.getPosition() for any bullet in new.getAllBullets()
+     * @throws IllegalArgumentException
+     *          If the specified time is smaller then zero.
+     *          | time < 0
      */
     @Override	
-    public void move(double time) {
+    public void move(double time) throws IllegalArgumentException {
         if( time < 0 ) {
             throw new IllegalArgumentException(Double.toString(time));
         }
@@ -292,9 +364,10 @@ public class Ship extends Entity {
     }
     
     /**
-     * Return the direction this ship is currently facing. The returned vector has unity length.
+     * Return the direction this ship is currently facing. The returned vector is a unit vector.
      * 
-     * @return	
+     * @return  ...
+     *          | @see implementation
      */
     private Vector getDirection() {
     	return new Vector(Math.cos(getOrientation()), Math.sin(getOrientation()));
@@ -459,7 +532,8 @@ public class Ship extends Entity {
     /**
      * Returns a HashSet containing all the bullets loaded on this ship.
      * 
-     * @return 
+     * @return  ...
+     *          | @see implementation
      */
     public HashSet<Bullet> getAllBullets() {
     	return new HashSet<Bullet>(bullets);

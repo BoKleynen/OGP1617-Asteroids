@@ -31,7 +31,7 @@ public class Bullet extends Entity {
 	 * @Effect this((position, velocity, getSpeedOfLight() ,radius)
 	 */
     public Bullet(Vector position, Vector velocity, double radius) {
-        this(position, velocity, getSpeedOfLight() ,radius,2);
+        this(position, velocity, getSpeedOfLight() ,radius,(char) 2);
     }
     
     /**
@@ -80,11 +80,11 @@ public class Bullet extends Entity {
 	 * @Post	The initial amount of times this bullet has bounced off a wall will be equal to zero.
 	 * 			| this.wallHits == 0
 	 */
-    public Bullet(Vector position, Vector velocity, double maxSpeed, double radius, int maxWallHits) {
+    public Bullet(Vector position, Vector velocity, double maxSpeed, double radius, char maxWallHits) {
 
         super(position, maxSpeed, velocity, getMinRadius(), radius, getMassDensity(), getMassDensity()*4/3*Math.PI*Math.pow(radius, 3));
 
-        this.maxWallHits = (char) maxWallHits;
+        this.maxWallHits = maxWallHits;
         wallHits = 0;
 
     }
@@ -94,8 +94,8 @@ public class Bullet extends Entity {
     /**
      * Returns the initial speed of a bullet.
      * 
-     * @return	...
-     * 			| result == this.initialSpeed
+     * @return	The initial speed of a bullet.
+     * 			| result == Bullet.initialSpeed
      */
     public static double getInitialSpeed() {
         return initialSpeed;
@@ -106,8 +106,8 @@ public class Bullet extends Entity {
     /**
      * Returns the minimal value for the radius of a Bullet.
      *
-     * @return 	...
-     * 			| result == minRadius
+     * @return 	The minimal radius of a bullet.
+     * 			| result == Bullet.minRadius
      */
     public static double getMinRadius() {
         return minRadius;
@@ -118,8 +118,8 @@ public class Bullet extends Entity {
     /**
      * Returns the minimal mass density of a Bullet.
      * 
-     * @return	...
-     * 			| result == this.massDensity()
+     * @return	The minimal mass density of a bullet.
+     * 			| result == Bullet.massDensity()
      */
     public static double getMassDensity() {
         return massDensity;
@@ -133,11 +133,13 @@ public class Bullet extends Entity {
      * 
      * @param ship	The ship to set as parent ship
      * 
-     * @Post	...
+     * @Post	This bullets parent ship is set to the specified ship
      * 			| (new this).getParentShip() == ship
      */
     @Basic
     void setParentShip(Ship ship) {
+        if (hasParentShip())
+            throw new IllegalStateException("This bullet already has a parent ship");
         this.parentShip = ship;
     }
 
@@ -150,6 +152,10 @@ public class Bullet extends Entity {
     @Basic
     public Ship getParentShip() {
     	return parentShip;
+    }
+
+    public boolean hasParentShip() {
+        return getParentShip() != null;
     }
 
     private Ship ship = null;
@@ -166,13 +172,13 @@ public class Bullet extends Entity {
     }
     
     /**
-     * Returns true if this bullet is currently loaded to a ship.
+     * Returns true if this bullet is currently loaded onto its parent ship.
      * 
-     * @return	...
-     * 			| result == (getShip() != null)
+     * @return	True if and only if the bullet is currently loaded onto its parent ship.
+     * 			| getShip() != null
      */
-    public boolean hasShip() {
-    	return (getShip() != null);
+    public boolean isLoadedOntoShip() {
+    	return getShip() != null;
     }
 
     /**
@@ -184,8 +190,7 @@ public class Bullet extends Entity {
      */
     @Raw
     void removeShip() {
-    	if (hasShip())
-    		ship = null;
+        ship = null;
     }
 
     /**
@@ -195,30 +200,19 @@ public class Bullet extends Entity {
      * 
      * @throws	IllegalArgumentException
      * 			...
-     * 			| (ship.getAllBullets().contains(this) || hasShip()) ||
+     * 			| (ship.getAllBullets().contains(this) || isLoadedOntoShip()) ||
      * 			| 	(this.getParentShip() != ship)
      * @Post	...
      * 			| (new this).getShip() == ship
      */
     @Raw
-    void setShip(Ship ship) {
-    	if (ship.getAllBullets().contains(this) || hasShip())
-    		throw new IllegalArgumentException();
+    void setShip(Ship ship) throws IllegalStateException, IllegalArgumentException{
+    	if (isLoadedOntoShip())
+    		throw new IllegalStateException("Bullet already loaded onto its parent ship");
     	if (this.getParentShip() != ship)
-    	    throw new IllegalArgumentException();
+    	    throw new IllegalArgumentException("The specified ship is not this bullets parent ship");
 
     	this.ship = ship;
-    }
-
-    /**
-     * Removes the association with the world this bullet is currently in.
-     * Should only be used in methods to remove bullets from worlds or ships to guarantee
-     * referential integrity.
-     */
-    @Raw
-    public void removeWorld() {
-    	if (getWorld() != null)
-    		super.setWorld(null);
     }
     
     private char wallHits;
@@ -248,7 +242,7 @@ public class Bullet extends Entity {
    /**
     * Returns the maximum amount of wall hits for this bullet.
     *
-    * @return  result == this.maxWallHits
+    * @return  | result == this.maxWallHits
     */
    public char getMaxWallHits() {
         return maxWallHits;
@@ -266,10 +260,11 @@ public class Bullet extends Entity {
     */
    @Override
    public void terminate() {
-	   if ( hasShip() )
+	   if ( isLoadedOntoShip() )
 		   getShip().removeBullet(this);
-	   if ( hasWorld() )
+	   else if ( hasWorld() )
 		   getWorld().removeEntity(this);
+
 	   isTerminated = true;
    }
 

@@ -13,7 +13,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar 	An entity is associated with at most one world at once.
  * 			| ( (getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
  * @Invar 	An entity always has a valid position as its position in its current world.
- * 			| canHaveAsPosition(getPosition())
+ * 			| hasValidPositionInWorld(getWorld())
  * @Invar 	An entity always has a valid radius as its radius.
  * 			| canHaveAsRadius(getRadius())
  */
@@ -68,7 +68,7 @@ public abstract class Entity {
 	 * 
 	 * 
      */
-    Entity(Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass)
+    protected Entity(Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass)
             throws IllegalArgumentException {
 
         if (! canHaveAsRadius(radius, minRadius))
@@ -188,7 +188,7 @@ public abstract class Entity {
      */
     @Basic
     public boolean hasWorld() {
-    	return !(getWorld() == null);
+    	return getWorld() != null;
     }
 
     private World world;
@@ -207,7 +207,7 @@ public abstract class Entity {
     /**
      * Associates this entity with the given World. If the given world is null, the entity is
      * no longer associated with a world.
-     * This method should only be used inside the method addEntity of the World Class to guarantee
+     * This method should only be used inside the method addEntity or removeEntity of the World Class to guarantee
      * the integrity of the associations.
      *
      * @param world	The world to add this entity to.
@@ -280,9 +280,9 @@ public abstract class Entity {
      * Checks whether or not the specified position is within the boundaries of the specified world.
      *
      * @param world
-     *          A non-null world object for which the position has to be validated.
+     *          The world in which the position has to be validated.
      * @param position
-     *          A non-null vector object which has to be checked
+     *          A non-null vector object which has to be validated as a position for this entity in the specified world.
      * @return  True if and only if the entity lies fully within the boundaries of the specified world.
      *          | @see implementation
      * @throws IllegalArgumentException
@@ -290,23 +290,23 @@ public abstract class Entity {
      *          | world == null || position == null
      */
     public boolean isWithinBoundariesOfWorld(World world, Vector position) throws IllegalArgumentException {
-        if (world == null)
-            throw new IllegalArgumentException();
         if (position == null)
             throw new IllegalArgumentException();
 
-        return (position.getX() >= getRadius()) &&
+        return world == null ||
+                ((position.getX() >= getRadius()) &&
                 (position.getX() <= world.getWidth() - getRadius()) &&
                 (position.getY() >= getRadius()) &&
-                (position.getY() <= world.getHeight() - getRadius());
+                (position.getY() <= world.getHeight() - getRadius()));
     }
 
     /**
      * Checks whether or not this entities current position is within the boundaries of the specified world.
      *
      * @param world
-     *          A non-null world object for which this entities current position has to be validated.
-     * @return  isWithinBoundariesOfWorld(world, getPosition)
+     *          The world in which the position has to be validated.
+     * @return  True if and only if this entities current position lays fully within the boundaries of the specified world.
+     *          | isWithinBoundariesOfWorld(world, getPosition)
      */
     public boolean isWithinBoundariesOfWorld(World world) {
         return isWithinBoundariesOfWorld(world, getPosition());
@@ -315,7 +315,9 @@ public abstract class Entity {
     /**
      * Checks whether or not this entity can have the specified position in the specified world
      * @param position
+     *          The position that has to be validated.
      * @param world
+     *          The world in which the position has to be validated.
      * @return  True if and only if the specified world is a null object
      *          | world == null
      * @return  True if and only if the specified position results in the entity laying fully within the boundaries of
@@ -327,6 +329,15 @@ public abstract class Entity {
 
     }
 
+    /**
+     * Checks whether or not this entity has a valid position in the specified world
+     *
+     * @param world
+     *          The world in which the position has to be validated.
+     * @return  True if and only if this entity can have its current position in the specified world.
+     *          | canHaveAsPositionInWorld(getPosition(), world)
+     *
+     */
     public boolean hasValidPositionInWorld(World world) {
         return canHaveAsPositionInWorld(getPosition(), world);
     }
@@ -334,6 +345,7 @@ public abstract class Entity {
     /**
      * Checks whether or not this entity overlaps with another entity in the specified world.
      * @param world
+     *          The world from which the entities have to be checked for overlap with this entity.
      * @return  True if and only if this entity overlaps with an entity in the world.
      *          | overlap(entity) for any entity in world.getAllEntities()
      */
@@ -508,7 +520,7 @@ public abstract class Entity {
         double d = Math.pow(deltaR.dotProduct(deltaV), 2) - deltaV.dotProduct(deltaV) *
                 (deltaR.dotProduct(deltaR) - Math.pow(getRadius() + entity.getRadius(), 2));
 
-        return d <= 0 ? Double.POSITIVE_INFINITY : Math.max(-(deltaV.dotProduct(deltaR) + Math.sqrt(d)) / deltaV.dotProduct(deltaV), 0);
+        return d <= 0 ? Double.POSITIVE_INFINITY : -(deltaV.dotProduct(deltaR) + Math.sqrt(d)) / deltaV.dotProduct(deltaV);
 
     }
 
@@ -562,7 +574,7 @@ public abstract class Entity {
      * 			| @see implementation
      */
     public double getTimeToWallCollision() {
-        if ( getWorld() == null || getVelocity().dotProduct(getVelocity()) == 0)
+        if ( getWorld() == null)
             return Double.POSITIVE_INFINITY;
 
         double xCollisionTime, yCollisionTime;
@@ -572,15 +584,16 @@ public abstract class Entity {
         else if ( getVelocity().getX() > 0 )
         	xCollisionTime = (getWorld().getWidth() - getPosition().getX() - getRadius()) / getVelocity().getX();
         else
-        	xCollisionTime = Math.abs((getPosition().getX() - getRadius()) / getVelocity().getX());
+        	xCollisionTime = -(getPosition().getX() - getRadius()) / getVelocity().getX();
+
         if ( getVelocity().getY()  == 0 )
         	yCollisionTime = Double.POSITIVE_INFINITY;
         else if ( getVelocity().getY()  > 0 )
         	yCollisionTime = (getWorld().getHeight() - getPosition().getY() - getRadius()) / getVelocity().getY();
         else
-        	yCollisionTime = Math.abs((getPosition().getY() - getRadius()) / getVelocity().getY());
+        	yCollisionTime = -(getPosition().getY() - getRadius()) / getVelocity().getY();
 
-        return Math.max(Math.min(xCollisionTime, yCollisionTime), 0);
+        return Math.min(xCollisionTime, yCollisionTime);
     }
 
     
@@ -593,14 +606,13 @@ public abstract class Entity {
      * 			| @see implementation
      */
     public Vector getWallCollisionPosition() {
-        if (getWorld() == null)
+
+        double timeToWallCollision = getTimeToWallCollision();
+
+        if (timeToWallCollision == Double.POSITIVE_INFINITY)
             return new Vector(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
 
-        else {
-            double timeToWallCollision = getTimeToWallCollision();
-
-            return getPosition().add(getVelocity().multiply(timeToWallCollision));
-        }
+        return getPosition().add(getVelocity().multiply(timeToWallCollision));
     }
 
 
