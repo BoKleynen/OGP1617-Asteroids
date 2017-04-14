@@ -66,7 +66,7 @@ public class BoundaryCollision extends Collision {
      */
     @Override
     public void resolve() throws IllegalStateException {
-        if (getTimeToCollision() == Double.POSITIVE_INFINITY)
+        if (getEntity1() == null)
             throw new IllegalStateException("The entity won't collide with the boundary of its world");
 
         if (getEntity1() instanceof Bullet) {
@@ -75,9 +75,11 @@ public class BoundaryCollision extends Collision {
                 bullet.die();
             else
                 bullet.incrementWallHits();
+                resolveCollisionWithBoundary();
         }
 
-        resolveCollisionWithBoundary();
+        else
+            resolveCollisionWithBoundary();
     }
 
     /**
@@ -88,7 +90,7 @@ public class BoundaryCollision extends Collision {
      * 			| @see implementation
      */
     private void resolveCollisionWithBoundary() {
-        if (getCollisionPosition().getX() <= getEntity1().getRadius() 
+        if (getCollisionPosition().getX() <= getEntity1().getRadius()
         		|| getCollisionPosition().getX() >= getEntity1().getWorld().getWidth() - getEntity1().getRadius()) {
             getEntity1().setVelocity(new Vector(-getEntity1().getVelocity().getX(), getEntity1().getVelocity().getY()));
         }
