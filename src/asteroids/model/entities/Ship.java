@@ -160,11 +160,11 @@ public class Ship extends Entity {
     }
     
     public boolean isValidMass(double mass) {
-    	return mass >= ( (4.0/3.0) * Math.pow(getRadius(), 3) * Math.PI * Ship.getMinMassDensity() );
+    	return isValidMass(mass, getRadius());
     }
     
     public static boolean isValidMass(double mass, double radius) {
-    	return mass >= ( (4.0/3.0) * Math.pow(radius, 3) * Math.PI * Ship.getMinMassDensity() );
+    	return mass >= getMinMass(radius);
     }
     
     public static double getMinMass(double radius) {
@@ -229,7 +229,7 @@ public class Ship extends Entity {
      *          |   new.getVelocity().getY() == getThrust() / getMass() * Math.sin(getOrientation()) * time
      */
     public void accelerate(double time) {
-        double acceleration = getThrust() / getMass();
+        double acceleration = getAcceleration();
         setVelocity(getVelocity().add(new Vector(acceleration * Math.cos(getOrientation()) * time, acceleration * Math.sin(getOrientation()) * time)));
     }
 
