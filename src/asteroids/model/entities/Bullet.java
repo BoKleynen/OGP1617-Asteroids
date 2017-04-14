@@ -5,7 +5,6 @@ import asteroids.model.collisions.Collision;
 import asteroids.model.collisions.EntityCollision;
 import be.kuleuven.cs.som.annotate.*;
 import vector.Vector;
-import asteroids.model.world.*;
 
 import java.util.Collection;
 
@@ -23,40 +22,24 @@ public class Bullet extends Entity {
 	
 
 	/**
-	 * Creates a new bullet with all the given parameters and adds it to the given world if this is possible.
+	 * Creates a new bullet with all the given parameters that can sustain a maximum of 2 wall hits.
 	 * 
 	 * @param position	The position at which to create the bullet
 	 * @param velocity	The current velocity of this bullet
 	 * @param radius	The current radius for this bullet
 	 * 
-	 * @Effect this((null, position, velocity, getSpeedOfLight() ,radius)
+	 * @Effect this((position, velocity, getSpeedOfLight() ,radius)
 	 */
     public Bullet(Vector position, Vector velocity, double radius) {
-        this(null, position, velocity, getSpeedOfLight() ,radius);
+        this(position, velocity, getSpeedOfLight() ,radius,2);
     }
     
     /**
-	 * Creates a new bullet with all the given parameters and adds it to the given world if this is possible.
-	 * 
-	 * @param world		The world to add this bullet to.
-     * @param position	The position at which to create the bullet
-	 * @param maxSpeed	The highest allowed speed for this bullet
-	 * @param velocity	The current velocity of this bullet
-	 * @param radius	The current radius for this bullet
-	 * 
-	 * @Effect this((null, position, velocity, getSpeedOfLight() ,radius)
-	 */
-    public Bullet(World world, Vector position, Vector velocity, double maxSpeed, double radius) {
-    	this(world, position, velocity, maxSpeed, radius, 2);
-    }
-    
-    /**
-     * Creates a new bullet with all the given parameters and adds it to the given world if this is possible.
+     * Creates a new bullet with all the given parameters.
      * The initial position will be equal to the vector position. The initial velocity will be equal to the vector velocity.
      * The maximum speed will be equal to maxSpeed. The initial radius will be equal to radius. 
      * If this entity overlaps another entity in the given world, it will not be added to that world.
      * 
-     * @param world		The world to add this bullet to.
      * @param position	The position at which to create the bullet
 	 * @param maxSpeed	The highest allowed speed for this bullet
 	 * @param velocity	The current velocity of this bullet
@@ -97,9 +80,9 @@ public class Bullet extends Entity {
 	 * @Post	The initial amount of times this bullet has bounced off a wall will be equal to zero.
 	 * 			| this.wallHits == 0
 	 */
-    public Bullet(World world, Vector position, Vector velocity, double maxSpeed, double radius, int maxWallHits) {
+    public Bullet(Vector position, Vector velocity, double maxSpeed, double radius, int maxWallHits) {
 
-        super(world, position, maxSpeed, velocity, getMinRadius(), radius, getMassDensity(), getMassDensity()*4/3*Math.PI*Math.pow(radius, 3));
+        super(position, maxSpeed, velocity, getMinRadius(), radius, getMassDensity(), getMassDensity()*4/3*Math.PI*Math.pow(radius, 3));
 
         this.maxWallHits = (char) maxWallHits;
         wallHits = 0;

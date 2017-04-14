@@ -34,7 +34,7 @@ public class Ship extends Entity {
      * 			| this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight())
      */
     public Ship() {
-    	this(null, new Vector(50, 50), getSpeedOfLight(), new Vector(0, 0), 0, getMinRadius(), 0, 1.1 * Math.pow(10, 21));
+    	this(new Vector(50, 50), getSpeedOfLight(), new Vector(0, 0), 0, getMinRadius(), 0, 1.1 * Math.pow(10, 21));
     }
 
     /**
@@ -57,7 +57,7 @@ public class Ship extends Entity {
     public Ship(Vector position, Vector velocity, double orientation, double radius, double mass)
             throws  IllegalArgumentException, NullPointerException {
 
-    	this(null,position, getSpeedOfLight(), velocity, orientation, radius, mass, 1.1 * Math.pow(10, 21));
+    	this(position, getSpeedOfLight(), velocity, orientation, radius, mass, 1.1 * Math.pow(10, 21));
     }
 
     /**
@@ -92,10 +92,10 @@ public class Ship extends Entity {
      *          If the specified position refers a null object
      *          | position == null
      */
-    public Ship(World world, Vector position, double maxSpeed, Vector velocity, double orientation, double radius, double mass, double thrust)
+    public Ship(Vector position, double maxSpeed, Vector velocity, double orientation, double radius, double mass, double thrust)
             throws  IllegalArgumentException, NullPointerException {
 
-        super(world, position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
+        super(position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
         
         loadBullets(getInitialBulletAmount());
         setOrientation(orientation);
@@ -360,24 +360,33 @@ public class Ship extends Entity {
     private HashSet<Bullet> bullets = new HashSet<>();
 
     /**
-     * Adds the given bullet to this ship
+     * Adds the given bullet to this ship.
+     * Setting this ship as its parent ship and loading it onto this ship.
      *
      * @param bullet The bullet to be added to this ship.
-     * @Post	
+     * @Post	This ship is the bullets parent ship.
+     *          | (new bullet).getParentShip() == new
      */
     public void addBullet(Bullet bullet) {
         bullet.setParentShip(this);
-        bullet.setWorld(null);
-        bullet.setShip(this);
-        bullets.add(bullet);
-    	bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
+        loadBullet(bullet);
     }
 
     /**
      * Loads the given bullet onto this ship.
+     *
      * @param bullet
+     * @Post    The bullet is loaded onto this ship
+     *          | (new bullet).getShip() == new
+     *          | new.getAllBullets().contain((new bullet))
+     * @Post    The bullet is not part of a world
+     *          | !(new bullet).hasWorld()
      * @throws IllegalStateException
+     *          If this ship is terminated
+     *          | isTerminated()
      * @throws IllegalArgumentException
+     *          If this ship is not the bullets parent ship.
+     *          | bullet.getParentShip() != this
      */
     public void loadBullet(Bullet bullet) throws IllegalStateException, IllegalArgumentException {
         if (isTerminated())
@@ -385,7 +394,10 @@ public class Ship extends Entity {
         if (bullet.getParentShip() != this)
             throw new IllegalArgumentException("A bullet can only be loaded onto its parent ship");
 
-        getWorld().removeEntity(bullet);
+        try {
+            getWorld().removeEntity(bullet);
+        } catch (IllegalArgumentException e) {}
+
         bullet.setShip(this);
         bullets.add(bullet);
         bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
@@ -482,17 +494,16 @@ public class Ship extends Entity {
         Bullet bullet = getFirstBullet();
         if ( (bullet != null) && (getWorld() != null) ) {
             Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.02*(getRadius() + bullet.getRadius())));
+            removeBullet(bullet);
 
-            if (! bullet.canHaveAsPosition(nextBulletPosition)) {
-                removeBullet(bullet);
-                bullet.terminate();
-            }
-            else {
-                removeBullet(bullet);
+            try {
                 bullet.setPosition(nextBulletPosition);
                 getWorld().addEntity(bullet);
                 bullet.resolveInitialCollisions();
                 bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
+
+            } catch (IllegalArgumentException e) {
+                bullet.terminate();
             }
         }
 	}

@@ -19,33 +19,14 @@ import be.kuleuven.cs.som.annotate.*;
  */
 public abstract class Entity {
 
-
-	/**
-	 * Creates a new Entity with all the given parameters
-	 * 
-	 * @param position	The position at which to create the entity
-	 * @param maxSpeed	The highest allowed speed for this entity
-	 * @param velocity	The current velocity of this Entity
-	 * @param minRadius The smallest allowed radius for this Entity
-	 * @param radius	The current radius for this entity
-	 * @param minMassDensity	The smallest allowed mass density for this Entity
-	 * @param mass		The current mass for this Entity
-	 * 
-	 * @Effect see implementation
-	 */
-    Entity(Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass){
-        this(null, position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
-    }
-
     
     /**
-     * Creates a new Entity with all the given parameters and adds it to the given world if this is possible.
+     * Creates a new Entity with all the given parameters.
      * The initial position will be equal to the vector position. The initial velocity will be equal to the vector velocity.
      * The maximum speed will be equal to maxSpeed. The initial radius will be equal to radius and the smallest allowed radius
      * will be equal to minRadius. The initial mass will be equal to mass and the smallest allowed mass density will be
      * equal to minMassDensity. If this entity overlaps another entity in the given world, it will not be added to that world.
-     * 
-     * @param world		The world to add this entity to.
+     *
      * @param position	The position at which to create the entity
 	 * @param maxSpeed	The highest allowed speed for this entity
 	 * @param velocity	The current velocity of this Entity
@@ -61,15 +42,10 @@ public abstract class Entity {
 	 * 			When the radius is not a valid radius for this entity.
 	 * 			! canHaveAsRadius(radius, minRadius)
 	 * 
-	 * @Post	If the given position is a valid position for this entity in the given world, its position will
+	 * @Post	If the given position is a valid position for this entity, its position will
 	 * 			be equal to the given position.
 	 * 			| if canHaveAsPosition(position) then
 	 * 			| this.getPosition() == position
-	 * @Post	If the entity has a valid position within the given world, and it does not overlap any other entities
-	 * 			in that world, this entity will be added to the given world.
-	 * 			| if checkValidPositionInWorld() then
-	 * 			|	this.getWorld() == world
-	 * 			|else this.getWorld() == null
 	 * @Post	If the given maximum speed does not exceed the speed of light, the maximum speed of this entity will be equal to the
 	 * 			given maximum speed, otherwise it will be equal to the speed of light.
 	 * 			| this.getMaxSpeed == ( maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight() )
@@ -92,20 +68,13 @@ public abstract class Entity {
 	 * 
 	 * 
      */
-    Entity(World world, Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass)
+    Entity(Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass)
             throws IllegalArgumentException {
-        if (! canHaveAsPosition(position))
-            throw new IllegalArgumentException();
 
         if (! canHaveAsRadius(radius, minRadius))
             throw new IllegalArgumentException();
 
-        
-        setWorld(world);
         setPosition(position);
-        
-        checkValidPositionInWorld();
-
         this.maxSpeed = maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight();
         setVelocity(velocity);
         this.radius = radius;
@@ -235,57 +204,9 @@ public abstract class Entity {
         return world;
     }
 
-
-    /**
-     * Checks whether this entity is at a valid position in its current world. If the
-     * position of this entity is already partially occupied or if the position is outside of
-     * the boundaries of the world, it is removed from the world. This method returns true if
-     * the entity can be at its current position in its current world, otherwise returns false.
-     * This method should only be used when adding new entities to a world, when creating new
-     * entities in a world or when moving entities between worlds.
-     * 
-     * @Post 	If this entity overlaps another entity in its current world, it is removed from the world.
-     * 			| for entity in getWorld.getAllEntities() do
-     * 			| 	if this.overlap(entity) then
-     * 			|		( ! world.getAllEntities().contains(new this) ) and
-     * 			|		( (new this).getWorld() == null )
-     * @Post	If the position is invalid for the current world, the entity is removed.
-     * 			| if ! canHaveAsPosition(getPosition()) then
-     * 			|	( ! getWorld.getAllEntities().contains(new this) ) and
-     * 			|	( (new this).getWorld() == null )
-     * @return	True if the position was valid and the entity is not removed from the world. False if the
-     * 			position was already (partially) occupied and the entity was removed from the world.
-     * 			| if this.getworld() == null then
-     * 			|	result == true;
-     * 			| else
-     * 			| 	result == (new this).getWorld() != null
-     */
-    @Raw
-    private boolean checkValidPositionInWorld() {
-    	if ( getWorld() != null ) {
-    		HashSet<Entity> entities = getWorld().getAllEntities();
-    		entities.remove(this);
-    	
-    		if ( ! canHaveAsPosition(getPosition())) {
-    			world.removeEntity(this);
-    			return false;
-    		}
-    		for ( Entity entity : entities ) {
-    			if ( overlap(entity) ) {
-    				world.removeEntity(this);
-    				return false;
-    			}
-    		}
-    	}
-    	return true;
-    }
-
-
     /**
      * Associates this entity with the given World. If the given world is null, the entity is
-     * no longer associated with a world. If the position in the target world is already
-     * occupied by another entity or this entity is at a position that is invalid in the given
-     * world, the world of this entity will be set to null.
+     * no longer associated with a world.
      * This method should only be used inside the method addEntity of the World Class to guarantee
      * the integrity of the associations.
      *
@@ -295,8 +216,8 @@ public abstract class Entity {
     public void setWorld(World world) throws IllegalStateException {
     	if (isTerminated())
     	    throw new IllegalStateException("This entity is Terminated");
+
         this.world = world;
-    	checkValidPositionInWorld();
     }
 
     private Vector position;    // defensively
@@ -334,40 +255,95 @@ public abstract class Entity {
      */
     @Basic
     public void setPosition(Vector newPosition) throws NullPointerException, IllegalArgumentException, IllegalStateException {
-    	if ( newPosition == null )
-    		throw new NullPointerException();
         if (isTerminated())
             throw new IllegalStateException("This entity is terminated");
-        if (! canHaveAsPosition(newPosition))
+        if (!isValidPosition(newPosition))
             throw new IllegalArgumentException("The new position is invalid");
 
         position = newPosition;
     }
 
     /**
-     * Checks whether the vector position is a valid position for an entity.
+     * Checks whether or not a given position is a valid position for an entity.
+     * valid position are non-null vector objects that do not have NaN as their x or y component.
      *
-     * @param 	position
-     * 			The position to be tested.
-     * @return	True if and only if the components of the vector position are valid real numbers,
-     * 			and if the entity stays within the boundaries of the world it is in.
-     * 			| result == ((! Double.isNaN(position.getX())) && (! Double.isNaN(position.getY())))
-     * @throws 	NullPointerException
-     * 			If the specified position refers a null object.
-     * 		    | position == null
+     * @param   position
+     *          The position to be tested.
+     * @return  True if and only if the vector is not a null object and the components of the vector are real numbers
+     *          | @see implementation
      */
-    @Basic
-    public boolean canHaveAsPosition(Vector position) throws NullPointerException {
-        if (position == null)
-            throw new NullPointerException();
+    public static boolean isValidPosition(Vector position) {
+        return !(position == null || Double.isNaN(position.getX()) ||  Double.isNaN(position.getY()));
+    }
 
-        boolean withinBoundaries = true;
-        if ( getWorld() != null ) {
-        	withinBoundaries = ( (position.getX() >= getRadius()) && (position.getX() <= getWorld().getWidth() - getRadius())
-        			&& (position.getY() >= getRadius()) && (position.getY() <= getWorld().getHeight() - getRadius()) );
+    /**
+     * Checks whether or not the specified position is within the boundaries of the specified world.
+     *
+     * @param world
+     *          A non-null world object for which the position has to be validated.
+     * @param position
+     *          A non-null vector object which has to be checked
+     * @return  True if and only if the entity lies fully within the boundaries of the specified world.
+     *          | @see implementation
+     * @throws IllegalArgumentException
+     *          If the specified world or position are a null object
+     *          | world == null || position == null
+     */
+    public boolean isWithinBoundariesOfWorld(World world, Vector position) throws IllegalArgumentException {
+        if (world == null)
+            throw new IllegalArgumentException();
+        if (position == null)
+            throw new IllegalArgumentException();
+
+        return (position.getX() >= getRadius()) &&
+                (position.getX() <= world.getWidth() - getRadius()) &&
+                (position.getY() >= getRadius()) &&
+                (position.getY() <= world.getHeight() - getRadius());
+    }
+
+    /**
+     * Checks whether or not this entities current position is within the boundaries of the specified world.
+     *
+     * @param world
+     *          A non-null world object for which this entities current position has to be validated.
+     * @return  isWithinBoundariesOfWorld(world, getPosition)
+     */
+    public boolean isWithinBoundariesOfWorld(World world) {
+        return isWithinBoundariesOfWorld(world, getPosition());
+    }
+
+    /**
+     * Checks whether or not this entity can have the specified position in the specified world
+     * @param position
+     * @param world
+     * @return  True if and only if the specified world is a null object
+     *          | world == null
+     * @return  True if and only if the specified position results in the entity laying fully within the boundaries of
+     *          the world and this entity not overlapping with any entities already present in the world.
+     *          | isWithinBoundariesOfWorld(world, position) && !overlapWithEntityInWorld(world)
+     */
+    public boolean canHaveAsPositionInWorld(Vector position, World world) {
+        return world == null || (isWithinBoundariesOfWorld(world, position) && !overlapWithEntityInWorld(world));
+
+    }
+
+    public boolean hasValidPositionInWorld(World world) {
+        return canHaveAsPositionInWorld(getPosition(), world);
+    }
+
+    /**
+     * Checks whether or not this entity overlaps with another entity in the specified world.
+     * @param world
+     * @return  True if and only if this entity overlaps with an entity in the world.
+     *          | overlap(entity) for any entity in world.getAllEntities()
+     */
+    public boolean overlapWithEntityInWorld(World world) {
+        for (Entity otherEntity : world.getAllEntities()) {
+            if (overlap(otherEntity))
+                return true;
         }
 
-        return ( withinBoundaries && ( ! Double.isNaN(position.getX()) ) && ( ! Double.isNaN(position.getY()) ) );
+        return false;
     }
 
     /**

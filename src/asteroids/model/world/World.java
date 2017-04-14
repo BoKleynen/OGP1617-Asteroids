@@ -139,8 +139,8 @@ public class World {
     		throw new NullPointerException();
     	if ( entity.hasWorld() )
     		throw new IllegalArgumentException("Entity already has a world.");
-    	if ( entities.containsValue(entity) )
-    		throw new IllegalArgumentException("Entity is already in this world");
+    	if (! entity.hasValidPositionInWorld(this))
+    	    throw new IllegalArgumentException("Entity at invalid position for this world");
 
     	entities.put(entity.getPosition(), entity);
         entity.setWorld(this);
@@ -215,17 +215,6 @@ public class World {
 
         return bullets;
     }
-    
-//    /**
-//     * Removes the given bullet from this world, if the bullet is in this world.
-//     */
-//    private void removeBullet(Bullet bullet) {
-//    	if (entities.containsKey(bullet.getPosition()) ) {
-//
-//    	    entities.remove(bullet.getPosition(), bullet);
-//    		bullet.removeWorld();
-//    	}
-//    }
 
     /**
      * Updates the position of the given entity in this world to the given position.
@@ -327,5 +316,4 @@ public class World {
         }
         terminate();
     }
-
 }

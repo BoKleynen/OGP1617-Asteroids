@@ -17,7 +17,7 @@ public class WorldTest {
     public void testCreateWorld() {
         World world = new World(666, 999);
         assertEquals(666,world.getWidth(), EPSILON);
-        assertEquals(999, world.getWidth(), EPSILON);
+        assertEquals(999, world.getHeight(), EPSILON);
         assertTrue(world.getAllEntities().isEmpty());
         assertTrue(world.getAllShips().isEmpty());
         assertTrue(world.getAllBullets().isEmpty());
@@ -25,7 +25,7 @@ public class WorldTest {
 
     // Ship(Vector position, Vector velocity, double orientation, double radius, double mass)
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void testAddEntity() {
         World world = new World(5000, 5000);
 
