@@ -1,3 +1,5 @@
+package asteroids.tests.part2;
+
 
 import asteroids.model.world.*;
 import vector.Vector;
