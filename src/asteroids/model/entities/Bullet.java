@@ -33,6 +33,10 @@ public class Bullet extends Entity {
     public Bullet(Vector position, Vector velocity, double radius) {
         this(position, velocity, getSpeedOfLight() ,radius,(char) 2);
     }
+
+    public Bullet(Vector position, Vector velocity, double radius, char maxWallHits) {
+        this(position,velocity,getSpeedOfLight(),radius,maxWallHits);
+    }
     
     /**
      * Creates a new bullet with all the given parameters.

@@ -71,11 +71,12 @@ public class BoundaryCollision extends Collision {
 
         if (getEntity1() instanceof Bullet) {
         	Bullet bullet = (Bullet) getEntity1();
-            if (bullet.getWallHits() >= bullet.getMaxWallHits())
-                bullet.die();
-            else
+            if (bullet.getWallHits() >= bullet.getMaxWallHits()) {
+                bullet.die();}
+            else {
                 bullet.incrementWallHits();
                 resolveCollisionWithBoundary();
+            }
         }
 
         else
@@ -112,6 +113,6 @@ public class BoundaryCollision extends Collision {
 
     @Override
     public String toString() {
-        return "Entity collision (" + getEntity1() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision();
+        return "Boundary collision (" + getEntity1() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision() + ")";
     }
 }
