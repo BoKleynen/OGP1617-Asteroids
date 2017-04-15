@@ -1,6 +1,5 @@
 package asteroids.tests;
-import asteroids.model.collisions.Collision;
-import asteroids.model.collisions.EntityCollision;
+import asteroids.model.collisions.*;
 import asteroids.model.world.World;
 import org.junit.Before;
 import org.junit.Test;

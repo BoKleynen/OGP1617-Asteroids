@@ -37,6 +37,10 @@ public class Ship extends Entity {
     	this(new Vector(50, 50), getSpeedOfLight(), new Vector(0, 0), 0, getMinRadius(), 0, 1.1 * Math.pow(10, 21));
     }
 
+    public Ship(Vector position, Vector velocity, double orientation, double radius) {
+        this(position, getSpeedOfLight(), velocity, orientation,radius,0,1.1 * Math.pow(10, 21));
+    }
+
     /**
      * Creates a new ship and initializes its position to the given position vector,
      * its velocity to the given velocity vector, its orientation to the given orientation
