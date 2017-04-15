@@ -11,6 +11,9 @@ import static org.junit.Assert.*;
 
 /**
  * A class containing tests for the class asteroids.model.entities.Ship
+ * 
+ * For tests for the loading and adding of bullets, see the BulletAssociations test file.
+ * For tests for the firing of bullets, see the BulletFiring test file.
  *
  * @author Bo Kleynen and Yrjo Koyen
  *
