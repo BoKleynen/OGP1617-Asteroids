@@ -1,4 +1,4 @@
-package asteroids.tests;
+package asteroids.tests.part2;
 import asteroids.model.collisions.*;
 import asteroids.model.world.World;
 import org.junit.Before;

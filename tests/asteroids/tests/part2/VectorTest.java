@@ -1,4 +1,4 @@
-
+package asteroids.tests.part2;
 
 import vector.*;
 import asteroids.model.entities.*;
@@ -6,7 +6,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import asteroids.model.world.*;
 
-public class Part2VectorTests {
+public class VectorTest {
 
 	private static Vector v1, v2, v3;
 	

@@ -1,3 +1,4 @@
+package asteroids.tests.part2;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +8,7 @@ import vector.*;
 import asteroids.model.entities.*;
 import asteroids.model.world.*;
 
-public class Part2TestBulletFiring {
+public class BulletFiringTest {
 	
 	Ship ship;
 	World world; 

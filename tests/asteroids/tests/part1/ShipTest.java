@@ -1,4 +1,4 @@
-package asteroids.tests;
+package asteroids.tests.part1;
 
 import asteroids.model.entities.Ship;
 import vector.Vector;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  * TODO:	- Add documentation
  *
  */
-public class ShipTests {
+public class ShipTest {
 
     private static Ship defaultShip;
 

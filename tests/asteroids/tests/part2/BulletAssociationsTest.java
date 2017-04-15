@@ -1,3 +1,4 @@
+package asteroids.tests.part2;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +11,7 @@ import vector.*;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class Part2TestBulletAssociations {
+public class BulletAssociationsTest {
 	
 	private Ship s1, s2;
 	private World w1, w2;

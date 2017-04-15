@@ -1,3 +1,5 @@
+package asteroids.tests.part2;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -7,7 +9,7 @@ import asteroids.model.entities.Ship;
 import asteroids.model.world.World;
 import vector.Vector;
 
-public class Part2TestWorldAssociations {
+public class WorldAssociationsTest {
 	
 	World world;
 	Ship s1, s2, s3;
