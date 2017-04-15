@@ -103,7 +103,7 @@ public class EntityCollision extends Collision {
                 Ship ship2 = (Ship)getEntity2();
                 double sigma = ship1.getRadius() + ship2.getRadius();
                 double J = (2.0 * ship1.getTotalMass() * ship2.getTotalMass() * ship2.getVelocity().getDifference(ship1.getVelocity()).dotProduct(ship2.getPosition().getDifference(ship1.getPosition()))) /
-                        (sigma * (ship1.getTotalMass()+ ship2.getTotalMass()));
+                        (sigma * (ship1.getTotalMass() + ship2.getTotalMass()));
 
                 double Jx = J * (ship2.getPosition().getX() - ship1.getPosition().getX()) / sigma;
                 double Jy = J * (ship2.getPosition().getY() - ship1.getPosition().getY()) / sigma;
