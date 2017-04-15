@@ -113,6 +113,12 @@ public class BoundaryCollision extends Collision {
         collisionListener.boundaryCollision(getEntity1(), getCollisionPosition().getX(), getCollisionPosition().getY());
     }
 
+    /**
+     * Returns the string representation of this BoundaryCollision.
+     * 
+     * @return	A string representing this BoundaryCollision.
+     * 			| @see implementation
+     */
     @Override
     public String toString() {
         return "Boundary collision (" + getEntity1() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision() + ")";
