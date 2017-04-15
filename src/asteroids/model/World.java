@@ -165,7 +165,7 @@ public class World {
      * 			|	entity.getWorld() != (new this)
      */
     public void removeEntity(Entity entity) throws NullPointerException, IllegalArgumentException {
-    	if ( entity == null )
+    	if (entity == null)
     		throw new NullPointerException();
     	if ( ! entities.containsValue(entity))
     		throw new IllegalArgumentException("Entity is not in the world");

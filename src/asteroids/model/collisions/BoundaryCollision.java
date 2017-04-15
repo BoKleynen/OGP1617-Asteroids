@@ -109,7 +109,8 @@ public class BoundaryCollision extends Collision {
      */
     @Override
     public void collisionListener(CollisionListener collisionListener) {
-        collisionListener.boundaryCollision(getEntity1(), getCollisionPosition().getX(), getCollisionPosition().getY());
+        if (collisionListener != null)
+            collisionListener.boundaryCollision(getEntity1(), getCollisionPosition().getX(), getCollisionPosition().getY());
     }
 
     /**

@@ -302,14 +302,13 @@ public class Bullet extends Entity {
      * 			|	(new this).isTerminated();
      */
     void resolveInitialCollisions() {
-        Collection<Entity> allEntities = getWorld().getAllEntities();
-        allEntities.remove(this);
+        Collection<Entity> allEntities = getParentShip().getWorld().getAllEntities();
         allEntities.remove(getParentShip());
         Collision initialBulletCollision = null;
 
         for (Entity entity : allEntities) {
             if ( entity.overlap(this) ) {
-                initialBulletCollision = new EntityCollision(this, entity, 0);
+                initialBulletCollision = new EntityCollision(this, entity, 0, getPosition());
                 break;
             }
         }

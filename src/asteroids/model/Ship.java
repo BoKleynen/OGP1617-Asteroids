@@ -580,11 +580,10 @@ public class Ship extends Entity {
             try {
                 bullet.setPosition(nextBulletPosition);
                 getWorld().addEntity(bullet);
-                bullet.resolveInitialCollisions();
                 bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
 
             } catch (IllegalArgumentException e) {
-                bullet.terminate();
+                bullet.resolveInitialCollisions();
             }
         }
 	}

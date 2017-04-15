@@ -157,7 +157,8 @@ public class EntityCollision extends Collision {
      */
     @Override
     public void collisionListener(CollisionListener collisionListener) {
-        collisionListener.objectCollision(getEntity1(), getEntity2(), getCollisionPosition().getX(), getCollisionPosition().getY());
+        if (collisionListener != null)
+            collisionListener.objectCollision(getEntity1(), getEntity2(), getCollisionPosition().getX(), getCollisionPosition().getY());
     }
 
     /**

@@ -622,7 +622,9 @@ public abstract class Entity {
      * 			| (new this).isTerminated()
      */
     public void die() {
-        this.getWorld().removeEntity(this);
+        try {
+            this.getWorld().removeEntity(this);
+        } catch (NullPointerException e){}
         this.terminate();
     }
 
