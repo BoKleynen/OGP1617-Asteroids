@@ -77,8 +77,6 @@ public abstract class Collision {
 
     /**
      * Returns the position at which this collision will occur.
-     *
-     * @return The position at which this collision will occur
      */
     public abstract Vector calculateCollisionPosition();
 

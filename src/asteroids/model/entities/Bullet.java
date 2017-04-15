@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * @Invar   A bullet is associated with at most one world or one ship at once
  *          | getWorld() == null || getShip() == null
- * @Invar   A bullet associated with a ship, is associated with its parent ship
+ * @Invar   A bullet associated with a ship, is associated with the same ship as its parent ship
  *          | if getShip() instanceof Ship
  *          |   then getShip() == getParentShip()
  * @Invar   A bullet will never collide with a wall more then the maximum amount of wall hits
@@ -28,7 +28,7 @@ public class Bullet extends Entity {
 	 * @param velocity	The current velocity of this bullet
 	 * @param radius	The current radius for this bullet
 	 * 
-	 * @Effect this((position, velocity, getSpeedOfLight() ,radius)
+	 * @Effect this(position, velocity, getSpeedOfLight() ,radius)
 	 */
     public Bullet(Vector position, Vector velocity, double radius) {
         this(position, velocity, getSpeedOfLight() ,radius,(char) 2);
@@ -150,7 +150,7 @@ public class Bullet extends Entity {
 
     /**
      * Removes the parent ship from this bullet. This method is useful for terminating bullets to tear down the
-     * parent ship association.
+     * parent ship association when bullets die or are terminated.
      * 
      * @Post	The parent ship of this bullet is null
      * 			| (new this).getParentShip() == null
@@ -290,6 +290,14 @@ public class Bullet extends Entity {
      * Resolves a collision caused by the firing of this bullet from its parent ship. This method only
      * creates and resolves a collision if a fired bullet overlaps an entity in the current
      * world upon spawning at its initial location.
+     * 
+     * @Post	If this bullet does not overlap an entity in its world, it is not changed.
+     * 			| if ! this.overlapWithEntityInWorld(this.getWorld()) then
+     * 			|	new this == this
+     * @Post	If this bullet overlaps another entity upon spawning in a world, a collision is created
+     *			with this bullet and the entity it overlaps with and this collision is resolved.
+     *			| if this.overlapWithEntityInWorld(this.getWorld()) then
+     * 			|	(new this).isTerminated();
      */
     void resolveInitialCollisions() {
         Collection<Entity> allEntities = getWorld().getAllEntities();

@@ -3,8 +3,10 @@ package asteroids.model.entities;
 import asteroids.part2.CollisionListener;
 import vector.Vector;
 
+import java.util.Collection;
 import java.util.HashSet;
 
+import asteroids.model.collisions.EntityCollision;
 import asteroids.model.world.World;
 import be.kuleuven.cs.som.annotate.*;
 

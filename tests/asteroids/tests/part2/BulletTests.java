@@ -3,7 +3,6 @@ package asteroids.tests.part2;
 
 import asteroids.model.world.*;
 import vector.Vector;
-import asteroids.model.entities.*;
 
 import static org.junit.Assert.*;
 

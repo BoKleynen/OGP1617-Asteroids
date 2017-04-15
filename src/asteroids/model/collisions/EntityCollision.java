@@ -159,8 +159,10 @@ public class EntityCollision extends Collision {
     }
 
     /**
-     * Returns a string object of this entity collision
-     * @return
+     * Returns a string representation of this entity collision
+     * 
+     * @return 	A string representing this collision.
+     * 			| @see implementation
      */
     @Override
     public String toString() {
