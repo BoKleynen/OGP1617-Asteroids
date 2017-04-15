@@ -147,6 +147,19 @@ public class Bullet extends Entity {
         this.parentShip = ship;
     }
 
+
+    /**
+     * Removes the parent ship from this bullet. This method is useful for terminating bullets to tear down the
+     * parent ship association.
+     * 
+     * @Post	The parent ship of this bullet is null
+     * 			| (new this).getParentShip() == null
+     */
+    @Basic
+    void removeParentShip() {
+        this.parentShip = null;
+    }
+
     /**
      * Returns the ship to which this bullet belongs or that fired it.
      *
@@ -268,6 +281,7 @@ public class Bullet extends Entity {
 		   getShip().removeBullet(this);
 	   else if ( hasWorld() )
 		   getWorld().removeEntity(this);
+	   removeParentShip();
 
 	   isTerminated = true;
    }
@@ -294,4 +308,5 @@ public class Bullet extends Entity {
             initialBulletCollision.resolve();
         }
     }
+    
 }
