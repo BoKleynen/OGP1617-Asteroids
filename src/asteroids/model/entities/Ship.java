@@ -474,6 +474,7 @@ public class Ship extends Entity {
         try {
             getWorld().removeEntity(bullet);
         } catch (IllegalArgumentException e) {}
+        catch (NullPointerException e) {}
 
         bullet.setShip(this);
         bullets.add(bullet);
