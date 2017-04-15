@@ -141,7 +141,7 @@ public class Bullet extends Entity {
      * 			| (new this).getParentShip() == ship
      */
     @Basic
-    void setParentShip(Ship ship) {
+    public void setParentShip(Ship ship) {
         if (hasParentShip())
             throw new IllegalStateException("This bullet already has a parent ship");
         this.parentShip = ship;

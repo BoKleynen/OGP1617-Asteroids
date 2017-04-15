@@ -146,6 +146,12 @@ public class World {
         entity.setWorld(this);
     }
 
+    public void addEntity(Entity... entities) {
+        for (Entity entity : entities) {
+            addEntity(entity);
+        }
+    }
+
     /**
      * @param entity	The entity to be removed from this world
      * @throws	IllegalArgumentException

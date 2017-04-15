@@ -36,15 +36,10 @@ public class WorldTest {
         Ship ship3 = new Ship(new Vector(500,500), velocity, 0, 15, 0);
         Ship ship4 = new Ship(new Vector(1000,500), velocity, 0, 15, 0);
         Ship ship5 = new Ship(new Vector(510,500), velocity, 0, 15, 0);
-        Ship[] ships = {ship1, ship2, ship3, ship4};
+        world.addEntity(ship1, ship2, ship3, ship4);
 
-        for (Ship ship : ships) {
-            world.addEntity(ship);
-            assertTrue(world.getAllShips().contains(ship));
-            assertTrue(world.getAllEntities().contains(ship));
-        }
-        assertEquals(ships.length, world.getAllShips().size(), EPSILON);
-        assertEquals(ships.length, world.getAllEntities().size(), EPSILON);
+        assertEquals(4, world.getAllShips().size(), EPSILON);
+        assertEquals(4, world.getAllEntities().size(), EPSILON);
         assertEquals(0, world.getAllBullets().size(), EPSILON);
 
         world.addEntity(ship5);

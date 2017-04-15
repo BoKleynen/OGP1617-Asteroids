@@ -64,8 +64,8 @@ public class Vector {
      *
      * @param a The value with which this Vector has to be multiplied.
      * @return  The product of this vector with a given double as a new vector.
-     *          | new.getX() == a * this.getX()
-     *          | new.getY() == a * this.getY()
+     *          | result.getX() == a * this.getX()
+     *          | result.getY() == a * this.getY()
      */
     public Vector multiply(double a) {
         return new Vector(a * getX(), a * getY());
@@ -76,7 +76,7 @@ public class Vector {
      *
      * @param u
      * @return  The dot product of this vector with a given vector as a double.
-     *          | getX() * u.getX() + getY() * u.getY()
+     *          | result == getX() * u.getX() + getY() * u.getY()
      */
     public double dotProduct(Vector u) {
         return getX() * u.getX() + getY() * u.getY();
@@ -99,8 +99,8 @@ public class Vector {
      * and with the same orientation as this Vector.
      *
      * @return  A new vector with magnitude 1, with the same orientation as this vector.
-     *          | new.getMagnitude() = 1
-     *          | v = new.multiply(this.getMagnitude())
+     *          | result.getMagnitude() = 1
+     *          | v = result.multiply(this.getMagnitude())
      *          |   v.getX() == this.getX()
      *          |   v.getY() == this.getY()
      */
@@ -124,7 +124,8 @@ public class Vector {
      *
      * @return  The difference of the x coordinates of this Vector and the given Vector and the difference of the
      *          y coordinates of this Vector and the given Vector
-     *          | (getX() - v.getX(), getY() - v.getY())
+     *          | result.getX() == getX() - v.getX()
+     *          | result.getY() == getY() - v.getY()
      */
     public Vector getDifference(Vector v) {
         return new Vector(getX() - v.getX(), getY() - v.getY());
