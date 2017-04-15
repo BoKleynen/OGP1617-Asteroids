@@ -1,4 +1,4 @@
-
+package asteroids.tests.part2;
 
 import asteroids.model.entities.Ship;
 import vector.Vector;
@@ -58,7 +58,7 @@ public class ShipTests {
     @Test
     public void testGetTotalMass() {
     	assertEquals(massTestShip.getTotalMass(), 5e20, 0.001);
-    	massTestShip.loadBullets(5);
+    	massTestShip.loadBullet(5);
     	assertTrue(massTestShip.getTotalMass() > 5e20);  	
     }
     
@@ -229,7 +229,7 @@ public class ShipTests {
 		world.addEntity(mutableTestShip1);
 		assertTrue(mutableTestShip1.hasWorld());
 		assertTrue(mutableTestShip1.getWorld().equals(world));
-		mutableTestShip1.loadBullets(15);
+		mutableTestShip1.loadBullet(15);
 		assertEquals(mutableTestShip1.getNbBullets(), 15, 0.001);
 		
 		mutableTestShip1.terminate();

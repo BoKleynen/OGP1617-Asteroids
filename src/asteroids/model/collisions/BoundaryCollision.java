@@ -65,7 +65,7 @@ public class BoundaryCollision extends Collision {
      * @Post    | @see implementation
      */
     @Override
-    public void resolve() throws IllegalStateException {
+    public void resolve(CollisionListener collisionListener) throws IllegalStateException {
         if (getEntity1() == null)
             throw new IllegalStateException("The entity won't collide with the boundary of its world");
 
@@ -81,6 +81,8 @@ public class BoundaryCollision extends Collision {
 
         else
             resolveCollisionWithBoundary();
+
+        collisionListener(collisionListener);
     }
 
     /**

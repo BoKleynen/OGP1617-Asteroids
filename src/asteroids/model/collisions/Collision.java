@@ -85,7 +85,11 @@ public abstract class Collision {
     /**
      * Resolves this collision
      */
-    public abstract void resolve();
+    public abstract void resolve(CollisionListener collisionListener);
+
+    public void resolve() {
+        this.resolve(null);
+    }
 
     /**
      * invokes the collisionlistener against this collision.

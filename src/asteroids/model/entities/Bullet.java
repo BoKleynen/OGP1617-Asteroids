@@ -308,5 +308,5 @@ public class Bullet extends Entity {
             initialBulletCollision.resolve();
         }
     }
-    
+
 }

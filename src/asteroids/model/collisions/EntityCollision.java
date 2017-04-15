@@ -95,7 +95,7 @@ public class EntityCollision extends Collision {
      * 			| @see implementation
      */
     @Override
-    public void resolve() {
+    public void resolve(CollisionListener collisionListener) {
         if (getEntity1() instanceof Ship) {
             Ship ship1 = (Ship)getEntity1();
 
@@ -103,7 +103,7 @@ public class EntityCollision extends Collision {
                 Ship ship2 = (Ship)getEntity2();
                 double sigma = ship1.getRadius() + ship2.getRadius();
                 double J = (2.0 * ship1.getTotalMass() * ship2.getTotalMass() * ship2.getVelocity().getDifference(ship1.getVelocity()).dotProduct(ship2.getPosition().getDifference(ship1.getPosition()))) /
-                        (sigma * (ship1.getTotalMass() + ship2.getTotalMass()));
+                        (sigma * (ship1.getTotalMass()+ ship2.getTotalMass()));
 
                 double Jx = J * (ship2.getPosition().getX() - ship1.getPosition().getX()) / sigma;
                 double Jy = J * (ship2.getPosition().getY() - ship1.getPosition().getY()) / sigma;
@@ -112,11 +112,11 @@ public class EntityCollision extends Collision {
                 ship2.setVelocity(new Vector(ship2.getVelocity().getX() - Jx/ship2.getTotalMass(),ship2.getVelocity().getY() - Jy/ship2.getTotalMass()));
             }
             else
-                resolveShipBulletCollision(ship1, (Bullet) getEntity2());
+                resolveShipBulletCollision(ship1, (Bullet) getEntity2(), collisionListener);
         }
         else {
             if (getEntity2() instanceof Ship)
-                resolveShipBulletCollision((Ship) getEntity2(), (Bullet)getEntity1());
+                resolveShipBulletCollision((Ship) getEntity2(), (Bullet)getEntity1(), collisionListener);
 
             else {
                 getEntity1().die();
@@ -139,12 +139,13 @@ public class EntityCollision extends Collision {
      * 			|	else
      * 			|		(new ship).isTerminated() && (new bullet).isTerminated()
      */
-    private void resolveShipBulletCollision(Ship ship, Bullet bullet) {
+    private void resolveShipBulletCollision(Ship ship, Bullet bullet, CollisionListener collisionListener) {
         try {
             ship.loadBullet(bullet);
         } catch (IllegalArgumentException e) {
             ship.die();
             bullet.die();
+            collisionListener(collisionListener);
         }
     }
 

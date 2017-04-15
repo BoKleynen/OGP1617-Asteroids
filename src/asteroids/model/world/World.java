@@ -300,8 +300,7 @@ public class World {
                     entity.move(collisionTime);
                 }
 
-                firstCollision.collisionListener(collisionListener);
-                firstCollision.resolve();
+                firstCollision.resolve(collisionListener);
                 evolve(time - collisionTime, collisionListener);
             }
         }
