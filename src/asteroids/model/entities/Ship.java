@@ -1,8 +1,5 @@
 package asteroids.model.entities;
 
-import asteroids.model.collisions.Collision;
-import asteroids.model.collisions.EntityCollision;
-import asteroids.model.world.*;
 import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
@@ -101,7 +98,7 @@ public class Ship extends Entity {
 
         super(position, maxSpeed,velocity,minRadius,radius,minMassDensity,mass);
         
-        loadBullets(getInitialBulletAmount());
+        loadBullet(getInitialBulletAmount());
         setOrientation(orientation);
         setThrust(thrust);
         thrustOff();
@@ -481,6 +478,12 @@ public class Ship extends Entity {
 
 
     }
+
+    public void loadBullet(Bullet... bullets) {
+        for (Bullet bullet : bullets) {
+            loadBullet(bullet);
+        }
+    }
     
     /**
      * Loads the given amount of new bullets onto this ship.
@@ -492,7 +495,7 @@ public class Ship extends Entity {
      *          If this ship is terminated
      *          | isTerminated()
      */
-    public void loadBullets(int amount) throws IllegalStateException, IllegalArgumentException {
+    public void loadBullet(int amount) throws IllegalStateException, IllegalArgumentException {
     	if (isTerminated())
     	    throw new IllegalStateException("This ship is terminated");
         if ( amount < 0 )
@@ -508,7 +511,7 @@ public class Ship extends Entity {
      * Loads all the bullets in the given collection of bullets onto this ship.
      * @param bulletList
      */
-    public void loadBullets(Collection<Bullet> bulletList) {
+    public void loadBullet(Collection<Bullet> bulletList) {
     	for (Bullet bullet : bulletList)
     		addBullet(bullet);
     }

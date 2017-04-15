@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import asteroids.model.entities.*;
 import asteroids.model.world.*;
-import asteroids.util.ModelException;
 import vector.*;
 import java.util.Collection;
 import java.util.HashSet;
@@ -45,11 +44,11 @@ public class BulletAssociationsTest {
 		for ( int i = 0; i < 10; i++ ) {
 			coll.add(new Bullet(new Vector(0, 0), new Vector(0, 0), 2));
 		}
-		s2.loadBullets(coll);
+		s2.loadBullet(coll);
 		assertTrue(s2.getNbBullets() == Ship.getInitialBulletAmount() + 10);
 		
 		// Test loading multiple new bullets onto a ship.
-		s1.loadBullets(100);
+		s1.loadBullet(100);
 		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount() + 100);
 	}
 	
