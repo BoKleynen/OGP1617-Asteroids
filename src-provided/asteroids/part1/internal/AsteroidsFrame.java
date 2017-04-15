@@ -14,7 +14,7 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import asteroids.model.entities.Ship;
+import asteroids.model.Ship;
 import asteroids.part1.facade.IFacade;
 import asteroids.util.ModelException;
 import asteroids.util.internal.InternalUtils;

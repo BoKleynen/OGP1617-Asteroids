@@ -1,10 +1,12 @@
 package asteroids.tests.part2;
+import asteroids.model.Bullet;
+import asteroids.model.Ship;
 import asteroids.model.collisions.*;
-import asteroids.model.world.World;
+import asteroids.model.World;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import asteroids.model.entities.*;
+
 import vector.Vector;
 
 /**

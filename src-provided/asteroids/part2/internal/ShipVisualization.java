@@ -9,7 +9,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
-import asteroids.model.entities.Ship;
+import asteroids.model.Ship;
 import asteroids.part2.facade.IFacade;
 import asteroids.util.ModelException;
 

@@ -1,7 +1,7 @@
 package asteroids.tests.part2;
 
 
-import asteroids.model.world.*;
+import asteroids.model.World;
 import vector.Vector;
 
 import static org.junit.Assert.*;
@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import asteroids.model.entities.Bullet;
-import asteroids.model.entities.Ship;
+import asteroids.model.Bullet;
+import asteroids.model.Ship;
 
 public class BulletTests {
 	

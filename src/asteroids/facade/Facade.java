@@ -1,11 +1,11 @@
 package asteroids.facade;
 
-import asteroids.model.entities.Bullet;
-import asteroids.model.entities.Entity;
-import asteroids.model.world.World;
+import asteroids.model.Bullet;
+import asteroids.model.Entity;
+import asteroids.model.World;
 import asteroids.part2.CollisionListener;
 import asteroids.util.ModelException;
-import asteroids.model.entities.Ship;
+import asteroids.model.Ship;
 import vector.Vector;
 
 import java.util.Collection;

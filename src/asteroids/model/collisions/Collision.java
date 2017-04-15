@@ -1,6 +1,6 @@
 package asteroids.model.collisions;
 
-import asteroids.model.entities.*;
+import asteroids.model.Entity;
 import asteroids.part2.CollisionListener;
 import be.kuleuven.cs.som.annotate.*;
 import vector.Vector;

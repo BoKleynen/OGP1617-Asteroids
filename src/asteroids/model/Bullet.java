@@ -1,6 +1,8 @@
-package asteroids.model.entities;
+package asteroids.model;
 
 
+import asteroids.model.Entity;
+import asteroids.model.Ship;
 import asteroids.model.collisions.Collision;
 import asteroids.model.collisions.EntityCollision;
 import be.kuleuven.cs.som.annotate.*;

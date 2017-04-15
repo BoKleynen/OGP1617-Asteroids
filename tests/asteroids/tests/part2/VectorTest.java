@@ -1,10 +1,10 @@
 package asteroids.tests.part2;
 
+import asteroids.model.Ship;
+import asteroids.model.World;
 import vector.*;
-import asteroids.model.entities.*;
 import org.junit.*;
 import static org.junit.Assert.*;
-import asteroids.model.world.*;
 
 public class VectorTest {
 

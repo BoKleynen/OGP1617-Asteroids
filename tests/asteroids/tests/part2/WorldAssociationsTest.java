@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import asteroids.model.entities.Ship;
-import asteroids.model.world.World;
+import asteroids.model.Ship;
+import asteroids.model.World;
 import vector.Vector;
 
 public class WorldAssociationsTest {

@@ -7,9 +7,9 @@ import java.awt.Stroke;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import asteroids.model.entities.Bullet;
-import asteroids.model.entities.Ship;
-import asteroids.model.world.World;
+import asteroids.model.Bullet;
+import asteroids.model.Ship;
+import asteroids.model.World;
 import asteroids.part2.facade.IFacade;
 import asteroids.util.ModelException;
 

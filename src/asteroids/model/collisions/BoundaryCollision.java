@@ -1,8 +1,7 @@
 package asteroids.model.collisions;
 
-import asteroids.model.entities.Bullet;
-import asteroids.model.entities.Entity;
-import asteroids.model.entities.Ship;
+import asteroids.model.Bullet;
+import asteroids.model.Entity;
 import asteroids.part2.CollisionListener;
 import vector.Vector;
 

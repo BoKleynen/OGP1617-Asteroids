@@ -2,16 +2,17 @@ package asteroids.tests.part2;
 
 import static org.junit.Assert.*;
 
+import asteroids.model.Bullet;
+import asteroids.model.Ship;
+import asteroids.model.World;
 import org.junit.*;
 
 import vector.*;
-import asteroids.model.entities.*;
-import asteroids.model.world.*;
 
 public class BulletFiringTest {
 	
 	Ship ship;
-	World world; 
+	World world;
 	
 	Double eps = 0.0001;
 	

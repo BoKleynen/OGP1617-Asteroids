@@ -2,10 +2,11 @@ package asteroids.tests.part2;
 
 import static org.junit.Assert.*;
 
+import asteroids.model.Bullet;
+import asteroids.model.Ship;
+import asteroids.model.World;
 import org.junit.Before;
 import org.junit.Test;
-import asteroids.model.entities.*;
-import asteroids.model.world.*;
 import vector.*;
 import java.util.Collection;
 import java.util.HashSet;
