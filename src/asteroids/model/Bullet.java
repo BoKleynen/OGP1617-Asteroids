@@ -88,7 +88,15 @@ public class Bullet extends Entity {
 	 */
     public Bullet(Vector position, Vector velocity, double maxSpeed, double radius, char maxWallHits) {
 
-        super(position, maxSpeed, velocity, getMinRadius(), radius, getMassDensity(), getMassDensity()*4/3*Math.PI*Math.pow(radius, 3));
+        super(
+                position,
+                maxSpeed,
+                velocity,
+                getMinRadius(),
+                radius,
+                getMassDensity(),
+                getMassDensity() * 4/3 * Math.PI * Math.pow(radius, 3)
+        );
 
         this.maxWallHits = maxWallHits;
         wallHits = 0;

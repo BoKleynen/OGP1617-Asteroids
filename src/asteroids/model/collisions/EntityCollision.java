@@ -147,6 +147,13 @@ public class EntityCollision extends Collision {
      */
     @Override
     public String toString() {
-        return "Entity collision (" + getEntity1() + ", " + getEntity2() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision();
+        return "Entity collision ("
+                + getEntity1()
+                + ", "
+                + getEntity2()
+                + ", Position: "
+                + getCollisionPosition()
+                + ", time: "
+                + getTimeToCollision();
     }
 }

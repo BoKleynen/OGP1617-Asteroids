@@ -94,13 +94,13 @@ public class BoundaryCollision extends Collision {
     private void resolveCollisionWithBoundary() {
         if (getCollisionPosition().getX() <= getEntity1().getRadius()
         		|| getCollisionPosition().getX() >= getEntity1().getWorld().getWidth() - getEntity1().getRadius()) {
-            getEntity1().setVelocity(new Vector(-getEntity1().getVelocity().getX(), getEntity1().getVelocity().getY()));
+
+            getEntity1().setVelocity(-getEntity1().getVelocity().getX(), getEntity1().getVelocity().getY());
         }
 
         else if ( (getCollisionPosition().getY() <= getEntity1().getRadius())
         		|| (getCollisionPosition().getY() >= getEntity1().getWorld().getHeight() - getEntity1().getRadius()) ) {
-            getEntity1().setVelocity(new Vector(getEntity1().getVelocity().getX(), -getEntity1().getVelocity().getY()));
-
+            getEntity1().setVelocity(getEntity1().getVelocity().getX(), -getEntity1().getVelocity().getY());
         }
     }
 
@@ -110,7 +110,10 @@ public class BoundaryCollision extends Collision {
     @Override
     public void collisionListener(CollisionListener collisionListener) {
         if (collisionListener != null)
-            collisionListener.boundaryCollision(getEntity1(), getCollisionPosition().getX(), getCollisionPosition().getY());
+            collisionListener.boundaryCollision(
+                    getEntity1(),
+                    getCollisionPosition().getX(),
+                    getCollisionPosition().getY());
     }
 
     /**

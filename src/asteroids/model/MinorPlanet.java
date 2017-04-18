@@ -33,14 +33,27 @@ public abstract class MinorPlanet extends Entity {
      */
     public void resolveCollisionWithMinorPlanet(MinorPlanet minorPlanet) {
         double sigma = getRadius() + minorPlanet.getRadius();
-        double J = (2.0 * getMass() * minorPlanet.getMass() * minorPlanet.getVelocity().getDifference(getVelocity()).dotProduct(minorPlanet.getPosition().getDifference(getPosition()))) /
-                (sigma * (getMass() + minorPlanet.getMass()));
+        double J =
+                (2.0 * getMass() * minorPlanet.getMass() *
+                        minorPlanet
+                                .getVelocity()
+                                .getDifference(getVelocity())
+                                .dotProduct(
+                                        minorPlanet
+                                                .getPosition()
+                                                .getDifference(getPosition())
+                                )
+                ) / (sigma * (getMass() + minorPlanet.getMass()));
 
         double Jx = J * (minorPlanet.getPosition().getX() - getPosition().getX()) / sigma;
         double Jy = J * (minorPlanet.getPosition().getY() - getPosition().getY()) / sigma;
 
-        setVelocity(getVelocity().getX() + Jx/getMass(), getVelocity().getY() + Jy/getMass());
-        minorPlanet.setVelocity(minorPlanet.getVelocity().getX() - Jx/minorPlanet.getMass(),minorPlanet.getVelocity().getY() - Jy/minorPlanet.getMass());
+        setVelocity(
+                getVelocity().getX() + Jx/getMass(),
+                getVelocity().getY() + Jy/getMass());
+        minorPlanet.setVelocity(
+                minorPlanet.getVelocity().getX() - Jx/minorPlanet.getMass(),
+                minorPlanet.getVelocity().getY() - Jy/minorPlanet.getMass());
     }
 
 
