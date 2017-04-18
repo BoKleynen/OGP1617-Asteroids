@@ -1,13 +1,11 @@
 package asteroids.model;
 
-
-import asteroids.model.Entity;
-import asteroids.model.Ship;
 import asteroids.model.collisions.Collision;
 import asteroids.model.collisions.EntityCollision;
 import be.kuleuven.cs.som.annotate.*;
 import vector.Vector;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -18,6 +16,8 @@ import java.util.Collection;
  *          |   then getShip() == getParentShip()
  * @Invar   A bullet will never collide with a wall more then the maximum amount of wall hits
  *          | getWallHits() <= getMaxWallHits()
+ * @Invar   A terminated bullet is not associated with a world or a ship
+ *          | if isTerminated() then !(hasShip() && hasWorld())
  *
  */
 public class Bullet extends Entity {
@@ -279,12 +279,15 @@ public class Bullet extends Entity {
     */
    @Override
    public void terminate() {
-	   if ( isLoadedOntoShip() )
-		   getShip().removeBullet(this);
-	   else if ( hasWorld() )
-		   getWorld().removeEntity(this);
-	   removeParentShip();
+       try {
+           getWorld().removeEntity(this);
+       } catch (NullPointerException e) {
+           try {
+               getShip().removeBullet(this);
+           } catch (NullPointerException ex) {}
+       }
 
+	   removeParentShip();
 	   isTerminated = true;
    }
 
@@ -304,18 +307,25 @@ public class Bullet extends Entity {
     void resolveInitialCollisions() {
         Collection<Entity> allEntities = getParentShip().getWorld().getAllEntities();
         allEntities.remove(getParentShip());
-        Collision initialBulletCollision = null;
+        ArrayList<EntityCollision> initialBulletCollisions = new ArrayList<>();
 
         for (Entity entity : allEntities) {
-            if ( entity.overlap(this) ) {
-                initialBulletCollision = new EntityCollision(this, entity, 0, getPosition());
-                break;
+            if (entity.overlap(this)) {
+                initialBulletCollisions.add(new EntityCollision(this, entity, 0, getPosition()));
             }
         }
 
-        if ( initialBulletCollision != null ) {
-            initialBulletCollision.resolve();
+        for (EntityCollision collision : initialBulletCollisions) {
+            collision.resolve();
         }
     }
 
+    public void resolveCollisionWithEntity(Entity entity) {
+        try {
+            ((Ship) entity).loadBullet(this);
+        } catch (IllegalArgumentException e) {
+            entity.die();
+            die();
+        }
+    }
 }

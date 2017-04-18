@@ -4,6 +4,7 @@ import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
 import java.util.Collection;
+import java.util.Random;
 
 
 /**
@@ -573,8 +574,8 @@ public class Ship extends Entity {
      */
     public void fireBullet() {				//Totally
         Bullet bullet = getFirstBullet();
-        if ( (bullet != null) && (getWorld() != null) ) {
-            Vector nextBulletPosition = getPosition().add(getDirection().multiply(1.02*(getRadius() + bullet.getRadius())));
+        if ((bullet != null) && hasWorld()) {
+            Vector nextBulletPosition = getPosition().add(getDirection().multiply((getRadius() + bullet.getRadius())));
             removeBullet(bullet);
 
             try {
@@ -587,6 +588,18 @@ public class Ship extends Entity {
             }
         }
 	}
+
+	public void resolveCollisionWithShip(Ship ship) {
+        double sigma = getRadius() + ship.getRadius();
+        double J = (2.0 * getTotalMass() * ship.getTotalMass() * ship.getVelocity().getDifference(getVelocity()).dotProduct(ship.getPosition().getDifference(getPosition()))) /
+                (sigma * (getTotalMass() + ship.getTotalMass()));
+
+        double Jx = J * (ship.getPosition().getX() - getPosition().getX()) / sigma;
+        double Jy = J * (ship.getPosition().getY() - getPosition().getY()) / sigma;
+
+        setVelocity(getVelocity().getX() + Jx/getTotalMass(), getVelocity().getY() + Jy/getTotalMass());
+        ship.setVelocity(ship.getVelocity().getX() - Jx/ship.getTotalMass(),ship.getVelocity().getY() - Jy/ship.getTotalMass());
+    }
     
     /** Terminates this ship. A terminated ship no longer belongs to a world and no longer has any bullets.
      * 	All bullets currently in this ship will be terminated as well.
@@ -601,13 +614,22 @@ public class Ship extends Entity {
      */
 	@Override
 	public void terminate() {
-		if(hasWorld())
-			getWorld().removeEntity(this);
+		try {
+		    getWorld().removeEntity(this);
+        } catch (NullPointerException e){}
+
 		for (Bullet bullet : getAllBullets() ) {
 			bullet.terminate();
 		}
+
 		bullets = new HashSet<Bullet>();
 		isTerminated = true;
 	}
+
+	public void setRandomPosition() {
+        Random random = new Random();
+        random.doubles(getRadius(), getWorld().getWidth()-getRadius());
+        random.doubles(getRadius(), getWorld().getHeight()-getRadius());
+    }
     
 }

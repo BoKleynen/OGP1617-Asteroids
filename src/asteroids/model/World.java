@@ -6,7 +6,6 @@ import asteroids.model.collisions.BoundaryCollision;
 import asteroids.part2.CollisionListener;
 import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
-
 import java.util.*;
 
 /**
@@ -167,7 +166,7 @@ public class World {
     public void removeEntity(Entity entity) throws NullPointerException, IllegalArgumentException {
     	if (entity == null)
     		throw new NullPointerException();
-    	if ( ! entities.containsValue(entity))
+    	if (!entities.containsValue(entity))
     		throw new IllegalArgumentException("Entity is not in the world");
 
         entities.remove(entity.getPosition(), entity);
@@ -175,28 +174,27 @@ public class World {
     }
 
     /**
-     * Returns a HashSet containing all entities in this world.
+     * Returns a Set containing all entities in this world.
      * 
-     * @return 	A HashSet containing all entities in this world.
+     * @return 	A Set containing all entities in this world.
      * 			| result == entities.values()
      */
-    public HashSet<Entity> getAllEntities() {
+    public Set<Entity> getAllEntities() {
         return new HashSet<Entity>(entities.values());
     }
 
     /**
-     * Returns a HashSet containing all ships in this world.
+     * Returns a Set containing all ships in this world.
      * 
-     * @return 	A HashSet containing all ships in this world.
+     * @return 	A Set containing all ships in this world.
      * 			| @see implementation
      */
-    public HashSet<Ship> getAllShips() {
+    public Set<Ship> getAllShips() {
         HashSet<Ship> ships = new HashSet<>();
 
         for (Entity entity : getAllEntities()) {
-            if (entity instanceof Ship) {
+            if (entity instanceof Ship)
                 ships.add((Ship) entity);
-            }
         }
 
         return ships;
@@ -204,21 +202,36 @@ public class World {
 
 
     /**
-     * Returns a HashSet containing all bullets in this world.
+     * Returns a Set containing all bullets in this world.
      * 
-     * @return 	A HashSet containing all bullets in this world.
+     * @return 	A Set containing all bullets in this world.
      * 			| @see implementation
      */
-    public HashSet<Bullet> getAllBullets() {
+    public Set<Bullet> getAllBullets() {
         HashSet<Bullet> bullets = new HashSet<>();
 
-        for (Entity entity : getAllEntities()) {
+        for (Entity entity : getAllEntities())
             if (entity instanceof Bullet) {
                 bullets.add((Bullet) entity);
-            }
         }
 
         return bullets;
+    }
+
+    /**
+     * Returns a Set containing all minor planets in this world.
+     *
+     * @return | @see implementation
+     */
+    public Set<MinorPlanet> getAllMinorPlanets() {
+        Set<MinorPlanet> minorPlanets = new HashSet<>();
+
+        for (Entity entity : getAllEntities()) {
+            if (entity instanceof MinorPlanet)
+                minorPlanets.add((MinorPlanet) entity);
+        }
+
+        return minorPlanets;
     }
 
     /**
@@ -251,7 +264,7 @@ public class World {
      * collision will be the returned collision at exactly the end of that period.
      */
     public Collision getFirstCollision() {
-        HashSet<Entity> entitiesSet = getAllEntities();
+        Set<Entity> entitiesSet = getAllEntities();
         Entity[] entities = entitiesSet.toArray(new Entity[entitiesSet.size()]);
         Collision earliestCollision = new BoundaryCollision();
 
@@ -286,8 +299,8 @@ public class World {
 
         if (time > 0) {
             Collision firstCollision = getFirstCollision();
-
             double collisionTime = firstCollision.getTimeToCollision();
+
             if (collisionTime > time) {
                 for (Entity entity : getAllEntities()) {
                     entity.move(time);
