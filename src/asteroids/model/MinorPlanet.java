@@ -27,7 +27,7 @@ public abstract class MinorPlanet extends Entity {
     }
 
     /**
-     * Resolves the collision of this minot planet with the specified minor planet.
+     * Resolves the collision of this minor planet with the specified minor planet.
      *
      * @param minorPlanet
      */

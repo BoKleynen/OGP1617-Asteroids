@@ -331,7 +331,7 @@ public class Bullet extends Entity {
     public void resolveCollisionWithEntity(Entity entity) {
         try {
             ((Ship) entity).loadBullet(this);
-        } catch (IllegalArgumentException e) {
+        } catch (ClassCastException | IllegalArgumentException e) {
             entity.die();
             die();
         }
