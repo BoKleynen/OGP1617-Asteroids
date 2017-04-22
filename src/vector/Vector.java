@@ -160,4 +160,5 @@ public class Vector {
     public String toString() {
         return "(" + getX() + ", " + getY() + ")";
     }
+
 }

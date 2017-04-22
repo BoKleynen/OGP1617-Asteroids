@@ -1,8 +1,6 @@
 package asteroids.model.collisions;
 
-import asteroids.model.Bullet;
-import asteroids.model.Entity;
-import asteroids.model.Ship;
+import asteroids.model.*;
 import asteroids.part2.CollisionListener;
 import be.kuleuven.cs.som.annotate.*;
 import vector.Vector;
@@ -75,7 +73,9 @@ public class EntityCollision extends Collision {
      * If one of the involved entities is a bullet, the ship is destroyed if the bullet was not fired 
      * by that ship. If it was fired by that ship, it is instead reloaded to the ship. If both entities
      * are bullets, they both die.
-     * 
+     *
+     * TODO: Update the documentation
+     *
      * @Post	If both involved entities are an instance of the Bullet class, both entities are destroyed.
      * 			| if ( getEntity1() instanceof Bullet && getEntity2() instanceof Bullet ) then
      * 			| 	(new this).getEntity1().isTerminated() && (new this).getEntity2().isTerminated()
@@ -98,57 +98,35 @@ public class EntityCollision extends Collision {
      */
     @Override
     public void resolve(CollisionListener collisionListener) {
-        if (getEntity1() instanceof Ship) {
-            Ship ship1 = (Ship)getEntity1();
+        if (getEntity1() instanceof Bullet)
+            ((Bullet) getEntity1()).resolveCollisionWithEntity(getEntity2());
 
-            if (getEntity2() instanceof Ship) {
-                Ship ship2 = (Ship)getEntity2();
-                double sigma = ship1.getRadius() + ship2.getRadius();
-                double J = (2.0 * ship1.getTotalMass() * ship2.getTotalMass() * ship2.getVelocity().getDifference(ship1.getVelocity()).dotProduct(ship2.getPosition().getDifference(ship1.getPosition()))) /
-                        (sigma * (ship1.getTotalMass()+ ship2.getTotalMass()));
+        else if (getEntity2() instanceof Bullet)
+            ((Bullet) getEntity2()).resolveCollisionWithEntity(getEntity1());
 
-                double Jx = J * (ship2.getPosition().getX() - ship1.getPosition().getX()) / sigma;
-                double Jy = J * (ship2.getPosition().getY() - ship1.getPosition().getY()) / sigma;
-
-                ship1.setVelocity(new Vector(ship1.getVelocity().getX() + Jx/ship1.getTotalMass(),ship1.getVelocity().getY() + Jy/ship1.getTotalMass()));
-                ship2.setVelocity(new Vector(ship2.getVelocity().getX() - Jx/ship2.getTotalMass(),ship2.getVelocity().getY() - Jy/ship2.getTotalMass()));
-            }
-            else
-                resolveShipBulletCollision(ship1, (Bullet) getEntity2(), collisionListener);
-        }
-        else {
+        else if (getEntity1() instanceof Ship) {
             if (getEntity2() instanceof Ship)
-                resolveShipBulletCollision((Ship) getEntity2(), (Bullet)getEntity1(), collisionListener);
+                ((Ship) getEntity1()).resolveCollisionWithShip((Ship) getEntity2());
 
-            else {
-                getEntity1().die();
-                getEntity2().die();
-            }
-        }
-    }
+            else if (getEntity2() instanceof Asteroid)
+                ((Asteroid) getEntity2()).resolveCollisionWithShip((Ship) getEntity1());
 
-    /**
-     * Resolves a collision between the Ship ship and the Bullet bullet. If The bullet was originally fired
-     * by the given ship, it is reloaded to that ship, otherwise both entities die.
-     * 
-     * @param ship	The ship involved in this collision
-     * @param bullet	The bullet involved in this collision
-     * 
-     * @Post	If The bullet was originally fired by the given ship, it is reloaded to that ship, otherwise both
-     * 			entities die.
-     * 			| if bullet.getParentShip().equals(ship) then
-     * 			|		(new ship).getAllBullets().contains(bullet)
-     * 			|	else
-     * 			|		(new ship).isTerminated() && (new bullet).isTerminated()
-     */
-    private void resolveShipBulletCollision(Ship ship, Bullet bullet, CollisionListener collisionListener) {
-        try {
-            ship.loadBullet(bullet);
-        } catch (IllegalArgumentException e) {
-            ship.die();
-            bullet.die();
-            collisionListener(collisionListener);
+            else //(getEntity2() instanceof Planetoid)
+                ((Planetoid) getEntity2()).resolveCollisionWithShip((Ship) getEntity1());
         }
+
+        else if (getEntity2() instanceof Ship) {
+            if (getEntity1() instanceof Asteroid)
+                ((Asteroid) getEntity1()).resolveCollisionWithShip((Ship) getEntity2());
+
+            else //(getEntity1() instanceof Planetoid)
+                ((Planetoid) getEntity1()).resolveCollisionWithShip((Ship) getEntity2());
+        }
+
+        else //(getEntity1() instanceof MinorPlanet && getEntity2() instanceof MinorPlanet)
+            ((MinorPlanet) getEntity1()).resolveCollisionWithMinorPlanet((MinorPlanet) getEntity2());
+
+        collisionListener(collisionListener);
     }
 
     /**
@@ -169,6 +147,13 @@ public class EntityCollision extends Collision {
      */
     @Override
     public String toString() {
-        return "Entity collision (" + getEntity1() + ", " + getEntity2() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision();
+        return "Entity collision ("
+                + getEntity1()
+                + ", "
+                + getEntity2()
+                + ", Position: "
+                + getCollisionPosition()
+                + ", time: "
+                + getTimeToCollision();
     }
 }

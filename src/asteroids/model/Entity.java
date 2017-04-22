@@ -1,9 +1,7 @@
 package asteroids.model;
 
 import vector.Vector;
-
 import be.kuleuven.cs.som.annotate.*;
-
 
 /**
  * @Invar 	An entity is associated with at most one world at once.
@@ -12,10 +10,20 @@ import be.kuleuven.cs.som.annotate.*;
  * 			| hasValidPositionInWorld(getWorld())
  * @Invar 	An entity always has a valid radius as its radius.
  * 			| canHaveAsRadius(getRadius())
+ * @Invar   An entities mass is greater then or equal to its minimal mass.
+ *          | getMass() >= getMinMass(getRadius(), getMinMassDensity())
+ * @Invar   A terminated entity does not belong to a world
+ *          | if isTerminated() then hasWorld() == false
+ * @Invar   An entities speed is less then or equal to the speed of light
+ *          This is the magnitude of an entities velocity is less then or equal to the speed of light
+ *          | getVelocity().getMagnitude() <= getSpeedOfLight()
  */
 public abstract class Entity {
 
-    
+    protected Entity(Vector position, double maxSpeed, Vector velocity, double minRadius,double radius, double massDensity) {
+        this(position, maxSpeed, velocity, minRadius, radius, massDensity, 0);
+    }
+
     /**
      * Creates a new Entity with all the given parameters.
      * The initial position will be equal to the vector position. The initial velocity will be equal to the vector velocity.
@@ -119,7 +127,7 @@ public abstract class Entity {
         return speedOfLight;
     }
 
-    private final double radius;        // defensively
+    private double radius;        // defensively
 
     /**
      * Returns the radius of this entity.
@@ -127,9 +135,13 @@ public abstract class Entity {
      * @return 	The radius of this entity
      * 			| result == this.radius
      */
-    @Basic @Immutable
+    @Basic
     public double getRadius() {
         return radius;
+    }
+
+    protected void setRadius(double newRadius) {
+        radius = newRadius;
     }
 
     private double mass;    // total
@@ -259,6 +271,10 @@ public abstract class Entity {
         position = newPosition;
     }
 
+    public void setPosition(double xpos, double ypos) {
+        setPosition(new Vector(xpos, ypos));
+    }
+
     /**
      * Checks whether or not a given position is a valid position for an entity.
      * valid position are non-null vector objects that do not have NaN as their x or y component.
@@ -274,6 +290,7 @@ public abstract class Entity {
 
     /**
      * Checks whether or not the specified position is within the boundaries of the specified world.
+     * An entity lies within a world if it lies fully within the boundries of the world.
      *
      * @param world
      *          The world in which the position has to be validated.
@@ -372,12 +389,11 @@ public abstract class Entity {
         if( time < 0 )
             throw new IllegalArgumentException(Double.toString(time));
 
-        if (hasWorld()) {
+        try {
             getWorld().updateEntityPosition(this, getPosition().add(getVelocity().multiply(time)));
-        }
-
-        else
+        } catch (NullPointerException e) {
             setPosition(getPosition().add(getVelocity().multiply(time)));
+        }
     }
 
     private Vector velocity;    // total
@@ -429,6 +445,10 @@ public abstract class Entity {
 
             velocity = newVelocity;
         }
+    }
+
+    public void setVelocity(double xVel, double yVel) {
+        setVelocity(new Vector(xVel, yVel));
     }
 
     private final double maxSpeed;
@@ -627,5 +647,4 @@ public abstract class Entity {
         } catch (NullPointerException e){}
         this.terminate();
     }
-
 }
