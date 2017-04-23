@@ -1,4 +1,4 @@
-package Program;
+package asteroids.model.programs;
 
 import asteroids.part3.programs.SourceLocation;
 

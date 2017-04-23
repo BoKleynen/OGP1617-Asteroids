@@ -1,4 +1,7 @@
-package Program;
+package asteroids.model;
+
+import asteroids.model.programs.Function;
+import asteroids.model.programs.Statement;
 
 import java.util.List;
 

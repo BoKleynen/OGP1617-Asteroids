@@ -1,20 +1,19 @@
 package asteroids.facade;
 
-import asteroids.model.Bullet;
-import asteroids.model.Entity;
-import asteroids.model.World;
+import asteroids.model.*;
 import asteroids.part2.CollisionListener;
+import asteroids.part3.programs.IProgramFactory;
 import asteroids.util.ModelException;
-import asteroids.model.Ship;
 import vector.Vector;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by Bo Kleynen and Yrjo Koyen.
  */
-public class Facade implements asteroids.part2.facade.IFacade {
+public class Facade implements asteroids.part3.facade.IFacade {
     public Facade() {
 
     }
@@ -527,5 +526,312 @@ public class Facade implements asteroids.part2.facade.IFacade {
         } catch (Exception e) {
             throw new ModelException(e);
         }
+    }
+
+    /**
+     * Return the number of students in your team (used to adapt the tests for
+     * single-student groups).
+     *
+     * @return 1 or 2
+     */
+    @Override
+    public int getNbStudentsInTeam() {
+        return 0;
+    }
+
+    /**
+     * Return all asteroids located in <code>world</code>.
+     *
+     * @param world
+     */
+    @Override
+    public Set<? extends Asteroid> getWorldAsteroids(World world) throws ModelException {
+        return null;
+    }
+
+    /**
+     * Add <code>asteroid</code> to <code>world</code>.
+     *
+     * @param world
+     * @param asteroid
+     */
+    @Override
+    public void addAsteroidToWorld(World world, Asteroid asteroid) throws ModelException {
+
+    }
+
+    /**
+     * Remove <code>asteroid</code> from <code>world</code>.
+     *
+     * @param world
+     * @param asteroid
+     */
+    @Override
+    public void removeAsteroidFromWorld(World world, Asteroid asteroid) throws ModelException {
+
+    }
+
+    /**
+     * Return all planetoids located in <code>world</code>.
+     *
+     * @param world
+     */
+    @Override
+    public Set<? extends Planetoid> getWorldPlanetoids(World world) throws ModelException {
+        return null;
+    }
+
+    /**
+     * Add <code>planetoid</code> to <code>world</code>.
+     *
+     * @param world
+     * @param planetoid
+     */
+    @Override
+    public void addPlanetoidToWorld(World world, Planetoid planetoid) throws ModelException {
+
+    }
+
+    /**
+     * Remove <code>planetoid</code> from <code>world</code>.
+     *
+     * @param world
+     * @param planetoid
+     */
+    @Override
+    public void removePlanetoidFromWorld(World world, Planetoid planetoid) throws ModelException {
+
+    }
+
+    /**
+     * Create a new non-null asteroid with the given position, velocity and
+     * radius.
+     * <p>
+     * The asteroid is not located in a world.
+     *
+     * @param x
+     * @param y
+     * @param xVelocity
+     * @param yVelocity
+     * @param radius
+     */
+    @Override
+    public Asteroid createAsteroid(double x, double y, double xVelocity, double yVelocity, double radius) throws ModelException {
+        return null;
+    }
+
+    /**
+     * Terminate <code>asteroid</code>.
+     *
+     * @param asteroid
+     */
+    @Override
+    public void terminateAsteroid(Asteroid asteroid) throws ModelException {
+
+    }
+
+    /**
+     * Check whether <code>asteroid</code> is terminated.
+     *
+     * @param asteroid
+     */
+    @Override
+    public boolean isTerminatedAsteroid(Asteroid asteroid) throws ModelException {
+        return false;
+    }
+
+    /**
+     * Return the position of <code>asteroid</code> as an array containing the
+     * x-coordinate, followed by the y-coordinate.
+     *
+     * @param asteroid
+     */
+    @Override
+    public double[] getAsteroidPosition(Asteroid asteroid) throws ModelException {
+        return new double[0];
+    }
+
+    /**
+     * Return the velocity of <code>asteroid</code> as an array containing the
+     * velocity along the X-axis, followed by the velocity along the Y-axis.
+     *
+     * @param asteroid
+     */
+    @Override
+    public double[] getAsteroidVelocity(Asteroid asteroid) throws ModelException {
+        return new double[0];
+    }
+
+    /**
+     * Return the radius of <code>asteroid</code>.
+     *
+     * @param asteroid
+     */
+    @Override
+    public double getAsteroidRadius(Asteroid asteroid) throws ModelException {
+        return 0;
+    }
+
+    /**
+     * Return the mass of <code>asteroid</code>.
+     *
+     * @param asteroid
+     */
+    @Override
+    public double getAsteroidMass(Asteroid asteroid) throws ModelException {
+        return 0;
+    }
+
+    /**
+     * Return the world in which <code>asteroid</code> is positioned.
+     *
+     * @param asteroid
+     */
+    @Override
+    public World getAsteroidWorld(Asteroid asteroid) throws ModelException {
+        return null;
+    }
+
+    /**
+     * Create a new non-null planetoid with the given position, velocity,
+     * radius, and total traveled distance.
+     * <p>
+     * The planetoid is not located in a world.
+     *
+     * @param x
+     * @param y
+     * @param xVelocity
+     * @param yVelocity
+     * @param radius
+     * @param totalTraveledDistance
+     */
+    @Override
+    public Planetoid createPlanetoid(double x, double y, double xVelocity, double yVelocity, double radius, double totalTraveledDistance) throws ModelException {
+        return null;
+    }
+
+    /**
+     * Terminate <code>planetoid</code>.
+     *
+     * @param planetoid
+     */
+    @Override
+    public void terminatePlanetoid(Planetoid planetoid) throws ModelException {
+
+    }
+
+    /**
+     * Check whether <code>planetoid</code> is terminated.
+     *
+     * @param planetoid
+     */
+    @Override
+    public boolean isTerminatedPlanetoid(Planetoid planetoid) throws ModelException {
+        return false;
+    }
+
+    /**
+     * Return the position of <code>planetoid</code> as an array containing the
+     * x-coordinate, followed by the y-coordinate.
+     *
+     * @param planetoid
+     */
+    @Override
+    public double[] getPlanetoidPosition(Planetoid planetoid) throws ModelException {
+        return new double[0];
+    }
+
+    /**
+     * Return the velocity of <code>planetoid</code> as an array containing the
+     * velocity along the X-axis, followed by the velocity along the Y-axis.
+     *
+     * @param planetoid
+     */
+    @Override
+    public double[] getPlanetoidVelocity(Planetoid planetoid) throws ModelException {
+        return new double[0];
+    }
+
+    /**
+     * Return the radius of <code>planetoid</code>.
+     *
+     * @param planetoid
+     */
+    @Override
+    public double getPlanetoidRadius(Planetoid planetoid) throws ModelException {
+        return 0;
+    }
+
+    /**
+     * Return the mass of <code>planetoid</code>.
+     *
+     * @param planetoid
+     */
+    @Override
+    public double getPlanetoidMass(Planetoid planetoid) throws ModelException {
+        return 0;
+    }
+
+    /**
+     * Return the total traveled distance of <code>planetoid</code>.
+     *
+     * @param planetoid
+     */
+    @Override
+    public double getPlanetoidTotalTraveledDistance(Planetoid planetoid) throws ModelException {
+        return 0;
+    }
+
+    /**
+     * Return the world in which <code>planetoid</code> is positioned.
+     *
+     * @param planetoid
+     */
+    @Override
+    public World getPlanetoidWorld(Planetoid planetoid) throws ModelException {
+        return null;
+    }
+
+    /**
+     * Return the program loaded on the given ship.
+     *
+     * @param ship
+     */
+    @Override
+    public Program getShipProgram(Ship ship) throws ModelException {
+        return null;
+    }
+
+    /**
+     * Load the given program on the given ship.
+     *
+     * @param ship
+     * @param program
+     */
+    @Override
+    public void loadProgramOnShip(Ship ship, Program program) throws ModelException {
+
+    }
+
+    /**
+     * Execute the program loaded on the given ship during the given period of
+     * time. The ship is positioned in some world. Returns null if the program
+     * is not completely executed. Otherwise, returns the objects that have been
+     * printed.
+     *
+     * @param ship
+     * @param dt
+     */
+    @Override
+    public List<Object> executeProgram(Ship ship, double dt) throws ModelException {
+        return null;
+    }
+
+    /**
+     * Creates a new program factory.
+     */
+    @Override
+    public IProgramFactory<?, ?, ?, ? extends Program> createProgramFactory() throws ModelException {
+        return null;
     }
 }

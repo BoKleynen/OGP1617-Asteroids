@@ -1,7 +1,8 @@
-package Program;
+package asteroids.model.programs;
 
 import java.util.List;
 
+import asteroids.model.Program;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.part3.programs.SourceLocation;
 
