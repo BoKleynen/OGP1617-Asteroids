@@ -536,7 +536,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public int getNbStudentsInTeam() {
-        return 0;
+        return 2;
     }
 
     /**
@@ -557,7 +557,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public void addAsteroidToWorld(World world, Asteroid asteroid) throws ModelException {
-
+        try {
+           world.addEntity(asteroid);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -568,7 +572,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public void removeAsteroidFromWorld(World world, Asteroid asteroid) throws ModelException {
-
+        try {
+            world.removeEntity(asteroid);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -589,7 +597,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public void addPlanetoidToWorld(World world, Planetoid planetoid) throws ModelException {
-
+        try {
+            world.addEntity(planetoid);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -600,7 +612,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public void removePlanetoidFromWorld(World world, Planetoid planetoid) throws ModelException {
-
+        try {
+            world.addEntity(planetoid);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -617,7 +633,14 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public Asteroid createAsteroid(double x, double y, double xVelocity, double yVelocity, double radius) throws ModelException {
-        return null;
+        try {
+            return new Asteroid(
+                    new Vector(x,y),
+                    new Vector(xVelocity, yVelocity),
+                    radius);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -627,7 +650,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public void terminateAsteroid(Asteroid asteroid) throws ModelException {
-
+        try {
+           asteroid.terminate();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -637,7 +664,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public boolean isTerminatedAsteroid(Asteroid asteroid) throws ModelException {
-        return false;
+        try {
+            return asteroid.isTerminated();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -648,7 +679,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double[] getAsteroidPosition(Asteroid asteroid) throws ModelException {
-        return new double[0];
+        try {
+            return new double[] {asteroid.getPosition().getX(), asteroid.getPosition().getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -659,7 +694,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double[] getAsteroidVelocity(Asteroid asteroid) throws ModelException {
-        return new double[0];
+        try {
+            return new double[] {asteroid.getVelocity().getX(), asteroid.getVelocity().getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -669,7 +708,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double getAsteroidRadius(Asteroid asteroid) throws ModelException {
-        return 0;
+        try {
+            return asteroid.getRadius();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -679,7 +722,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double getAsteroidMass(Asteroid asteroid) throws ModelException {
-        return 0;
+        try {
+            return asteroid.getMass();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -689,7 +736,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public World getAsteroidWorld(Asteroid asteroid) throws ModelException {
-        return null;
+        try {
+            return asteroid.getWorld();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -697,6 +748,8 @@ public class Facade implements asteroids.part3.facade.IFacade {
      * radius, and total traveled distance.
      * <p>
      * The planetoid is not located in a world.
+     *
+     * TODO: add support for that totalTraveledDistance
      *
      * @param x
      * @param y
@@ -707,7 +760,14 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public Planetoid createPlanetoid(double x, double y, double xVelocity, double yVelocity, double radius, double totalTraveledDistance) throws ModelException {
-        return null;
+        try {
+            return new Planetoid(
+                    new Vector(x,y),
+                    new Vector(xVelocity, yVelocity),
+                    radius);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -717,7 +777,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public void terminatePlanetoid(Planetoid planetoid) throws ModelException {
-
+        try {
+            planetoid.terminate();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -727,7 +791,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public boolean isTerminatedPlanetoid(Planetoid planetoid) throws ModelException {
-        return false;
+        try {
+            return planetoid.isTerminated();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -738,7 +806,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double[] getPlanetoidPosition(Planetoid planetoid) throws ModelException {
-        return new double[0];
+        try {
+            return new double[] {planetoid.getPosition().getX(), planetoid.getPosition().getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -749,7 +821,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double[] getPlanetoidVelocity(Planetoid planetoid) throws ModelException {
-        return new double[0];
+        try {
+            return new double[] {planetoid.getVelocity().getX(), planetoid.getVelocity().getY()};
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -759,7 +835,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double getPlanetoidRadius(Planetoid planetoid) throws ModelException {
-        return 0;
+        try {
+            return planetoid.getRadius();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -769,11 +849,17 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double getPlanetoidMass(Planetoid planetoid) throws ModelException {
-        return 0;
+        try {
+            return planetoid.getMass();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
      * Return the total traveled distance of <code>planetoid</code>.
+     *
+     * TODO
      *
      * @param planetoid
      */
@@ -789,7 +875,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public World getPlanetoidWorld(Planetoid planetoid) throws ModelException {
-        return null;
+        try {
+            return planetoid.getWorld();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
