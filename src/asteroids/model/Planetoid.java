@@ -3,7 +3,6 @@ package asteroids.model;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import vector.Vector;
-import java.util.Random;
 
 
 /**
@@ -62,11 +61,18 @@ public class Planetoid extends MinorPlanet {
     }
 
     /**
-     * TODO: this method will be implemented after the class on streams.
      * @param ship
      */
     public void resolveCollisionWithShip(Ship ship) {
+        Vector randomPosition = new Vector(
+                Math.random() * (getWorld().getWidth() - 2 * ship.getRadius()) + getRadius(),
+                Math.random() * (getWorld().getHeight() - 2 * ship.getRadius()) + getRadius()
+                );
 
+        if (canHaveAsPositionInWorld(randomPosition, getWorld()))
+            getWorld().setEntityPosition(ship, randomPosition);
+        else
+            ship.die();
     }
 
     @Override

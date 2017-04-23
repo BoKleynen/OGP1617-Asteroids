@@ -338,7 +338,7 @@ public abstract class Entity {
      *          | isWithinBoundariesOfWorld(world, position) && !overlapWithEntityInWorld(world)
      */
     public boolean canHaveAsPositionInWorld(Vector position, World world) {
-        return world == null || (isWithinBoundariesOfWorld(world, position) && !overlapWithEntityInWorld(world));
+        return world == null || (isWithinBoundariesOfWorld(world, position) && !overlapWithEntityInWorld(world, position));
 
     }
 
@@ -363,8 +363,12 @@ public abstract class Entity {
      *          | overlap(entity) for any entity in world.getAllEntities()
      */
     public boolean overlapWithEntityInWorld(World world) {
+        return overlapWithEntityInWorld(world, getPosition());
+    }
+
+    public boolean overlapWithEntityInWorld(World world, Vector virtualPosition) {
         for (Entity otherEntity : world.getAllEntities()) {
-            if (overlap(otherEntity))
+            if (overlap(otherEntity, virtualPosition))
                 return true;
         }
 
@@ -390,7 +394,7 @@ public abstract class Entity {
             throw new IllegalArgumentException(Double.toString(time));
 
         try {
-            getWorld().updateEntityPosition(this, getPosition().add(getVelocity().multiply(time)));
+            getWorld().setEntityPosition(this, getPosition().add(getVelocity().multiply(time)));
         } catch (NullPointerException e) {
             setPosition(getPosition().add(getVelocity().multiply(time)));
         }
@@ -489,18 +493,26 @@ public abstract class Entity {
     }
 
     /**
-     * Returns a boolean to check if this entity overlaps with the specified entity.
+     * Returns a boolean to check if this entity overlaps with the specified other entity.
      *
-     * Two entities overlap if and only if they are the same entity or the distance between their centers is negative.
-     * | spaceentity == this || this.getDistanceBetween(spaceentity) < 0
+     * Two entities overlap if and only if they are the same other or the distance between their centers is negative.
+     * | spaceentity == this || this.getDistanceBetween(other) < 0
      *
-     * @param	entity
-     * 			The entity that might overlap this entity
+     * @param	other
+     * 			The other entity that might overlap this entity
      * @return	True if and only if both entities overlap.
-     * 			| result == ( getDistanceBetween(spaceentity) <= 0 )
+     * 			| result == ( getDistanceBetween(other) <= 0 )
      */
-    public boolean overlap(Entity entity) {
-        return getDistanceBetweenCenters(entity) <= (getRadius() + entity.getRadius()) * 0.99;
+    public boolean overlap(Entity other) {
+        return overlap(other, getPosition(), other.getPosition());
+    }
+
+    public boolean overlap (Entity other, Vector virtualPosThis) {
+        return overlap(other,virtualPosThis, other.getPosition());
+    }
+
+    public boolean overlap (Entity other, Vector virtualPosThis, Vector virtualPosOther) {
+        return virtualPosThis.getDistance(virtualPosOther) <= (getRadius() + other.getRadius()) * 0.99;
     }
 
     /**

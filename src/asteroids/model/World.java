@@ -248,7 +248,7 @@ public class World {
      *          ...
      *          | entity.getWorld() != this
      */
-    public void updateEntityPosition(Entity entity, Vector newPosition) throws IllegalArgumentException {
+    public void setEntityPosition(Entity entity, Vector newPosition) throws IllegalArgumentException {
         if (entity.getWorld() != this)
             throw new IllegalArgumentException("The specified entity does not belong to this world");
 

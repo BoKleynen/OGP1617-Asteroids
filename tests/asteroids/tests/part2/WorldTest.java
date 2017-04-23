@@ -69,8 +69,8 @@ public class WorldTest {
         Vector newShipPos = new Vector(666,666);
         Vector newBulletPos = new Vector(22, 33);
 
-        world.updateEntityPosition(ship, newShipPos);
-        world.updateEntityPosition(bullet, newBulletPos);
+        world.setEntityPosition(ship, newShipPos);
+        world.setEntityPosition(bullet, newBulletPos);
 
         assertTrue(world.getAllEntities().contains(ship));
         assertTrue(world.getAllEntities().contains(bullet));
