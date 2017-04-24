@@ -4,7 +4,6 @@ import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
 import java.util.Collection;
-import java.util.Random;
 
 
 /**
@@ -643,18 +642,14 @@ public class Ship extends Entity {
 		isTerminated = true;
 	}
 
-	public void setRandomPosition() {
-        Random random = new Random();
-        random.doubles(getRadius(), getWorld().getWidth()-getRadius());
-        random.doubles(getRadius(), getWorld().getHeight()-getRadius());
-    }
-
     private Program program;
 
+	@Basic
 	public Program getProgram() {
 	    return program;
     }
 
+    @Basic
     public void loadProgram(Program program) {
 	    this.program = program;
     }

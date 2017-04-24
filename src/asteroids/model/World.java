@@ -234,6 +234,28 @@ public class World {
         return minorPlanets;
     }
 
+    public Set<Planetoid> getAllPlanetoids() {
+        Set<Planetoid> planetoids = new HashSet<>();
+
+        for (Entity entity : getAllEntities()) {
+            if (entity instanceof Planetoid)
+                planetoids.add((Planetoid) entity);
+        }
+
+        return planetoids;
+    }
+
+    public Set<Asteroid> getAllAsteroids() {
+        Set<Asteroid> asteroids = new HashSet<>();
+
+        for (Entity entity : getAllEntities()) {
+            if (entity instanceof MinorPlanet)
+                asteroids.add((Asteroid) entity);
+        }
+
+        return asteroids;
+    }
+
     /**
      * Updates the position of the given entity in this world to the given position.
      * @param entity

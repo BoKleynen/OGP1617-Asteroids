@@ -546,7 +546,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public Set<? extends Asteroid> getWorldAsteroids(World world) throws ModelException {
-        return null;
+        return world.getAllAsteroids();
     }
 
     /**
@@ -586,7 +586,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public Set<? extends Planetoid> getWorldPlanetoids(World world) throws ModelException {
-        return null;
+        return world.getAllPlanetoids();
     }
 
     /**
