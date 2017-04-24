@@ -749,8 +749,6 @@ public class Facade implements asteroids.part3.facade.IFacade {
      * <p>
      * The planetoid is not located in a world.
      *
-     * TODO: add support for that totalTraveledDistance
-     *
      * @param x
      * @param y
      * @param xVelocity
@@ -888,7 +886,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public Program getShipProgram(Ship ship) throws ModelException {
-        return null;
+        return ship.getProgram();
     }
 
     /**
@@ -899,7 +897,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public void loadProgramOnShip(Ship ship, Program program) throws ModelException {
-
+        ship.loadProgram(program);
     }
 
     /**

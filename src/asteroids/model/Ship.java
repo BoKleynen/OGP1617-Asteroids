@@ -648,5 +648,15 @@ public class Ship extends Entity {
         random.doubles(getRadius(), getWorld().getWidth()-getRadius());
         random.doubles(getRadius(), getWorld().getHeight()-getRadius());
     }
+
+    private Program program;
+
+	public Program getProgram() {
+	    return program;
+    }
+
+    public void loadProgram(Program program) {
+	    this.program = program;
+    }
     
 }
