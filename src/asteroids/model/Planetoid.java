@@ -10,12 +10,18 @@ import vector.Vector;
  */
 public class Planetoid extends MinorPlanet {
 
-    public Planetoid(Vector position, Vector velocity, double radius) {
-        super(position, getSpeedOfLight(), velocity, radius, getMassDensity());
+    public Planetoid(Vector postition, Vector velocity, double radius) {
+        this (postition, velocity, radius, 0);
     }
 
-    public Planetoid(Vector position, double maxSpeed, Vector velocity, double radius) {
+    public Planetoid(Vector position, Vector velocity, double radius, double totalTraveledDistance) {
+        this(position, getSpeedOfLight(), velocity, radius, totalTraveledDistance);
+    }
+
+    public Planetoid(Vector position, double maxSpeed, Vector velocity, double radius, double totalTraveledDistance) {
         super(position, maxSpeed, velocity, radius, getMassDensity());
+        addTraveledDistance(totalTraveledDistance);
+
     }
 
     private static final double massDensity = 0.917 * 1e12;
@@ -43,12 +49,7 @@ public class Planetoid extends MinorPlanet {
     @Override
     public void move(double time) {
         super.move(time);
-
-        try {
-            super.setRadius(getRadius() - getVelocity().getMagnitude() * time * 1e-6);
-        } catch (IllegalArgumentException e) {
-            die();
-        }
+        addTraveledDistance(getVelocity().getMagnitude() * time);
     }
 
     @Override
@@ -58,6 +59,21 @@ public class Planetoid extends MinorPlanet {
 
         super.setRadius(newRadius);
 
+    }
+
+    private double totalTraveledDistance = 0;
+
+    public double getTotalTraveledDistance() {
+        return totalTraveledDistance;
+    }
+
+    public void addTraveledDistance(double distance) {
+        totalTraveledDistance += distance;
+        try {
+            setRadius(getRadius() - distance * 1e-6);
+        } catch (IllegalArgumentException e) {
+            die();
+        }
     }
 
     /**

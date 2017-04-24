@@ -764,7 +764,8 @@ public class Facade implements asteroids.part3.facade.IFacade {
             return new Planetoid(
                     new Vector(x,y),
                     new Vector(xVelocity, yVelocity),
-                    radius);
+                    radius,
+                    totalTraveledDistance);
         } catch (Exception e) {
             throw new ModelException(e);
         }
@@ -859,13 +860,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
     /**
      * Return the total traveled distance of <code>planetoid</code>.
      *
-     * TODO
-     *
      * @param planetoid
      */
     @Override
     public double getPlanetoidTotalTraveledDistance(Planetoid planetoid) throws ModelException {
-        return 0;
+        return planetoid.getTotalTraveledDistance();
     }
 
     /**
