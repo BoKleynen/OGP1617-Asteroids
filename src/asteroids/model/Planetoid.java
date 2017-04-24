@@ -6,18 +6,56 @@ import vector.Vector;
 
 
 /**
- * Created by Bo on 18/04/2017.
+ * Created by Bo Kleynen and Yrjo Koyen
  */
 public class Planetoid extends MinorPlanet {
 
-    public Planetoid(Vector postition, Vector velocity, double radius) {
-        this (postition, velocity, radius, 0);
+    /**
+     * creates a new planetoid with the given parameters, the speed of light as max speed and the totalTraveledDistance
+     * equal to 0.
+     *
+     * @param position
+     * @param velocity
+     * @param radius
+     */
+    public Planetoid(Vector position, Vector velocity, double radius) {
+        this (position, velocity, radius, 0);
     }
 
+    /**
+     * Creates a new planetoid with the given parameters and the speed of light as max speed.
+     *
+     * @param position
+     * @param velocity
+     * @param radius
+     * @param totalTraveledDistance
+     * @Effect  | this(position, getSpeedOfLight(), velocity, radius, totalTraveledDistance)
+     */
     public Planetoid(Vector position, Vector velocity, double radius, double totalTraveledDistance) {
         this(position, getSpeedOfLight(), velocity, radius, totalTraveledDistance);
     }
 
+    /**
+     * Creates a new planetoid with the given parameters.
+     *
+     * @param position
+     *          The position for this planetoid.
+     * @param maxSpeed
+     *          The maximum speed this planetoid can achieve.
+     * @param velocity
+     *          The velocity for this plaentoid
+     * @param radius
+     *          The radius for this planetoid.
+     * @param totalTraveledDistance
+     *          The total distance this planetoid has travelled.
+     * @Post    | result.getPosition == position
+     * @Post    | result.getMaxSpeed() <= maxSpeed
+     * @Post    | result.getVelocity() == velocity
+     * @Post    | result.getRadius <= radius
+     * @Post    | result.getTotalTraveledDistance == totalTravelledDistance
+     * @Post    | if result.getRadius <= getMinRadius() then
+     *          |   result.isTerminated() == true
+     */
     public Planetoid(Vector position, double maxSpeed, Vector velocity, double radius, double totalTraveledDistance) {
         super(position, maxSpeed, velocity, radius, getMassDensity());
         addTraveledDistance(totalTraveledDistance);
@@ -28,7 +66,8 @@ public class Planetoid extends MinorPlanet {
 
     /**
      * Returns the mass density of a Planetoid
-     * @return | this.massDensity()
+     *
+     * @return | Planetoid.massDensity
      */
     @Basic @Immutable
     public static double getMassDensity() {
@@ -38,21 +77,39 @@ public class Planetoid extends MinorPlanet {
     private static final double minSplitRadius = 30;
 
     /**
-     * Returns the minimal radius a Planetoid must have on death to split into two asteroids
-     * @return | this.minSplitRadius
+     * Returns the minimal radius a Planetoid must have on death to split into two asteroids.
+     *
+     * @return | Planetoid.minSplitRadius
      */
     @Basic @Immutable
     public static double getMinSplitRadius() {
         return minSplitRadius;
     }
 
+    /**
+     * Moves this planetoid at its current velocity over a given time time.
+     *
+     * @param 	time
+     * 			The time to move in the direction of the velocity vector.
+     * @Effect  | super.move(time)
+     *
+     */
     @Override
     public void move(double time) {
         super.move(time);
         addTraveledDistance(getVelocity().getMagnitude() * time);
     }
 
-    @Override
+    /**
+     * Sets the radius of this planetoid to the specified value.
+     *
+     * @param newRadius
+     *          The new radius for this planetoid
+     * @Post    | new.getRadius == newRadius
+     * @throws IllegalArgumentException
+     *          | if (newRadius < MinorPlanet.getMinRadius())
+     */
+    @Override @Basic
     public void setRadius(double newRadius) throws IllegalArgumentException {
         if (newRadius < getMinRadius())
             throw new IllegalArgumentException();
@@ -63,10 +120,30 @@ public class Planetoid extends MinorPlanet {
 
     private double totalTraveledDistance = 0;
 
+    /**
+     * Returns the total distance this planetoid has travelled.
+     *
+     * @return  The total distance this planetoid has travelled
+     *          | this.totalTraveledDistance
+     */
+    @Basic
     public double getTotalTraveledDistance() {
         return totalTraveledDistance;
     }
 
+    /**
+     * Adds the specified distance to the total traveled distance of this planetoid.
+     *
+     * @param distance
+     *          The distance to be added to this planetoids totalTraveledDistance
+     * @Post    | new.getTotalTraveledDistance() == this.getTotalTraveledDistance + distance
+     * @Post    | new.getRadius() == this.getRadius() - distance * 1e-6
+     * @Post    If the radius of this new planetoid would be less then the minimal radius for a minor planet this new
+     *          planetoid will die.
+     *          | if new.getRadius < MinorPlanet.getMinRadius() then
+     *          |   new.die()
+     */
+    @Basic
     public void addTraveledDistance(double distance) {
         totalTraveledDistance += distance;
         try {
@@ -77,7 +154,10 @@ public class Planetoid extends MinorPlanet {
     }
 
     /**
+     * Resolves the collision of this planetoid with the given ship, teleporting the ship to a random location in its
+     * world, if that position is already occupied by another entity, the ship dies.
      * @param ship
+     *          The ship that collides with this planetoid.
      */
     public void resolveCollisionWithShip(Ship ship) {
         Vector randomPosition = new Vector(
@@ -91,6 +171,15 @@ public class Planetoid extends MinorPlanet {
             ship.die();
     }
 
+    /**
+     * Kills this planetoid, removing it from its world and marking it as terminated. If this planetoids is located
+     * within a world and its radius is greater then or equal to the minimal split radius, it will split into 2
+     * asteroids each with a radius equal to half the radius of this asteroid. Both asteroids are then placed into the world
+     * of this planetoid at a random position along a circle with radius half the radius of this planetoid and centered
+     * on the center of this planetoid, in such a way that the centers of this planetoid and the 2 new asteroids are on
+     * a line. The magnitude of the velocity of these new asteroids is 1.5 times the magnitude of the velocity of this
+     * asteroid and the orientation is set at random, but they both move in opposite directions.
+     */
     @Override
     public void die() {
         if (hasWorld() && getRadius() >= getMinSplitRadius()) {
