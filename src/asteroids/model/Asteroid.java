@@ -12,6 +12,20 @@ public class Asteroid extends MinorPlanet {
         this(position, getSpeedOfLight(), velocity, radius);
     }
 
+    /**
+     * Creates a new asteroid according to the given parameters.
+     *
+     * @param position
+     *          The position for this asteroid.
+     * @param maxSpeed
+     *          The maximum speed this asteroid can achieve.
+     * @param velocity
+     *          The velocity for this asteroid.
+     * @param radius
+     *          The radius for this asteroid.
+     *
+     * @Effect  | super(position, maxSpeed, velocity, radius, getMassDensity())
+     */
     public Asteroid(Vector position, double maxSpeed, Vector velocity, double radius) {
         super(position, maxSpeed, velocity, radius, getMassDensity());
     }
@@ -29,8 +43,10 @@ public class Asteroid extends MinorPlanet {
     }
 
     /**
+     * Resolves the collision of this asteroid with the specified ship, resulting in the death of the ship.
      *
      * @param ship
+     *          The ship this Asteroids collides with.
      * @Post    | (new ship).isTerminated()
      */
     public void resolveCollisionWithShip(Ship ship) {

@@ -2,8 +2,8 @@ package asteroids.model;
 
 import asteroids.model.programs.Function;
 import asteroids.model.programs.Statement;
-
 import java.util.List;
+import java.util.ArrayList;
 
 public class Program {
 	
@@ -11,7 +11,10 @@ public class Program {
 		setFunctions(functions);
 		setMainStatement(main);
 	}
-	
+
+	public List<Object> execute(double time) {
+		return new ArrayList<>();
+	}
 	
 	public List<Function> getFunctions() {
 		return functions;

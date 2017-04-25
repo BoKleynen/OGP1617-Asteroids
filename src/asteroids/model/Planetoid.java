@@ -158,6 +158,8 @@ public class Planetoid extends MinorPlanet {
      * world, if that position is already occupied by another entity, the ship dies.
      * @param ship
      *          The ship that collides with this planetoid.
+     * @Post    | new == this
+     * @Post    | @see implementation for what happens to the ship
      */
     public void resolveCollisionWithShip(Ship ship) {
         Vector randomPosition = new Vector(
@@ -177,8 +179,36 @@ public class Planetoid extends MinorPlanet {
      * asteroids each with a radius equal to half the radius of this asteroid. Both asteroids are then placed into the world
      * of this planetoid at a random position along a circle with radius half the radius of this planetoid and centered
      * on the center of this planetoid, in such a way that the centers of this planetoid and the 2 new asteroids are on
-     * a line. The magnitude of the velocity of these new asteroids is 1.5 times the magnitude of the velocity of this
-     * asteroid and the orientation is set at random, but they both move in opposite directions.
+     * the same line. The magnitude of the velocity of these new asteroids is 1.5 times the magnitude of the velocity of
+     * this asteroid and the orientation is set at random, but they both move in opposite directions.
+     *
+     * @Post    The new entity is terminated.
+     *          | new.isTerminated == true
+     * @Post    The new entity is no longer located in a world
+     *          | new.hasWorld() == false
+     * @Post    If this planetoid was part of a world and had a radius larger then or equal too a minimal threshold, the
+     *          minimal split radius, it will split into 2 asteroids. Each of these 2 asteroids will be located in the
+     *          world this planetoid was in at a random position on a circle with radius half the radius of this planetoid
+     *          and centered on the center of this planetoid, in such a way that the centers of the asteroids and this planetoid
+     *          are on the same line. The magnitude of the velocity of these new asteroids is 1.5 times the magnitude of
+     *          the velocity of this asteroid and the orientation is set at random, but they both move in opposite directions.
+     *          | if hasWorld() && getRadius() >= getMinSplitRadius() then
+     *          |   this.getWorld.getAllEntities().contains(Asteroid(
+     *          |                                                       this.getPosition().add(orientation.multiply(getRadius()/2)),
+     *          |                                                       getSpeedOfLight(),
+     *          |                                                       velocityOrientation.multiply(speed),
+     *          |                                                       radius)
+     *          | &&
+     *          |   this.getWorld.getAllEntities().contains(Asteroid(
+     *          |                                                       this.getPosition().add(orientation.multiply(-getRadius()/2)),
+     *          |                                                       getSpeedOfLight(),
+     *          |                                                       velocityOrientation.multiply(-speed),
+     *          |                                                       radius)
+     *          | where
+     *          |       speed = 1.5 * this.getVelocity().getMagnitude()
+     *          |       velocityOrientation = Vector(Math.cos(phi), Math.sin(phi)   with phi some random angle between 0..2PI
+     *          |       orientation = Vector(Math.cos(theta), Math.sin(theta))      with theta some random angle between 0..2PI
+     *          |
      */
     @Override
     public void die() {

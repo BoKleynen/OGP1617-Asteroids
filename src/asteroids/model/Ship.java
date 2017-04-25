@@ -4,6 +4,7 @@ import vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
 import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -58,7 +59,7 @@ public class Ship extends Entity {
     public Ship(Vector position, Vector velocity, double orientation, double radius, double mass)
             throws  IllegalArgumentException, NullPointerException {
 
-    	this(position, getSpeedOfLight(), velocity, orientation, radius, mass, 1.1 * 1e18);
+    	this(position, getSpeedOfLight(), velocity, orientation, radius, mass, 1.1 * 1e21);
     }
 
     /**
@@ -652,6 +653,10 @@ public class Ship extends Entity {
     @Basic
     public void loadProgram(Program program) {
 	    this.program = program;
+    }
+
+    public List<Object> executeProgram(double time) {
+	    return program.execute(time);
     }
     
 }

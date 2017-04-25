@@ -10,6 +10,21 @@ import vector.Vector;
  */
 public abstract class MinorPlanet extends Entity {
 
+    /**
+     * Creates a new minor planet in accordance with the give parameters.
+     *
+     * @param position
+     *          The position for this minor planet.
+     * @param maxSpeed
+     *          The maximum speed this minor planet can achieve.
+     * @param velocity
+     *          The velocity for this minor planet.
+     * @param radius
+     *          The radius for this minor planet.
+     * @param massDensity
+     *          The mass density of this minor planet.
+     * @Effect  | super(position, maxSpeed, velocity, radius, getMinRadius(), massDensity)
+     */
     public  MinorPlanet(Vector position, double maxSpeed, Vector velocity, double radius, double massDensity) {
         super(position, maxSpeed, velocity, radius, getMinRadius(), massDensity);
     }
@@ -28,8 +43,10 @@ public abstract class MinorPlanet extends Entity {
 
     /**
      * Resolves the collision of this minor planet with the specified minor planet.
+     * When 2 minor planets collide they bounce of off each other.
      *
      * @param minorPlanet
+     *          The minor planet that collides with this minor planet.
      */
     public void resolveCollisionWithMinorPlanet(MinorPlanet minorPlanet) {
         double sigma = getRadius() + minorPlanet.getRadius();
@@ -56,8 +73,12 @@ public abstract class MinorPlanet extends Entity {
                 minorPlanet.getVelocity().getY() - Jy/minorPlanet.getMass());
     }
 
-
-
+    /**
+     * Terminates this minor Planet removing it from its world and marking it as terminated.
+     *
+     * @Post    | new.isTerminated() == true
+     * @Post    | new.hasWorld() == false
+     */
     @Override
     public void terminate() {
         try {
