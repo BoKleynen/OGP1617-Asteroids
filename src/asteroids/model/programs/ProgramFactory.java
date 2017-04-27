@@ -1,10 +1,12 @@
 package asteroids.model.programs;
 
 import java.util.List;
-
 import asteroids.model.Program;
+import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.actionStatements.*;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.part3.programs.SourceLocation;
+import asteroids.model.programs.statements.Statement;
 
 public class ProgramFactory implements IProgramFactory<Expression, Statement, Function, Program> {
 
@@ -421,7 +423,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createThrustOnStatement(SourceLocation location) {
-		return null;
+		return new EnableThruster();
 	}
 
 	/**
@@ -432,7 +434,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createThrustOffStatement(SourceLocation location) {
-		return null;
+		return new DisableThruster();
 	}
 
 	/**
@@ -443,7 +445,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createFireStatement(SourceLocation location) {
-		return null;
+		return new FireBullet();
 	}
 
 	/**
@@ -455,7 +457,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createTurnStatement(Expression angle, SourceLocation location) {
-		return null;
+		return new Turn(angle);
 	}
 
 	/**
@@ -465,6 +467,6 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createSkipStatement(SourceLocation location) {
-		return null;
+		return new Skip();
 	}
 }
