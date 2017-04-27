@@ -4,7 +4,6 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
 import vector.Vector;
 
-
 /**
  * Created by Bo Kleynen and Yrjo Koyen
  */

@@ -652,6 +652,7 @@ public class Ship extends Entity {
 
     @Basic
     public void loadProgram(Program program) {
+	    program.setShip(this);
 	    this.program = program;
     }
 
