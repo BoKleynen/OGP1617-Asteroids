@@ -1,5 +1,6 @@
-package asteroids.model.programs;
+package asteroids.model.programs.expressions;
 
-public class Expression {
+public abstract class Expression {
 
+    public abstract boolean equals();
 }
