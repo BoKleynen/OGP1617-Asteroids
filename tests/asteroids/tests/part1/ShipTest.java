@@ -1,7 +1,7 @@
 package asteroids.tests.part1;
 
 import asteroids.model.Ship;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 
 import org.junit.*;
 

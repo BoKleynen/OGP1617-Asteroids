@@ -1,6 +1,6 @@
 package asteroids.model;
 
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 
 /**

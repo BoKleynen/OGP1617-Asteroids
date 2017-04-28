@@ -1,9 +1,8 @@
 package asteroids.model;
 
-import asteroids.model.collisions.Collision;
 import asteroids.model.collisions.EntityCollision;
 import be.kuleuven.cs.som.annotate.*;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 
 import java.util.ArrayList;
 import java.util.Collection;

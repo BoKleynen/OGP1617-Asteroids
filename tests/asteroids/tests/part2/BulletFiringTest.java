@@ -5,9 +5,8 @@ import static org.junit.Assert.*;
 import asteroids.model.Bullet;
 import asteroids.model.Ship;
 import asteroids.model.World;
+import asteroids.model.util.vector.Vector;
 import org.junit.*;
-
-import vector.*;
 
 public class BulletFiringTest {
 	

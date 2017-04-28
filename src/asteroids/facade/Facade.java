@@ -4,7 +4,8 @@ import asteroids.model.*;
 import asteroids.part2.CollisionListener;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.util.ModelException;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
+import com.sun.tools.internal.ws.processor.modeler.ModelerException;
 
 import java.util.Collection;
 import java.util.List;
@@ -546,7 +547,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public Set<? extends Asteroid> getWorldAsteroids(World world) throws ModelException {
-        return world.getAllAsteroids();
+        try {
+            return world.getAllAsteroids();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -586,7 +591,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public Set<? extends Planetoid> getWorldPlanetoids(World world) throws ModelException {
-        return world.getAllPlanetoids();
+        try {
+            return world.getAllPlanetoids();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -862,7 +871,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public double getPlanetoidTotalTraveledDistance(Planetoid planetoid) throws ModelException {
-        return planetoid.getTotalTraveledDistance();
+        try {
+            return planetoid.getTotalTraveledDistance();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -886,7 +899,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public Program getShipProgram(Ship ship) throws ModelException {
-        return ship.getProgram();
+        try {
+            return ship.getProgram();
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -897,7 +914,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public void loadProgramOnShip(Ship ship, Program program) throws ModelException {
-        ship.loadProgram(program);
+        try {
+            ship.loadProgram(program);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -911,7 +932,11 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public List<Object> executeProgram(Ship ship, double dt) throws ModelException {
-        return ship.executeProgram(dt);
+        try {
+            return ship.executeProgram(dt);
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 
     /**
@@ -919,6 +944,10 @@ public class Facade implements asteroids.part3.facade.IFacade {
      */
     @Override
     public IProgramFactory<?, ?, ?, ? extends Program> createProgramFactory() throws ModelException {
-        return null;
+        try {
+            return null;
+        } catch (Exception e) {
+            throw new ModelException(e);
+        }
     }
 }

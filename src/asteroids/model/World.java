@@ -4,7 +4,7 @@ import asteroids.model.collisions.Collision;
 import asteroids.model.collisions.EntityCollision;
 import asteroids.model.collisions.BoundaryCollision;
 import asteroids.part2.CollisionListener;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package asteroids.model.exceptions;
+package asteroids.model.util.exceptions;
 
 /**
  * Created by Bo on 27/04/2017.

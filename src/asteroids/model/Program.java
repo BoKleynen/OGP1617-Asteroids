@@ -1,6 +1,6 @@
 package asteroids.model;
 
-import asteroids.model.exceptions.NotEnoughTimeRemainingException;
+import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.Function;
 import asteroids.model.programs.statements.Statement;
 import be.kuleuven.cs.som.annotate.Basic;
@@ -49,6 +49,7 @@ public class Program {
 	}
 
 	public List<Object> execute(double time) {
+		incrementTimeRemaining(time);
 		return new ArrayList<>();
 	}
 	

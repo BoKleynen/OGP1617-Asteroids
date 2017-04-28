@@ -3,7 +3,7 @@ package asteroids.model.collisions;
 import asteroids.model.Bullet;
 import asteroids.model.Entity;
 import asteroids.part2.CollisionListener;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 
 /**
  * A class of collisions with the edge of a world.

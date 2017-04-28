@@ -3,7 +3,7 @@ package asteroids.tests.part1;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 
 /**
  * Created by Bo on 28/02/2017.

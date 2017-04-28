@@ -1,6 +1,6 @@
 package asteroids.model.programs.statements.actionStatements;
 
-import asteroids.model.exceptions.NotEnoughTimeRemainingException;
+import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.expressions.Expression;
 
 /**

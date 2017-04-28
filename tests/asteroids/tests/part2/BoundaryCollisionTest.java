@@ -6,7 +6,7 @@ import asteroids.model.World;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 
 /**
  * Created by Bo on 15/04/2017.

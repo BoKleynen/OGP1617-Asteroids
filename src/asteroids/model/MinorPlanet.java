@@ -3,7 +3,7 @@ package asteroids.model;
 
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Immutable;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 
 /**
  * Created by Bo on 18/04/2017.

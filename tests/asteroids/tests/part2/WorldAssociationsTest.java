@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import asteroids.model.Ship;
 import asteroids.model.World;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 
 public class WorldAssociationsTest {
 	

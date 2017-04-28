@@ -3,7 +3,7 @@ package asteroids.model.collisions;
 import asteroids.model.*;
 import asteroids.part2.CollisionListener;
 import be.kuleuven.cs.som.annotate.*;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 
 
 /**

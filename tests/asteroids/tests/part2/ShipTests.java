@@ -2,7 +2,7 @@ package asteroids.tests.part2;
 
 import asteroids.model.World;
 import asteroids.model.Ship;
-import vector.Vector;
+import asteroids.model.util.vector.Vector;
 import org.junit.*;
 
 
