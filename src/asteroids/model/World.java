@@ -354,4 +354,21 @@ public class World {
         }
         terminate();
     }
+
+    public Ship getClosestShip(Ship ship) {
+        Set<Ship> ships = getAllShips();
+        ships.remove(ship);
+        double smallestDistance = Double.POSITIVE_INFINITY;
+        Ship closestShip = null;
+
+        for (Ship otherShip : ships) {
+            double distance = ship.getDistanceBetween(otherShip);
+            if (distance < smallestDistance) {
+                smallestDistance = distance;
+                closestShip = otherShip;
+            }
+        }
+
+        return closestShip;
+    }
 }

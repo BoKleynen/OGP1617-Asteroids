@@ -4,6 +4,8 @@ import asteroids.model.Program;
 
 public abstract class Statement {
 
+    public abstract void execute();
+
     private Program program;
 
     public Program getProgram() {

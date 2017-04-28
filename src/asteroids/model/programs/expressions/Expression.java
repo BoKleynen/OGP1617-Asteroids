@@ -1,6 +1,27 @@
 package asteroids.model.programs.expressions;
 
-public abstract class Expression {
+import asteroids.model.Program;
+import asteroids.model.programs.statements.Statement;
 
-    public abstract boolean equals();
+/**
+ * Created by Bo on 28/04/2017.
+ */
+public abstract class Expression <T> {
+
+    public abstract T getValue();
+
+    @Override
+    public String toString() {
+        return getValue().toString();
+    }
+
+    private Statement statement;
+
+    public Statement getStatement() {
+        return statement;
+    }
+
+    public void setStatement(Statement statement) {
+        this.statement = statement;
+    }
 }

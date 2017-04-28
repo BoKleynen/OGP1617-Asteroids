@@ -1,11 +1,13 @@
 package asteroids.model;
 
+import asteroids.model.programs.expressions.Expression;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.Function;
 import asteroids.model.programs.statements.Statement;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -76,5 +78,8 @@ public class Program {
 	public void pause() {
 
 	}
+
+	private HashMap<String, Expression> variables = new HashMap<>();
+
 
 }

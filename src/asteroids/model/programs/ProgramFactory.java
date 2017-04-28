@@ -2,11 +2,16 @@ package asteroids.model.programs;
 
 import java.util.List;
 import asteroids.model.Program;
-import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.expressions.arithmeticExpressions.unaryExpressions.Negate;
+import asteroids.model.programs.expressions.logicalExpressions.Not;
+import asteroids.model.programs.expressions.valueExpressions.SelfExpression;
+import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.programs.statements.*;
 import asteroids.model.programs.statements.actionStatements.*;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.part3.programs.SourceLocation;
+import asteroids.model.programs.expressions.Expression;
+
 
 public class ProgramFactory implements IProgramFactory<Expression, Statement, Function, Program> {
 
@@ -105,7 +110,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createPrintStatement(Expression value, SourceLocation sourceLocation) {
-		return null;
+		return new Print(value);
 	}
 
 	/**
@@ -165,7 +170,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createChangeSignExpression(Expression expression, SourceLocation sourceLocation) {
-		return null;
+		return new Negate(expression);
 	}
 
 	/**
@@ -177,7 +182,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createNotExpression(Expression expression, SourceLocation sourceLocation) {
-		return null;
+		return new Not(expression);
 	}
 
 	/**
@@ -188,7 +193,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createDoubleLiteralExpression(double value, SourceLocation location) {
-		return null;
+		return new ValueExpression<>(value);
 	}
 
 	/**
@@ -198,7 +203,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createNullExpression(SourceLocation location) {
-		return null;
+		return new ValueExpression<>(null);
 	}
 
 	/**
@@ -209,7 +214,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createSelfExpression(SourceLocation location) {
-		return null;
+		return new SelfExpression();
 	}
 
 	/**
