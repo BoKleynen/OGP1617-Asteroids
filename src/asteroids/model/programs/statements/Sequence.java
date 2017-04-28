@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class SequenceStatement extends Statement{
-    public SequenceStatement(List<Statement> statements) {
+public class Sequence extends Statement{
+    public Sequence(List<Statement> statements) {
         this.statements = statements;
     }
 

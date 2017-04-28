@@ -8,9 +8,9 @@ import asteroids.model.programs.statements.Statement;
  *
  * TODO: implement expressions so they can be converted to boolean types
  */
-public class WhileStatement extends Statement {
+public class While extends Statement {
 
-    public WhileStatement(Expression condition, Statement body) {
+    public While(Expression condition, Statement body) {
         this.body = body;
     }
 

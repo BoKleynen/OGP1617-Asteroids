@@ -7,9 +7,9 @@ import asteroids.model.programs.expressions.Expression;
  *
  * TODO: implement expressions so they can be converted to boolean types
  */
-public class IfStatement extends Statement{
+public class If extends Statement{
 
-    public IfStatement(Expression condition, Statement ifBody, Statement elseBody) {
+    public If(Expression condition, Statement ifBody, Statement elseBody) {
 
         this.ifBody = ifBody;
         this.elseBody = elseBody;

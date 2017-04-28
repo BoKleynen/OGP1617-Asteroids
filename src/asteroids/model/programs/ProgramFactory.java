@@ -3,13 +3,10 @@ package asteroids.model.programs;
 import java.util.List;
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.statements.IfStatement;
-import asteroids.model.programs.statements.SequenceStatement;
-import asteroids.model.programs.statements.WhileStatement;
+import asteroids.model.programs.statements.*;
 import asteroids.model.programs.statements.actionStatements.*;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.part3.programs.SourceLocation;
-import asteroids.model.programs.statements.Statement;
 
 public class ProgramFactory implements IProgramFactory<Expression, Statement, Function, Program> {
 
@@ -48,7 +45,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createAssignmentStatement(String variableName, Expression value, SourceLocation sourceLocation) {
-		return null;
+		return new Assignment(variableName, value);
 	}
 
 	/**
@@ -60,7 +57,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createWhileStatement(Expression condition, Statement body, SourceLocation sourceLocation) {
-		return new WhileStatement(condition, body);
+		return new While(condition, body);
 	}
 
 	/**
@@ -70,7 +67,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createBreakStatement(SourceLocation sourceLocation) {
-		return null;
+		return new Break();
 	}
 
 	/**
@@ -81,7 +78,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createReturnStatement(Expression value, SourceLocation sourceLocation) {
-		return null;
+		return new Return(value);
 	}
 
 	/**
@@ -96,7 +93,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createIfStatement(Expression condition, Statement ifBody, Statement elseBody, SourceLocation sourceLocation) {
-		return new IfStatement(condition, ifBody, elseBody);
+		return new If(condition, ifBody, elseBody);
 	}
 
 	/**
@@ -119,7 +116,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createSequenceStatement(List<Statement> statements, SourceLocation sourceLocation) {
-		return new SequenceStatement(statements);
+		return new Sequence(statements);
 	}
 
 	/**
