@@ -10,6 +10,7 @@ import asteroids.model.programs.expressions.Expression;
 public class While extends Statement {
 
     public While(Expression condition, Statement body) {
+        this.condition = condition;
         this.body = body;
     }
 
