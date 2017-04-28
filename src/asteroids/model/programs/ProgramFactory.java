@@ -3,6 +3,9 @@ package asteroids.model.programs;
 import java.util.List;
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.IfStatement;
+import asteroids.model.programs.statements.SequenceStatement;
+import asteroids.model.programs.statements.WhileStatement;
 import asteroids.model.programs.statements.actionStatements.*;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.part3.programs.SourceLocation;
@@ -20,7 +23,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Program createProgram(List<Function> functions, Statement main) {
-		return null;
+		return new Program(functions, main);
 	}
 
 	/**
@@ -57,7 +60,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createWhileStatement(Expression condition, Statement body, SourceLocation sourceLocation) {
-		return null;
+		return new WhileStatement(condition, body);
 	}
 
 	/**
@@ -93,7 +96,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createIfStatement(Expression condition, Statement ifBody, Statement elseBody, SourceLocation sourceLocation) {
-		return null;
+		return new IfStatement(condition, ifBody, elseBody);
 	}
 
 	/**
@@ -116,7 +119,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Statement createSequenceStatement(List<Statement> statements, SourceLocation sourceLocation) {
-		return null;
+		return new SequenceStatement(statements);
 	}
 
 	/**
