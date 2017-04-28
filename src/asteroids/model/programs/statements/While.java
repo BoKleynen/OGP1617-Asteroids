@@ -13,13 +13,13 @@ public class While extends Statement {
         this.body = body;
     }
 
-    private boolean condition;
+    private Expression<Boolean> condition;;
 
     private Statement body;
 
     @Override
     public void execute() {
-        while (condition) {
+        while (condition.getValue()) {
             body.execute();
         }
     }

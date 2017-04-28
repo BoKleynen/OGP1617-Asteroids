@@ -1,4 +1,4 @@
-package asteroids.model.programs.expressions.arithmeticExpressions;
+package asteroids.model.programs.expressions.arithmeticExpressions.binaryExpressions;
 
 import asteroids.model.programs.expressions.Expression;
 
@@ -11,9 +11,8 @@ public class Multiplication extends BinaryArithmeticExpression {
         super(leftOperand, rightOperand);
     }
 
-
     @Override
-    public double getValue() {
-        return 0;
+    public Double getValue() {
+        return (Double) getLeftOperand().getValue() * (Double) getRightOperand().getValue();
     }
 }

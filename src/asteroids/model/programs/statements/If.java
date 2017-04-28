@@ -15,14 +15,14 @@ public class If extends Statement{
         this.elseBody = elseBody;
     }
 
-    private boolean condition;
+    private Expression<Boolean> condition;
     private Statement ifBody;
     private Statement elseBody;
 
 
     @Override
     public void execute() {
-        if (condition)
+        if (condition.getValue())
             ifBody.execute();
         else
             elseBody.execute();

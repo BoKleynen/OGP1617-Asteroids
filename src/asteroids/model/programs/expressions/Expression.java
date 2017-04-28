@@ -1,6 +1,5 @@
 package asteroids.model.programs.expressions;
 
-import asteroids.model.Program;
 import asteroids.model.programs.statements.Statement;
 
 /**
