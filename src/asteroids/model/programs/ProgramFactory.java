@@ -2,10 +2,18 @@ package asteroids.model.programs;
 
 import java.util.List;
 import asteroids.model.Program;
+import asteroids.model.programs.expressions.arithmeticExpressions.binaryExpressions.Addition;
+import asteroids.model.programs.expressions.arithmeticExpressions.binaryExpressions.Multiplication;
 import asteroids.model.programs.expressions.arithmeticExpressions.unaryExpressions.Negate;
+import asteroids.model.programs.expressions.arithmeticExpressions.unaryExpressions.Sqrt;
+import asteroids.model.programs.expressions.compareExpressions.Equal;
+import asteroids.model.programs.expressions.compareExpressions.LessThan;
+import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetDirection;
+import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetRadius;
+import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetVY;
+import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetX;
 import asteroids.model.programs.expressions.logicalExpressions.Not;
-import asteroids.model.programs.expressions.valueExpressions.SelfExpression;
-import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
+import asteroids.model.programs.expressions.valueExpressions.*;
 import asteroids.model.programs.statements.*;
 import asteroids.model.programs.statements.actionStatements.*;
 import asteroids.part3.programs.IProgramFactory;
@@ -225,7 +233,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createShipExpression(SourceLocation location) {
-		return null;
+		return new ShipExpression();
 	}
 
 	/**
@@ -236,7 +244,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createAsteroidExpression(SourceLocation location) {
-		return null;
+		return new AsteroidExpression();
 	}
 
 	/**
@@ -247,7 +255,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createPlanetoidExpression(SourceLocation location) {
-		return null;
+		return new PlanetoidExpression();
 	}
 
 	/**
@@ -258,7 +266,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createBulletExpression(SourceLocation location) {
-		return null;
+		return new BulletExpression();
 	}
 
 	/**
@@ -269,7 +277,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createPlanetExpression(SourceLocation location) {
-		return null;
+		return new MinorPlanetExpression();
 	}
 
 	/**
@@ -280,7 +288,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createAnyExpression(SourceLocation location) {
-		return null;
+		return new AnyExpression();
 	}
 
 	/**
@@ -292,7 +300,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createGetXExpression(Expression expression, SourceLocation location) {
-		return null;
+		return new GetX(expression);
 	}
 
 	/**
@@ -304,7 +312,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createGetYExpression(Expression expression, SourceLocation location) {
-		return null;
+		return new GetVY(expression);
 	}
 
 	/**
@@ -316,7 +324,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createGetVXExpression(Expression expression, SourceLocation location) {
-		return null;
+		return new GetVY(expression);
 	}
 
 	/**
@@ -340,7 +348,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createGetRadiusExpression(Expression expression, SourceLocation location) {
-		return null;
+		return new GetRadius(expression);
 	}
 
 	/**
@@ -354,7 +362,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createLessThanExpression(Expression e1, Expression e2, SourceLocation location) {
-		return null;
+		return new LessThan(e1, e1);
 	}
 
 	/**
@@ -368,7 +376,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createEqualityExpression(Expression e1, Expression e2, SourceLocation location) {
-		return null;
+		return new Equal(e1, e2);
 	}
 
 	/**
@@ -381,7 +389,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createAdditionExpression(Expression e1, Expression e2, SourceLocation location) {
-		return null;
+		return new Addition(e1, e2);
 	}
 
 	/**
@@ -394,7 +402,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createMultiplicationExpression(Expression e1, Expression e2, SourceLocation location) {
-		return null;
+		return new Multiplication(e1, e2);
 	}
 
 	/**
@@ -406,7 +414,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createSqrtExpression(Expression expression, SourceLocation location) {
-		return null;
+		return new Sqrt(expression);
 	}
 
 	/**
@@ -417,7 +425,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createGetDirectionExpression(SourceLocation location) {
-		return null;
+		return new GetDirection();
 	}
 
 	/**
