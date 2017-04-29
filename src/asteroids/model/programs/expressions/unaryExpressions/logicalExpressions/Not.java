@@ -1,7 +1,7 @@
-package asteroids.model.programs.expressions.logicalExpressions;
+package asteroids.model.programs.expressions.unaryExpressions.logicalExpressions;
 
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.expressions.UnaryExpression;
+import asteroids.model.programs.expressions.unaryExpressions.UnaryExpression;
 
 /**
  * Created by Bo on 28/04/2017.

@@ -1,4 +1,4 @@
-package asteroids.model.programs.expressions.arithmeticExpressions.unaryExpressions;
+package asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions;
 
 import asteroids.model.programs.expressions.Expression;
 

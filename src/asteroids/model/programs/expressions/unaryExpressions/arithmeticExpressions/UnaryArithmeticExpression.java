@@ -1,7 +1,7 @@
-package asteroids.model.programs.expressions.arithmeticExpressions.unaryExpressions;
+package asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions;
 
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.expressions.UnaryExpression;
+import asteroids.model.programs.expressions.unaryExpressions.UnaryExpression;
 
 /**
  * Created by Bo on 28/04/2017.

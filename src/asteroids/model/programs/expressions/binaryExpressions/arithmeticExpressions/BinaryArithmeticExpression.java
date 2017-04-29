@@ -1,6 +1,6 @@
-package asteroids.model.programs.expressions.arithmeticExpressions.binaryExpressions;
+package asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions;
 
-import asteroids.model.programs.expressions.BinaryExpression;
+import asteroids.model.programs.expressions.binaryExpressions.BinaryExpression;
 import asteroids.model.programs.expressions.Expression;
 
 /**
