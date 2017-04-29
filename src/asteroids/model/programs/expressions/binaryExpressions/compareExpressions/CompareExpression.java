@@ -6,8 +6,8 @@ import asteroids.model.programs.expressions.Expression;
 /**
  * Created by Bo on 28/04/2017.
  */
-public abstract class CompareExpression extends BinaryExpression<Boolean> {
-    public CompareExpression(Expression leftOperand, Expression rightOperand) {
+public abstract class CompareExpression<O> extends BinaryExpression<Boolean, O> {
+    public CompareExpression(Expression<O> leftOperand, Expression<O> rightOperand) {
         super(leftOperand, rightOperand);
     }
 }

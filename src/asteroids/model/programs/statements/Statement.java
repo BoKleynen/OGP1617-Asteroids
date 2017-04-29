@@ -1,6 +1,7 @@
 package asteroids.model.programs.statements;
 
 import asteroids.model.Program;
+import asteroids.model.programs.function.Function;
 
 public abstract class Statement {
 

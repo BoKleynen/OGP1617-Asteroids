@@ -1,5 +1,6 @@
 package asteroids.model.programs.expressions;
 
+import asteroids.model.Ship;
 import asteroids.model.programs.statements.Statement;
 
 /**
@@ -22,5 +23,9 @@ public abstract class Expression <T> {
 
     public void setStatement(Statement statement) {
         this.statement = statement;
+    }
+
+    public Ship getShip() {
+        return getStatement().getProgram().getShip();
     }
 }

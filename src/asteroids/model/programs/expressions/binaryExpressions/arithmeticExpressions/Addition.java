@@ -6,9 +6,9 @@ import asteroids.model.programs.expressions.Expression;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Addition extends BinaryExpression {
+public class Addition extends BinaryArithmeticExpression {
 
-    public Addition(Expression leftOperand, Expression rightOperand) {
+    public Addition(Expression<Double> leftOperand, Expression<Double> rightOperand) {
         super(leftOperand, rightOperand);
     }
 

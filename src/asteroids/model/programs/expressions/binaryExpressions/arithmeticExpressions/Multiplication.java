@@ -7,7 +7,7 @@ import asteroids.model.programs.expressions.Expression;
  */
 public class Multiplication extends BinaryArithmeticExpression {
 
-    public Multiplication(Expression leftOperand, Expression rightOperand) {
+    public Multiplication(Expression<Double> leftOperand, Expression<Double> rightOperand) {
         super(leftOperand, rightOperand);
     }
 

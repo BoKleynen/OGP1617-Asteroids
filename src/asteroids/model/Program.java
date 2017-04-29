@@ -1,23 +1,69 @@
 package asteroids.model;
 
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class Program {
-	
+
 	public Program(List<Function> functions, Statement main) {
 		setFunctions(functions);
-		setMainStatement(main);
+		this.main = main;
 	}
+
+	public List<Object> execute(double time) {
+		incrementTimeRemaining(time);
+
+		return null;
+	}
+
+	public void pause() {
+
+	}
+
+	private Map<String, Function> functions = new HashMap<>();
+
+	public void setFunctions(List<Function> functions) {
+		for (Function function: functions) {
+			this.functions.put(function.getFunctionName(), function);
+			function.setProgram(this);
+		}
+	}
+
+	private Statement main;
+
+	private Map<String, Expression> globalVariables;
+
+	public Expression readGlobalVariable(String variableName) {
+		return new ValueExpression<>(getGlobalVariable(variableName).getValue());
+	}
+
+	public Expression getGlobalVariable(String variableName) {
+		return globalVariables.get(variableName);
+	}
+
+	public void addGlobalVariable(String variableName, Expression expression) {
+		if (globalVariables.containsKey(variableName))
+			if (globalVariables.get(variableName).getValue().getClass() == expression.getValue().getClass())
+				globalVariables.put(variableName, expression);
+
+		else
+			globalVariables.put(variableName, expression);
+	}
+
+	private void setMainStatement(Statement main) {
+		mainStatement.setProgram(this);
+		this.mainStatement = main;
+	}
+
+	private Statement mainStatement;
 
 	private Ship ship;
 
@@ -49,58 +95,5 @@ public class Program {
 			throw new NotEnoughTimeRemainingException();
 
 		timeRemaining = newTime;
-	}
-
-	public List<Object> execute(double time) {
-		incrementTimeRemaining(time);
-		return new ArrayList<>();
-	}
-	
-	public List<Function> getFunctions() {
-		return functions;
-	}
-	
-	private void setFunctions(List<Function> functions) {
-		for (Function function : functions) {
-			function.setProgram(this);
-		}
-		this.functions = functions;
-	}
-	
-	private List<Function> functions;
-	
-	public Statement getMainStatement() {
-		return this.mainStatement;
-	}
-	
-	private void setMainStatement(Statement main) {
-		mainStatement.setProgram(this);
-		this.mainStatement = main;
-	}
-	
-	private Statement mainStatement;
-
-	public void pause() {
-
-	}
-
-	private Map<String, Expression> variables = new HashMap<>();
-
-	//TODO: enforce read only characteristics
-	public Expression readVariable(String variableName) {
-		return getVariable(variableName);
-	}
-
-	private Expression getVariable(String variableName) {
-		return variables.get(variableName);
-	}
-
-	private void addVariable(String variableName, Expression expression) {
-		if (variables.containsKey(variableName))
-			if (variables.get(variableName).getValue().getClass() == expression.getValue().getClass())
-				variables.put(variableName, expression);
-
-		else
-			variables.put(variableName, expression);
 	}
 }

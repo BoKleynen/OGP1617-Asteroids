@@ -5,8 +5,8 @@ import asteroids.model.programs.expressions.*;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Equal extends CompareExpression {
-    public Equal(Expression left, Expression right) {
+public class Equal extends CompareExpression<Object> {
+    public Equal(Expression<Object> left, Expression<Object> right) {
         super(left, right);
     }
 

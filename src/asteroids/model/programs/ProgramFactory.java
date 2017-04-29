@@ -48,7 +48,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Function createFunctionDefinition(String functionName, Statement body, SourceLocation sourceLocation) {
-		return null;
+		return new Function(functionName, body);
 	}
 
 	/**
