@@ -1,4 +1,4 @@
-package asteroids.model.programs.expressions.valueExpressions;
+package asteroids.model.programs.expressions.entityExpressions;
 
 import asteroids.model.Bullet;
 import asteroids.model.programs.expressions.Expression;

@@ -2,7 +2,7 @@ package asteroids.model;
 
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
-import asteroids.model.programs.Function;
+import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
@@ -10,6 +10,7 @@ import be.kuleuven.cs.som.annotate.Raw;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Program {
 	
@@ -60,6 +61,9 @@ public class Program {
 	}
 	
 	private void setFunctions(List<Function> functions) {
+		for (Function function : functions) {
+			function.setProgram(this);
+		}
 		this.functions = functions;
 	}
 	
@@ -70,6 +74,7 @@ public class Program {
 	}
 	
 	private void setMainStatement(Statement main) {
+		mainStatement.setProgram(this);
 		this.mainStatement = main;
 	}
 	
@@ -79,7 +84,23 @@ public class Program {
 
 	}
 
-	private HashMap<String, Expression> variables = new HashMap<>();
+	private Map<String, Expression> variables = new HashMap<>();
 
+	//TODO: enforce read only characteristics
+	public Expression readVariable(String variableName) {
+		return getVariable(variableName);
+	}
 
+	private Expression getVariable(String variableName) {
+		return variables.get(variableName);
+	}
+
+	private void addVariable(String variableName, Expression expression) {
+		if (variables.containsKey(variableName))
+			if (variables.get(variableName).getValue().getClass() == expression.getValue().getClass())
+				variables.put(variableName, expression);
+
+		else
+			variables.put(variableName, expression);
+	}
 }

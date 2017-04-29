@@ -1,4 +1,4 @@
-package asteroids.model.programs.expressions.compareExpressions;
+package asteroids.model.programs.expressions.binaryExpressions.compareExpressions;
 
 import asteroids.model.programs.expressions.*;
 

@@ -1,6 +1,7 @@
-package asteroids.model.programs.expressions;
+package asteroids.model.programs.expressions.unaryExpressions;
 
 import asteroids.model.Entity;
+import asteroids.model.programs.expressions.Expression;
 
 /**
  * Created by Bo on 28/04/2017.
