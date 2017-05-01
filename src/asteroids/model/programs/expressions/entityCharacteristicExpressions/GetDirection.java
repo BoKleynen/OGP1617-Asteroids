@@ -9,6 +9,6 @@ public class GetDirection extends Expression<Double> {
 
     @Override
     public Double getValue() {
-        return getStatement().getProgram().getShip().getOrientation();
+        return getShip().getOrientation();
     }
 }
