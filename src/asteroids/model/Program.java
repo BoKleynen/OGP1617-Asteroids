@@ -31,15 +31,17 @@ public class Program {
 	private Map<String, Function> functions = new HashMap<>();
 
 	public void setFunctions(List<Function> functions) {
-		for (Function function: functions) {
-			this.functions.put(function.getFunctionName(), function);
-			function.setProgram(this);
+		if ( functions.size() > 0 ) {
+			for (Function function: functions) {
+				this.functions.put(function.getFunctionName(), function);
+				function.setProgram(this);
+			}
 		}
 	}
 
 	private Statement main;
 
-	private Map<String, Expression> globalVariables;
+	private Map<String, Expression> globalVariables = new HashMap<>();
 
 	public Expression readGlobalVariable(String variableName) {
 		return new ValueExpression<>(getGlobalVariable(variableName).getValue());
@@ -55,6 +57,7 @@ public class Program {
 				globalVariables.put(variableName, expression);
 
 		else
+			System.out.println("Adding variable");
 			globalVariables.put(variableName, expression);
 	}
 
