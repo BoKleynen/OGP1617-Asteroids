@@ -10,6 +10,6 @@ public class SelfExpression extends Expression<Ship> {
 
     @Override
     public Ship getValue() {
-        return getStatement().getProgram().getShip();
+        return getShip();
     }
 }

@@ -3,6 +3,8 @@ package asteroids.model.programs.expressions.entityExpressions;
 import asteroids.model.Ship;
 import asteroids.model.programs.expressions.Expression;
 
+import java.util.Comparator;
+
 /**
  * Created by Bo on 28/04/2017.
  */
@@ -10,7 +12,13 @@ public class ShipExpression extends Expression<Ship> {
 
     @Override
     public Ship getValue() {
-        return getStatement().getProgram().getShip().getWorld().getClosestShip(getStatement().getProgram().getShip());
+        return getShip()
+                .getWorld()
+                .getAllShips()
+                .stream()
+                .filter(ship -> ship != getShip())
+                .min(Comparator.comparingDouble(ship -> ship.getDistanceBetween(getShip())))
+                .orElse(null);
     }
 
 }

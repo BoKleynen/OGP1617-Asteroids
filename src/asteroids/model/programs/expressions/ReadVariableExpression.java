@@ -4,9 +4,8 @@ import asteroids.part3.programs.SourceLocation;
 
 public class ReadVariableExpression extends Expression<Object> {
 
-	public ReadVariableExpression(String name, SourceLocation location) {
+	public ReadVariableExpression(String name) {
 		this.name = name;
-		this.location = location;
 	}
 	
 	public String getName() {
@@ -14,11 +13,7 @@ public class ReadVariableExpression extends Expression<Object> {
 	}
 	
 	private String name;
-	
-	public SourceLocation getLocation() {
-		return this.location;
-	}
-	
+
 	private SourceLocation location;
 	
 	@Override

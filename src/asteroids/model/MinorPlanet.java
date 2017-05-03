@@ -26,7 +26,7 @@ public abstract class MinorPlanet extends Entity {
      * @Effect  | super(position, maxSpeed, velocity, radius, getMinRadius(), massDensity)
      */
     public  MinorPlanet(Vector position, double maxSpeed, Vector velocity, double radius, double massDensity) {
-        super(position, maxSpeed, velocity, radius, getMinRadius(), massDensity);
+        super(position, maxSpeed, velocity, getMinRadius(), radius, massDensity);
     }
 
     private static final double minRadius = 5;
