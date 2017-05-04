@@ -31,11 +31,9 @@ public class Program {
 	private Map<String, Function> functions = new HashMap<>();
 
 	public void setFunctions(List<Function> functions) {
-		if ( functions.size() > 0 ) {
-			for (Function function: functions) {
-				this.functions.put(function.getFunctionName(), function);
-				function.setProgram(this);
-			}
+		for (Function function: functions) {
+			this.functions.put(function.getFunctionName(), function);
+			function.setProgram(this);
 		}
 	}
 

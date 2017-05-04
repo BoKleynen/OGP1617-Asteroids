@@ -8,11 +8,10 @@ import java.util.Comparator;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class MinorPlanetExpression extends Expression<MinorPlanet> {
+public class MinorPlanetExpression extends EntityExpression<MinorPlanet> {
     @Override
     public MinorPlanet getValue() {
-        return getShip()
-                .getWorld()
+        return getWorld()
                 .getAllMinorPlanets()
                 .stream()
                 .min(Comparator.comparingDouble(minorPlanet -> minorPlanet.getDistanceBetween(getShip())))

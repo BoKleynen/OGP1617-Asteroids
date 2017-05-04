@@ -4,14 +4,11 @@ import java.util.List;
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.Addition;
 import asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.Multiplication;
+import asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.*;
 import asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.Negate;
 import asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.Sqrt;
 import asteroids.model.programs.expressions.binaryExpressions.compareExpressions.Equal;
 import asteroids.model.programs.expressions.binaryExpressions.compareExpressions.LessThan;
-import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetDirection;
-import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetRadius;
-import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetVY;
-import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetX;
 import asteroids.model.programs.expressions.entityExpressions.*;
 import asteroids.model.programs.expressions.unaryExpressions.logicalExpressions.Not;
 import asteroids.model.programs.expressions.valueExpressions.*;
@@ -314,7 +311,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createGetYExpression(Expression expression, SourceLocation location) {
-		return new GetVY(expression);
+		return new GetY(expression);
 	}
 
 	/**
@@ -326,7 +323,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createGetVXExpression(Expression expression, SourceLocation location) {
-		return new GetVY(expression);
+		return new GetVX(expression);
 	}
 
 	/**

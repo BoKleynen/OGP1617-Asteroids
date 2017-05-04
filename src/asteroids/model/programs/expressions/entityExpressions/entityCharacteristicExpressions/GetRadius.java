@@ -1,4 +1,4 @@
-package asteroids.model.programs.expressions.entityCharacteristicExpressions;
+package asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions;
 
 import asteroids.model.programs.expressions.Expression;
 
@@ -12,7 +12,7 @@ public class GetRadius extends EntityCharacteristicExpression {
     }
 
     @Override
-    public Object getValue() {
+    public Double getValue() {
         return getEntity().getRadius();
     }
 }

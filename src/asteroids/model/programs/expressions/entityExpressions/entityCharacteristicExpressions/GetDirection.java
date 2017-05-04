@@ -1,4 +1,4 @@
-package asteroids.model.programs.expressions.entityCharacteristicExpressions;
+package asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions;
 
 import asteroids.model.programs.expressions.Expression;
 
@@ -9,6 +9,6 @@ public class GetDirection extends Expression<Double> {
 
     @Override
     public Double getValue() {
-        return getShip().getOrientation();
+        return getStatement().getProgram().getShip().getOrientation();
     }
 }

@@ -9,12 +9,11 @@ import java.util.Set;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class AnyExpression extends Expression<Entity> {
+public class AnyExpression extends EntityExpression<Entity> {
 
     @Override @SuppressWarnings("all")
     public Entity getValue() {
-        return getShip()
-                .getWorld()
+        return getWorld()
                 .getAllEntities()
                 .stream()
                 .findAny()

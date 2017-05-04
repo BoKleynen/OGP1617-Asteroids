@@ -8,11 +8,10 @@ import java.util.Comparator;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class AsteroidExpression extends Expression<Asteroid> {
+public class AsteroidExpression extends EntityExpression<Asteroid> {
     @Override
     public Asteroid getValue() {
-        return getShip()
-                .getWorld()
+        return getWorld()
                 .getAllAsteroids()
                 .stream()
                 .min(Comparator.comparingDouble(asteroid -> asteroid.getDistanceBetween(getShip())))

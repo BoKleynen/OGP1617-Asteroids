@@ -8,7 +8,7 @@ import java.util.Comparator;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class ShipExpression extends Expression<Ship> {
+public class ShipExpression extends EntityExpression<Ship> {
 
     @Override
     public Ship getValue() {
