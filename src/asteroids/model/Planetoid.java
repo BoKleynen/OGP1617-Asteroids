@@ -211,7 +211,11 @@ public class Planetoid extends MinorPlanet {
      */
     @Override
     public void die() {
-        if (hasWorld() && getRadius() >= getMinSplitRadius()) {
+        World world = getWorld();
+
+        super.die();
+
+        if (world != null && getRadius() >= getMinSplitRadius()) {
 
             double radius = getRadius() / 2;
 
@@ -234,9 +238,7 @@ public class Planetoid extends MinorPlanet {
                     velocityOrientation.multiply(-speed),
                     radius);
 
-            getWorld().addEntity(asteroid1, asteroid2);
+            world.addEntity(asteroid1, asteroid2);
         }
-
-        terminate();
     }
 }

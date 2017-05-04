@@ -137,6 +137,7 @@ public class Part3TestFull {
     score += 3;
   }
 
+  @Test
   public void testCreateShipRadiusNan() throws ModelException {
     try {
       max_score += 1;
@@ -630,6 +631,7 @@ public class Part3TestFull {
     score += 8;
   }
 
+  // TODO bullets can only be loaded when they are inside the ship
   @Test
   public void testLoadBulletOnShipOutOfShip() throws ModelException {
     try {
@@ -654,6 +656,7 @@ public class Part3TestFull {
     score += 4;
   }
 
+  // TODO
   @Test
   public void testLoadBulletOnShipBulletAlreadyInWorld() throws ModelException {
     try {

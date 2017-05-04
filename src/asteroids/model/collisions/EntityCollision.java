@@ -65,7 +65,7 @@ public class EntityCollision extends Collision {
      */
     @Override
     public Vector calculateCollisionPosition() {
-        return getEntity1().getCollisionPosition(getEntity2());
+        return getEntity1().getCollisionPosition(getEntity2(), getTimeToCollision());
     }
 
     /**

@@ -479,9 +479,9 @@ public class Ship extends Entity {
             getWorld().removeEntity(bullet);
         } catch (IllegalArgumentException | NullPointerException e) {}
 
+        bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
         bullet.setShip(this);
         bullets.add(bullet);
-        bullet.setPosition(getPosition().add(new Vector(getRadius()/2, 0)));
 
 
     }
@@ -529,9 +529,10 @@ public class Ship extends Entity {
      * @param bullet
      */
     public void removeBullet(Bullet bullet) {
-        if (bullet.getShip() == this)
-            bullets.remove(bullet);
-            bullet.removeShip();
+        if (bullet.getShip() != this)
+            throw new IllegalStateException();
+        bullets.remove(bullet);
+        bullet.removeShip();
     }
     
     /**
@@ -662,6 +663,10 @@ public class Ship extends Entity {
 
     public List<Object> executeProgram(double time) {
 	    return program.execute(time);
+    }
+
+    public String toString() {
+	    return getPosition().toString() + getVelocity().toString();
     }
     
 }

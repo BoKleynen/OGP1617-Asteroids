@@ -253,7 +253,7 @@ public class World {
         Set<Asteroid> asteroids = new HashSet<>();
 
         for (Entity entity : getAllEntities()) {
-            if (entity instanceof MinorPlanet)
+            if (entity instanceof Asteroid)
                 asteroids.add((Asteroid) entity);
         }
 
@@ -320,7 +320,7 @@ public class World {
 
 
     public void evolve(double time, CollisionListener collisionListener) {
-        if (time < 0)
+        if (time < 0 || Double.isNaN(time))
             throw new IllegalArgumentException(Double.toString(time));
 
         if (time > 0) {

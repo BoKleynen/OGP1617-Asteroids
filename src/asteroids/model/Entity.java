@@ -573,11 +573,13 @@ public abstract class Entity {
      *          | this.overlap(entity)
      */
     public Vector getCollisionPosition(Entity entity) throws IllegalArgumentException {
+        return getCollisionPosition(entity, getTimeToCollision(entity));
+    }
+
+    public Vector getCollisionPosition(Entity entity, double time) {
         if (overlap(entity)) {
             throw new IllegalArgumentException();
         }
-
-        double time = getTimeToCollision(entity);
 
         if (time == Double.POSITIVE_INFINITY)
             return null;
