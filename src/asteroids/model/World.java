@@ -17,7 +17,7 @@ public class World {
         if (width < 0)
             this.width = 0;
 
-        else if (width > getMaxWidth())
+        else if (width > getMaxWidth() || !Double.isFinite(width))
             this.width = getMaxWidth();
 
         else
@@ -26,7 +26,7 @@ public class World {
         if (height < 0)
             this.height = 0;
 
-        else if (height > getMaxHeight())
+        else if (height > getMaxHeight() || !Double.isFinite(height))
             this.height = getMaxHeight();
 
         else

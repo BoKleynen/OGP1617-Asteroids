@@ -574,7 +574,7 @@ public class Ship extends Entity {
      * 
      * @Post	The bullet is no longer loaded on this ship.
      *          | new.getAllBullets().contains(this.getFirstBullet()) == false
-     *
+     * TODO : something with bullets spawning outside of the world
      */
     public void fireBullet() {				//Totally
         Bullet bullet = getFirstBullet();

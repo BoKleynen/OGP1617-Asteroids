@@ -23,7 +23,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
         try {
             return new Ship();
 
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -33,7 +33,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
         try {
             return new Ship( new Vector(x, y), new Vector(xVelocity, yVelocity), orientation, radius, 0);
 
-        } catch (Exception e) {
+        } catch (Error e) {
             throw new ModelException(e);
         }
     }
@@ -41,7 +41,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Ship createShip(double x, double y, double xVelocity, double yVelocity, double radius, double direction, double mass) throws ModelException {
         try {
             return new Ship(new Vector(x, y), new Vector(xVelocity, yVelocity), direction, radius, mass);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -50,7 +50,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void terminateShip(Ship ship) throws ModelException {
         try {
             ship.terminate();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -59,7 +59,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public boolean isTerminatedShip(Ship ship) throws ModelException {
         try {
             return ship.isTerminated();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -68,7 +68,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getShipMass(Ship ship) throws ModelException {
         try {
             return ship.getTotalMass();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -77,7 +77,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public World getShipWorld(Ship ship) throws ModelException {
         try {
             return ship.getWorld();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -86,7 +86,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public boolean isShipThrusterActive(Ship ship) throws ModelException {
         try {
             return ship.thrusterOn();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -98,7 +98,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
                 ship.thrustOn();
             else
                 ship.thrustOff();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -107,7 +107,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getShipAcceleration(Ship ship) throws ModelException {
         try {
             return ship.getAcceleration();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -115,7 +115,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getShipPosition(Ship ship) throws ModelException {
         try {
             return new double[]{ship.getPosition().getX(), ship.getPosition().getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -124,7 +124,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             return new double[]{ship.getVelocity().getX(), ship.getVelocity().getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -133,7 +133,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             return ship.getRadius();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -142,7 +142,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             return ship.getOrientation();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -151,7 +151,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             ship.move(dt);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -161,7 +161,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
         try {
             return new Bullet(new Vector(x,y), new Vector(xVelocity, yVelocity), radius);
 
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -170,7 +170,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void terminateBullet(Bullet bullet) throws ModelException {
         try {
             bullet.terminate();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -179,7 +179,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public boolean isTerminatedBullet(Bullet bullet) throws ModelException {
         try {
             return bullet.isTerminated();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -188,7 +188,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getBulletPosition(Bullet bullet) throws ModelException {
         try {
             return new double[]{bullet.getPosition().getX(), bullet.getPosition().getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -197,7 +197,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getBulletVelocity(Bullet bullet) throws ModelException {
         try {
             return new double[]{bullet.getVelocity().getX(), bullet.getVelocity().getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -206,7 +206,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getBulletRadius(Bullet bullet) throws ModelException {
         try {
             return bullet.getRadius();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -215,7 +215,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getBulletMass(Bullet bullet) throws ModelException {
         try {
             return bullet.getMass();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -224,7 +224,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public World getBulletWorld(Bullet bullet) throws ModelException {
         try {
             return bullet.getWorld();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -233,7 +233,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Ship getBulletShip(Bullet bullet) throws ModelException {
         try {
             return bullet.getShip();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -242,7 +242,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Ship getBulletSource(Bullet bullet) throws ModelException {
         try {
             return bullet.getParentShip();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -251,7 +251,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public World createWorld(double width, double height) throws ModelException {
         try {
             return new World(width, height);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -259,8 +259,8 @@ public class Facade implements asteroids.part3.facade.IFacade {
     @Override
     public void terminateWorld(World world) throws ModelException {
         try {
-            world.terminate();
-        } catch (Exception e) {
+            world.destroy();
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -269,7 +269,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public boolean isTerminatedWorld(World world) throws ModelException {
         try {
             return world.isTerminated();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -278,7 +278,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getWorldSize(World world) throws ModelException {
         try {
             return new double[]{world.getWidth(), world.getHeight()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -287,7 +287,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Set<? extends Ship> getWorldShips(World world) throws ModelException {
         try {
             return world.getAllShips();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -296,7 +296,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Set<? extends Bullet> getWorldBullets(World world) throws ModelException {
         try {
             return world.getAllBullets();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -305,7 +305,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void addShipToWorld(World world, Ship ship) throws ModelException {
         try {
             world.addEntity(ship);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -314,7 +314,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void removeShipFromWorld(World world, Ship ship) throws ModelException {
         try {
             world.removeEntity(ship);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -323,7 +323,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void addBulletToWorld(World world, Bullet bullet) throws ModelException {
         try {
             world.addEntity(bullet);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -332,7 +332,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void removeBulletFromWorld(World world, Bullet bullet) throws ModelException {
         try {
             world.removeEntity(bullet);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -341,7 +341,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Set<? extends Bullet> getBulletsOnShip(Ship ship) throws ModelException {
         try {
             return ship.getAllBullets();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -350,7 +350,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public int getNbBulletsOnShip(Ship ship) throws ModelException {
         try {
             return ship.getNbBullets();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -359,7 +359,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void loadBulletOnShip(Ship ship, Bullet bullet) throws ModelException {
         try {
             ship.addBullet(bullet);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -368,7 +368,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void loadBulletsOnShip(Ship ship, Collection<Bullet> bullets) throws ModelException {
         try {
             ship.loadBullet(bullets);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -377,7 +377,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void removeBulletFromShip(Ship ship, Bullet bullet) throws ModelException {
         try {
             ship.removeBullet(bullet);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -386,7 +386,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void fireBullet(Ship ship) throws ModelException {
         try {
             ship.fireBullet();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -395,7 +395,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getTimeCollisionBoundary(Object object) throws ModelException {
         try {
             return ((Entity) object).getTimeToWallCollision();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -404,8 +404,8 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getPositionCollisionBoundary(Object object) throws ModelException {
         try {
             Vector collisionPosition = ((Entity) object).getWallCollisionPosition();
-            return new double[]{collisionPosition.getX(), collisionPosition.getY()};
-        } catch (Exception e) {
+            return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -414,7 +414,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getTimeCollisionEntity(Object entity1, Object entity2) throws ModelException {
         try {
             return ((Entity) entity1).getTimeToCollision(((Entity) entity2));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -424,7 +424,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
         try {
             Vector collisionPosition = ((Entity) entity1).getCollisionPosition((Entity) entity2);
             return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -433,7 +433,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getTimeNextCollision(World world) throws ModelException {
         try {
             return world.getFirstCollision().getTimeToCollision();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -443,7 +443,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
         try {
             Vector collisionPosition = world.getFirstCollision().getCollisionPosition();
             return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -452,7 +452,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void evolve(World world, double dt, CollisionListener collisionListener) throws ModelException {
         try {
             world.evolve(dt, collisionListener);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -461,7 +461,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Object getEntityAt(World world, double x, double y) throws ModelException {
         try {
             return world.getEntityAtPosition(new Vector(x,y));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -470,7 +470,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Set<? extends Object> getEntities(World world) throws ModelException {
         try {
             return world.getAllEntities();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -479,7 +479,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             ship.thrust(amount);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -488,7 +488,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             ship.turn(angle);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -497,7 +497,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             return ship1.getDistanceBetween(ship2);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -506,7 +506,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             return ship1.overlap(ship2);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -515,7 +515,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     {
         try {
             return ship1.getTimeToCollision(ship2);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -524,7 +524,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
         try {
             Vector collisionPosition = ship1.getCollisionPosition(ship2);
             return collisionPosition == null ? null : new double[]{collisionPosition.getX(), collisionPosition.getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -549,7 +549,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Set<? extends Asteroid> getWorldAsteroids(World world) throws ModelException {
         try {
             return world.getAllAsteroids();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -564,7 +564,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void addAsteroidToWorld(World world, Asteroid asteroid) throws ModelException {
         try {
            world.addEntity(asteroid);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -579,7 +579,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void removeAsteroidFromWorld(World world, Asteroid asteroid) throws ModelException {
         try {
             world.removeEntity(asteroid);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -593,7 +593,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Set<? extends Planetoid> getWorldPlanetoids(World world) throws ModelException {
         try {
             return world.getAllPlanetoids();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -608,7 +608,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void addPlanetoidToWorld(World world, Planetoid planetoid) throws ModelException {
         try {
             world.addEntity(planetoid);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -623,7 +623,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void removePlanetoidFromWorld(World world, Planetoid planetoid) throws ModelException {
         try {
             world.addEntity(planetoid);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -647,7 +647,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
                     new Vector(x,y),
                     new Vector(xVelocity, yVelocity),
                     radius);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -661,7 +661,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void terminateAsteroid(Asteroid asteroid) throws ModelException {
         try {
            asteroid.terminate();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -675,7 +675,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public boolean isTerminatedAsteroid(Asteroid asteroid) throws ModelException {
         try {
             return asteroid.isTerminated();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -690,7 +690,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getAsteroidPosition(Asteroid asteroid) throws ModelException {
         try {
             return new double[] {asteroid.getPosition().getX(), asteroid.getPosition().getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -705,7 +705,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getAsteroidVelocity(Asteroid asteroid) throws ModelException {
         try {
             return new double[] {asteroid.getVelocity().getX(), asteroid.getVelocity().getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -719,7 +719,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getAsteroidRadius(Asteroid asteroid) throws ModelException {
         try {
             return asteroid.getRadius();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -733,7 +733,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getAsteroidMass(Asteroid asteroid) throws ModelException {
         try {
             return asteroid.getMass();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -747,7 +747,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public World getAsteroidWorld(Asteroid asteroid) throws ModelException {
         try {
             return asteroid.getWorld();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -773,7 +773,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
                     new Vector(xVelocity, yVelocity),
                     radius,
                     totalTraveledDistance);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -787,7 +787,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void terminatePlanetoid(Planetoid planetoid) throws ModelException {
         try {
             planetoid.terminate();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -801,7 +801,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public boolean isTerminatedPlanetoid(Planetoid planetoid) throws ModelException {
         try {
             return planetoid.isTerminated();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -816,7 +816,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getPlanetoidPosition(Planetoid planetoid) throws ModelException {
         try {
             return new double[] {planetoid.getPosition().getX(), planetoid.getPosition().getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -831,7 +831,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double[] getPlanetoidVelocity(Planetoid planetoid) throws ModelException {
         try {
             return new double[] {planetoid.getVelocity().getX(), planetoid.getVelocity().getY()};
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -845,7 +845,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getPlanetoidRadius(Planetoid planetoid) throws ModelException {
         try {
             return planetoid.getRadius();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -859,7 +859,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getPlanetoidMass(Planetoid planetoid) throws ModelException {
         try {
             return planetoid.getMass();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -873,7 +873,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public double getPlanetoidTotalTraveledDistance(Planetoid planetoid) throws ModelException {
         try {
             return planetoid.getTotalTraveledDistance();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -887,7 +887,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public World getPlanetoidWorld(Planetoid planetoid) throws ModelException {
         try {
             return planetoid.getWorld();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -901,7 +901,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public Program getShipProgram(Ship ship) throws ModelException {
         try {
             return ship.getProgram();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -916,7 +916,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public void loadProgramOnShip(Ship ship, Program program) throws ModelException {
         try {
             ship.loadProgram(program);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -934,7 +934,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public List<Object> executeProgram(Ship ship, double dt) throws ModelException {
         try {
             return ship.executeProgram(dt);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }
@@ -946,7 +946,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     public IProgramFactory<?, ?, ?, ? extends Program> createProgramFactory() throws ModelException {
         try {
             return null;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }

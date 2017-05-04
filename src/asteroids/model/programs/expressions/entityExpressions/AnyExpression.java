@@ -11,15 +11,13 @@ import java.util.Set;
  */
 public class AnyExpression extends Expression<Entity> {
 
-    @Override
+    @Override @SuppressWarnings("all")
     public Entity getValue() {
-
-        ArrayList<Entity> entities = new ArrayList<>(getStatement().getProgram().getShip().getWorld().getAllEntities());
-        for (int i = 0; i < entities.size()-2; i++) {
-            if (Math.random() <= 1.0 / (entities.size()-1))
-                return entities.get(i);
-        }
-
-        return entities.get(entities.size()-1);
+        return getShip()
+                .getWorld()
+                .getAllEntities()
+                .stream()
+                .findAny()
+                .get();
     }
 }

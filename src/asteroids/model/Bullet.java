@@ -294,7 +294,6 @@ public class Bullet extends Entity {
            } catch (NullPointerException ex) {}
        }
 
-	   removeParentShip();
 	   isTerminated = true;
    }
 

@@ -607,16 +607,16 @@ public abstract class Entity {
 
         double xCollisionTime, yCollisionTime;
 
-        if ( getVelocity().getX() == 0 )
-        	xCollisionTime = Double.POSITIVE_INFINITY;
-        else if ( getVelocity().getX() > 0 )
+        if ( getVelocity().getX() == 0 ) {
+        	xCollisionTime = Double.POSITIVE_INFINITY;}
+        else if (getVelocity().getX() > 0)
         	xCollisionTime = (getWorld().getWidth() - getPosition().getX() - getRadius()) / getVelocity().getX();
         else
         	xCollisionTime = -(getPosition().getX() - getRadius()) / getVelocity().getX();
 
         if ( getVelocity().getY()  == 0 )
         	yCollisionTime = Double.POSITIVE_INFINITY;
-        else if ( getVelocity().getY()  > 0 )
+        else if (getVelocity().getY()  > 0)
         	yCollisionTime = (getWorld().getHeight() - getPosition().getY() - getRadius()) / getVelocity().getY();
         else
         	yCollisionTime = -(getPosition().getY() - getRadius()) / getVelocity().getY();
@@ -636,11 +636,11 @@ public abstract class Entity {
     public Vector getWallCollisionPosition() {
 
         double timeToWallCollision = getTimeToWallCollision();
-
+        
         if (timeToWallCollision == Double.POSITIVE_INFINITY)
-            return new Vector(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+            return null;
 
-        return getPosition().add(getVelocity().multiply(timeToWallCollision));
+        return getPosition().add(getVelocity().multiply(timeToWallCollision)).add(getVelocity().normalize().multiply(getRadius()));
     }
 
 
