@@ -100,7 +100,7 @@ public class BoundaryCollision extends Collision {
             getEntity1().setVelocity(-getEntity1().getVelocity().getX(), getEntity1().getVelocity().getY());
         }
 
-        else if ( (getCollisionPosition().getY() <= getEntity1().getRadius())
+        if ((getCollisionPosition().getY() <= getEntity1().getRadius())
         		|| (getCollisionPosition().getY() >= getEntity1().getWorld().getHeight() - getEntity1().getRadius()) ) {
             getEntity1().setVelocity(getEntity1().getVelocity().getX(), -getEntity1().getVelocity().getY());
         }

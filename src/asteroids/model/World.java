@@ -3,6 +3,8 @@ package asteroids.model;
 import asteroids.model.collisions.Collision;
 import asteroids.model.collisions.EntityCollision;
 import asteroids.model.collisions.BoundaryCollision;
+import asteroids.model.util.exceptions.EntityOutOfWorldException;
+import asteroids.model.util.exceptions.OverlappingEntitiesException;
 import asteroids.part2.CollisionListener;
 import asteroids.model.util.vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
@@ -137,8 +139,10 @@ public class World {
     		throw new NullPointerException();
     	if ( entity.hasWorld() )
     		throw new IllegalArgumentException("Entity already has a world.");
-    	if (! entity.hasValidPositionInWorld(this))
-    	    throw new IllegalArgumentException("Entity at invalid position for this world");
+    	if (! entity.isWithinBoundariesOfWorld(this))
+    	    throw new EntityOutOfWorldException();
+    	if (entity.overlapWithEntityInWorld(this))
+    	    throw new OverlappingEntitiesException();
 
     	entities.put(entity.getPosition(), entity);
         entity.setWorld(this);

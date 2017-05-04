@@ -1,5 +1,7 @@
 package asteroids.model;
 
+import asteroids.model.util.exceptions.EntityOutOfWorldException;
+import asteroids.model.util.exceptions.OverlappingEntitiesException;
 import asteroids.model.util.vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 import java.util.HashSet;
@@ -587,7 +589,9 @@ public class Ship extends Entity {
                 getWorld().addEntity(bullet);
                 bullet.setVelocity(getDirection().multiply(Bullet.getInitialSpeed()));
 
-            } catch (IllegalArgumentException e) {
+            } catch (EntityOutOfWorldException e1) {
+                bullet.die();
+            } catch (OverlappingEntitiesException e2) {
                 bullet.resolveInitialCollisions();
             }
         }
