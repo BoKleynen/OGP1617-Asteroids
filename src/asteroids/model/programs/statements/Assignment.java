@@ -10,6 +10,7 @@ public class Assignment extends Statement{
     public Assignment(String name, Expression value) {
         this.name = name;
         this.value = value;
+        value.setStatement(this);
     }
 
     private String name;

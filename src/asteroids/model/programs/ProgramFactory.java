@@ -6,6 +6,7 @@ import asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressi
 import asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.*;
 import asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.*;
 import asteroids.model.programs.expressions.binaryExpressions.compareExpressions.*;
+import asteroids.model.programs.expressions.entityCharacteristicExpressions.GetX;
 import asteroids.model.programs.expressions.entityExpressions.*;
 import asteroids.model.programs.expressions.unaryExpressions.logicalExpressions.*;
 import asteroids.model.programs.expressions.valueExpressions.*;

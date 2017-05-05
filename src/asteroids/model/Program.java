@@ -16,6 +16,7 @@ public class Program {
 	public Program(List<Function> functions, Statement main) {
 		setFunctions(functions);
 		this.main = main;
+		main.setProgram(this);
 	}
 
 	public List<Object> execute(double time) {
