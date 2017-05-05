@@ -15,8 +15,7 @@ public class Program {
 
 	public Program(List<Function> functions, Statement main) {
 		setFunctions(functions);
-		this.main = main;
-		main.setProgram(this);
+		setMainStatement(main);
 	}
 
 	public List<Object> execute(double time) {
@@ -61,7 +60,7 @@ public class Program {
 	}
 
 	private void setMainStatement(Statement main) {
-		mainStatement.setProgram(this);
+		main.setProgram(this);
 		this.mainStatement = main;
 	}
 
