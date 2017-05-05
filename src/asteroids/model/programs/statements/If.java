@@ -10,10 +10,10 @@ import asteroids.model.programs.expressions.Expression;
 public class If extends Statement{
 
     public If(Expression condition, Statement ifBody, Statement elseBody) {
-
         this.condition = condition;
         this.ifBody = ifBody;
         this.elseBody = elseBody;
+        condition.setStatement(this);
     }
 
     private Expression<Boolean> condition;
