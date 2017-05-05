@@ -9,6 +9,7 @@ public class Return extends Statement {
 
     public Return(Expression value) {
         this.value = value;
+        value.setStatement(this);
     }
 
     private Expression value;

@@ -9,6 +9,7 @@ public class Print extends Statement{
 
     public Print(Expression expression) {
         this.expression = expression;
+        expression.setStatement(this);
     }
 
     private Expression expression;

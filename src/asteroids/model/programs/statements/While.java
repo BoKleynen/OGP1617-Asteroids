@@ -12,6 +12,7 @@ public class While extends Statement {
     public While(Expression condition, Statement body) {
         this.condition = condition;
         this.body = body;
+        condition.setStatement(this);
     }
 
     private Expression<Boolean> condition;;
