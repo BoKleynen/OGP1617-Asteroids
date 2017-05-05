@@ -14,13 +14,17 @@ public class Function {
 
 	public Function(String functionName, Statement body) {
 		this.functionName = functionName;
-		this.body = body;
+		setBody(body);
 	}
 
 	private String functionName;
 
 	public String getFunctionName() {
 		return functionName;
+	}
+	
+	private void setBody(Statement body) {
+		this.body = body;
 	}
 
 	private Statement body;
@@ -39,6 +43,7 @@ public class Function {
 
 	public void setProgram(Program program) {
 		this.program = program;
+		body.setProgram(program);
 	}
 
 	public Program getProgram() {
