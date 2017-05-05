@@ -33,7 +33,7 @@ public class testGetXY {
 
 	}
 	@Test
-	public void testGetX() {
+	public void testGetXAndY() {
 		s.loadProgram(P);
 		GetX gx = new GetX(E);
 		GetY gy = new GetY(E);
