@@ -7,9 +7,7 @@ import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Program {
 
@@ -18,14 +16,22 @@ public class Program {
 		setMainStatement(main);
 	}
 
+	private List<Object> printedObjects = new ArrayList<>();
+
+	public void addPrintedObject(Object object) {
+		printedObjects.add(object);
+	}
+
 	public List<Object> execute(double time) {
 		incrementTimeRemaining(time);
+		isPaused = false;
 
-		return null;
+		main.execute();
+		return printedObjects;
 	}
 
 	public void pause() {
-
+		isPaused = true;
 	}
 
 	private Map<String, Function> functions = new HashMap<>();
@@ -97,4 +103,6 @@ public class Program {
 
 		timeRemaining = newTime;
 	}
+
+	private boolean isPaused = false;
 }
