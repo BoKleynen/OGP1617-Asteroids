@@ -1236,9 +1236,7 @@ public class Part3TestFull {
     assertTrue(facade.isTerminatedBullet(bullet));
     score += 12;
   }
-
-  // TODO test doesnt succeed no clue why
-  // ship + bullet overlap
+  
   @Test
   public void testEvolveShipOwnBulletCollision() throws ModelException {
     max_score += 12;
