@@ -358,7 +358,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
     @Override
     public void loadBulletOnShip(Ship ship, Bullet bullet) throws ModelException {
         try {
-            ship.addBullet(bullet);
+            ship.loadBullet(bullet);
         } catch (Throwable e) {
             throw new ModelException(e);
         }

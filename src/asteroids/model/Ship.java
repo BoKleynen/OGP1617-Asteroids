@@ -441,19 +441,6 @@ public class Ship extends Entity {
     private HashSet<Bullet> bullets = new HashSet<>();
 
     /**
-     * Adds the given bullet to this ship.
-     * Setting this ship as its parent ship and loading it onto this ship.
-     *
-     * @param bullet The bullet to be added to this ship.
-     * @Post	This ship is the bullets parent ship.
-     *          | (new bullet).getParentShip() == new
-     */
-    public void addBullet(Bullet bullet) {
-        bullet.setParentShip(this);
-        loadBullet(bullet);
-    }
-
-    /**
      * Loads the given bullet onto this ship.
      *
      * @param bullet
@@ -472,8 +459,10 @@ public class Ship extends Entity {
     public void loadBullet(Bullet bullet) throws IllegalStateException, IllegalArgumentException {
         if (isTerminated())
             throw new IllegalStateException("This ship is terminated");
-        if (bullet.getParentShip() != this)
-            throw new IllegalArgumentException("A bullet can only be loaded onto its parent ship");
+        if (!bullet.liesWithinShip(this))
+            throw new IllegalStateException();
+        if (bullet.hasWorld())
+            throw new IllegalStateException();
 
         try {
             getWorld().removeEntity(bullet);
@@ -510,7 +499,7 @@ public class Ship extends Entity {
     	
     	for (int i = 0; i < amount; i++) {
     		Bullet b = new Bullet(getPosition(), getVelocity(), getRadius()/5.0);
-    		addBullet(b);
+    		loadBullet(b);
     	}
     }
     
@@ -520,7 +509,7 @@ public class Ship extends Entity {
      */
     public void loadBullet(Collection<Bullet> bulletList) {
     	for (Bullet bullet : bulletList)
-    		addBullet(bullet);
+    		loadBullet(bullet);
     }
     
     /**
@@ -583,6 +572,7 @@ public class Ship extends Entity {
         Bullet bullet = getFirstBullet();
         if ((bullet != null) && hasWorld()) {
             Vector nextBulletPosition = getPosition().add(getDirection().multiply((getRadius() + bullet.getRadius())));
+            bullet.setParentShip(this);
             removeBullet(bullet);
 
             try {

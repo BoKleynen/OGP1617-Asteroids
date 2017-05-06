@@ -151,8 +151,6 @@ public class Bullet extends Entity {
      */
     @Basic
     public void setParentShip(Ship ship) {
-        if (hasParentShip())
-            throw new IllegalStateException("This bullet already has a parent ship");
         this.parentShip = ship;
     }
 
@@ -235,8 +233,6 @@ public class Bullet extends Entity {
     void setShip(Ship ship) throws IllegalStateException, IllegalArgumentException{
     	if (isLoadedOntoShip())
     		throw new IllegalStateException("Bullet already loaded onto its parent ship");
-    	if (this.getParentShip() != ship)
-    	    throw new IllegalArgumentException("The specified ship is not this bullets parent ship");
 
     	this.ship = ship;
     }
@@ -327,11 +323,19 @@ public class Bullet extends Entity {
     }
 
     public void resolveCollisionWithEntity(Entity entity) {
-        try {
+        if (getParentShip() == entity) {
+            getWorld().removeEntity(this);
+            setPosition(entity.getPosition());
             ((Ship) entity).loadBullet(this);
-        } catch (ClassCastException | IllegalArgumentException e) {
+        }
+        else {
             entity.die();
             die();
         }
     }
+
+    public boolean liesWithinShip(Ship ship) {
+        return getDistanceBetweenCenters(ship) <= ship.getRadius() - getRadius();
+    }
+
 }

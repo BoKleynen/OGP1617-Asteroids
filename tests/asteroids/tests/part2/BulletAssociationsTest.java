@@ -30,7 +30,7 @@ public class BulletAssociationsTest {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
 		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount());
-		s1.addBullet(b);
+		s1.loadBullet(b);
 		
 		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount() + 1);
 		assertTrue(s1.getAllBullets().contains(b));
@@ -59,8 +59,8 @@ public class BulletAssociationsTest {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
 		// Adding a bullet multiple times to one ship.
-		s1.addBullet(b);
-		s1.addBullet(b);
+		s1.loadBullet(b);
+		s1.loadBullet(b);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -68,8 +68,8 @@ public class BulletAssociationsTest {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
 		// Adding one bullet to multiple ships.
-		s1.addBullet(b);
-		s2.addBullet(b);
+		s1.loadBullet(b);
+		s2.loadBullet(b);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -78,14 +78,14 @@ public class BulletAssociationsTest {
 		
 		// Adding one bullet to a world and a ship.
 		w1.addEntity(b);
-		s1.addBullet(b);
+		s1.loadBullet(b);
 	}
 	
 	@Test
 	public void testBulletPositionInShip() {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
-		s1.addBullet(b);
+		s1.loadBullet(b);
 		assertTrue(b.getPosition().getDistance(s1.getPosition()) == s1.getRadius()/2);
 	}
 	

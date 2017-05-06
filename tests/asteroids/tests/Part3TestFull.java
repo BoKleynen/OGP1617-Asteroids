@@ -631,7 +631,6 @@ public class Part3TestFull {
     score += 8;
   }
 
-  // TODO bullets can only be loaded when they are inside the ship
   @Test
   public void testLoadBulletOnShipOutOfShip() throws ModelException {
     try {
@@ -656,7 +655,6 @@ public class Part3TestFull {
     score += 4;
   }
 
-  // TODO
   @Test
   public void testLoadBulletOnShipBulletAlreadyInWorld() throws ModelException {
     try {
@@ -1239,6 +1237,8 @@ public class Part3TestFull {
     score += 12;
   }
 
+  // TODO test doesnt succeed no clue why
+  // ship + bullet overlap
   @Test
   public void testEvolveShipOwnBulletCollision() throws ModelException {
     max_score += 12;
