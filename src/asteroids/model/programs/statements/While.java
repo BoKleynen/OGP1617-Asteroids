@@ -28,7 +28,7 @@ public class While extends Statement {
     protected boolean loopReturn;
     
     
-    // @TODO: Implement return calls 
+    // @TODO: Implement return call handling.
     @Override
     public void execute() {
     	System.out.println("Entering while loop.");
@@ -38,13 +38,12 @@ public class While extends Statement {
     	if ( body instanceof Sequence ) {
     		while (condition.getValue() && !loopBreak && !loopReturn) {
     			for (Statement statement : ((Sequence) body).getStatements()) {
-    				statement.execute();
-    				if ( loopBreak ) {
-    					System.out.println("Breaking out of for loop");
+    				if (statement instanceof Break) {
+    					loopBreak = true;
     					break;
     				}
-    				if ( loopReturn ) {
-    					// something
+    				else if (statement instanceof Return) {
+    					loopReturn = true;
     					break;
     				}
     			}
@@ -53,31 +52,24 @@ public class While extends Statement {
 					break;
 				}
     			if (loopReturn ) {
+					System.out.println("Returning out of while loop");
     				break;
     			}
     		}
     	}
     	else if (body instanceof Statement) {
-    		while (condition.getValue() && !loopBreak && !loopReturn) {
-    			body.execute();
-    			if ( loopBreak ) {
-					System.out.println("Breaking out of while loop");
+    		while (condition.getValue()) {
+    			if (body instanceof Break) {
 					break;
 				}
-    			if (loopReturn ) {
-    				break;
-    			}
+				else if (body instanceof Return) {
+					loopReturn = true;
+					break;
+				}
     		}
+    		// @TODO: handle return statement value.
     	}
     	System.out.println("End of while loop execution.");
-    }
-    
-    protected void executeBreak() {
-    	loopBreak = true;
-    }
-    
-    protected void executeReturn(Expression returnValue) {
-    	this.loopReturn = true;
     }
     
     @Override

@@ -11,6 +11,6 @@ public class Break extends Statement {
 
     @Override
     public void execute() {
-    	this.getParentWhile().executeBreak();
+    	
     }
 }
