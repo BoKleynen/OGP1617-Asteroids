@@ -27,12 +27,24 @@ public abstract class Statement {
     	return parentWhile;
     }
     
-    /*
-     * Only while statements can be parent statements.
-     */
+    
     protected void setParentWhile(While parent) {
     	this.parentWhile = parent;
     }
     
     protected While parentWhile = null;
+    
+    protected boolean hasParentFunction() {
+    	return (parentFunction != null);
+    }
+    
+    protected Function getParentFunction() {
+    	return parentFunction;
+    }
+  
+    protected void setParentFunction(Function parent) {
+    	this.parentFunction = parent;
+    }
+    
+    protected Function parentFunction = null;
 }

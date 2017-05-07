@@ -2,6 +2,7 @@ package asteroids.model.programs.function;
 
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.Return;
 import asteroids.model.programs.statements.Sequence;
 import asteroids.model.programs.statements.Statement;
 import asteroids.model.programs.statements.While;
@@ -72,5 +73,27 @@ public class Function {
 
 		else
 			return (statement instanceof ActionStatement);
+	}
+	
+	public void execute() {
+		if ( body instanceof Sequence ) {
+			for (Statement statement : ((Sequence)body).getStatements()) {
+				if ( statement instanceof Return ) {
+					// @TODO: actually return something
+					break;
+				}
+				else {
+					statement.execute();
+				}
+			}
+		}
+		else if ( body instanceof Statement ) {
+			if ( body instanceof Return ) {
+				// @TODO: actually return something
+			}
+			else {
+				body.execute();
+			}	
+		}
 	}
 }

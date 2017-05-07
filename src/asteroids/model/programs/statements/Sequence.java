@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import asteroids.model.Program;
+import asteroids.model.programs.function.Function;
 
 /**
  * Created by Bo on 28/04/2017.
@@ -76,5 +77,12 @@ public class Sequence extends Statement{
     	for (Statement statement : statements) {
             statement.setParentWhile(parent);
     	}
-    }	
+    }
+    
+    @Override
+    protected void setParentFunction(Function F) {
+    	for (Statement statement : statements) {
+            statement.setParentFunction(F);
+    	}
+    }
 }
