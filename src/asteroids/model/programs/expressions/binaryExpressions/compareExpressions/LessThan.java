@@ -4,7 +4,7 @@ import asteroids.model.programs.expressions.*;
 
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class LessThan extends CompareExpression<Double> {
 

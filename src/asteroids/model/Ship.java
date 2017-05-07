@@ -19,8 +19,7 @@ import java.util.List;
  * @Invar	The radius of a ship is always greater the the smallest allowed radius.
  * 			| getRadius() >= getMinRadius()
  * 
- * Created by Bo Kleynen and Yrjo Koyen.
- *
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class Ship extends Entity {
 

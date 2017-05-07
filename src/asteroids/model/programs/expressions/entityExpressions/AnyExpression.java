@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class AnyExpression extends EntityExpression<Entity> {
 

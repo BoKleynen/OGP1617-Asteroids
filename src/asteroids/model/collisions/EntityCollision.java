@@ -7,7 +7,7 @@ import asteroids.model.util.vector.Vector;
 
 
 /**
- * Created by Bo Kleynen and Yrjo Koyen.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class EntityCollision extends Collision {
 

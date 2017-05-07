@@ -6,7 +6,26 @@ import be.kuleuven.cs.som.annotate.Immutable;
 import asteroids.model.util.vector.Vector;
 
 /**
- * Created by Bo on 18/04/2017.
+ * A class of minor planets.
+ * @Invar 	A minor planet is associated with at most one world at once.
+ * 			| ((getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
+ * @Invar 	A minor planet always has a valid position as its position in its current world.
+ * 			| hasValidPositionInWorld(getWorld())
+ * @Invar 	A minor planet always has a valid radius as its radius.
+ * 			| canHaveAsRadius(getRadius())
+ * @Invar   A minor planets mass is greater then or equal to its minimal mass.
+ *          | getMass() >= getMinMass(getRadius(), getMinMassDensity())
+ * @Invar   A terminated minor planet does not belong to a world
+ *          | if isTerminated() then hasWorld() == false
+ * @Invar   The maximum speed of each minor planet is less then or equal to the speed of light.
+ *          This is the magnitude of an entities velocity is less then or equal to the speed of light.
+ *          | getMaxSpeed() <= getSpeedOfLight()
+ * @Invar   No minor planet will move faster than its maximum speed.
+ *          | getVelocity().getMagnitude() <= getMaxSpeed();
+ * @Invar   Each minor planets radius is greater then or equal to the minimal radius.
+ *          | getRadius() >= getMinRadius
+ *
+ * @author Bo Kleynen & Yrjo Koyen
  */
 public abstract class MinorPlanet extends Entity {
 
@@ -32,7 +51,7 @@ public abstract class MinorPlanet extends Entity {
     private static final double minRadius = 5;
 
     /**
-     * Returns the minamal radius for a MinorPlanet.
+     * Returns the minimal radius for a MinorPlanet.
      *
      * @return  this.minRadius
      */

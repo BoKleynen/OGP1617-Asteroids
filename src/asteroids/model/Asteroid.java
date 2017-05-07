@@ -4,7 +4,29 @@ import be.kuleuven.cs.som.annotate.Basic;
 import asteroids.model.util.vector.Vector;
 
 /**
- * Created by Bo on 18/04/2017.
+ * A class of asteroids.
+ *
+ * @Invar 	A asteroid is associated with at most one world at once.
+ * 			| ((getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
+ * @Invar 	A asteroid always has a valid position as its position in its current world.
+ * 			| hasValidPositionInWorld(getWorld())
+ * @Invar 	A asteroid always has a valid radius as its radius.
+ * 			| canHaveAsRadius(getRadius())
+ * @Invar   A asteroids mass is greater then or equal to its minimal mass.
+ *          | getMass() >= getMinMass(getRadius(), getMinMassDensity())
+ * @Invar   A terminated asteroid does not belong to a world
+ *          | if isTerminated() then hasWorld() == false
+ * @Invar   The maximum speed of each asteroid is less then or equal to the speed of light.
+ *          This is the magnitude of an entities velocity is less then or equal to the speed of light.
+ *          | getMaxSpeed() <= getSpeedOfLight()
+ * @Invar   No asteroid will move faster than its maximum speed.
+ *          | getVelocity().getMagnitude() <= getMaxSpeed();
+ * @Invar   Each asteroid has a mass density equal to Asteroid.getMassDensity().
+ *          | getMass() / (4.0/3.0 * Math.PI * Math.pow(getRadius(), 3)) == getMassDensity()
+ * @Invar   The radius of each asteroid is greater then or equal to the minimal radius for a asteroid.
+ *          | getRadius() >= getMinRadius
+ *
+ * @author  Bo Kleynen and Yrjo Koyen.
  */
 public class Asteroid extends MinorPlanet {
 

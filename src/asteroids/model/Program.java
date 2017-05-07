@@ -9,6 +9,9 @@ import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 import java.util.*;
 
+/**
+ * @author  Bo Kleynen & Yrjo Koyen
+ */
 public class Program {
 
 	public Program(List<Function> functions, Statement main) {

@@ -3,7 +3,7 @@ package asteroids.model.programs.expressions.binaryExpressions;
 import asteroids.model.programs.expressions.Expression;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public abstract class BinaryExpression<T, O> extends Expression<T> {
 

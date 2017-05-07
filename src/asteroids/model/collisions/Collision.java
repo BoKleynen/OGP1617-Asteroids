@@ -7,7 +7,9 @@ import asteroids.model.util.vector.Vector;
 
 /**
  * A class of collisions
- * Created by Bo Kleynen and Yrjo Koyen.
+ *
+ *
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public abstract class Collision {
 

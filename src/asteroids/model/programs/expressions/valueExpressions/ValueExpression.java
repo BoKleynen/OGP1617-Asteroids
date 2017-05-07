@@ -3,7 +3,7 @@ package asteroids.model.programs.expressions.valueExpressions;
 import asteroids.model.programs.expressions.Expression;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class ValueExpression<T> extends Expression<T> {
 

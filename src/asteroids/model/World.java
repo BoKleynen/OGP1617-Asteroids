@@ -11,7 +11,7 @@ import be.kuleuven.cs.som.annotate.*;
 import java.util.*;
 
 /**
- * Created by Bo Kleynen and Yrjo Koyen
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class World {
 

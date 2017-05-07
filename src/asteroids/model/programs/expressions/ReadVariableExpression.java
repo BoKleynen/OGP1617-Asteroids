@@ -2,6 +2,9 @@ package asteroids.model.programs.expressions;
 
 import asteroids.part3.programs.SourceLocation;
 
+/**
+ * @author  Bo Kleynen & Yrjo Koyen
+ */
 public class ReadVariableExpression extends Expression<Object> {
 
 	public ReadVariableExpression(String name) {

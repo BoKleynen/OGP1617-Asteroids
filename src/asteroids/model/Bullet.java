@@ -18,6 +18,7 @@ import java.util.Collection;
  * @Invar   A terminated bullet is not associated with a world or a ship
  *          | if isTerminated() then !(hasShip() && hasWorld())
  *
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class Bullet extends Entity {
 	

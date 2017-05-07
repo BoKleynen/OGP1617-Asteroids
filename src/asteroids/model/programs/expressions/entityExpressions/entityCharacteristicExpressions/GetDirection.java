@@ -4,7 +4,7 @@ import asteroids.model.Ship;
 import asteroids.model.programs.expressions.entityExpressions.SelfExpression;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class GetDirection extends EntityCharacteristicExpression {
 

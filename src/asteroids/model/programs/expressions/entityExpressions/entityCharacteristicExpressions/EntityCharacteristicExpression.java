@@ -5,7 +5,7 @@ import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public abstract class EntityCharacteristicExpression extends Expression<Double> {
 

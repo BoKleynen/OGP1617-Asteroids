@@ -7,7 +7,8 @@ import asteroids.model.util.vector.Vector;
 
 /**
  * A class of collisions with the edge of a world.
- * Created by Bo Kleynen and Yrjo Koyen.
+ *
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class BoundaryCollision extends Collision {
 

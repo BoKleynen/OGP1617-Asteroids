@@ -5,7 +5,7 @@ import be.kuleuven.cs.som.annotate.*;
 
 /**
  * @Invar 	An entity is associated with at most one world at once.
- * 			| ( (getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
+ * 			| ((getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
  * @Invar 	An entity always has a valid position as its position in its current world.
  * 			| hasValidPositionInWorld(getWorld())
  * @Invar 	An entity always has a valid radius as its radius.

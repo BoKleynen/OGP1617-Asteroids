@@ -2,7 +2,11 @@ package asteroids.model.programs.function;
 
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.Sequence;
 import asteroids.model.programs.statements.Statement;
+import asteroids.model.programs.statements.While;
+import asteroids.model.programs.statements.actionStatements.ActionStatement;
+import asteroids.model.programs.statements.actionStatements.FireBullet;
 import be.kuleuven.cs.som.annotate.Raw;
 
 import java.util.ArrayList;
@@ -10,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author  Bo Kleynen & Yrjo Koyen
+ */
 public class Function {
 
 	public Function(String functionName, Statement body) {
@@ -24,6 +31,9 @@ public class Function {
 	}
 	
 	private void setBody(Statement body) {
+		if (! isValidStatement(body))
+			throw new IllegalArgumentException();
+
 		this.body = body;
 	}
 
@@ -48,5 +58,19 @@ public class Function {
 
 	public Program getProgram() {
 		return program;
+	}
+
+	public static boolean isValidStatement(Statement statement) {
+		if (statement instanceof Sequence) {
+			for (Statement s : ((Sequence) statement).getStatements()) {
+				if (! isValidStatement(s))
+					return false;
+			}
+
+			return true;
+		}
+
+		else
+			return (statement instanceof ActionStatement);
 	}
 }

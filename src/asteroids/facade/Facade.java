@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Bo Kleynen and Yrjo Koyen.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class Facade implements asteroids.part3.facade.IFacade {
     public Facade() {

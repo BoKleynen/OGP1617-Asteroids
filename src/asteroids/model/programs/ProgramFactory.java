@@ -16,7 +16,9 @@ import asteroids.part3.programs.IProgramFactory;
 import asteroids.part3.programs.SourceLocation;
 import asteroids.model.programs.expressions.Expression;
 
-
+/**
+ * @author  Bo Kleynen & Yrjo Koyen
+ */
 public class ProgramFactory implements IProgramFactory<Expression, Statement, Function, Program> {
 
 	/**

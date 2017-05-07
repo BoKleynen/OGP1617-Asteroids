@@ -3,7 +3,7 @@ package asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressi
 import asteroids.model.programs.expressions.Expression;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class Negate extends UnaryArithmeticExpression {
     public Negate(Expression operand) {

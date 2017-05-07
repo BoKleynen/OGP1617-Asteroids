@@ -6,7 +6,7 @@ import asteroids.model.World;
 import asteroids.model.programs.expressions.Expression;
 
 /**
- * Created by Bo on 04/05/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public abstract class EntityExpression<T extends Entity> extends Expression<T> {
 

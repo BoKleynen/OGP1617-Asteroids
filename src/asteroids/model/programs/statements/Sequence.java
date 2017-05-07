@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Bo on 28/04/2017.
  */
 public class Sequence extends Statement{
+
     public Sequence(List<Statement> statements) {
         this.statements = statements;
         iterator = iterator();
@@ -57,4 +58,7 @@ public class Sequence extends Statement{
         iterator.resume();
     }
 
+    public List<Statement> getStatements() {
+        return statements;
+    }
 }

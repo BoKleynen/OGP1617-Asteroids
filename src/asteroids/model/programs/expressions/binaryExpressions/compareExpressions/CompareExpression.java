@@ -4,7 +4,7 @@ import asteroids.model.programs.expressions.binaryExpressions.BinaryExpression;
 import asteroids.model.programs.expressions.Expression;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public abstract class CompareExpression<O> extends BinaryExpression<Boolean, O> {
     public CompareExpression(Expression<O> leftOperand, Expression<O> rightOperand) {

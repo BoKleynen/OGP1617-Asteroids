@@ -3,7 +3,7 @@ package asteroids.model.programs.expressions.binaryExpressions.compareExpression
 import asteroids.model.programs.expressions.*;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class Equal extends CompareExpression<Object> {
     public Equal(Expression<Object> left, Expression<Object> right) {

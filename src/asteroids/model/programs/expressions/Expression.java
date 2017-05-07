@@ -5,7 +5,7 @@ import asteroids.model.programs.statements.Statement;
 import be.kuleuven.cs.som.annotate.Raw;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public abstract class Expression <T> {
 

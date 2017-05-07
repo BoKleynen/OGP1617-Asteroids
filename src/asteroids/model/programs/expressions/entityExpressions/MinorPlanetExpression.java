@@ -6,7 +6,7 @@ import asteroids.model.programs.expressions.Expression;
 import java.util.Comparator;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class MinorPlanetExpression extends EntityExpression<MinorPlanet> {
     @Override
