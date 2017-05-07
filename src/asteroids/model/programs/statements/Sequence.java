@@ -3,6 +3,8 @@ package asteroids.model.programs.statements;
 import java.util.Iterator;
 import java.util.List;
 
+import asteroids.model.Program;
+
 /**
  * Created by Bo on 28/04/2017.
  */
@@ -61,4 +63,18 @@ public class Sequence extends Statement{
     public List<Statement> getStatements() {
         return statements;
     }
+    
+    @Override
+    public void setProgram(Program P) {
+    	for (Statement statement : statements) {
+            statement.setProgram(P);
+    	}
+    }
+    
+    @Override
+    protected void setParentWhile(While parent) {
+    	for (Statement statement : statements) {
+            statement.setParentWhile(parent);
+    	}
+    }	
 }
