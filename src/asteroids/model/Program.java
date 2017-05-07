@@ -62,9 +62,11 @@ public class Program {
 		if (globalVariables.containsKey(variableName))
 			if (globalVariables.get(variableName).getValue().getClass() == expression.getValue().getClass())
 				globalVariables.put(variableName, expression);
-
+			else
+				throw new IllegalArgumentException("Expected type of " + variableName +
+						" is: " + globalVariables.get(variableName).getValue().getClass().toString() + 
+						" but received: " + expression.getValue().getClass().toString());
 		else
-			System.out.println("Adding variable");
 			globalVariables.put(variableName, expression);
 	}
 
