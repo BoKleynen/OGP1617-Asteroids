@@ -1529,7 +1529,7 @@ public class Part3TestFull {
 //  }
 //
 //  @Test
-//  public void testIfStatement_NonBooleanControllingExpression() throws ModelException {
+//  public void testIfStatement_NonBooleanControlling() throws ModelException {
 //    try {
 //      max_score += 5;
 //      String code = "if self { " + "  print 4.0; " + "}";
