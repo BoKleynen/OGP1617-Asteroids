@@ -48,7 +48,18 @@ public abstract class Statement {
     
     protected Function parentFunction = null;
     
-    public abstract Statement next();
-    
-    public abstract void resetNext(); 
+    public Statement next() {
+		if (!returned) {
+			returned = true;
+			return this;
+		}
+		else
+			return null;
+	}
+
+	public void resetNext() {
+		returned = false;
+	}
+	
+	private boolean returned = false;
 }

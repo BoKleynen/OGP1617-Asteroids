@@ -7,7 +7,7 @@ import asteroids.model.programs.expressions.Expression;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Assignment extends Statement{
+public class Assignment extends Statement {
 
     public Assignment(String name, Expression value) {
         this.name = name;
@@ -31,21 +31,5 @@ public class Assignment extends Statement{
     public void execute() {
     	getProgram().addGlobalVariable(name, value);
     }
-
-	@Override
-	public Statement next() {
-		if (!returned) {
-			returned = true;
-			return this;
-		}
-		else
-			return null;
-	}
-
-	@Override
-	public void resetNext() {
-		returned = false;
-	}
 	
-	private boolean returned = false;
 }

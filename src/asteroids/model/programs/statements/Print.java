@@ -19,20 +19,4 @@ public class Print extends Statement{
         System.out.println(expression.toString());
     }
 
-    @Override
-	public Statement next() {
-		if (!returned) {
-			returned = true;
-			return this;
-		}
-		else
-			return null;
-	}
-
-	@Override
-	public void resetNext() {
-		returned = false;
-	}
-	
-	private boolean returned = false;
 }
