@@ -95,9 +95,9 @@ public class Sequence extends Statement{
 				return returnStatement;
 			}
 			else {
+				statements.get(nextCounter).resetNext();
 				nextCounter++;
-				returnStatement.resetNext();
-				return null;
+				return this.next();
 			}
 		}
 		return null;
