@@ -5,6 +5,7 @@ import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
+import asteroids.model.programs.statements.actionStatements.ActionStatement;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 import java.util.*;
@@ -27,12 +28,42 @@ public class Program {
 
 	public List<Object> execute(double time) {
 		incrementTimeRemaining(time);
-		main.execute();
+		printedObjects = new ArrayList<Object>();
+		
+		if (getTimeRemaining() > 0.2 )
+			unPause();
+		
+		while (!isPaused) {
+			Statement next = getNextStatement();
+			if (next instanceof ActionStatement) {
+				next.execute();
+				decrementTimeRemaining(0.2);
+			}
+			else {
+				next.execute();
+			}
+			if ( getTimeRemaining() < 0.2 )
+				pause();
+		}
 		return printedObjects;
+	}
+	
+	private Statement getNextStatement() {
+		Statement nextStatement = main.next();
+		if ( nextStatement == null ) {
+			main.resetNext();
+			return main.next();
+		}
+		else
+			return nextStatement;
 	}
 
 	public void pause() {
 		isPaused = true;
+	}
+	
+	public void unPause() {
+		isPaused = false;
 	}
 
 	private Map<String, Function> functions = new HashMap<>();

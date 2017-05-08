@@ -14,6 +14,7 @@ public class Sequence extends Statement{
     public Sequence(List<Statement> statements) {
         this.statements = statements;
         iterator = iterator();
+        resetNext();
     }
 
     private List<Statement> statements;
@@ -83,4 +84,27 @@ public class Sequence extends Statement{
             statement.setParentFunction(F);
     	}
     }
+
+	@Override
+	public Statement next() {
+		if ( nextCounter < statements.size()) {
+			Statement returnStatement = statements.get(nextCounter).next();
+			if ( returnStatement != null ) {
+				return returnStatement;
+			}
+			else {
+				nextCounter++;
+				returnStatement.resetNext();
+				return null;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void resetNext() {
+		nextCounter = 0;
+	}
+	
+	int nextCounter;
 }

@@ -47,4 +47,8 @@ public abstract class Statement {
     }
     
     protected Function parentFunction = null;
+    
+    public abstract Statement next();
+    
+    public abstract void resetNext(); 
 }
