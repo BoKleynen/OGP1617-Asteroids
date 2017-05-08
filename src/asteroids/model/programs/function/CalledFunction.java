@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Bo on 08/05/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class CalledFunction {
 
