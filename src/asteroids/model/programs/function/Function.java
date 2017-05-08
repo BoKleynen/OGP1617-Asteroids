@@ -2,17 +2,12 @@ package asteroids.model.programs.function;
 
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.statements.Return;
+import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.programs.statements.Sequence;
 import asteroids.model.programs.statements.Statement;
-import asteroids.model.programs.statements.While;
 import asteroids.model.programs.statements.actionStatements.ActionStatement;
-import asteroids.model.programs.statements.actionStatements.FireBullet;
-import be.kuleuven.cs.som.annotate.Raw;
+import asteroids.model.util.exceptions.ReturnException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,14 +35,8 @@ public class Function {
 
 	private Statement body;
 
-	private Map<String, Expression> localVariables;
-
-	public Expression getLocalVariable(String variableName) {
-		if (localVariables.containsKey(variableName))
-			return localVariables.get(variableName);
-
-		else
-			return getProgram().readGlobalVariable(variableName);
+	public Statement getBody() {
+		return body;
 	}
 
 	private Program program;
@@ -73,27 +62,5 @@ public class Function {
 
 		else
 			return (statement instanceof ActionStatement);
-	}
-	
-	public void execute() {
-		if ( body instanceof Sequence ) {
-			for (Statement statement : ((Sequence)body).getStatements()) {
-				if ( statement instanceof Return ) {
-					// @TODO: actually return something
-					break;
-				}
-				else {
-					statement.execute();
-				}
-			}
-		}
-		else if ( body instanceof Statement ) {
-			if ( body instanceof Return ) {
-				// @TODO: actually return something
-			}
-			else {
-				body.execute();
-			}	
-		}
 	}
 }

@@ -11,7 +11,7 @@ public class EnableThruster extends ActionStatement {
     public void execute() {
         try {
             getProgram().decrementTimeRemaining(getExecutionTime());
-            getProgram().getShip().thrusterOn();
+            getProgram().getShip().thrustOn();
         } catch (NotEnoughTimeRemainingException e) {
             getProgram().pause();
         }

@@ -26,6 +26,7 @@ public class If extends Statement{
         if (condition.getValue())
             ifBody.execute();
         else
-            elseBody.execute();
+            if (elseBody != null)
+                elseBody.execute();
     }
 }

@@ -2,6 +2,7 @@ package asteroids.model.programs;
 
 import java.util.List;
 import asteroids.model.Program;
+import asteroids.model.programs.expressions.FunctionCall;
 import asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.*;
 import asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.*;
 import asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.*;
@@ -164,7 +165,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createFunctionCallExpression(String functionName, List<Expression> actualArgs, SourceLocation sourceLocation) {
-		return null;
+		return new FunctionCall(functionName, actualArgs);
 	}
 
 	/**

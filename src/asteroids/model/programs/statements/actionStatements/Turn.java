@@ -8,13 +8,13 @@ import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
  */
 public class Turn extends ActionStatement {
 
-    public Turn(Expression angle) {
-
+    public Turn(Expression<Double> angle) {
+        this.angle = angle;
     }
-    private double angle;
+    private Expression<Double> angle;
 
     public double getAngle() {
-        return angle;
+        return angle.getValue();
     }
 
     @Override

@@ -15,6 +15,7 @@ public class BulletExpression extends EntityExpression<Bullet> {
         return getWorld()
                 .getAllBullets()
                 .stream()
+                .filter(b -> b.getParentShip() == getShip())
                 .min(Comparator.comparingDouble(bullet -> bullet.getDistanceBetween(getShip())))
                 .orElse(null);
     }

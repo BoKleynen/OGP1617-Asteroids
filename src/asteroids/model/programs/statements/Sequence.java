@@ -22,8 +22,11 @@ public class Sequence extends Statement{
 
     @Override
     public void execute() {
-        while (iterator.hasNext()) {
-            iterator.next().execute();
+//        while (iterator.hasNext()) {
+//            iterator.next().execute();
+//        }
+        for (Statement statement : statements) {
+            statement.execute();
         }
     }
 

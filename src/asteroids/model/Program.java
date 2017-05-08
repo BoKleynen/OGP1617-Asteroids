@@ -27,8 +27,6 @@ public class Program {
 
 	public List<Object> execute(double time) {
 		incrementTimeRemaining(time);
-		isPaused = false;
-
 		main.execute();
 		return printedObjects;
 	}
@@ -38,6 +36,10 @@ public class Program {
 	}
 
 	private Map<String, Function> functions = new HashMap<>();
+
+	public Function getFunction(String functionName) {
+		return functions.get(functionName);
+	}
 
 	public void setFunctions(List<Function> functions) {
 		for (Function function: functions) {
@@ -71,11 +73,9 @@ public class Program {
 	}
 
 	private void setMainStatement(Statement main) {
+		this.main = main;
 		main.setProgram(this);
-		this.mainStatement = main;
 	}
-
-	private Statement mainStatement;
 
 	private Ship ship;
 
