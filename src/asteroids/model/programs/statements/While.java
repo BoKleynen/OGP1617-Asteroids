@@ -15,6 +15,7 @@ public class While extends Statement {
         this.body = body;
         condition.setStatement(this);
         body.setParentWhile((While) this);
+        resetNext();
     }
 
     private Expression<Boolean> condition;;
@@ -77,4 +78,41 @@ public class While extends Statement {
     	super.setProgram(P);
     	body.setProgram(P);
     }
+    
+    @Override
+    public Statement next() {
+    	
+    	// @TODO: Implement Break functionality
+    	
+    	if (!conditionChecked) {
+    		conditionAtCheck = condition.getValue();
+    		conditionChecked = true;
+    	}
+    	
+
+    	if (conditionAtCheck) {
+    		Statement returnStatement = body.next();
+    		
+    		if (returnStatement == null) {
+    			body.resetNext();
+    			conditionChecked = false;
+    			return next();
+    		}
+    		else {
+    			return returnStatement;
+    		}
+    	}
+    	else
+    		return null;
+    }
+    
+    
+    @Override
+    public void resetNext() {
+    	conditionChecked = false;
+    	conditionAtCheck = false;
+    }
+    
+    private boolean conditionChecked;
+    private boolean conditionAtCheck;   
 }
