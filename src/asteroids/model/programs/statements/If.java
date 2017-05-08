@@ -1,7 +1,7 @@
 package asteroids.model.programs.statements;
 
 import java.util.Iterator;
-
+import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
 
 /**
@@ -29,7 +29,17 @@ public class If extends Statement{
         if (condition.getValue())
             ifBody.execute();
         else
-            elseBody.execute();
+            if (elseBody != null)
+                elseBody.execute();
+    }
+
+    @Override
+    public void setProgram(Program program) {
+        super.setProgram(program);
+        ifBody.setProgram(program);
+
+        if (elseBody != null)
+            elseBody.setProgram(program);
     }
 
 	@Override

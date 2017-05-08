@@ -2,6 +2,7 @@ package asteroids.model.programs.statements;
 
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.util.exceptions.BreakException;
 
 /**
  * Created by Bo on 28/04/2017.
@@ -22,56 +23,16 @@ public class While extends Statement {
 
     private Statement body;
 
-    // Used by break statements to exit a running loop.
-    protected boolean loopBreak;
-    
-    // Used by return statements to exit a running loop.
-    protected boolean loopReturn;
-    
-    
-    // @TODO: Implement return call handling.
     @Override
-    public void execute() {
-    	System.out.println("Entering while loop.");
-    	loopBreak = false;
-    	loopReturn = false;
-    	
-    	if ( body instanceof Sequence ) {
-    		while (condition.getValue() && !loopBreak && !loopReturn) {
-    			for (Statement statement : ((Sequence) body).getStatements()) {
-    				if (statement instanceof Break) {
-    					loopBreak = true;
-    					break;
-    				}
-    				else if (statement instanceof Return) {
-    					loopReturn = true;
-    					break;
-    				}
-    			}
-    			if ( loopBreak ) {
-					System.out.println("Breaking out of while loop");
-					break;
-				}
-    			if (loopReturn ) {
-					System.out.println("Returning out of while loop");
-    				break;
-    			}
-    		}
-    	}
-    	else if (body instanceof Statement) {
-    		while (condition.getValue()) {
-    			if (body instanceof Break) {
-					break;
-				}
-				else if (body instanceof Return) {
-					loopReturn = true;
-					break;
-				}
-    		}
-    		// @TODO: handle return statement value.
-    	}
-    	System.out.println("End of while loop execution.");
-    }
+	public void execute() {
+    	while (condition.getValue()) {
+    		try {
+    			body.execute();
+			} catch (BreakException br) {
+    			break;
+			}
+		}
+	}
     
     @Override
     public void setProgram(Program P) {

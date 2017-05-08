@@ -9,6 +9,7 @@ public class DisableThruster extends ActionStatement {
 
     @Override
     public void execute() {
+
         try {
             getProgram().decrementTimeRemaining(getExecutionTime());
             getProgram().getShip().thrustOff();

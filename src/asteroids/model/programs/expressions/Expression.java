@@ -13,7 +13,8 @@ public abstract class Expression <T> {
 
     @Override
     public String toString() {
-        return getValue().toString();
+        Object value = getValue();
+        return value == null ? null : getValue().toString();
     }
 
     private Statement statement;

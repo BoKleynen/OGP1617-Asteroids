@@ -23,8 +23,11 @@ public class Sequence extends Statement{
 
     @Override
     public void execute() {
-        while (iterator.hasNext()) {
-            iterator.next().execute();
+//        while (iterator.hasNext()) {
+//            iterator.next().execute();
+//        }
+        for (Statement statement : statements) {
+            statement.execute();
         }
     }
 
@@ -67,16 +70,11 @@ public class Sequence extends Statement{
     }
     
     @Override
-    public void setProgram(Program P) {
-    	for (Statement statement : statements) {
-            statement.setProgram(P);
-    	}
-    }
-    
-    @Override
-    protected void setParentWhile(While parent) {
-    	for (Statement statement : statements) {
-            statement.setParentWhile(parent);
+    public void setProgram(Program program) {
+    	super.setProgram(program);
+
+        for (Statement statement : statements) {
+            statement.setProgram(program);
     	}
     }
     
