@@ -29,6 +29,7 @@ public class While extends Statement {
     		try {
     			body.execute();
 			} catch (BreakException br) {
+				brokenOutOfLoop = true;
     			break;
 			}
 		}
@@ -44,12 +45,15 @@ public class While extends Statement {
     public Statement next() {
     	
     	// @TODO: Implement Break functionality
+    	if (brokenOutOfLoop) {
+    		return null;
+    	}
     	
     	if (!conditionChecked) {
     		conditionAtCheck = condition.getValue();
+    		body.resetNext();
     		conditionChecked = true;
     	}
-    	
 
     	if (conditionAtCheck) {
     		Statement returnStatement = body.next();
@@ -72,8 +76,10 @@ public class While extends Statement {
     public void resetNext() {
     	conditionChecked = false;
     	conditionAtCheck = false;
+    	brokenOutOfLoop = false;
     }
     
     private boolean conditionChecked;
-    private boolean conditionAtCheck;   
+    private boolean conditionAtCheck;  
+    private boolean brokenOutOfLoop;
 }

@@ -16,12 +16,14 @@ import asteroids.model.programs.statements.Print;
 import asteroids.model.programs.statements.Sequence;
 import asteroids.model.programs.statements.Statement;
 import asteroids.model.programs.statements.While;
+import asteroids.model.programs.statements.actionStatements.ActionStatement;
+import asteroids.model.programs.statements.actionStatements.Turn;
 
 	
 public class testNextStatement {
 		
 	@Test
-	public void testAssignmentNext() {
+	public void testSimpleStatementNext() {
 		Assignment A = new Assignment("Hello", new ValueExpression<Double>(5.0));
 		assertTrue(A.next().equals(A));
 		assertTrue(A.next() == null);
@@ -31,19 +33,32 @@ public class testNextStatement {
 		assertTrue(A.next().equals(A));
 		assertTrue(A.next() == null);
 		assertTrue(A.next() == null);
+		
+		Break B = new Break();
+		assertTrue(B.next().equals(B));
+		assertTrue(B.next() == null);
+		assertTrue(B.next() == null);
+
+		B.resetNext();
+		assertTrue(B.next().equals(B));
+		assertTrue(B.next() == null);
+		assertTrue(B.next() == null);
 	}
 	
 	@Test
-	public void testBreakNext() {
-		Break A = new Break();
-		assertTrue(A.next().equals(A));
-		assertTrue(A.next() == null);
-		assertTrue(A.next() == null);
-
-		A.resetNext();
-		assertTrue(A.next().equals(A));
-		assertTrue(A.next() == null);
-		assertTrue(A.next() == null);
+	public void testActionStatementNext() {
+		ValueExpression<Double> d = new ValueExpression<Double>(0.5);
+		ActionStatement turn = new Turn(d);
+		
+		assertTrue(turn.next().equals(turn));
+		assertTrue(turn.next() == null);
+		assertTrue(turn.next() == null);
+		
+		turn.resetNext();
+		
+		assertTrue(turn.next().equals(turn));
+		assertTrue(turn.next() == null);
+		assertTrue(turn.next() == null);	
 	}
 	
 	
@@ -110,8 +125,11 @@ public class testNextStatement {
 		Assignment A = new Assignment("Hello", new ValueExpression<Double>(5.0));
 		Print P = new Print(new ValueExpression<Double>(5.0));
 		List<Statement> lst = new ArrayList<>();
+		Break B = new Break();
 		lst.add(A);
 		lst.add(P);
+		lst.add(P);
+		lst.add(B);
 		
 		Sequence seqWithoutBreak = new Sequence(lst);
 		
@@ -121,8 +139,8 @@ public class testNextStatement {
 		
 		assertTrue(whileStatement.next().equals(A));
 		assertTrue(whileStatement.next().equals(P));
-		assertTrue(whileStatement.next().equals(A));
 		assertTrue(whileStatement.next().equals(P));
+		assertTrue(whileStatement.next().equals(B));
 		assertTrue(whileStatement.next().equals(A));
 		assertTrue(whileStatement.next().equals(P));
 		
