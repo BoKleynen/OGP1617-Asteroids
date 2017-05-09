@@ -31,21 +31,5 @@ public class Assignment extends Statement {
     public void execute() {
     	getProgram().addGlobalVariable(name, value);
     }
-
-	@Override
-	public Statement next() {
-		if (!returned) {
-			returned = true;
-			return this;
-		}
-		else
-			return null;
-	}
-
-	@Override
-	public void resetNext() {
-		returned = false;
-	}
 	
-	private boolean returned = false;
 }

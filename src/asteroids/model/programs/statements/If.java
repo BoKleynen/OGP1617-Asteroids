@@ -59,10 +59,6 @@ public class If extends Statement{
 		else
 			returnStatement = elseBody.next();
 		
-		if (returnStatement == null) {
-			elseBody.resetNext();
-			return null;
-		}
 		return returnStatement;
 	}
 
