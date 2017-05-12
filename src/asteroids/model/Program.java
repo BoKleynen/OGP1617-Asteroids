@@ -35,13 +35,19 @@ public class Program {
 		
 		while (!isPaused) {
 			Statement next = getNextStatement();
-			if (next instanceof ActionStatement) {
+			
+			// If main statement is completed then break;
+			if (next == null) {
+				break;
+			}	// If ActionStatement then decrease time.
+			else if (next instanceof ActionStatement) {
 				next.execute();
 				decrementTimeRemaining(0.2);
-			}
+			}	// Else execute and don't decrease time
 			else {
 				next.execute();
 			}
+			
 			if ( getTimeRemaining() < 0.2 )
 				pause();
 		}
@@ -52,12 +58,12 @@ public class Program {
 		Statement nextStatement = main.next();
 		if ( nextStatement == null ) {
 			main.resetNext();
-			return main.next();
+			return null;
 		}
 		else
 			return nextStatement;
 	}
-
+	
 	public void pause() {
 		isPaused = true;
 	}
