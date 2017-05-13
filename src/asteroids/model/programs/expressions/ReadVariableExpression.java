@@ -17,11 +17,9 @@ public class ReadVariableExpression extends Expression<Object> {
 	
 	private String name;
 
-	private SourceLocation location;
-	
 	@Override
 	public Object getValue() {
-		return getStatement().getProgram().getGlobalVariable(name).getValue();
+		return getStatement().getProgram().getVariable(name).getValue();
 	}
 	
 

@@ -1,5 +1,6 @@
 package asteroids.model;
 
+import asteroids.model.programs.Variable;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
@@ -13,7 +14,7 @@ import java.util.*;
 /**
  * @author  Bo Kleynen & Yrjo Koyen
  */
-public class Program {
+public class Program implements Variable{
 
 	public Program(List<Function> functions, Statement main) {
 		setFunctions(functions);
@@ -37,21 +38,12 @@ public class Program {
 			Statement next = getNextStatement();
 			
 			// If main statement is completed then break;
-			if (next == null) {
+			if (next == null)
 				break;
-			}	// If ActionStatement then decrease time.
-			else if (next instanceof ActionStatement) {
+			else
 				next.execute();
-				decrementTimeRemaining(0.2);
-			}	// Else execute and don't decrease time
-			else {
-				next.execute();
-			}
-			
-			if ( getTimeRemaining() < 0.2 )
-				pause();
 		}
-		return printedObjects;
+		return isPaused ? null : printedObjects;
 	}
 	
 	private Statement getNextStatement() {
@@ -89,24 +81,14 @@ public class Program {
 
 	private Map<String, Expression> globalVariables = new HashMap<>();
 
-	public Expression readGlobalVariable(String variableName) {
-		return new ValueExpression<>(getGlobalVariable(variableName).getValue());
+	@Override
+	public Expression getVariable(String varName) {
+		return globalVariables.get(varName);
 	}
 
-	public Expression getGlobalVariable(String variableName) {
-		return globalVariables.get(variableName);
-	}
-
-	public void addGlobalVariable(String variableName, Expression expression) {
-		if (globalVariables.containsKey(variableName))
-			if (globalVariables.get(variableName).getValue().getClass() == expression.getValue().getClass())
-				globalVariables.put(variableName, expression);
-			else
-				throw new IllegalArgumentException("Expected type of " + variableName +
-						" is: " + globalVariables.get(variableName).getValue().getClass().toString() + 
-						" but received: " + expression.getValue().getClass().toString());
-		else
-			globalVariables.put(variableName, expression);
+	@Override
+	public void addVariable(String varName, Expression value) {
+		addVariableToMap(varName, value, globalVariables);
 	}
 
 	private void setMainStatement(Statement main) {
@@ -140,7 +122,7 @@ public class Program {
 	public void decrementTimeRemaining(double time) {
 		double newTime = timeRemaining - time;
 
-		if (newTime <= 0)
+		if (newTime < 0)
 			throw new NotEnoughTimeRemainingException();
 
 		timeRemaining = newTime;

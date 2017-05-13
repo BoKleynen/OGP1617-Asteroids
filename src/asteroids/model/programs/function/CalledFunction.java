@@ -1,5 +1,6 @@
 package asteroids.model.programs.function;
 
+import asteroids.model.programs.Variable;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.util.exceptions.ReturnException;
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * @author  Bo Kleynen & Yrjo Koyen
  */
-public class CalledFunction {
+public class CalledFunction implements Variable {
 
     public CalledFunction(Function parentFunction, List<Expression> actualArgs) {
         this.parentFunction = parentFunction;
@@ -22,20 +23,14 @@ public class CalledFunction {
 
     private Map<String, Expression> arguments = new HashMap<>();
 
+    public Expression getArgument(String argName) {
+        return new ValueExpression<>(arguments.get(argName));
+    }
+
     private Function parentFunction;
 
     public Function getParentFunction() {
         return parentFunction;
-    }
-
-    private Map<String, Expression> localVariables;
-
-    public Expression getLocalVariable(String variableName) {
-        if (localVariables.containsKey(variableName))
-            return localVariables.get(variableName);
-
-        else
-            return getParentFunction().getProgram().readGlobalVariable(variableName);
     }
 
     public Expression execute() {
@@ -47,5 +42,19 @@ public class CalledFunction {
         return new ValueExpression<>(null);
     }
 
+    private Map<String, Expression> localVariables = new HashMap<>();
 
+    @Override
+    public Expression getVariable(String varName) {
+        if (localVariables.containsKey(varName))
+            return localVariables.get(varName);
+
+        else
+            return new ValueExpression<>(getParentFunction().getProgram().getVariable(varName).getValue());
+    }
+
+    @Override
+    public void addVariable(String varName, Expression value) {
+        addVariableToMap(varName, value, localVariables);
+    }
 }
