@@ -19,7 +19,7 @@ public class FunctionCall extends Expression {
     private List<Expression> actualArgs;
 
     @Override
-    public Expression getValue() {
-        return new CalledFunction(getStatement().getParent().getFunction(functionName), actualArgs).execute();
+    public Object getValue() {
+        return new CalledFunction(getStatement().getParent().getFunction(functionName), actualArgs).execute().getValue();
     }
 }

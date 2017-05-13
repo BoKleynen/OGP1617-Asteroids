@@ -20,6 +20,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public CalledFunction(Function function, List<Expression> actualArgs) {
         body = function.getBody();
+        body.setParent(this);
         setParent(function.getParent());
 
         for (int i = 0; i < actualArgs.size(); i++) {
@@ -29,13 +30,13 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     private Map<String, Expression> arguments = new HashMap<>();
 
-    public Expression getArgument(String argName) {
-        return new ValueExpression<>(arguments.get(argName));
+    public Expression getParameter(String paramName) {
+        return new ValueExpression<>(arguments.get(paramName).getValue());
     }
 
     public Expression execute() {
         try {
-
+            body.execute();
         } catch (ReturnException rt) {
             return rt.getExpression();
         }

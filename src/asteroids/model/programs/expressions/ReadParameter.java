@@ -1,6 +1,7 @@
 package asteroids.model.programs.expressions;
 
-import asteroids.model.programs.expressions.Expression;
+
+import asteroids.model.programs.function.CalledFunction;
 
 /**
  * Created by Bo on 13/05/2017.
@@ -10,10 +11,10 @@ public class ReadParameter extends Expression {
         this.paramName = paramName;
     }
 
-    String paramName;
+    private String paramName;
 
     @Override
     public Object getValue() {
-        return null;
+        return ((CalledFunction) getStatement().getParent()).getParameter(paramName).getValue();
     }
 }
