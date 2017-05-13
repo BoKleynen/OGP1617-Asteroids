@@ -507,6 +507,12 @@ public class Ship extends Entity {
      * @param bulletList
      */
     public void loadBullet(Collection<Bullet> bulletList) {
+    	for (Bullet bullet : bulletList) {
+    		if (bullet == null)
+    			throw new NullPointerException("Can't add null to a ship as if it were a Bullet");
+    		if (bullet.hasWorld() || bullet.hasParentShip())
+    			throw new IllegalArgumentException("Bullet is already on a ship or in a world.");
+    	}
     	for (Bullet bullet : bulletList)
     		loadBullet(bullet);
     }
