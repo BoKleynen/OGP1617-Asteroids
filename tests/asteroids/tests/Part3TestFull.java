@@ -1962,7 +1962,7 @@ public class Part3TestFull {
     }
   }
 
-  // Read Variable
+  // Read Parent
 
   @Test
   public void testReadVariable_GlobalVariable() throws ModelException {

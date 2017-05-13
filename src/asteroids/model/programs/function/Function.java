@@ -1,6 +1,7 @@
 package asteroids.model.programs.function;
 
 import asteroids.model.Program;
+import asteroids.model.programs.Child;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.programs.statements.Sequence;
@@ -13,7 +14,7 @@ import java.util.Map;
 /**
  * @author  Bo Kleynen & Yrjo Koyen
  */
-public class Function {
+public class Function implements Child<Program>{
 
 	public Function(String functionName, Statement body) {
 		this.functionName = functionName;
@@ -39,15 +40,16 @@ public class Function {
 		return body;
 	}
 
-	private Program program;
+	private Program parent;
 
-	public void setProgram(Program program) {
-		this.program = program;
-		body.setProgram(program);
+	@Override
+	public Program getParent() {
+		return parent;
 	}
 
-	public Program getProgram() {
-		return program;
+	@Override
+	public void setParent(Program parent) {
+		this.parent = parent;
 	}
 
 	public static boolean isValidStatement(Statement statement) {

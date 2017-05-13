@@ -19,7 +19,7 @@ public class ReadVariableExpression extends Expression<Object> {
 
 	@Override
 	public Object getValue() {
-		return getStatement().getProgram().getVariable(name).getValue();
+		return getStatement().getParent().getVariable(name).getValue();
 	}
 	
 

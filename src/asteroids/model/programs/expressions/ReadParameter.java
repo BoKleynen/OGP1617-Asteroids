@@ -7,7 +7,7 @@ import asteroids.model.programs.expressions.Expression;
  */
 public class ReadParameter extends Expression {
     public ReadParameter(String paramName) {
-        this.paramName = paramName
+        this.paramName = paramName;
     }
 
     String paramName;

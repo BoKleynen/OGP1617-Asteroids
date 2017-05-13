@@ -1,6 +1,6 @@
 package asteroids.model;
 
-import asteroids.model.programs.Variable;
+import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.function.Function;
@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * @author  Bo Kleynen & Yrjo Koyen
  */
-public class Program implements Variable{
+public class Program implements Parent<Program> {
 
 	public Program(List<Function> functions, Statement main) {
 		setFunctions(functions);
@@ -70,7 +70,7 @@ public class Program implements Variable{
 	public void setFunctions(List<Function> functions) {
 		for (Function function: functions) {
 			this.functions.put(function.getFunctionName(), function);
-			function.setProgram(this);
+			function.setParent(this);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Program implements Variable{
 
 	private void setMainStatement(Statement main) {
 		this.main = main;
-		main.setProgram(this);
+		main.setParent(this);
 	}
 
 	private Ship ship;

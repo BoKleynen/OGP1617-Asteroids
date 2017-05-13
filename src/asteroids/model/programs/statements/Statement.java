@@ -1,51 +1,26 @@
 package asteroids.model.programs.statements;
 
 import asteroids.model.Program;
+import asteroids.model.programs.Child;
+import asteroids.model.programs.Parent;
 import asteroids.model.programs.function.Function;
 
-public abstract class Statement {
+public abstract class Statement<T extends Parent<T>> implements Cloneable, Child<T> {
 
     public abstract void execute();
 
-    private Program program;
+    T parent;
 
-    public Program getProgram() {
-        return program;
+    @Override
+    public T getParent() {
+        return parent;
     }
 
-    public void setProgram(Program program) {
-        this.program = program;
+    @Override
+    public void setParent(T parent) {
+        this.parent = parent;
     }
-    
-    protected boolean hasParentWhile() {
-    	return (parentWhile != null);
-    }
-    
-    protected While getParentWhile() {
-    	return parentWhile;
-    }
-    
-    
-    protected void setParentWhile(While parent) {
-    	this.parentWhile = parent;
-    }
-    
-    protected While parentWhile = null;
-    
-    protected boolean hasParentFunction() {
-    	return (parentFunction != null);
-    }
-    
-    protected Function getParentFunction() {
-    	return parentFunction;
-    }
-  
-    protected void setParentFunction(Function parent) {
-    	this.parentFunction = parent;
-    }
-    
-    protected Function parentFunction = null;
-    
+
     public Statement next() {
 		if (!executed) {
 			return this;

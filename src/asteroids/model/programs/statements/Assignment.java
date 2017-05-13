@@ -29,7 +29,7 @@ public class Assignment extends Statement {
 
     @Override
     public void execute() {
-    	getProgram().addVariable(name, value);
+    	getParent().addVariable(name, value);
         executed = true;
 
     }

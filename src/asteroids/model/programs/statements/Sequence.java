@@ -3,12 +3,13 @@ package asteroids.model.programs.statements;
 import java.util.List;
 
 import asteroids.model.Program;
+import asteroids.model.programs.Parent;
 import asteroids.model.programs.function.Function;
 
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Sequence extends Statement{
+public class Sequence extends Statement {
 
     public Sequence(List<Statement> statements) {
         this.statements = statements;
@@ -28,24 +29,17 @@ public class Sequence extends Statement{
     public List<Statement> getStatements() {
         return statements;
     }
-    
+
     @Override
-    public void setProgram(Program program) {
-    	super.setProgram(program);
+    public void setParent(Parent parent) {
+        super.setParent(parent);
 
         for (Statement statement : statements) {
-            statement.setProgram(program);
-    	}
-    }
-    
-    @Override
-    protected void setParentFunction(Function F) {
-    	for (Statement statement : statements) {
-            statement.setParentFunction(F);
-    	}
+            statement.setParent(parent);
+        }
     }
 
-	@Override
+    @Override
 	public Statement next() {
 		if ( nextCounter < statements.size()) {
 			Statement returnStatement = statements.get(nextCounter).next();

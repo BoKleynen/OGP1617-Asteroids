@@ -16,7 +16,7 @@ public class Print extends Statement{
 
     @Override
     public void execute() {
-        getProgram().addPrintedObject(expression.getValue());
+        getParent().addPrintedObject(expression.getValue());
         System.out.println(expression.toString());
         executed = true;
     }

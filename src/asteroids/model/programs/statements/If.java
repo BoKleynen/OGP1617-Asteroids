@@ -1,6 +1,7 @@
 package asteroids.model.programs.statements;
 
 import asteroids.model.Program;
+import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 
 /**
@@ -34,22 +35,18 @@ public class If extends Statement{
     }
 
     @Override
-    public void setProgram(Program program) {
-        super.setProgram(program);
-        ifBody.setProgram(program);
+    public void setParent(Parent parent) {
+        super.setParent(parent);
+        ifBody.setParent(parent);
 
         if (elseBody != null)
-            elseBody.setProgram(program);
+            elseBody.setParent(parent);
     }
 
-	@Override
+    @Override
 	public Statement next() {
-		if ( !decidedCondition ) {
-			if ( condition.getValue() )
-				returnIf = true;
-			else
-				returnIf = false;
-			
+		if (!decidedCondition) {
+		    returnIf = condition.getValue();
 			decidedCondition = true;
 		}
 		Statement returnStatement = null;

@@ -10,10 +10,10 @@ public class Skip extends ActionStatement {
     @Override
     public void execute() {
         try {
-            getProgram().decrementTimeRemaining(getExecutionTime());
+            getParent().decrementTimeRemaining(getExecutionTime());
             executed = true;
         }catch (NotEnoughTimeRemainingException e) {
-            getProgram().pause();
+            getParent().pause();
         }
     }
 }

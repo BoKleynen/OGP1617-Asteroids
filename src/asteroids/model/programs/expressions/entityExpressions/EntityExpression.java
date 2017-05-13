@@ -11,7 +11,7 @@ import asteroids.model.programs.expressions.Expression;
 public abstract class EntityExpression<T extends Entity> extends Expression<T> {
 
     public Ship getShip() {
-        return getStatement().getProgram().getShip();
+        return getStatement().getParent().getShip();
     }
 
     public World getWorld() {

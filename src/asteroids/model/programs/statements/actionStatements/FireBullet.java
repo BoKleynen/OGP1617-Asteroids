@@ -10,11 +10,11 @@ public class FireBullet extends ActionStatement {
     @Override
     public void execute() {
         try {
-            getProgram().decrementTimeRemaining(getExecutionTime());
-            getProgram().getShip().fireBullet();
+            getParent().decrementTimeRemaining(getExecutionTime());
+            getParent().getShip().fireBullet();
             executed = true;
         } catch (NotEnoughTimeRemainingException e) {
-            getProgram().pause();
+            getParent().pause();
         }
     }
 }

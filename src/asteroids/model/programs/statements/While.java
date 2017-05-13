@@ -1,6 +1,7 @@
 package asteroids.model.programs.statements;
 
 import asteroids.model.Program;
+import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.util.exceptions.BreakException;
 
@@ -11,11 +12,10 @@ import asteroids.model.util.exceptions.BreakException;
  */
 public class While extends Statement {
 
-    public While(Expression condition, Statement body) {
+    public While(Expression<Boolean> condition, Statement body) {
         this.condition = condition;
         this.body = body;
         condition.setStatement(this);
-        body.setParentWhile((While) this);
         resetExecuted();
     }
 
@@ -35,14 +35,13 @@ public class While extends Statement {
 		}
 		executed = true;
 	}
-    
-    @Override
-    public void setProgram(Program P) {
-    	super.setProgram(P);
-    	body.setProgram(P);
-    }
-    
-    @Override
+	@Override
+	public void setParent(Parent parent) {
+		super.setParent(parent);
+		body.setParent(parent);
+	}
+
+	@Override
     public Statement next() {
     	
     	// @TODO: Implement Break functionality
