@@ -10,7 +10,10 @@ public class Return extends Statement {
 
     public Return(Expression value) {
         this.value = value;
-        value.setStatement(this);
+        
+        // Should value ever even be null? This check does solve some NullPointerExceptions...
+        if (value != null) 
+        	value.setStatement(this);
     }
 
     private Expression value;
