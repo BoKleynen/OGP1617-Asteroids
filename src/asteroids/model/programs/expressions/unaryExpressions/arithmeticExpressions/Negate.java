@@ -12,6 +12,6 @@ public class Negate extends UnaryArithmeticExpression {
 
     @Override
     public Double getValue() {
-        return null;
+        return - ((Double)getOperand().getValue());
     }
 }

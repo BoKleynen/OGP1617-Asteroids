@@ -3,6 +3,7 @@ package asteroids.model.programs.expressions.entityExpressions.entityCharacteris
 import asteroids.model.Entity;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
+import asteroids.model.programs.statements.Statement;
 
 /**
  * @author  Bo Kleynen & Yrjo Koyen
@@ -21,5 +22,11 @@ public abstract class EntityCharacteristicExpression extends Expression<Double> 
 
     public Entity getEntity() {
         return entity.getValue();
+    }
+
+    @Override
+    public void setStatement(Statement statement) {
+        super.setStatement(statement);
+        entity.setStatement(statement);
     }
 }

@@ -1,6 +1,7 @@
 package asteroids.model.programs.expressions.binaryExpressions;
 
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.Statement;
 
 /**
  * @author  Bo Kleynen & Yrjo Koyen
@@ -22,5 +23,11 @@ public abstract class BinaryExpression<T, O> extends Expression<T> {
 
     public Expression getRightOperand() {
         return rightOperand;
+    }
+
+    @Override
+    public void setStatement(Statement statement) {
+        leftOperand.setStatement(statement);
+        rightOperand.setStatement(statement);
     }
 }

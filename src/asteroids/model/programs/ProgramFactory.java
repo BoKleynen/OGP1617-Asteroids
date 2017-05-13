@@ -361,7 +361,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createLessThanExpression(Expression e1, Expression e2, SourceLocation location) {
-		return new LessThan(e1, e1);
+		return new LessThan(e1, e2);
 	}
 
 	/**
