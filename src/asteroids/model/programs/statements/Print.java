@@ -18,6 +18,7 @@ public class Print extends Statement{
     public void execute() {
         getProgram().addPrintedObject(expression.getValue());
         System.out.println(expression.toString());
+        executed = true;
     }
 
 }

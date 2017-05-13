@@ -1,6 +1,5 @@
 package asteroids.model.programs.statements;
 
-import java.util.Iterator;
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
 
@@ -16,7 +15,7 @@ public class If extends Statement{
         this.ifBody = ifBody;
         this.elseBody = elseBody;
         condition.setStatement(this);
-        resetNext();
+        resetExecuted();
     }
 
     private Expression<Boolean> condition;
@@ -31,6 +30,7 @@ public class If extends Statement{
         else
             if (elseBody != null)
                 elseBody.execute();
+        executed = true;
     }
 
     @Override
@@ -52,11 +52,12 @@ public class If extends Statement{
 			
 			decidedCondition = true;
 		}
-		Statement returnStatement;
+		Statement returnStatement = null;
 		
 		if (returnIf)
 			returnStatement = ifBody.next();
-		else
+
+		else if (elseBody != null)
 			returnStatement = elseBody.next();
 		
 		return returnStatement;
@@ -64,11 +65,12 @@ public class If extends Statement{
 
 
 	@Override
-	public void resetNext() {
+	public void resetExecuted() {
 		decidedCondition = false;
 		returnIf = false;
-		ifBody.resetNext();
-		elseBody.resetNext();
+		ifBody.resetExecuted();
+		if (elseBody != null)
+		    elseBody.resetExecuted();
 	}
 	
 	private boolean decidedCondition;

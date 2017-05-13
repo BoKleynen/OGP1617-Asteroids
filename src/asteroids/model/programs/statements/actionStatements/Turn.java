@@ -22,6 +22,8 @@ public class Turn extends ActionStatement {
         try {
             getProgram().decrementTimeRemaining(getExecutionTime());
             getProgram().getShip().turn(getAngle());
+            executed = true;
+
         } catch (NotEnoughTimeRemainingException e) {
             getProgram().pause();
         }

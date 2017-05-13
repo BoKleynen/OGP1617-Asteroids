@@ -61,6 +61,6 @@ public class Function {
 		}
 
 		else
-			return (statement instanceof ActionStatement);
+			return !(statement instanceof ActionStatement);
 	}
 }

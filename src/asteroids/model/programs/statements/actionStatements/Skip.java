@@ -11,6 +11,7 @@ public class Skip extends ActionStatement {
     public void execute() {
         try {
             getProgram().decrementTimeRemaining(getExecutionTime());
+            executed = true;
         }catch (NotEnoughTimeRemainingException e) {
             getProgram().pause();
         }

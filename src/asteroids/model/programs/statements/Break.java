@@ -13,7 +13,8 @@ public class Break extends Statement {
 
     @Override
     public void execute() {
-    	throw new BreakException();
+        executed = true;
+        throw new BreakException();
     }
     
 }

@@ -1,7 +1,5 @@
 package asteroids.model.programs.statements;
 
-import java.lang.instrument.IllegalClassFormatException;
-
 import asteroids.model.Program;
 import asteroids.model.programs.function.Function;
 
@@ -49,17 +47,16 @@ public abstract class Statement {
     protected Function parentFunction = null;
     
     public Statement next() {
-		if (!returned) {
-			returned = true;
+		if (!executed) {
 			return this;
 		}
 		else
 			return null;
 	}
 
-	public void resetNext() {
-		returned = false;
+	public void resetExecuted() {
+		executed = false;
 	}
-	
-	private boolean returned = false;
+
+    protected boolean executed = false;
 }

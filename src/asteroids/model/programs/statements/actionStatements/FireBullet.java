@@ -12,6 +12,7 @@ public class FireBullet extends ActionStatement {
         try {
             getProgram().decrementTimeRemaining(getExecutionTime());
             getProgram().getShip().fireBullet();
+            executed = true;
         } catch (NotEnoughTimeRemainingException e) {
             getProgram().pause();
         }

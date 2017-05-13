@@ -2,11 +2,9 @@ package asteroids.model;
 
 import asteroids.model.programs.Variable;
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
-import asteroids.model.programs.statements.actionStatements.ActionStatement;
 import be.kuleuven.cs.som.annotate.Basic;
 import be.kuleuven.cs.som.annotate.Raw;
 import java.util.*;
@@ -29,8 +27,7 @@ public class Program implements Variable{
 
 	public List<Object> execute(double time) {
 		incrementTimeRemaining(time);
-		printedObjects = new ArrayList<Object>();
-		
+
 		if (getTimeRemaining() > 0.2 )
 			unPause();
 		
@@ -49,7 +46,7 @@ public class Program implements Variable{
 	private Statement getNextStatement() {
 		Statement nextStatement = main.next();
 		if ( nextStatement == null ) {
-			main.resetNext();
+			main.resetExecuted();
 			return null;
 		}
 		else
@@ -88,6 +85,8 @@ public class Program implements Variable{
 
 	@Override
 	public void addVariable(String varName, Expression value) {
+		if (functions.containsKey(varName))
+			throw new IllegalArgumentException("functiona and variables can not hold the same name");
 		addVariableToMap(varName, value, globalVariables);
 	}
 

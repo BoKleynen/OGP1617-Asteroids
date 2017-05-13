@@ -1,6 +1,5 @@
 package asteroids.model.programs.statements;
 
-import java.util.Iterator;
 import java.util.List;
 
 import asteroids.model.Program;
@@ -14,7 +13,7 @@ public class Sequence extends Statement{
     public Sequence(List<Statement> statements) {
         this.statements = statements;
         iterator = iterator();
-        resetNext();
+        resetExecuted();
     }
 
     private List<Statement> statements;
@@ -29,6 +28,7 @@ public class Sequence extends Statement{
         for (Statement statement : statements) {
             statement.execute();
         }
+        executed = true;
     }
 
     public SequenceIterator iterator() {
@@ -93,7 +93,7 @@ public class Sequence extends Statement{
 				return returnStatement;
 			}
 			else {
-				statements.get(nextCounter).resetNext();
+				statements.get(nextCounter).resetExecuted();
 				nextCounter++;
 				return this.next();
 			}
@@ -102,7 +102,7 @@ public class Sequence extends Statement{
 	}
 
 	@Override
-	public void resetNext() {
+	public void resetExecuted() {
 		nextCounter = 0;
 	}
 	

@@ -3,12 +3,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import asteroids.model.Program;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
-import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Assignment;
 import asteroids.model.programs.statements.Break;
 import asteroids.model.programs.statements.If;
@@ -29,7 +26,7 @@ public class testNextStatement {
 		assertTrue(A.next() == null);
 		assertTrue(A.next() == null);
 
-		A.resetNext();
+		A.resetExecuted();
 		assertTrue(A.next().equals(A));
 		assertTrue(A.next() == null);
 		assertTrue(A.next() == null);
@@ -39,7 +36,7 @@ public class testNextStatement {
 		assertTrue(B.next() == null);
 		assertTrue(B.next() == null);
 
-		B.resetNext();
+		B.resetExecuted();
 		assertTrue(B.next().equals(B));
 		assertTrue(B.next() == null);
 		assertTrue(B.next() == null);
@@ -54,7 +51,7 @@ public class testNextStatement {
 		assertTrue(turn.next() == null);
 		assertTrue(turn.next() == null);
 		
-		turn.resetNext();
+		turn.resetExecuted();
 		
 		assertTrue(turn.next().equals(turn));
 		assertTrue(turn.next() == null);
@@ -80,7 +77,7 @@ public class testNextStatement {
 		assertTrue(seq.next() == null);
 		assertTrue(seq.next() == null);
 		
-		seq.resetNext();
+		seq.resetExecuted();
 		
 		assertTrue(seq.next().equals(A));
 		assertTrue(seq.next().equals(P));

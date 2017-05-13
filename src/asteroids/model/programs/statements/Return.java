@@ -17,7 +17,8 @@ public class Return extends Statement {
 
     @Override
     public void execute() {
-    	throw new ReturnException(value);
+		executed = true;
+		throw new ReturnException(value);
     }
     
     @Override
@@ -31,7 +32,7 @@ public class Return extends Statement {
 	}
 
 	@Override
-	public void resetNext() {
+	public void resetExecuted() {
 		returned = false;
 	}
 	
