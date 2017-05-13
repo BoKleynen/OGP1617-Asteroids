@@ -1954,7 +1954,6 @@ public class Part3TestFull {
       String code = "def f { " + "  break; " + "  return 0.0;" + "}" + "a := 10; " + "while a < 20.5 { " + "  print a; "
           + "  if 14.5 < a { " + "    b := f(); " + "  }" + "  a := a + 2.0; " + "}" + "print 0.0; ";
       Program program = ProgramParser.parseProgramFromString(code, programFactory);
-      assert(program!=null);
       facade.loadProgramOnShip(ship1, program);
       List<Object> results = facade.executeProgram(ship1, 1.0);
       Object[] expecteds = { 10.0, 12.0, 14.0, 16.0, 0.0 };
