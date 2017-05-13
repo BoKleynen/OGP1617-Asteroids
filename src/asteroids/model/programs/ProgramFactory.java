@@ -3,6 +3,8 @@ package asteroids.model.programs;
 import java.util.List;
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.FunctionCall;
+import asteroids.model.programs.expressions.ReadParameter;
+import asteroids.model.programs.expressions.ReadVariableExpression;
 import asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.*;
 import asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.*;
 import asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.*;
@@ -140,7 +142,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createReadVariableExpression(String variableName, SourceLocation sourceLocation) {
-		return null;
+		return new ReadVariableExpression(variableName);
 	}
 
 	/**
@@ -152,7 +154,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createReadParameterExpression(String parameterName, SourceLocation sourceLocation) {
-		return null;
+		return new ReadParameter(parameterName);
 	}
 
 	/**
@@ -335,7 +337,7 @@ public class ProgramFactory implements IProgramFactory<Expression, Statement, Fu
 	 */
 	@Override
 	public Expression createGetVYExpression(Expression expression, SourceLocation location) {
-		return null;
+		return new GetVY(expression);
 	}
 
 	/**
