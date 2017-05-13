@@ -5,7 +5,6 @@ import asteroids.part2.CollisionListener;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.util.ModelException;
 import asteroids.model.util.vector.Vector;
-import com.sun.tools.internal.ws.processor.modeler.ModelerException;
 
 import java.util.Collection;
 import java.util.List;
