@@ -12,57 +12,17 @@ public class Sequence extends Statement{
 
     public Sequence(List<Statement> statements) {
         this.statements = statements;
-        iterator = iterator();
         resetExecuted();
     }
 
     private List<Statement> statements;
 
-    private SequenceIterator iterator;
-
     @Override
     public void execute() {
-//        while (iterator.hasNext()) {
-//            iterator.next().execute();
-//        }
         for (Statement statement : statements) {
             statement.execute();
         }
         executed = true;
-    }
-
-    public SequenceIterator iterator() {
-        return new SequenceIterator() {
-
-            private boolean paused;
-            private int lastExecutedStatement = -1;
-
-            @Override
-            public boolean hasNext() {
-                return lastExecutedStatement < statements.size() && !paused;
-            }
-
-            @Override
-            public Statement next() {
-                return statements.get(lastExecutedStatement++);
-            }
-
-            public void pause() {
-                paused = true;
-            }
-
-            public void resume() {
-                paused = false;
-            }
-        };
-    }
-
-    public void pause() {
-        iterator.pause();
-    }
-
-    public void resume() {
-        iterator.resume();
     }
 
     public List<Statement> getStatements() {
