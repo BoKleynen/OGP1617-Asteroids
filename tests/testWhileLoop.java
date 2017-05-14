@@ -1,5 +1,3 @@
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,15 +6,13 @@ import org.junit.Test;
 
 import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.expressions.ReadVariableExpression;
-import asteroids.model.programs.expressions.binaryExpressions.compareExpressions.LessThan;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.programs.function.Function;
-import asteroids.model.programs.statements.Assignment;
-import asteroids.model.programs.statements.Break;
-import asteroids.model.programs.statements.Sequence;
+import asteroids.model.programs.statements.simpleStatements.Assignment;
+import asteroids.model.programs.statements.simpleStatements.Break;
+import asteroids.model.programs.statements.composedStatements.Sequence;
 import asteroids.model.programs.statements.Statement;
-import asteroids.model.programs.statements.While;
+import asteroids.model.programs.statements.composedStatements.While;
 
 public class testWhileLoop {
 	

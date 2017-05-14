@@ -1,8 +1,9 @@
-package asteroids.model.programs.statements;
+package asteroids.model.programs.statements.composedStatements;
 
 import asteroids.model.Program;
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.Statement;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -12,7 +13,7 @@ import java.util.NoSuchElementException;
  *
  * TODO: implement expressions so they can be converted to boolean types
  */
-public class If extends Statement{
+public class If extends Statement {
 
     public If(Expression<Boolean> condition, Statement ifBody, Statement elseBody) {
         this.condition = condition;
@@ -51,21 +52,11 @@ public class If extends Statement{
     public Iterator<Statement> iterator() {
         return new Iterator<Statement>() {
 
-            Iterator<Statement> bodyIterator;
-            boolean setup = false;
+            Iterator<Statement> bodyIterator = condition.getValue() ? ifBody.iterator()
+                    : (elseBody != null ? elseBody.iterator() : null);
 
             @Override
             public boolean hasNext() {
-                if (! setup) {
-                    setup = true;
-                    if (condition.getValue())
-                        bodyIterator = ifBody.iterator();
-
-                    else if (elseBody != null)
-                        bodyIterator = elseBody.iterator();
-
-                }
-
                 return bodyIterator != null && bodyIterator.hasNext();
             }
 

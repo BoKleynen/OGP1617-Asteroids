@@ -1,6 +1,4 @@
-package asteroids.model.programs.statements;
-
-import java.util.Iterator;
+package asteroids.model.programs.statements.simpleStatements;
 
 import asteroids.model.programs.expressions.Expression;
 

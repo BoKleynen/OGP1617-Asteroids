@@ -1,4 +1,4 @@
-package asteroids.model.programs.statements;
+package asteroids.model.programs.statements.composedStatements;
 
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import asteroids.model.Program;
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.function.Function;
+import asteroids.model.programs.statements.Statement;
 
 /**
  * Created by Bo on 28/04/2017.

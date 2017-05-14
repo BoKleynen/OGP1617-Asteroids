@@ -1,4 +1,4 @@
-package asteroids.model.programs.statements;
+package asteroids.model.programs.statements.simpleStatements;
 
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.function.CalledFunction;

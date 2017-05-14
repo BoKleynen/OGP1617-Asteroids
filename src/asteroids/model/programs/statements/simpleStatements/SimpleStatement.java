@@ -1,6 +1,7 @@
-package asteroids.model.programs.statements;
+package asteroids.model.programs.statements.simpleStatements;
 
 import asteroids.model.programs.Parent;
+import asteroids.model.programs.statements.Statement;
 
 import java.util.Iterator;
 

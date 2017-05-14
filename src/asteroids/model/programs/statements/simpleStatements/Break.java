@@ -1,4 +1,4 @@
-package asteroids.model.programs.statements;
+package asteroids.model.programs.statements.simpleStatements;
 
 import asteroids.model.util.exceptions.BreakException;
 

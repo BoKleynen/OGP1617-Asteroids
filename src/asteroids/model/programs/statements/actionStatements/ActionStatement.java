@@ -1,8 +1,7 @@
 package asteroids.model.programs.statements.actionStatements;
 
 import asteroids.model.Program;
-import asteroids.model.programs.statements.SimpleStatement;
-import asteroids.model.programs.statements.Statement;
+import asteroids.model.programs.statements.simpleStatements.SimpleStatement;
 import be.kuleuven.cs.som.annotate.Basic;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
