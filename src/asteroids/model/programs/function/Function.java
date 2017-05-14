@@ -4,8 +4,7 @@ import asteroids.model.Program;
 import asteroids.model.programs.Child;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
-import asteroids.model.programs.statements.Sequence;
-import asteroids.model.programs.statements.Statement;
+import asteroids.model.programs.statements.*;
 import asteroids.model.programs.statements.actionStatements.ActionStatement;
 import asteroids.model.util.exceptions.ReturnException;
 
@@ -62,7 +61,15 @@ public class Function implements Child<Program>{
 			return true;
 		}
 
+		else if (statement instanceof If)
+			return (isValidStatement( ((If) statement).getIfBody())
+					|| (((If) statement).getElseBody() != null && isValidStatement(((If) statement).getElseBody())));
+
+
+		else if (statement instanceof While)
+			return isValidStatement(((While) statement).getBody());
+
 		else
-			return !(statement instanceof ActionStatement);
+			return !(statement instanceof ActionStatement || statement instanceof Print);
 	}
 }

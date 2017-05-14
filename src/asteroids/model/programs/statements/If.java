@@ -25,6 +25,13 @@ public class If extends Statement{
     private Statement ifBody;
     private Statement elseBody;
 
+    public Statement getIfBody() {
+        return ifBody;
+    }
+
+    public Statement getElseBody() {
+        return elseBody;
+    }
 
     @Override
     public void execute() {

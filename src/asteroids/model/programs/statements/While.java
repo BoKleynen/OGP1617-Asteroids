@@ -25,7 +25,11 @@ public class While extends Statement {
 
     private Statement body;
 
-    @Override
+	public Statement getBody() {
+		return body;
+	}
+
+	@Override
 	public void execute() {
     	throw new RuntimeException("something went terribly wrong");
 	}
