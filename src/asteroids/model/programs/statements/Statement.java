@@ -5,6 +5,8 @@ import asteroids.model.programs.Child;
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.function.Function;
 
+import java.util.Iterator;
+
 public abstract class Statement<T extends Parent<T>> implements Cloneable, Child<T> {
 
     public abstract void execute();
@@ -34,4 +36,8 @@ public abstract class Statement<T extends Parent<T>> implements Cloneable, Child
 	}
 
     protected boolean executed = false;
+
+    public abstract Iterator<Statement> iterator();
+
+
 }

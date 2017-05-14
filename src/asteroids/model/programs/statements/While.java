@@ -5,6 +5,9 @@ import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.util.exceptions.BreakException;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Created by Bo on 28/04/2017.
  *
@@ -25,16 +28,18 @@ public class While extends Statement {
 
     @Override
 	public void execute() {
-    	while (condition.getValue()) {
-    		try {
-    			body.execute();
-			} catch (BreakException br) {
-				brokenOutOfLoop = true;
-    			break;
-			}
-		}
-		executed = true;
+    	System.out.println("something went wrong");
+//    	while (condition.getValue()) {
+//    		try {
+//    			body.execute();
+//			} catch (BreakException br) {
+//				brokenOutOfLoop = true;
+//    			break;
+//			}
+//		}
+//		executed = true;
 	}
+
 	@Override
 	public void setParent(Parent parent) {
 		super.setParent(parent);
@@ -82,4 +87,25 @@ public class While extends Statement {
     private boolean conditionChecked;
     private boolean conditionAtCheck;  
     private boolean brokenOutOfLoop;
+
+	@Override
+	public Iterator<Statement<? extends Parent<?>>> iterator() {
+		return new Iterator<Statement<? extends Parent<?>>>() {
+
+			Iterator<Statement<? extends Parent<?>>> bodyIterator = body.iterator();
+
+			@Override
+			public boolean hasNext() {
+				return condition.getValue() && bodyIterator.hasNext();
+			}
+
+			@Override
+			public Statement<? extends Parent<?>> next() throws NoSuchElementException {
+				if (! hasNext())
+					throw new NoSuchElementException();
+
+				return bodyIterator.next();
+			}
+		};
+	}
 }

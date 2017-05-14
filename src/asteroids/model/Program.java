@@ -25,33 +25,49 @@ public class Program implements Parent<Program> {
 		printedObjects.add(object);
 	}
 
+//	public List<Object> execute(double time) {
+//		incrementTimeRemaining(time);
+//
+//		if (getTimeRemaining() > 0.2 )
+//			unPause();
+//
+//		while (!isPaused) {
+//			Statement next = getNextStatement();
+//
+//			// If main statement is completed then break;
+//			if (next == null)
+//				break;
+//			else
+//				next.execute();
+//		}
+//		return isPaused ? null : printedObjects;
+//	}
+//
+//	private Statement getNextStatement() {
+//		Statement nextStatement = main.next();
+//		if ( nextStatement == null ) {
+//			main.resetExecuted();
+//			return null;
+//		}
+//		else
+//			return nextStatement;
+//	}
+
 	public List<Object> execute(double time) {
 		incrementTimeRemaining(time);
 
-		if (getTimeRemaining() > 0.2 )
+		if (getTimeRemaining() >= 0.2)
 			unPause();
-		
-		while (!isPaused) {
-			Statement next = getNextStatement();
-			
-			// If main statement is completed then break;
-			if (next == null)
-				break;
-			else
-				next.execute();
+
+		Iterator<Statement> mainIterator = main.iterator();
+
+		while (! isPaused && mainIterator.hasNext()) {
+			mainIterator.next().execute();
 		}
+
 		return isPaused ? null : printedObjects;
 	}
-	
-	private Statement getNextStatement() {
-		Statement nextStatement = main.next();
-		if ( nextStatement == null ) {
-			main.resetExecuted();
-			return null;
-		}
-		else
-			return nextStatement;
-	}
+
 	
 	public void pause() {
 		isPaused = true;
@@ -74,7 +90,7 @@ public class Program implements Parent<Program> {
 		}
 	}
 
-	private Statement main;
+	private Statement<Program> main;
 
 	private Map<String, Expression> globalVariables = new HashMap<>();
 
@@ -90,7 +106,7 @@ public class Program implements Parent<Program> {
 		addVariableToMap(varName, value, globalVariables);
 	}
 
-	private void setMainStatement(Statement main) {
+	private void setMainStatement(Statement<Program> main) {
 		this.main = main;
 		main.setParent(this);
 	}

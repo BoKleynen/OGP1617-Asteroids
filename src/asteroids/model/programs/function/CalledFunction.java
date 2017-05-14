@@ -10,6 +10,7 @@ import asteroids.model.programs.statements.Statement;
 import asteroids.model.util.exceptions.ReturnException;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public CalledFunction(Function function, List<Expression> actualArgs) {
+        oldParent = function.getBody().getParent();
         body = function.getBody();
         body.setParent(this);
         setParent(function.getParent());
@@ -28,6 +30,8 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
         }
     }
 
+    Parent oldParent;
+
     private Map<String, Expression> arguments = new HashMap<>();
 
     public Expression getParameter(String paramName) {
@@ -36,10 +40,15 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public Expression execute() {
         try {
-            body.execute();
+            Iterator<Statement> bodyIterator = body.iterator();
+            while (bodyIterator.hasNext()) {
+                bodyIterator.next().execute();
+            }
         } catch (ReturnException rt) {
+            body.setParent(oldParent);
             return rt.getExpression();
         }
+        body.setParent(oldParent);
         return new ValueExpression<>(null);
     }
 

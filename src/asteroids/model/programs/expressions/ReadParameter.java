@@ -8,13 +8,13 @@ import asteroids.model.programs.function.CalledFunction;
  */
 public class ReadParameter extends Expression {
     public ReadParameter(String paramName) {
-        this.paramName = paramName;
+        value = ((CalledFunction) getStatement().getParent()).getParameter(paramName).getValue();
     }
 
-    private String paramName;
+    private Object value;
 
     @Override
     public Object getValue() {
-        return ((CalledFunction) getStatement().getParent()).getParameter(paramName).getValue();
+        return value;
     }
 }

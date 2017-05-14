@@ -7,7 +7,7 @@ import asteroids.model.util.exceptions.ReturnException;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Return extends Statement<CalledFunction> {
+public class Return extends SimpleStatement<CalledFunction> {
 
     public Return(Expression value) {
         this.value = value;

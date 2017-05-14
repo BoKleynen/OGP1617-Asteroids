@@ -7,7 +7,7 @@ import asteroids.model.programs.expressions.Expression;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Assignment extends Statement {
+public class Assignment extends SimpleStatement {
 
     public Assignment(String name, Expression value) {
         this.name = name;

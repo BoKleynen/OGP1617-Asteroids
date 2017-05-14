@@ -1,6 +1,8 @@
 package asteroids.model.programs.statements;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import asteroids.model.Program;
 import asteroids.model.programs.Parent;
@@ -20,10 +22,12 @@ public class Sequence extends Statement {
 
     @Override
     public void execute() {
-        for (Statement statement : statements) {
-            statement.execute();
-        }
-        executed = true;
+        System.out.println("something went wrong");
+
+//        for (Statement statement : statements) {
+//            statement.execute();
+//        }
+//        executed = true;
     }
 
     public List<Statement> getStatements() {
@@ -61,4 +65,32 @@ public class Sequence extends Statement {
 	}
 	
 	int nextCounter;
+
+    public Iterator<Statement<? extends Parent<?>>> iterator() {
+        return new Iterator<Statement<? extends Parent<?>>>() {
+
+            int index = 0;
+            Iterator<Statement<? extends Parent<?>>> subIterator = statements.get(index).iterator();
+
+            @Override
+            public boolean hasNext() {
+                return subIterator.hasNext() || index + 1 < statements.size();
+            }
+
+            @Override
+            public Statement<? extends Parent<?>> next() throws NoSuchElementException {
+                if (! hasNext())
+                    throw new NoSuchElementException();
+
+                if (subIterator.hasNext())
+                    return subIterator.next();
+
+                else {
+                    subIterator = statements.get(index++).iterator();
+                    return subIterator.next();
+                }
+
+            }
+        };
+    }
 }

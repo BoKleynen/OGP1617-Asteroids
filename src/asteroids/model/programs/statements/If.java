@@ -4,6 +4,9 @@ import asteroids.model.Program;
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Created by Bo on 28/04/2017.
  *
@@ -26,12 +29,13 @@ public class If extends Statement{
 
     @Override
     public void execute() {
-        if (condition.getValue())
-            ifBody.execute();
-        else
-            if (elseBody != null)
-                elseBody.execute();
-        executed = true;
+        System.out.println("something went wrong");
+//        if (condition.getValue())
+//            ifBody.execute();
+//        else
+//            if (elseBody != null)
+//                elseBody.execute();
+//        executed = true;
     }
 
     @Override
@@ -72,4 +76,36 @@ public class If extends Statement{
 	
 	private boolean decidedCondition;
 	private boolean returnIf;
+
+    @Override
+    public Iterator<Statement<? extends Parent<?>>> iterator() {
+        return new Iterator<Statement<? extends Parent<?>>>() {
+
+            Iterator<Statement<? extends Parent<?>>> bodyIterator;
+            boolean setup = false;
+
+            @Override
+            public boolean hasNext() {
+                if (! setup) {
+                    setup = true;
+                    if (condition.getValue())
+                        bodyIterator = ifBody.iterator();
+
+                    else if (elseBody != null)
+                        bodyIterator = elseBody.iterator();
+
+                }
+
+                return bodyIterator != null && bodyIterator.hasNext();
+            }
+
+            @Override
+            public Statement<? extends Parent<?>> next() {
+                if (! hasNext())
+                    throw new NoSuchElementException();
+
+                return bodyIterator.next();
+            }
+        };
+    }
 }
