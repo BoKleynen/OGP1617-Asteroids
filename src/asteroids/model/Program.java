@@ -17,6 +17,7 @@ public class Program implements Parent<Program> {
 	public Program(List<Function> functions, Statement main) {
 		setFunctions(functions);
 		setMainStatement(main);
+		mainIterator = main.iterator();
 	}
 
 	private List<Object> printedObjects = new ArrayList<>();
@@ -53,13 +54,21 @@ public class Program implements Parent<Program> {
 //			return nextStatement;
 //	}
 
+	Statement stashedStatement = null;
+
+	Iterator<Statement> mainIterator;
+
 	public List<Object> execute(double time) {
 		incrementTimeRemaining(time);
 
-		if (getTimeRemaining() >= 0.2)
+		if (getTimeRemaining() >= 0.2) {
 			unPause();
 
-		Iterator<Statement> mainIterator = main.iterator();
+			if (stashedStatement != null) {
+				stashedStatement.execute();
+				stashedStatement = null;
+			}
+		}
 
 		while (! isPaused && mainIterator.hasNext()) {
 			mainIterator.next().execute();
@@ -69,8 +78,9 @@ public class Program implements Parent<Program> {
 	}
 
 	
-	public void pause() {
+	public void pause(Statement statement) {
 		isPaused = true;
+		stashedStatement = statement;
 	}
 	
 	public void unPause() {

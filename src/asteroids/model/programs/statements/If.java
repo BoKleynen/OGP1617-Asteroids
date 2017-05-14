@@ -19,7 +19,6 @@ public class If extends Statement{
         this.ifBody = ifBody;
         this.elseBody = elseBody;
         condition.setStatement(this);
-        resetExecuted();
     }
 
     private Expression<Boolean> condition;
@@ -29,13 +28,7 @@ public class If extends Statement{
 
     @Override
     public void execute() {
-        System.out.println("something went wrong");
-//        if (condition.getValue())
-//            ifBody.execute();
-//        else
-//            if (elseBody != null)
-//                elseBody.execute();
-//        executed = true;
+        throw new RuntimeException("something went terribly wrong");
     }
 
     @Override
@@ -48,40 +41,10 @@ public class If extends Statement{
     }
 
     @Override
-	public Statement next() {
-		if (!decidedCondition) {
-		    returnIf = condition.getValue();
-			decidedCondition = true;
-		}
-		Statement returnStatement = null;
-		
-		if (returnIf)
-			returnStatement = ifBody.next();
+    public Iterator<Statement> iterator() {
+        return new Iterator<Statement>() {
 
-		else if (elseBody != null)
-			returnStatement = elseBody.next();
-		
-		return returnStatement;
-	}
-
-
-	@Override
-	public void resetExecuted() {
-		decidedCondition = false;
-		returnIf = false;
-		ifBody.resetExecuted();
-		if (elseBody != null)
-		    elseBody.resetExecuted();
-	}
-	
-	private boolean decidedCondition;
-	private boolean returnIf;
-
-    @Override
-    public Iterator<Statement<? extends Parent<?>>> iterator() {
-        return new Iterator<Statement<? extends Parent<?>>>() {
-
-            Iterator<Statement<? extends Parent<?>>> bodyIterator;
+            Iterator<Statement> bodyIterator;
             boolean setup = false;
 
             @Override
@@ -100,7 +63,7 @@ public class If extends Statement{
             }
 
             @Override
-            public Statement<? extends Parent<?>> next() {
+            public Statement next() {
                 if (! hasNext())
                     throw new NoSuchElementException();
 

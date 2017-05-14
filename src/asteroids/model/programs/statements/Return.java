@@ -18,24 +18,6 @@ public class Return extends SimpleStatement<CalledFunction> {
 
     @Override
     public void execute() {
-		executed = true;
 		throw new ReturnException(value);
     }
-    
-    @Override
-	public Statement next() {
-		if (!returned) {
-			returned = true;
-			return this;
-		}
-		else
-			return null;
-	}
-
-	@Override
-	public void resetExecuted() {
-		returned = false;
-	}
-	
-	private boolean returned = false;
 }

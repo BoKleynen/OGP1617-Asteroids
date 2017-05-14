@@ -13,9 +13,8 @@ public class DisableThruster extends ActionStatement {
         try {
             getParent().decrementTimeRemaining(getExecutionTime());
             getParent().getShip().thrustOff();
-            executed = true;
         } catch (NotEnoughTimeRemainingException e) {
-            getParent().pause();
+            getParent().pause(this);
         }
     }
 }

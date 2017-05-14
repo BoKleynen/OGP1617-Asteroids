@@ -19,25 +19,15 @@ public class While extends Statement {
         this.condition = condition;
         this.body = body;
         condition.setStatement(this);
-        resetExecuted();
     }
 
-    private Expression<Boolean> condition;;
+    private Expression<Boolean> condition;
 
     private Statement body;
 
     @Override
 	public void execute() {
-    	System.out.println("something went wrong");
-//    	while (condition.getValue()) {
-//    		try {
-//    			body.execute();
-//			} catch (BreakException br) {
-//				brokenOutOfLoop = true;
-//    			break;
-//			}
-//		}
-//		executed = true;
+    	throw new RuntimeException("something went terribly wrong");
 	}
 
 	@Override
@@ -47,52 +37,10 @@ public class While extends Statement {
 	}
 
 	@Override
-    public Statement next() {
-    	
-    	// @TODO: Implement Break functionality
-    	if (brokenOutOfLoop) {
-    		return null;
-    	}
-    	
-    	if (!conditionChecked) {
-    		conditionAtCheck = condition.getValue();
-    		body.resetExecuted();
-    		conditionChecked = true;
-    	}
+	public Iterator<Statement> iterator() {
+		return new Iterator<Statement>() {
 
-    	if (conditionAtCheck) {
-    		Statement returnStatement = body.next();
-    		
-    		if (returnStatement == null) {
-    			body.resetExecuted();
-    			conditionChecked = false;
-    			return next();
-    		}
-    		else {
-    			return returnStatement;
-    		}
-    	}
-    	else
-    		return null;
-    }
-    
-    
-    @Override
-    public void resetExecuted() {
-    	conditionChecked = false;
-    	conditionAtCheck = false;
-    	brokenOutOfLoop = false;
-    }
-    
-    private boolean conditionChecked;
-    private boolean conditionAtCheck;  
-    private boolean brokenOutOfLoop;
-
-	@Override
-	public Iterator<Statement<? extends Parent<?>>> iterator() {
-		return new Iterator<Statement<? extends Parent<?>>>() {
-
-			Iterator<Statement<? extends Parent<?>>> bodyIterator = body.iterator();
+			Iterator<Statement> bodyIterator = body.iterator();
 
 			@Override
 			public boolean hasNext() {

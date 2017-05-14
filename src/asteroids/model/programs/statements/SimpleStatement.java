@@ -19,14 +19,14 @@ public abstract class SimpleStatement<T extends Parent<T>> extends Statement<T> 
             }
 
             @Override
-            public Statement<? extends Parent<?>> next() {
+            public Statement next() {
                 returned = true;
                 return getStatement();
             }
         };
     }
 
-    private Statement<? extends Parent<?>> getStatement() {
+    private Statement getStatement() {
         return this;
     }
 }

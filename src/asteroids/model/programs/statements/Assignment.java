@@ -30,8 +30,6 @@ public class Assignment extends SimpleStatement {
     @Override
     public void execute() {
     	getParent().addVariable(name, value);
-        executed = true;
-
     }
 	
 }

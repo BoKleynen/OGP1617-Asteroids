@@ -11,9 +11,8 @@ public class Skip extends ActionStatement {
     public void execute() {
         try {
             getParent().decrementTimeRemaining(getExecutionTime());
-            executed = true;
         }catch (NotEnoughTimeRemainingException e) {
-            getParent().pause();
+            getParent().pause(this);
         }
     }
 }

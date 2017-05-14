@@ -13,7 +13,6 @@ public class Break extends SimpleStatement {
 
     @Override
     public void execute() {
-        executed = true;
         throw new BreakException();
     }
     

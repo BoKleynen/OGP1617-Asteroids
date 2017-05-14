@@ -22,10 +22,9 @@ public class Turn extends ActionStatement {
         try {
             getParent().decrementTimeRemaining(getExecutionTime());
             getParent().getShip().turn(getAngle());
-            executed = true;
 
         } catch (NotEnoughTimeRemainingException e) {
-            getParent().pause();
+            getParent().pause(this);
         }
     }
 }

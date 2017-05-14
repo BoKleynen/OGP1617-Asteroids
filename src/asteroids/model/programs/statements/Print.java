@@ -18,7 +18,6 @@ public class Print extends SimpleStatement {
     public void execute() {
         getParent().addPrintedObject(expression.getValue());
         System.out.println(expression.toString());
-        executed = true;
     }
 
 }

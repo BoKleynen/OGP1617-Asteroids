@@ -12,9 +12,8 @@ public class FireBullet extends ActionStatement {
         try {
             getParent().decrementTimeRemaining(getExecutionTime());
             getParent().getShip().fireBullet();
-            executed = true;
         } catch (NotEnoughTimeRemainingException e) {
-            getParent().pause();
+            getParent().pause(this);
         }
     }
 }

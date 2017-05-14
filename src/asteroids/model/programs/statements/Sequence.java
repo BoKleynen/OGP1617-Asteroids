@@ -15,19 +15,13 @@ public class Sequence extends Statement {
 
     public Sequence(List<Statement> statements) {
         this.statements = statements;
-        resetExecuted();
     }
 
     private List<Statement> statements;
 
     @Override
     public void execute() {
-        System.out.println("something went wrong");
-
-//        for (Statement statement : statements) {
-//            statement.execute();
-//        }
-//        executed = true;
+        throw new RuntimeException("something went terribly wrong");
     }
 
     public List<Statement> getStatements() {
@@ -43,34 +37,11 @@ public class Sequence extends Statement {
         }
     }
 
-    @Override
-	public Statement next() {
-		if ( nextCounter < statements.size()) {
-			Statement returnStatement = statements.get(nextCounter).next();
-			if ( returnStatement != null ) {
-				return returnStatement;
-			}
-			else {
-				statements.get(nextCounter).resetExecuted();
-				nextCounter++;
-				return this.next();
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void resetExecuted() {
-		nextCounter = 0;
-	}
-	
-	int nextCounter;
-
-    public Iterator<Statement<? extends Parent<?>>> iterator() {
-        return new Iterator<Statement<? extends Parent<?>>>() {
+    public Iterator<Statement> iterator() {
+        return new Iterator<Statement>() {
 
             int index = 0;
-            Iterator<Statement<? extends Parent<?>>> subIterator = statements.get(index).iterator();
+            Iterator<Statement> subIterator = statements.get(index).iterator();
 
             @Override
             public boolean hasNext() {
@@ -82,11 +53,13 @@ public class Sequence extends Statement {
                 if (! hasNext())
                     throw new NoSuchElementException();
 
-                if (subIterator.hasNext())
+                if (subIterator.hasNext()) {
                     return subIterator.next();
+                }
 
                 else {
-                    subIterator = statements.get(index++).iterator();
+                    index++;
+                    subIterator = statements.get(index).iterator();
                     return subIterator.next();
                 }
 

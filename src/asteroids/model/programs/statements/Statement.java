@@ -23,19 +23,6 @@ public abstract class Statement<T extends Parent<T>> implements Cloneable, Child
         this.parent = parent;
     }
 
-    public Statement next() {
-		if (!executed) {
-			return this;
-		}
-		else
-			return null;
-	}
-
-	public void resetExecuted() {
-		executed = false;
-	}
-
-    protected boolean executed = false;
 
     public abstract Iterator<Statement> iterator();
 
