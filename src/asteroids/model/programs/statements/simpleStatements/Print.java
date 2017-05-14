@@ -20,4 +20,8 @@ public class Print extends SimpleStatement {
         System.out.println(expression.toString());
     }
 
+    @Override
+    public boolean isValidFunctionStatement() {
+        return false;
+    }
 }

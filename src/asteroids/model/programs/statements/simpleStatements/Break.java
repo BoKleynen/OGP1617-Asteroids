@@ -15,5 +15,9 @@ public class Break extends SimpleStatement {
     public void execute() {
         throw new BreakException();
     }
-    
+
+    @Override
+    public boolean isValidFunctionStatement() {
+        return true;
+    }
 }

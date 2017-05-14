@@ -69,4 +69,9 @@ public class If extends Statement {
             }
         };
     }
+
+    @Override
+    public boolean isValidFunctionStatement() {
+        return ifBody.isValidFunctionStatement() && (elseBody == null || elseBody.isValidFunctionStatement());
+    }
 }

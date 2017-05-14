@@ -67,4 +67,13 @@ public class Sequence extends Statement {
             }
         };
     }
+
+    @Override
+    public boolean isValidFunctionStatement() {
+        for (Statement statement : statements) {
+            if (! statement.isValidFunctionStatement())
+                return false;
+        }
+        return true;
+    }
 }

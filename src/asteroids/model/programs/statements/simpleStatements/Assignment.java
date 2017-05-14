@@ -29,5 +29,9 @@ public class Assignment extends SimpleStatement {
     public void execute() {
     	getParent().addVariable(name, value);
     }
-	
+
+    @Override
+    public boolean isValidFunctionStatement() {
+        return true;
+    }
 }

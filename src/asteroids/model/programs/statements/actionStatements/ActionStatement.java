@@ -17,4 +17,8 @@ public abstract class ActionStatement extends SimpleStatement<Program> {
         return executionTime;
     }
 
+    @Override
+    public boolean isValidFunctionStatement() {
+        return false;
+    }
 }

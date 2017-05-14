@@ -26,7 +26,7 @@ public class Function implements Child<Program>{
 	}
 	
 	private void setBody(Statement body) {
-		if (! isValidStatement(body))
+		if (! body.isValidFunctionStatement())
 			throw new IllegalArgumentException();
 
 		this.body = body;
@@ -48,27 +48,5 @@ public class Function implements Child<Program>{
 	@Override
 	public void setParent(Program parent) {
 		this.parent = parent;
-	}
-
-	public static boolean isValidStatement(Statement statement) {
-		if (statement instanceof Sequence) {
-			for (Statement s : ((Sequence) statement).getStatements()) {
-				if (! isValidStatement(s))
-					return false;
-			}
-
-			return true;
-		}
-
-		else if (statement instanceof If)
-			return (isValidStatement( ((If) statement).getIfBody())
-					|| (((If) statement).getElseBody() != null && isValidStatement(((If) statement).getElseBody())));
-
-
-		else if (statement instanceof While)
-			return isValidStatement(((While) statement).getBody());
-
-		else
-			return !(statement instanceof ActionStatement || statement instanceof Print);
 	}
 }

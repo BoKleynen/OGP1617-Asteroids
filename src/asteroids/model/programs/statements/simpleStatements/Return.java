@@ -20,4 +20,9 @@ public class Return extends SimpleStatement<CalledFunction> {
     public void execute() {
 		throw new ReturnException(value);
     }
+
+    @Override
+    public boolean isValidFunctionStatement() {
+        return true;
+    }
 }

@@ -49,4 +49,9 @@ public class While extends SimpleStatement {
 		super.setParent(parent);
 		body.setParent(parent);
 	}
+
+	@Override
+	public boolean isValidFunctionStatement() {
+		return body.isValidFunctionStatement();
+	}
 }
