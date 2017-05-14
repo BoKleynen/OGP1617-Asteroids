@@ -431,8 +431,8 @@ public class Ship extends Entity {
      *  
      */
     public void turn(double angle) {
-    	assert(!Double.isNaN(angle) && !Double.isInfinite(angle));
-    	double newOrientation = (getOrientation() + angle) % (2 * Math.PI);
+        double newOrientation = getOrientation() + angle;
+    	assert canHaveAsOrientation(newOrientation);
 
         setOrientation(newOrientation >= 0 ? newOrientation : newOrientation + 2 * Math.PI);
     }
