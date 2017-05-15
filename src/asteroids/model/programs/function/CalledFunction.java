@@ -20,8 +20,8 @@ import java.util.Map;
  */
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
-    public CalledFunction(Function function, List<Expression> actualArgs, Statement callingStatement) {
-        oldParent = (CalledFunction) function.getBody().getParent();
+    public CalledFunction(Function function, List<Expression> actualArgs) {
+        oldParent = function.getBody().getParent();
         body = function.getBody();
         body.setParent(this);
         setParent(function.getParent());
