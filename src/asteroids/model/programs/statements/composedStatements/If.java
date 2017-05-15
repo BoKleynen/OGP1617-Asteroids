@@ -13,9 +13,9 @@ import java.util.NoSuchElementException;
  *
  * TODO: implement expressions so they can be converted to boolean types
  */
-public class If extends Statement {
+public class If<T extends Parent<T>> extends Statement<T> {
 
-    public If(Expression<Boolean> condition, Statement ifBody, Statement elseBody) {
+    public If(Expression<Boolean> condition, Statement<T> ifBody, Statement<T> elseBody) {
         this.condition = condition;
         this.ifBody = ifBody;
         this.elseBody = elseBody;
@@ -23,14 +23,14 @@ public class If extends Statement {
     }
 
     private Expression<Boolean> condition;
-    private Statement ifBody;
-    private Statement elseBody;
+    private Statement<T> ifBody;
+    private Statement<T> elseBody;
 
-    public Statement getIfBody() {
+    public Statement<T> getIfBody() {
         return ifBody;
     }
 
-    public Statement getElseBody() {
+    public Statement<T> getElseBody() {
         return elseBody;
     }
 
@@ -40,7 +40,7 @@ public class If extends Statement {
     }
 
     @Override
-    public void setParent(Parent parent) {
+    public void setParent(T parent) {
         super.setParent(parent);
         ifBody.setParent(parent);
 
@@ -49,10 +49,10 @@ public class If extends Statement {
     }
 
     @Override
-    public Iterator<Statement> iterator() {
-        return new Iterator<Statement>() {
+    public Iterator<Statement<T>> iterator() {
+        return new Iterator<Statement<T>>() {
 
-            Iterator<Statement> bodyIterator = condition.getValue() ? ifBody.iterator()
+            Iterator<Statement<T>> bodyIterator = condition.getValue() ? ifBody.iterator()
                     : (elseBody != null ? elseBody.iterator() : null);
 
             @Override
@@ -61,7 +61,7 @@ public class If extends Statement {
             }
 
             @Override
-            public Statement next() {
+            public Statement<T> next() {
                 if (! hasNext())
                     throw new NoSuchElementException();
 

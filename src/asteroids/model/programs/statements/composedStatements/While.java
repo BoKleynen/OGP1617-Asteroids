@@ -13,9 +13,9 @@ import java.util.Iterator;
  *
  * TODO: implement expressions so they can be converted to boolean types
  */
-public class While extends SimpleStatement {
+public class While<T extends Parent<T>> extends SimpleStatement<T> {
 
-    public While(Expression<Boolean> condition, Statement body) {
+    public While(Expression<Boolean> condition, Statement<T> body) {
         this.condition = condition;
         this.body = body;
         condition.setStatement(this);
@@ -23,7 +23,7 @@ public class While extends SimpleStatement {
 
     private Expression<Boolean> condition;
 
-    private Statement body;
+    private Statement<T> body;
 
 	public Statement getBody() {
 		return body;
@@ -32,7 +32,7 @@ public class While extends SimpleStatement {
 	@Override
 	public void execute() {
 		while (condition.getValue()) {
-			Iterator<Statement> iterator = body.iterator();
+			Iterator<Statement<T>> iterator = body.iterator();
 			try {
 				while (iterator.hasNext()) {
 					iterator.next().execute();
@@ -45,7 +45,7 @@ public class While extends SimpleStatement {
 	}
 
 	@Override
-	public void setParent(Parent parent) {
+	public void setParent(T parent) {
 		super.setParent(parent);
 		body.setParent(parent);
 	}

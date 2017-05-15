@@ -24,7 +24,10 @@ public abstract class Statement<T extends Parent<T>> implements Cloneable, Child
     }
 
 
-    public abstract Iterator<Statement> iterator();
+    public abstract Iterator<Statement<T>> iterator();
 
     public abstract boolean isValidFunctionStatement();
+
+//    @Override
+//    protected abstract Statement<T> clone() throws CloneNotSupportedException;
 }

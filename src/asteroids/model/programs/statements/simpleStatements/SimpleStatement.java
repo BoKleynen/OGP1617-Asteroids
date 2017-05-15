@@ -10,8 +10,8 @@ import java.util.Iterator;
  */
 public abstract class SimpleStatement<T extends Parent<T>> extends Statement<T> {
 
-    public Iterator<Statement> iterator() {
-        return new Iterator<Statement>() {
+    public Iterator<Statement<T>> iterator() {
+        return new Iterator<Statement<T>>() {
             boolean returned = false;
 
             @Override
@@ -20,14 +20,14 @@ public abstract class SimpleStatement<T extends Parent<T>> extends Statement<T> 
             }
 
             @Override
-            public Statement next() {
+            public Statement<T> next() {
                 returned = true;
                 return getStatement();
             }
         };
     }
 
-    private Statement getStatement() {
+    private Statement<T> getStatement() {
         return this;
     }
 }

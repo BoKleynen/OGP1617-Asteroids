@@ -2,6 +2,7 @@ package asteroids.model.programs;
 
 import asteroids.model.Ship;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.programs.function.Function;
 
 import java.util.Map;
@@ -17,13 +18,13 @@ public interface Parent<T> {
     default void addVariableToMap(String varName, Expression value, Map<String, Expression> variables) {
         if (variables.containsKey(varName))
             if (variables.get(varName).getValue().getClass() == value.getValue().getClass())
-                variables.put(varName, value);
+                variables.put(varName, new ValueExpression<>(value.getValue()));
             else
                 throw new IllegalArgumentException("Expected type of " + varName +
                         " is: " + variables.get(varName).getValue().getClass().toString() +
                         " but received: " + value.getValue().getClass().toString());
         else
-            variables.put(varName, value);
+            variables.put(varName, new ValueExpression<>(value.getValue()));
     }
 
     void addPrintedObject(Object value);

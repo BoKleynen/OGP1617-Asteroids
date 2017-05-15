@@ -12,45 +12,45 @@ import asteroids.model.programs.statements.Statement;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Sequence extends Statement {
+public class Sequence<T extends Parent<T>> extends Statement<T> {
 
-    public Sequence(List<Statement> statements) {
+    public Sequence(List<Statement<T>> statements) {
         this.statements = statements;
     }
 
-    private List<Statement> statements;
+    private List<Statement<T>> statements;
 
     @Override
     public void execute() {
         throw new RuntimeException("something went terribly wrong");
     }
 
-    public List<Statement> getStatements() {
+    public List<Statement<T>> getStatements() {
         return statements;
     }
 
     @Override
-    public void setParent(Parent parent) {
+    public void setParent(T parent) {
         super.setParent(parent);
 
-        for (Statement statement : statements) {
+        for (Statement<T> statement : statements) {
             statement.setParent(parent);
         }
     }
 
-    public Iterator<Statement> iterator() {
-        return new Iterator<Statement>() {
+    public Iterator<Statement<T>> iterator() {
+        return new Iterator<Statement<T>>() {
 
             int index = 0;
-            Iterator<Statement> subIterator = statements.get(index).iterator();
+            Iterator<Statement<T>> subIterator = statements.get(index++).iterator();
 
             @Override
             public boolean hasNext() {
-                return subIterator.hasNext() || index + 1 < statements.size();
+                return subIterator.hasNext() || index < statements.size();
             }
 
             @Override
-            public Statement<? extends Parent<?>> next() throws NoSuchElementException {
+            public Statement<T> next() throws NoSuchElementException {
                 if (! hasNext())
                     throw new NoSuchElementException();
 
@@ -59,8 +59,7 @@ public class Sequence extends Statement {
                 }
 
                 else {
-                    index++;
-                    subIterator = statements.get(index).iterator();
+                    subIterator = statements.get(index++).iterator();
                     return subIterator.next();
                 }
 

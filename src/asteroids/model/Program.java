@@ -14,9 +14,9 @@ import java.util.*;
  */
 public class Program implements Parent<Program> {
 
-	public Program(List<Function> functions, Statement main) {
+	public Program(List<Function> functions, Statement<Program> main) {
 		setFunctions(functions);
-		setMainStatement(main);
+		main.setParent(this);
 		mainIterator = main.iterator();
 	}
 
@@ -26,37 +26,9 @@ public class Program implements Parent<Program> {
 		printedObjects.add(object);
 	}
 
-//	public List<Object> execute(double time) {
-//		incrementTimeRemaining(time);
-//
-//		if (getTimeRemaining() > 0.2 )
-//			unPause();
-//
-//		while (!isPaused) {
-//			Statement next = getNextStatement();
-//
-//			// If main statement is completed then break;
-//			if (next == null)
-//				break;
-//			else
-//				next.execute();
-//		}
-//		return isPaused ? null : printedObjects;
-//	}
-//
-//	private Statement getNextStatement() {
-//		Statement nextStatement = main.next();
-//		if ( nextStatement == null ) {
-//			main.resetExecuted();
-//			return null;
-//		}
-//		else
-//			return nextStatement;
-//	}
+	private Statement stashedStatement = null;
 
-	Statement stashedStatement = null;
-
-	Iterator<Statement> mainIterator;
+	private Iterator<Statement<Program>> mainIterator;
 
 	public List<Object> execute(double time) {
 		incrementTimeRemaining(time);
@@ -100,7 +72,7 @@ public class Program implements Parent<Program> {
 		}
 	}
 
-	private Statement<Program> main;
+//	private Statement<Program> main;
 
 	private Map<String, Expression> globalVariables = new HashMap<>();
 
@@ -112,14 +84,14 @@ public class Program implements Parent<Program> {
 	@Override
 	public void addVariable(String varName, Expression value) {
 		if (functions.containsKey(varName))
-			throw new IllegalArgumentException("functiona and variables can not hold the same name");
+			throw new IllegalArgumentException("function and variables can not hold the same name");
 		addVariableToMap(varName, value, globalVariables);
 	}
 
-	private void setMainStatement(Statement<Program> main) {
-		this.main = main;
-		main.setParent(this);
-	}
+//	private void setMainStatement(Statement<Program> main) {
+//		this.main = main;
+//		main.setParent(this);
+//	}
 
 	private Ship ship;
 
