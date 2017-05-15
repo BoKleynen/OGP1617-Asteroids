@@ -11,7 +11,7 @@ public class EnableThruster extends ActionStatement {
     public void execute() {
         try {
             getParent().decrementTimeRemaining(getExecutionTime());
-            getParent().getShip().thrustOn();
+            getShip().thrustOn();
         } catch (NotEnoughTimeRemainingException e) {
             getParent().pause(this);
         }

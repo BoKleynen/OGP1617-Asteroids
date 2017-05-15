@@ -49,7 +49,8 @@ public class Program implements Parent<Program> {
 		return isPaused ? null : printedObjects;
 	}
 
-	
+	private boolean isPaused = false;
+
 	public void pause(Statement statement) {
 		isPaused = true;
 		stashedStatement = statement;
@@ -125,5 +126,4 @@ public class Program implements Parent<Program> {
 		timeRemaining = newTime;
 	}
 
-	private boolean isPaused = false;
 }

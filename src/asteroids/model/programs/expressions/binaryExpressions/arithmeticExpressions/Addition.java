@@ -14,6 +14,6 @@ public class Addition extends BinaryArithmeticExpression {
 
     @Override
     public Double getValue() {
-        return (Double) getLeftOperand().getValue() + (Double) getRightOperand().getValue();
+        return getLeftOperand().getValue() + getRightOperand().getValue();
     }
 }

@@ -20,7 +20,7 @@ import java.util.Map;
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public CalledFunction(Function function, List<Expression> actualArgs) {
-        oldParent = function.getBody().getParent();
+        oldParent = (CalledFunction) function.getBody().getParent();
         body = function.getBody();
         body.setParent(this);
         setParent(function.getParent());
@@ -30,7 +30,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
         }
     }
 
-    Parent oldParent;
+    private CalledFunction oldParent;
 
     private Map<String, Expression> arguments = new HashMap<>();
 
@@ -40,7 +40,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public Expression execute() {
         try {
-            Iterator<Statement> bodyIterator = body.iterator();
+            Iterator<Statement<CalledFunction>> bodyIterator = body.iterator();
             while (bodyIterator.hasNext()) {
                 bodyIterator.next().execute();
             }
@@ -54,7 +54,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     private Map<String, Expression> localVariables = new HashMap<>();
 
-    private Statement body;
+    private Statement<CalledFunction> body;
 
     @Override
     public Expression getVariable(String varName) {

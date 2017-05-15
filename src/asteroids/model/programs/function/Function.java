@@ -14,7 +14,7 @@ import asteroids.model.programs.statements.simpleStatements.Print;
  */
 public class Function implements Child<Program>{
 
-	public Function(String functionName, Statement body) {
+	public Function(String functionName, Statement<CalledFunction> body) {
 		this.functionName = functionName;
 		setBody(body);
 	}
@@ -25,14 +25,14 @@ public class Function implements Child<Program>{
 		return functionName;
 	}
 	
-	private void setBody(Statement body) {
+	private void setBody(Statement<CalledFunction> body) {
 		if (! body.isValidFunctionStatement())
 			throw new IllegalArgumentException();
 
 		this.body = body;
 	}
 
-	private Statement body;
+	private Statement<CalledFunction> body;
 
 	public Statement getBody() {
 		return body;
