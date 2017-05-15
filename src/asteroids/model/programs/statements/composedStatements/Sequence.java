@@ -60,6 +60,9 @@ public class Sequence<T extends Parent<T>> extends Statement<T> {
 
                 else {
                     subIterator = statements.get(index++).iterator();
+                    while (! subIterator.hasNext()) {
+                        subIterator = statements.get(index++).iterator();
+                    }
                     return subIterator.next();
                 }
 

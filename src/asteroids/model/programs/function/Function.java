@@ -34,7 +34,7 @@ public class Function implements Child<Program>{
 
 	private Statement<CalledFunction> body;
 
-	public Statement getBody() {
+	public Statement<CalledFunction> getBody() {
 		return body;
 	}
 
