@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
-    public CalledFunction(Function function, List<Expression> actualArgs) {
+    public CalledFunction(Function function, List<Expression> actualArgs, Statement callingStatement) {
         for (int i = 0; i < actualArgs.size(); i++) {
             arguments.put("$" + (i+1), new ValueExpression<>(actualArgs.get(i).getValue()));
         }
@@ -30,9 +30,13 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
         body = function.getBody();
         body.setParent(this);
         setParent(function.getParent());
-
-
+        this.callingStatement = callingStatement;
+        this.function = function;
     }
+    
+    private Function function;
+    
+    private Statement callingStatement;
 
     private CalledFunction oldParent;
 
@@ -40,6 +44,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public Expression getParameter(String paramName) {
     	Expression returnExpresion = new ValueExpression<>(arguments.get(paramName).getValue());
+    	assert(arguments.get(paramName).getStatement() != null);
     	returnExpresion.setStatement(arguments.get(paramName).getStatement());
         return returnExpresion;
     }
@@ -64,11 +69,18 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     @Override
     public Expression getVariable(String varName) {
+    	System.out.println("Known variables: ");
+        for (String name : localVariables.keySet()) {
+        	System.out.println(name + ": " + localVariables.get(name).getValue());
+        }
         if (localVariables.containsKey(varName))
             return localVariables.get(varName);
-
-        else
-            return new ValueExpression<>(getParent().getVariable(varName).getValue());
+        else {
+        	System.out.println("Variable " + varName + " is not local.");
+            Expression returnVal = new ValueExpression<>(getParent().getVariable(varName).getValue());
+            returnVal.setStatement(callingStatement);
+            return returnVal;
+        }
     }
 
     @Override
