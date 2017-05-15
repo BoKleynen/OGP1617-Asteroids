@@ -21,14 +21,17 @@ import java.util.Map;
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public CalledFunction(Function function, List<Expression> actualArgs) {
+        for (int i = 0; i < actualArgs.size(); i++) {
+            arguments.put("$" + (i+1), new ValueExpression<>(actualArgs.get(i).getValue()));
+        }
+        
+        System.out.println("function");
         oldParent = function.getBody().getParent();
         body = function.getBody();
         body.setParent(this);
         setParent(function.getParent());
 
-        for (int i = 0; i < actualArgs.size(); i++) {
-            arguments.put("$" + (i+1), actualArgs.get(i));
-        }
+
     }
 
     private CalledFunction oldParent;

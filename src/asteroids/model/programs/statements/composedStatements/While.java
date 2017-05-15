@@ -32,7 +32,6 @@ public class While<T extends Parent<T>> extends SimpleStatement<T> {
 	@Override
 	public void execute() {
 		while (condition.getValue()) {
-			System.out.println("entering while");
 			Iterator<Statement<T>> iterator = body.iterator();
 			try {
 				while (iterator.hasNext()) {

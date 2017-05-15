@@ -1,5 +1,6 @@
 package asteroids.model.programs.statements.composedStatements;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -39,36 +40,78 @@ public class Sequence<T extends Parent<T>> extends Statement<T> {
     }
 
     public Iterator<Statement<T>> iterator() {
-        return new Iterator<Statement<T>>() {
+        return new SequenceIterator();
+    }
 
-            int index = 0;
-            Iterator<Statement<T>> subIterator = statements.get(index++).iterator();
+    class SequenceIterator implements Iterator<Statement<T>> {
+        public SequenceIterator() {
+            for (Statement<T> statement : statements) {
+                subIterators.add(statement.iterator());
+            }
+        }
 
-            @Override
-            public boolean hasNext() {
-                return subIterator.hasNext() || index < statements.size();
+        int index = 0;
+        List<Iterator<Statement<T>>> subIterators = new ArrayList<>();
+
+        @Override
+        public boolean hasNext() {
+            for (int i = index; i < subIterators.size(); i++) {
+                if (subIterators.get(i).hasNext())
+                    return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Statement<T> next() {
+            if (! hasNext())
+                throw new NoSuchElementException();
+
+            if (subIterators.get(index).hasNext()) {
+                return subIterators.get(index++).next();
             }
 
-            @Override
-            public Statement<T> next() throws NoSuchElementException {
-                if (! hasNext())
-                    throw new NoSuchElementException();
-
-                if (subIterator.hasNext()) {
-                    return subIterator.next();
-                }
-
-                else {
-                    subIterator = statements.get(index++).iterator();
-                    while (! subIterator.hasNext()) {
+            else {
+                Iterator<Statement<T>> subIterator = subIterators.get(index++);
+                while (!subIterator.hasNext()) {
                         subIterator = statements.get(index++).iterator();
                     }
-                    return subIterator.next();
-                }
-
+                return subIterator.next();
             }
-        };
+        }
     }
+
+//    public Iterator<Statement<T>> iterator() {
+//        return new Iterator<Statement<T>>() {
+//
+//            int index = 0;
+//            Iterator<Statement<T>> subIterator = statements.get(index++).iterator();
+//
+//            @Override
+//            public boolean hasNext() {
+//                return subIterator.hasNext() || index < statements.size();
+//            }
+//
+//            @Override
+//            public Statement<T> next() throws NoSuchElementException {
+//                if (! hasNext())
+//                    throw new NoSuchElementException();
+//
+//                if (subIterator.hasNext()) {
+//                    return subIterator.next();
+//                }
+//
+//                else {
+//                    subIterator = statements.get(index++).iterator();
+//                    while (! subIterator.hasNext()) {
+//                        subIterator = statements.get(index++).iterator();
+//                    }
+//                    return subIterator.next();
+//                }
+//
+//            }
+//        };
+//    }
 
     @Override
     public boolean isValidFunctionStatement() {

@@ -8,7 +8,7 @@ import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
  */
 public class ReturnException extends RuntimeException {
     public ReturnException(Expression value) {
-        this.expression = new ValueExpression(value.getValue());
+        this.expression = new ValueExpression<>(value.getValue());
     }
 
     private Expression expression;
