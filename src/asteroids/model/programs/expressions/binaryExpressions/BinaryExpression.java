@@ -11,6 +11,8 @@ public abstract class BinaryExpression<T, O> extends Expression<T> {
     public BinaryExpression(Expression<O> leftOperand, Expression<O> rightOperand) {
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;
+        leftOperand.setStatement(getStatement());
+        rightOperand.setStatement(getStatement());
     }
 
     private Expression<O> leftOperand;
