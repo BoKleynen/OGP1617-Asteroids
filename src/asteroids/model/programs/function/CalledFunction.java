@@ -7,6 +7,7 @@ import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.programs.statements.Statement;
+import asteroids.model.util.exceptions.BreakException;
 import asteroids.model.util.exceptions.ReturnException;
 
 import java.util.HashMap;
@@ -35,7 +36,9 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
     private Map<String, Expression> arguments = new HashMap<>();
 
     public Expression getParameter(String paramName) {
-        return new ValueExpression<>(arguments.get(paramName).getValue());
+    	Expression returnExpresion = new ValueExpression<>(arguments.get(paramName).getValue());
+    	returnExpresion.setStatement(arguments.get(paramName).getStatement());
+        return returnExpresion;
     }
 
     public Expression execute() {
