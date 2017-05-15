@@ -8,8 +8,6 @@ import asteroids.model.programs.function.CalledFunction;
  */
 public class ReadParameter extends Expression {
     public ReadParameter(String paramName) {
-    	
-    	//assert(getStatement() != null);
         this.paramName = paramName;
     }
 
