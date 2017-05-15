@@ -20,6 +20,6 @@ public class FunctionCall extends Expression {
 
     @Override
     public Object getValue() {
-        return new CalledFunction(getStatement().getParent().getFunction(functionName), actualArgs).execute().getValue();
+        return new CalledFunction(getStatement().getParent().getFunction(functionName), actualArgs, getStatement()).execute().getValue();
     }
 }

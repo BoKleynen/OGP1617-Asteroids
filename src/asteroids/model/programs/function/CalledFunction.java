@@ -20,13 +20,14 @@ import java.util.Map;
  */
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
-    public CalledFunction(Function function, List<Expression> actualArgs) {
+    public CalledFunction(Function function, List<Expression> actualArgs, Statement callingStatement) {
         oldParent = (CalledFunction) function.getBody().getParent();
         body = function.getBody();
         body.setParent(this);
         setParent(function.getParent());
 
         for (int i = 0; i < actualArgs.size(); i++) {
+        	actualArgs.get(i).setStatement(callingStatement);
             arguments.put("$" + (i+1), actualArgs.get(i));
         }
     }
@@ -37,6 +38,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public Expression getParameter(String paramName) {
     	Expression returnExpresion = new ValueExpression<>(arguments.get(paramName).getValue());
+    	assert(arguments.get(paramName).getStatement() != null);
     	returnExpresion.setStatement(arguments.get(paramName).getStatement());
         return returnExpresion;
     }
@@ -63,9 +65,12 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
     public Expression getVariable(String varName) {
         if (localVariables.containsKey(varName))
             return localVariables.get(varName);
-
-        else
-            return new ValueExpression<>(getParent().getVariable(varName).getValue());
+        else {
+        	assert(getParent().getVariable(varName) != null);
+            Expression returnVal = new ValueExpression<>(getParent().getVariable(varName).getValue());
+            returnVal.setStatement(body);
+            return returnVal;
+        }
     }
 
     @Override
