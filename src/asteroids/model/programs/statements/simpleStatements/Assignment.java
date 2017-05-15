@@ -5,7 +5,7 @@ import asteroids.model.programs.expressions.Expression;
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Assignment extends SimpleStatement {
+public class Assignment extends asteroids.model.programs.statements.Statement {
 
     public Assignment(String name, Expression value) {
         this.name = name;
@@ -27,6 +27,7 @@ public class Assignment extends SimpleStatement {
 
     @Override
     public void execute() {
+        System.out.println("adding: " + name + " = " + value.getValue());
     	getParent().addVariable(name, value);
     }
 

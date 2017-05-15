@@ -1,12 +1,10 @@
 package asteroids.model.programs.statements.composedStatements;
 
-import asteroids.model.Program;
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.statements.Statement;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Created by Bo on 28/04/2017.
@@ -34,9 +32,21 @@ public class If<T extends Parent<T>> extends Statement<T> {
         return elseBody;
     }
 
+    private Iterator<Statement<T>> bodyIterator;
+
     @Override
     public void execute() {
-        throw new RuntimeException("something went terribly wrong");
+        if (condition.getValue()) {
+            bodyIterator = ifBody.iterator();
+        }
+
+        else if (elseBody != null) {
+            bodyIterator = elseBody.iterator();
+        }
+
+        while (bodyIterator != null && bodyIterator.hasNext()) {
+            bodyIterator.next().execute();
+        }
     }
 
     @Override
@@ -46,28 +56,6 @@ public class If<T extends Parent<T>> extends Statement<T> {
 
         if (elseBody != null)
             elseBody.setParent(parent);
-    }
-
-    @Override
-    public Iterator<Statement<T>> iterator() {
-        return new Iterator<Statement<T>>() {
-
-            Iterator<Statement<T>> bodyIterator = condition.getValue() ? ifBody.iterator()
-                    : (elseBody != null ? elseBody.iterator() : null);
-
-            @Override
-            public boolean hasNext() {
-                return bodyIterator != null && bodyIterator.hasNext();
-            }
-
-            @Override
-            public Statement<T> next() {
-                if (! hasNext())
-                    throw new NoSuchElementException();
-
-                return bodyIterator.next();
-            }
-        };
     }
 
     @Override

@@ -2,7 +2,6 @@ package asteroids.model.programs.statements.composedStatements;
 
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.statements.simpleStatements.SimpleStatement;
 import asteroids.model.programs.statements.Statement;
 import asteroids.model.util.exceptions.BreakException;
 
@@ -13,7 +12,7 @@ import java.util.Iterator;
  *
  * TODO: implement expressions so they can be converted to boolean types
  */
-public class While<T extends Parent<T>> extends SimpleStatement<T> {
+public class While<T extends Parent<T>> extends Statement<T> {
 
     public While(Expression<Boolean> condition, Statement<T> body) {
         this.condition = condition;

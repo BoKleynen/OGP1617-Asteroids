@@ -44,7 +44,7 @@ public class Sequence<T extends Parent<T>> extends Statement<T> {
     }
 
     class SequenceIterator implements Iterator<Statement<T>> {
-        public SequenceIterator() {
+        SequenceIterator() {
             for (Statement<T> statement : statements) {
                 subIterators.add(statement.iterator());
             }

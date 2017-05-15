@@ -44,7 +44,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public Expression getParameter(String paramName) {
     	Expression returnExpresion = new ValueExpression<>(arguments.get(paramName).getValue());
-    	assert(arguments.get(paramName).getStatement() != null);
+//    	assert(arguments.get(paramName).getStatement() != null);
     	returnExpresion.setStatement(arguments.get(paramName).getStatement());
         return returnExpresion;
     }
