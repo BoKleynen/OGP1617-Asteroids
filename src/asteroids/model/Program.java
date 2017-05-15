@@ -81,6 +81,10 @@ public class Program implements Parent<Program> {
 	public Expression getVariable(String varName) {
 		return globalVariables.get(varName);
 	}
+	
+	public Map<String, Expression> getAllVariables() {
+		return globalVariables;
+	}
 
 	@Override
 	public void addVariable(String varName, Expression value) {

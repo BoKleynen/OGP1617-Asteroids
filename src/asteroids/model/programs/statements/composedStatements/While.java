@@ -38,6 +38,7 @@ public class While<T extends Parent<T>> extends SimpleStatement<T> {
 					iterator.next().execute();
 				}
 			} catch (BreakException br) {
+				System.out.println("Breaking out of loop.");
 				break;
 			}
 
