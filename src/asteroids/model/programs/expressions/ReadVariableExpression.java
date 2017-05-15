@@ -19,7 +19,6 @@ public class ReadVariableExpression extends Expression {
 
 	@Override
 	public Object getValue() {
-		assert (getStatement() != null);
 		return getStatement().getParent().getVariable(name).getValue();
 	}
 	
