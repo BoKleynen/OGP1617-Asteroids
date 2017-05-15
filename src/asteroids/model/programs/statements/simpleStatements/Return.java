@@ -25,4 +25,9 @@ public class Return extends SimpleStatement<CalledFunction> {
     public boolean isValidFunctionStatement() {
         return true;
     }
+
+    @Override
+    public void setParent(CalledFunction parent) {
+        super.setParent(parent);
+    }
 }
