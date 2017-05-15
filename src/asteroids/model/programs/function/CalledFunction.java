@@ -20,17 +20,23 @@ import java.util.Map;
  */
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
-    public CalledFunction(Function function, List<Expression> actualArgs) {
-        oldParent = function.getBody().getParent();
+    public CalledFunction(Function function, List<Expression> actualArgs, Statement callingStatement) {
+        oldParent = (CalledFunction) function.getBody().getParent();
         body = function.getBody();
         body.setParent(this);
         setParent(function.getParent());
-
+        this.callingStatement = callingStatement;
+        this.function = function;
+        
         for (int i = 0; i < actualArgs.size(); i++) {
         	actualArgs.get(i).setStatement(callingStatement);
             arguments.put("$" + (i+1), actualArgs.get(i));
         }
     }
+    
+    private Function function;
+    
+    private Statement callingStatement;
 
     private CalledFunction oldParent;
 
@@ -63,12 +69,16 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     @Override
     public Expression getVariable(String varName) {
+    	System.out.println("Known variables: ");
+        for (String name : localVariables.keySet()) {
+        	System.out.println(name + ": " + localVariables.get(name).getValue());
+        }
         if (localVariables.containsKey(varName))
             return localVariables.get(varName);
         else {
-        	assert(getParent().getVariable(varName) != null);
+        	System.out.println("Variable " + varName + " is not local.");
             Expression returnVal = new ValueExpression<>(getParent().getVariable(varName).getValue());
-            returnVal.setStatement(body);
+            returnVal.setStatement(callingStatement);
             return returnVal;
         }
     }
