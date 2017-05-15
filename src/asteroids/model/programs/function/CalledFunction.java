@@ -49,7 +49,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
             return rt.getExpression();
         }
         body.setParent(oldParent);
-        return new ValueExpression<>(null);
+        throw new IllegalStateException("no return statement found");
     }
 
     private Map<String, Expression> localVariables = new HashMap<>();
