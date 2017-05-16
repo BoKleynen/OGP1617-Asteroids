@@ -79,6 +79,9 @@ public class Program implements Parent<Program> {
 
 	@Override
 	public Expression getVariable(String varName) {
+		if (!globalVariables.containsKey(varName))
+			throw new IllegalArgumentException("Variable " + varName + " is never assigned.");
+
 		return globalVariables.get(varName);
 	}
 	
@@ -112,7 +115,7 @@ public class Program implements Parent<Program> {
 
 	private double timeRemaining = 0;
 
-	@Basic
+	@Override @Basic
 	public double getTimeRemaining() {
 		return timeRemaining;
 	}

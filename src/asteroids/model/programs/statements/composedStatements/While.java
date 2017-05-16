@@ -31,6 +31,7 @@ public class While<T extends Parent<T>> extends Statement<T> {
 	@Override
 	public void execute() {
 		while (condition.getValue()) {
+			System.out.println(getParent().getTimeRemaining());
 			Iterator<Statement<T>> iterator = body.iterator();
 			try {
 				while (iterator.hasNext()) {

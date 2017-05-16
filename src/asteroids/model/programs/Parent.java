@@ -33,4 +33,6 @@ public interface Parent<T> {
 
     Ship getShip();
 
+    double getTimeRemaining();
+
 }

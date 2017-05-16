@@ -114,4 +114,9 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
     public Ship getShip() {
         return getParent().getShip();
     }
+
+    @Override
+    public double getTimeRemaining() {
+        return getParent().getTimeRemaining();
+    }
 }
