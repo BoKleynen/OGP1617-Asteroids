@@ -12,12 +12,12 @@ public class Return extends Statement<CalledFunction> {
 
     public Return(Expression value) {
         this.value = value;
-        value.setStatement(this);
     }
     private Expression value;
 
     @Override
     public void execute() {
+        value.setStatement(this);
 		throw new ReturnException(value);
     }
 

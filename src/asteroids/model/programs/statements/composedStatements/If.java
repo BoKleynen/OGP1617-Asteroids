@@ -17,7 +17,6 @@ public class If<T extends Parent<T>> extends Statement<T> {
         this.condition = condition;
         this.ifBody = ifBody;
         this.elseBody = elseBody;
-        condition.setStatement(this);
     }
 
     private Expression<Boolean> condition;
@@ -36,6 +35,7 @@ public class If<T extends Parent<T>> extends Statement<T> {
 
     @Override
     public void execute() {
+        condition.setStatement(this);
         if (condition.getValue()) {
             bodyIterator = ifBody.iterator();
         }

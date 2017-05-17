@@ -17,19 +17,16 @@ public class While<T extends Parent<T>> extends Statement<T> {
     public While(Expression<Boolean> condition, Statement<T> body) {
         this.condition = condition;
         this.body = body;
-        condition.setStatement(this);
     }
 
     private Expression<Boolean> condition;
 
     private Statement<T> body;
 
-	public Statement getBody() {
-		return body;
-	}
 
 	@Override
 	public void execute() {
+		condition.setStatement(this);
 		while (condition.getValue()) {
 			System.out.println(getParent().getTimeRemaining());
 			Iterator<Statement<T>> iterator = body.iterator();

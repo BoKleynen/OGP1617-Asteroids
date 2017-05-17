@@ -18,6 +18,7 @@ public class Print<T extends Parent<T>> extends Statement<T> {
 
     @Override
     public void execute() {
+        expression.setStatement(this);
         getParent().addPrintedObject(expression.getValue());
         System.out.println(expression.toString());
     }

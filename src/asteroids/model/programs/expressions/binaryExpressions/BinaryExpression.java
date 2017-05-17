@@ -11,8 +11,6 @@ public abstract class BinaryExpression<T, O> extends Expression<T> {
     public BinaryExpression(Expression<O> leftOperand, Expression<O> rightOperand) {
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;
-        leftOperand.setStatement(getStatement());
-        rightOperand.setStatement(getStatement());
     }
 
     private Expression<O> leftOperand;
@@ -29,6 +27,7 @@ public abstract class BinaryExpression<T, O> extends Expression<T> {
 
     @Override
     public void setStatement(Statement statement) {
+        super.setStatement(statement);
         leftOperand.setStatement(statement);
         rightOperand.setStatement(statement);
     }

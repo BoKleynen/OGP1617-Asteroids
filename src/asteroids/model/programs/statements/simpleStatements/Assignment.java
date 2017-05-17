@@ -12,14 +12,9 @@ public class Assignment<T extends Parent<T>> extends Statement<T> {
     public Assignment(String name, Expression value) {
         this.name = name;
         this.value = value;
-        value.setStatement(this);
     }
 
     private String name;
-
-    public String getName() {
-        return name;
-    }
 
     private Expression value;
 
@@ -29,6 +24,7 @@ public class Assignment<T extends Parent<T>> extends Statement<T> {
 
     @Override
     public void execute() {
+        value.setStatement(this);
         System.out.println("adding: " + name + " = " + value.getValue());
     	getParent().addVariable(name, value);
     }
