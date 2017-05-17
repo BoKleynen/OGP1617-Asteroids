@@ -17,4 +17,11 @@ public class AsteroidExpression extends EntityExpression<Asteroid> {
                 .min(Comparator.comparingDouble(asteroid -> asteroid.getDistanceBetween(getShip())))
                 .orElse(null);
     }
+
+    @Override
+    public Expression<Asteroid> clone() {
+        Expression clone = new AsteroidExpression();
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

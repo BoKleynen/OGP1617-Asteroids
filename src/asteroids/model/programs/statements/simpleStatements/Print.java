@@ -1,11 +1,13 @@
 package asteroids.model.programs.statements.simpleStatements;
 
+import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.Statement;
 
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Print extends asteroids.model.programs.statements.Statement {
+public class Print<T extends Parent<T>> extends Statement<T> {
 
     public Print(Expression expression) {
         this.expression = expression;
@@ -23,5 +25,12 @@ public class Print extends asteroids.model.programs.statements.Statement {
     @Override
     public boolean isValidFunctionStatement() {
         return false;
+    }
+
+    @Override
+    public Statement<T> clone() throws CloneNotSupportedException {
+        Statement<T> clone = new Print<>(expression.clone());
+        clone.setParent(getParent());
+        return clone;
     }
 }

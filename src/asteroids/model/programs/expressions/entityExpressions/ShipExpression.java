@@ -21,4 +21,10 @@ public class ShipExpression extends EntityExpression<Ship> {
                 .orElse(null);
     }
 
+    @Override
+    public Expression<Ship> clone() {
+        Expression clone = new ShipExpression();
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

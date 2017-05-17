@@ -62,4 +62,11 @@ public class If<T extends Parent<T>> extends Statement<T> {
     public boolean isValidFunctionStatement() {
         return ifBody.isValidFunctionStatement() && (elseBody == null || elseBody.isValidFunctionStatement());
     }
+
+    @Override
+    public Statement<T> clone() throws CloneNotSupportedException {
+        Statement<T> clone = new If<>(condition.clone(), ifBody.clone(), elseBody == null ? null : elseBody.clone());
+        clone.setParent(getParent());
+        return clone;
+    }
 }

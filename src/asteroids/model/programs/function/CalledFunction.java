@@ -20,25 +20,19 @@ import java.util.Map;
  */
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
-    public CalledFunction(Function function, List<Expression> actualArgs, Statement callingStatement) {
+    public CalledFunction(Function function, List<Expression> actualArgs, Statement callingStatement) throws CloneNotSupportedException{
+        System.out.println("function call");
         for (int i = 0; i < actualArgs.size(); i++) {
-            arguments.put("$" + (i+1), new ValueExpression<>(actualArgs.get(i).getValue()));
+            arguments.put("$" + (i+1), actualArgs.get(i));
         }
-        
-        System.out.println("function");
-        oldParent = function.getBody().getParent();
-        body = function.getBody();
-        body.setParent(this);
         setParent(function.getParent());
+        body = function.getBody().clone();
+        body.setParent(this);
         this.callingStatement = callingStatement;
-        this.function = function;
     }
     
-    private Function function;
-    
-    private Statement callingStatement;
 
-    private CalledFunction oldParent;
+    private Statement callingStatement;
 
     private Map<String, Expression> arguments = new HashMap<>();
 
@@ -56,10 +50,8 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
                 bodyIterator.next().execute();
             }
         } catch (ReturnException rt) {
-            body.setParent(oldParent);
             return rt.getExpression();
         }
-        body.setParent(oldParent);
         throw new IllegalStateException("no return statement found");
     }
 

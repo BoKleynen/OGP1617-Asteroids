@@ -1,5 +1,7 @@
 package asteroids.model.programs.statements.actionStatements;
 
+import asteroids.model.Program;
+import asteroids.model.programs.statements.Statement;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 
 /**
@@ -16,5 +18,10 @@ public class DisableThruster extends ActionStatement {
         } catch (NotEnoughTimeRemainingException e) {
             getParent().pause(this);
         }
+    }
+
+    @Override
+    public Statement<Program> clone() throws CloneNotSupportedException {
+        return null;
     }
 }

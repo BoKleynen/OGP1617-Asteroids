@@ -13,6 +13,13 @@ public class GetRadius extends EntityCharacteristicExpression {
 
     @Override
     public Double getValue() {
-        return getEntity().getRadius();
+        return getEntity().getValue().getRadius();
+    }
+
+    @Override
+    public Expression<Double> clone() {
+        Expression clone = new GetRadius(getEntity().clone());
+        clone.setStatement(getStatement());
+        return clone;
     }
 }

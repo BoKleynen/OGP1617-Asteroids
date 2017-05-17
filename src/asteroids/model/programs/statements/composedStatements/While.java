@@ -55,4 +55,11 @@ public class While<T extends Parent<T>> extends Statement<T> {
 	public boolean isValidFunctionStatement() {
 		return body.isValidFunctionStatement();
 	}
+
+	@Override
+	public Statement<T> clone() throws CloneNotSupportedException {
+		Statement<T> clone = new While<>(condition.clone(), body.clone());
+		clone.setParent(getParent());
+		return clone;
+	}
 }

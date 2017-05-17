@@ -20,6 +20,15 @@ public class FunctionCall extends Expression {
 
     @Override
     public Object getValue() {
-        return new CalledFunction(getStatement().getParent().getFunction(functionName), actualArgs, getStatement()).execute().getValue();
+        try {
+            return new CalledFunction(getStatement().getParent().getFunction(functionName), actualArgs, getStatement()).execute().getValue();
+        } catch (CloneNotSupportedException e) { return null;}
+    }
+
+    @Override
+    public Expression clone() {
+        Expression clone = new FunctionCall(functionName, actualArgs);
+        clone.setStatement(getStatement());
+        return clone;
     }
 }

@@ -1,6 +1,7 @@
 package asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions;
 
 import asteroids.model.Ship;
+import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.entityExpressions.SelfExpression;
 
 /**
@@ -14,6 +15,13 @@ public class GetDirection extends EntityCharacteristicExpression {
 
     @Override
     public Double getValue() {
-        return ((Ship) getEntity()).getOrientation();
+        return ((Ship) getEntity().getValue()).getOrientation();
+    }
+
+    @Override
+    public Expression<Double> clone() {
+        Expression clone = new GetDirection();
+        clone.setStatement(getStatement());
+        return clone;
     }
 }

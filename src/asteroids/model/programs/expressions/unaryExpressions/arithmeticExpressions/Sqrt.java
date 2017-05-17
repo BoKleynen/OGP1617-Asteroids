@@ -15,4 +15,10 @@ public class Sqrt extends UnaryArithmeticExpression {
         return Math.sqrt((Double) getOperand().getValue());
     }
 
+    @Override
+    public Expression<Double> clone() {
+        Expression clone = new Sqrt(getOperand());
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

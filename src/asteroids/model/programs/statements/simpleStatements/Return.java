@@ -30,4 +30,11 @@ public class Return extends Statement<CalledFunction> {
     public void setParent(CalledFunction parent) {
         super.setParent(parent);
     }
+
+    @Override
+    public Statement<CalledFunction> clone() throws CloneNotSupportedException {
+        Statement<CalledFunction> clone = new Return(value.clone());
+        clone.setParent(getParent());
+        return clone;
+    }
 }

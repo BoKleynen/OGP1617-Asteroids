@@ -1,11 +1,13 @@
 package asteroids.model.programs.statements.simpleStatements;
 
+import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.Statement;
 
 /**
  * Created by Bo on 28/04/2017.
  */
-public class Assignment extends asteroids.model.programs.statements.Statement {
+public class Assignment<T extends Parent<T>> extends Statement<T> {
 
     public Assignment(String name, Expression value) {
         this.name = name;
@@ -34,5 +36,11 @@ public class Assignment extends asteroids.model.programs.statements.Statement {
     @Override
     public boolean isValidFunctionStatement() {
         return true;
+    }
+
+    @Override
+    public Statement<T> clone() throws CloneNotSupportedException {
+        Statement<T> clone = new Assignment<>(name, value.clone());
+        return clone;
     }
 }

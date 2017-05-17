@@ -16,4 +16,11 @@ public class Not extends UnaryExpression<Boolean> {
     public Boolean getValue() {
         return ! (Boolean) getOperand().getValue();
     }
+
+    @Override
+    public Expression<Boolean> clone() {
+        Expression clone = new Not(getOperand());
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

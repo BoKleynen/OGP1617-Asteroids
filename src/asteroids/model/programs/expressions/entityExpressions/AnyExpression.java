@@ -19,4 +19,11 @@ public class AnyExpression extends EntityExpression<Entity> {
                 .findAny()
                 .get();
     }
+
+    @Override
+    public Expression<Entity> clone() {
+        Expression clone = new AnyExpression();
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

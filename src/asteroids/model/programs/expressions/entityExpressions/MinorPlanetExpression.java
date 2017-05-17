@@ -17,4 +17,11 @@ public class MinorPlanetExpression extends EntityExpression<MinorPlanet> {
                 .min(Comparator.comparingDouble(minorPlanet -> minorPlanet.getDistanceBetween(getShip())))
                 .orElse(null);
     }
+
+    @Override
+    public Expression<MinorPlanet> clone() {
+        Expression clone = new MinorPlanetExpression();
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

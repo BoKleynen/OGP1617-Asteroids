@@ -10,6 +10,7 @@ public abstract class UnaryExpression<T> extends Expression<T> {
 
     public UnaryExpression(Expression operand) {
         this.operand = operand;
+        operand.setStatement(getStatement());
     }
 
     private Expression operand;

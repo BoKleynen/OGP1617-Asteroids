@@ -19,4 +19,11 @@ public class BulletExpression extends EntityExpression<Bullet> {
                 .min(Comparator.comparingDouble(bullet -> bullet.getDistanceBetween(getShip())))
                 .orElse(null);
     }
+
+    @Override
+    public Expression<Bullet> clone() {
+        Expression clone = new BulletExpression();
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

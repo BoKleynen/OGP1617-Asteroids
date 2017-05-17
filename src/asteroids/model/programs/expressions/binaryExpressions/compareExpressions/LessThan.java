@@ -16,4 +16,11 @@ public class LessThan extends CompareExpression<Double> {
     public Boolean getValue() {
         return getLeftOperand().getValue() < getRightOperand().getValue();
     }
+
+    @Override
+    public Expression<Boolean> clone() {
+        Expression clone = new LessThan(getLeftOperand(), getRightOperand());
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

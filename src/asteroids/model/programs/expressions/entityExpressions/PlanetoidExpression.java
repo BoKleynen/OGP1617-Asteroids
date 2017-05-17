@@ -17,4 +17,11 @@ public class PlanetoidExpression extends EntityExpression<Planetoid> {
                 .min(Comparator.comparingDouble(planetoid -> planetoid.getDistanceBetween(getShip())))
                 .orElse(null);
     }
+
+    @Override
+    public Expression<Planetoid> clone() {
+        Expression clone = new PlanetoidExpression();
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }

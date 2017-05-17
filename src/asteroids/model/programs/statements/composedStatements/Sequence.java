@@ -121,4 +121,16 @@ public class Sequence<T extends Parent<T>> extends Statement<T> {
         }
         return true;
     }
+
+    @Override
+    public Statement<T> clone() throws CloneNotSupportedException {
+        List<Statement<T>> statements = new ArrayList<>();
+        for (Statement<T> statement : this.statements) {
+            statements.add(statement.clone());
+        }
+
+        Statement<T> clone = new Sequence<>(statements);
+        clone.setParent(getParent());
+        return clone;
+    }
 }

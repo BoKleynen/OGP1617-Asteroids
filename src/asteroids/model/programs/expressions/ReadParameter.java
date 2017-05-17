@@ -15,6 +15,14 @@ public class ReadParameter extends Expression {
 
     @Override
     public Object getValue() {
+        System.out.println(getStatement());
         return ((CalledFunction) getStatement().getParent()).getParameter(paramName).getValue();
+    }
+
+    @Override
+    public Expression clone() {
+        Expression clone = new ReadParameter(paramName);
+        clone.setStatement(getStatement());
+        return clone;
     }
 }

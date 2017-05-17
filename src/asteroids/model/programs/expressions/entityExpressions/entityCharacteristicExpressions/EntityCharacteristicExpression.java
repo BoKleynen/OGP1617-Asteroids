@@ -20,8 +20,8 @@ public abstract class EntityCharacteristicExpression extends Expression<Double> 
         this.entity = entity;
     }
 
-    public Entity getEntity() {
-        return entity.getValue();
+    public Expression<Entity> getEntity() {
+        return entity;
     }
 
     @Override
