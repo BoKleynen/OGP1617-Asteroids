@@ -23,7 +23,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
     public CalledFunction(Function function, List<Expression> actualArgs, Statement callingStatement) throws CloneNotSupportedException{
         System.out.println("function call");
         for (int i = 0; i < actualArgs.size(); i++) {
-            arguments.put("$" + (i+1), actualArgs.get(i));
+            arguments.put("$" + (i+1), new ValueExpression<>(actualArgs.get(i).getValue()));
         }
         setParent(function.getParent());
         body = function.getBody().clone();
@@ -61,14 +61,14 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     @Override
     public Expression getVariable(String varName) {
-    	System.out.println("Known variables: ");
-        for (String name : localVariables.keySet()) {
-        	System.out.println(name + ": " + localVariables.get(name).getValue());
-        }
+//    	System.out.println("Known variables: ");
+//        for (String name : localVariables.keySet()) {
+//        	System.out.println(name + ": " + localVariables.get(name).getValue());
+//        }
         if (localVariables.containsKey(varName))
             return localVariables.get(varName);
         else {
-        	System.out.println("Variable " + varName + " is not local.");
+//        	System.out.println("Variable " + varName + " is not local.");
             Expression returnVal = new ValueExpression<>(getParent().getVariable(varName).getValue());
             returnVal.setStatement(callingStatement);
             return returnVal;

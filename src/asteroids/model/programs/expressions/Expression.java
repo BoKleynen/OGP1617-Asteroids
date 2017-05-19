@@ -25,7 +25,6 @@ public abstract class Expression <T> implements Cloneable {
 
     @Raw
     public void setStatement(Statement statement) {
-        System.out.println("setting statement");
         this.statement = statement;
     }
 
