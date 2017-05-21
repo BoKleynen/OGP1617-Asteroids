@@ -43,9 +43,11 @@ public class Bullet extends Entity {
     /**
      * Creates a new bullet with all the given parameters.
      * The initial position will be equal to the vector position. The initial velocity will be equal to the vector velocity.
-     * The maximum speed will be equal to maxSpeed. The initial radius will be equal to radius. 
+     * The maximum speed will be equal to maxSpeed. The initial radius will be equal to radius. The smallest allowed radius
+     * will be equal to getMinRadius. The smallest allowed mass density will be equal to getMassDensity(). The mass will be
+     * equal to the smallest allowed mass.
      * If this entity overlaps another entity in the given world, it will not be added to that world.
-     * 
+     *  
      * @param position	The position at which to create the bullet
 	 * @param maxSpeed	The highest allowed speed for this bullet
 	 * @param velocity	The current velocity of this bullet
@@ -85,6 +87,10 @@ public class Bullet extends Entity {
 	 * 			| this.maxWallHits == 2
 	 * @Post	The initial amount of times this bullet has bounced off a wall will be equal to zero.
 	 * 			| this.wallHits == 0
+	 * @Post	The mass of this bullet is equal to the smallest allowed mass of a bullet with the give radius
+	 * 			| this.mass = getMinMass(radius, getMassDensity())
+	 * @Post	The smallest allowed mass density of this bullet is equal to getMassDensity().
+	 * 			| this.getMinMassDensity() = getMassDensity()
 	 */
     public Bullet(Vector position, Vector velocity, double maxSpeed, double radius, char maxWallHits) {
 
@@ -95,7 +101,7 @@ public class Bullet extends Entity {
                 getMinRadius(),
                 radius,
                 getMassDensity(),
-                getMassDensity() * 4/3 * Math.PI * Math.pow(radius, 3)
+                getMinMass(radius, getMassDensity())
         );
 
         this.maxWallHits = maxWallHits;
@@ -272,7 +278,8 @@ public class Bullet extends Entity {
    }
 
    /**
-    * Terminates this bullet. A terminated bullet no longer belongs to a ship or a world.
+    * Terminates this bullet. A terminated bullet no longer belongs to a ship or a world and it doesn't interact
+    * with other entities anymore.
     * 
     * @Post	This bullet does not belong to a world.
     * 		| this.getWorld() == null
