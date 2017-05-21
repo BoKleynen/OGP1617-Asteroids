@@ -299,8 +299,8 @@ public class Ship extends Entity {
     }
 
     /**
-     * Moves the ship for the specified amount of time, if this ships thruster(s) is (are) active, this ship will be
-     * accelerated for the specified amount of time.
+     * Moves the ship for the specified amount of time, if this ships thruster(s) is (are) active, this ship will also
+     * accelerate for the specified amount of time.
      *
      * @param 	time
      * 			The time to move in the direction of the velocity vector.
@@ -619,8 +619,10 @@ public class Ship extends Entity {
                 ship.getVelocity().getY() - Jy/ship.getTotalMass());
     }
     
-    /** Terminates this ship. A terminated ship no longer belongs to a world and no longer has any bullets.
-     * 	All bullets currently in this ship will be terminated as well.
+    /** 
+     * Terminates this ship. A terminated ship no longer belongs to a world and no longer has any bullets.
+     * All bullets currently in this ship will be terminated as well. If this ship was in a world, it will
+     * be removed from that world.
      * 
      * @Post 	All bullets currently in this ship will be terminated.
      * 			| for bullet in this.getAllBullets()
