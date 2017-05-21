@@ -253,7 +253,7 @@ public class Bullet extends Entity {
     /**
      * Increments the amount of wall hits for this bullet by 1.
      * 
-     * @Post	...
+     * @Post	The wallHits counter will be increased by one.
      * 			| (new this).getWallHits() == this.getWallHits() + 1
      */
    public void incrementWallHits() {

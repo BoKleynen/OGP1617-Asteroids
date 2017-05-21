@@ -15,7 +15,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar   A terminated entity does not belong to a world
  *          | if isTerminated() then hasWorld() == false
  * @Invar   An entities speed is less then or equal to the speed of light
- *          This is the magnitude of an entities velocity is less then or equal to the speed of light
+ *          This means the magnitude of an entities velocity is less then or equal to the speed of light
  *          | getVelocity().getMagnitude() <= getSpeedOfLight()
  */
 public abstract class Entity {
