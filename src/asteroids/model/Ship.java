@@ -122,6 +122,17 @@ public class Ship extends Entity {
 
     private static final double minMassDensity = 1.42 * 1e12;
 
+    /**
+     * Returns the minimal mass density for a Ship.
+     *
+     * @return 	The minimal mass density for a Ship.
+     * 			| result = Ship.minMassDensity
+     */
+    @Basic @Immutable
+    public static double getMinMassDensity() {
+        return minMassDensity;
+    }
+
     private static final double minRadius = 10;
 
     /**
