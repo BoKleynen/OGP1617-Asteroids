@@ -36,7 +36,6 @@ public class Assignment<T extends Parent<T>> extends Statement<T> {
 
     @Override
     public Statement<T> clone() throws CloneNotSupportedException {
-        Statement<T> clone = new Assignment<>(name, value.clone());
-        return clone;
+        return new Assignment<>(name, value.clone());
     }
 }

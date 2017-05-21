@@ -2,11 +2,12 @@ package asteroids.model.programs.statements.composedStatements;
 
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.expressions.binaryExpressions.BinaryExpression;
 import asteroids.model.programs.statements.Statement;
+import asteroids.model.programs.statements.simpleStatements.Break;
 import asteroids.model.util.exceptions.BreakException;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Bo on 28/04/2017.
@@ -24,20 +25,50 @@ public class While<T extends Parent<T>> extends Statement<T> {
 
     private Statement<T> body;
 
+    private Iterator<Statement<T>> bodyIterator = new Iterator<Statement<T>>() {
+
+		Iterator<Statement<T>> bodyIterator;
+		Statement<T> statement;
+
+		@Override
+		public boolean hasNext() {
+			try {
+				if (statement != null) {
+					return true;
+				} else if (bodyIterator != null && bodyIterator.hasNext()) {
+					statement = bodyIterator.next();
+					return true;
+				} else if (condition.getValue()) {
+					bodyIterator = body.iterator();
+					statement = bodyIterator.next();
+					return true;
+				} else {
+					return false;
+				}
+			} catch (BreakException br) {
+				return false;
+			}
+		}
+
+		@Override
+		public Statement<T> next() {
+			if (!hasNext())
+				throw new NoSuchElementException();
+			Statement<T> next = statement;
+			statement = null;
+			return next;
+		}
+	};
 
 	@Override
 	public void execute() {
 		condition.setStatement(this);
-		while (condition.getValue()) {
-			Iterator<Statement<T>> iterator = body.iterator();
+		while (bodyIterator.hasNext()) {
 			try {
-				while (iterator.hasNext()) {
-					iterator.next().execute();
-				}
+				bodyIterator.next().execute();
 			} catch (BreakException br) {
 				break;
 			}
-
 		}
 	}
 

@@ -2,6 +2,7 @@ package asteroids.model;
 
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.util.exceptions.BreakException;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
@@ -37,24 +38,29 @@ public class Program implements Parent<Program> {
 			unPause();
 
 			if (stashedStatement != null) {
-				stashedStatement.execute();
-				stashedStatement = null;
+				try {
+					stashedStatement.execute();
+					stashedStatement = null;
+				} catch (NotEnoughTimeRemainingException ex) {
+					isPaused = true;
+				}
 			}
 		}
 
 		while (! isPaused && mainIterator.hasNext()) {
-			mainIterator.next().execute();
+			try {
+				stashedStatement = mainIterator.next();
+				stashedStatement.execute();
+			} catch (NotEnoughTimeRemainingException ex) {
+				isPaused = true;
+				break;
+			}
 		}
 
 		return isPaused ? null : printedObjects;
 	}
 
 	private boolean isPaused = false;
-
-	public void pause(Statement statement) {
-		isPaused = true;
-		stashedStatement = statement;
-	}
 	
 	public void unPause() {
 		isPaused = false;
@@ -73,8 +79,6 @@ public class Program implements Parent<Program> {
 		}
 	}
 
-//	private Statement<Program> main;
-
 	private Map<String, Expression> globalVariables = new HashMap<>();
 
 	@Override
@@ -84,10 +88,6 @@ public class Program implements Parent<Program> {
 
 		return globalVariables.get(varName);
 	}
-	
-	public Map<String, Expression> getAllVariables() {
-		return globalVariables;
-	}
 
 	@Override
 	public void addVariable(String varName, Expression value) {
@@ -95,11 +95,6 @@ public class Program implements Parent<Program> {
 			throw new IllegalArgumentException("function and variables can not hold the same name");
 		addVariableToMap(varName, value, globalVariables);
 	}
-
-//	private void setMainStatement(Statement<Program> main) {
-//		this.main = main;
-//		main.setParent(this);
-//	}
 
 	private Ship ship;
 
@@ -124,7 +119,7 @@ public class Program implements Parent<Program> {
 		timeRemaining += time;
 	}
 
-	public void decrementTimeRemaining(double time) {
+	public void decrementTimeRemaining(double time) throws NotEnoughTimeRemainingException {
 		double newTime = timeRemaining - time;
 
 		if (newTime < 0)

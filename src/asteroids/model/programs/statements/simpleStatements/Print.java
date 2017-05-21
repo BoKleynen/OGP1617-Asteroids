@@ -11,7 +11,6 @@ public class Print<T extends Parent<T>> extends Statement<T> {
 
     public Print(Expression expression) {
         this.expression = expression;
-        expression.setStatement(this);
     }
 
     private Expression expression;
@@ -30,8 +29,6 @@ public class Print<T extends Parent<T>> extends Statement<T> {
 
     @Override
     public Statement<T> clone() throws CloneNotSupportedException {
-        Statement<T> clone = new Print<>(expression.clone());
-        clone.setParent(getParent());
-        return clone;
+        return new Print<>(expression.clone());
     }
 }

@@ -11,11 +11,11 @@ public class Skip extends ActionStatement {
 
     @Override
     public void execute() {
-        try {
+//        try {
             getParent().decrementTimeRemaining(getExecutionTime());
-        }catch (NotEnoughTimeRemainingException e) {
-            getParent().pause(this);
-        }
+//        } catch (NotEnoughTimeRemainingException e) {
+//            getParent().pause(this);
+//        }
     }
 
     @Override

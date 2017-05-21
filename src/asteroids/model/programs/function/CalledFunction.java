@@ -61,14 +61,9 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     @Override
     public Expression getVariable(String varName) {
-//    	System.out.println("Known variables: ");
-//        for (String name : localVariables.keySet()) {
-//        	System.out.println(name + ": " + localVariables.get(name).getValue());
-//        }
         if (localVariables.containsKey(varName))
             return localVariables.get(varName);
         else {
-//        	System.out.println("Variable " + varName + " is not local.");
             Expression returnVal = new ValueExpression<>(getParent().getVariable(varName).getValue());
             returnVal.setStatement(callingStatement);
             return returnVal;

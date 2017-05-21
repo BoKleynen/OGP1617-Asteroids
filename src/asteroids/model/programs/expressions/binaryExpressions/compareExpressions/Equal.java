@@ -17,8 +17,6 @@ public class Equal extends CompareExpression<Object> {
 
     @Override
     public Expression<Boolean> clone() {
-        Expression clone = new Equal(getLeftOperand(), getRightOperand());
-        clone.setStatement(getStatement());
-        return clone;
+        return new Equal(getLeftOperand().clone(), getRightOperand().clone());
     }
 }

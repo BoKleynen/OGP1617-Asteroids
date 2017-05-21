@@ -20,8 +20,6 @@ public class Addition extends BinaryArithmeticExpression {
 
     @Override
     public Expression<Double> clone() {
-        Expression<Double> clone = new Addition(getLeftOperand().clone(), getRightOperand().clone());
-        clone.setStatement(getStatement());
-        return clone;
+        return new Addition(getLeftOperand().clone(), getRightOperand().clone());
     }
 }

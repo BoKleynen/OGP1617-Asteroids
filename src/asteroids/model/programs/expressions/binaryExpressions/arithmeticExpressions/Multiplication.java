@@ -19,8 +19,6 @@ public class Multiplication extends BinaryArithmeticExpression {
 
     @Override
     public Expression<Double> clone() {
-        Expression<Double> clone = new Multiplication(getLeftOperand().clone(), getRightOperand().clone());
-        clone.setStatement(getStatement());
-        return clone;
+        return new Multiplication(getLeftOperand().clone(), getRightOperand().clone());
     }
 }

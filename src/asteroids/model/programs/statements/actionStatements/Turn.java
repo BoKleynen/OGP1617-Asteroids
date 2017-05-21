@@ -21,13 +21,8 @@ public class Turn extends ActionStatement {
 
     @Override
     public void execute() {
-        try {
-            getParent().decrementTimeRemaining(getExecutionTime());
-            getParent().getShip().turn(getAngle());
-
-        } catch (NotEnoughTimeRemainingException e) {
-            getParent().pause(this);
-        }
+        getParent().decrementTimeRemaining(getExecutionTime());
+        getParent().getShip().turn(getAngle());
     }
 
     @Override

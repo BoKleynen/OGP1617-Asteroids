@@ -15,13 +15,13 @@ public abstract class BinaryExpression<T, O> extends Expression<T> {
 
     private Expression<O> leftOperand;
 
-    public Expression<O> getLeftOperand() {
+    protected Expression<O> getLeftOperand() {
         return leftOperand;
     }
 
     private Expression<O> rightOperand;
 
-    public Expression<O> getRightOperand() {
+    protected Expression<O> getRightOperand() {
         return rightOperand;
     }
 

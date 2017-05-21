@@ -6,6 +6,7 @@ import asteroids.model.programs.Parent;
 import asteroids.model.programs.function.Function;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public abstract class Statement<T extends Parent<T>> implements Cloneable, Child<T> {
 
@@ -30,19 +31,18 @@ public abstract class Statement<T extends Parent<T>> implements Cloneable, Child
 
             @Override
             public boolean hasNext() {
-                return ! returned;
+                return !returned;
             }
 
             @Override
             public Statement<T> next() {
+                if (! hasNext())
+                    throw new NoSuchElementException();
+
                 returned = true;
-                return getStatement();
+                return Statement.this;
             }
         };
-    }
-
-    private Statement<T> getStatement() {
-        return this;
     }
 
     public abstract boolean isValidFunctionStatement();

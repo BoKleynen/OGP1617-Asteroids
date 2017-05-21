@@ -17,8 +17,9 @@ public interface Parent<T> {
 
     default void addVariableToMap(String varName, Expression value, Map<String, Expression> variables) {
         if (variables.containsKey(varName))
-            if (variables.get(varName).getValue().getClass() == value.getValue().getClass())
+            if (variables.get(varName).getValue().getClass() == value.getValue().getClass()) {
                 variables.put(varName, new ValueExpression<>(value.getValue()));
+            }
             else
                 throw new IllegalArgumentException("Expected type of " + varName +
                         " is: " + variables.get(varName).getValue().getClass().toString() +
