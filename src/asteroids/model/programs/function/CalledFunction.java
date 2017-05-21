@@ -37,10 +37,10 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
     private Map<String, Expression> arguments = new HashMap<>();
 
     public Expression getParameter(String paramName) {
-    	Expression returnExpresion = new ValueExpression<>(arguments.get(paramName).getValue());
+    	Expression returnExpression = new ValueExpression<>(arguments.get(paramName).getValue());
 //    	assert(arguments.get(paramName).getStatement() != null);
-    	returnExpresion.setStatement(arguments.get(paramName).getStatement());
-        return returnExpresion;
+    	returnExpression.setStatement(arguments.get(paramName).getStatement());
+        return returnExpression;
     }
 
     public Expression execute() {

@@ -25,7 +25,7 @@ public class Assignment<T extends Parent<T>> extends Statement<T> {
     @Override
     public void execute() {
         value.setStatement(this);
-        System.out.println("adding: " + name + " = " + value.getValue());
+//        System.out.println("adding: " + name + " = " + value.getValue());
     	getParent().addVariable(name, value);
     }
 

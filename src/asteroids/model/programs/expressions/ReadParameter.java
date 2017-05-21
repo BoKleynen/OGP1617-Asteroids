@@ -15,8 +15,8 @@ public class ReadParameter extends Expression {
 
     @Override
     public Object getValue() {
-        System.out.println("reading param");
-        System.out.println(getStatement());
+//        System.out.println("reading param");
+//        System.out.println(getStatement());
         return ((CalledFunction) getStatement().getParent()).getParameter(paramName).getValue();
     }
 

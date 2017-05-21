@@ -2,6 +2,7 @@ package asteroids.model.programs.statements.composedStatements;
 
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.expressions.binaryExpressions.BinaryExpression;
 import asteroids.model.programs.statements.Statement;
 import asteroids.model.util.exceptions.BreakException;
 
@@ -28,14 +29,12 @@ public class While<T extends Parent<T>> extends Statement<T> {
 	public void execute() {
 		condition.setStatement(this);
 		while (condition.getValue()) {
-			System.out.println(getParent().getTimeRemaining());
 			Iterator<Statement<T>> iterator = body.iterator();
 			try {
 				while (iterator.hasNext()) {
 					iterator.next().execute();
 				}
 			} catch (BreakException br) {
-				System.out.println("Breaking out of loop.");
 				break;
 			}
 

@@ -39,79 +39,40 @@ public class Sequence<T extends Parent<T>> extends Statement<T> {
         }
     }
 
+    @Override
     public Iterator<Statement<T>> iterator() {
-        return new SequenceIterator();
-    }
+        return new Iterator<Statement<T>>() {
 
-    class SequenceIterator implements Iterator<Statement<T>> {
-        SequenceIterator() {
-            for (Statement<T> statement : statements) {
-                subIterators.add(statement.iterator());
-            }
-        }
+            int index = 0;
+            Iterator<Statement<T>> subIterator = statements.get(index++).iterator();
 
-        int index = 0;
-        List<Iterator<Statement<T>>> subIterators = new ArrayList<>();
-
-        @Override
-        public boolean hasNext() {
-            for (int i = index; i < subIterators.size(); i++) {
-                if (subIterators.get(i).hasNext())
+            @Override
+            public boolean hasNext() {
+                if (subIterator.hasNext())
                     return true;
-            }
-            return false;
-        }
 
-        @Override
-        public Statement<T> next() {
-            if (! hasNext())
-                throw new NoSuchElementException();
-
-            if (subIterators.get(index).hasNext()) {
-                return subIterators.get(index++).next();
-            }
-
-            else {
-                Iterator<Statement<T>> subIterator = subIterators.get(index++);
-                while (!subIterator.hasNext()) {
-                        subIterator = statements.get(index++).iterator();
+                else {
+                    for (int i=index; i<statements.size(); i++) {
+                        index++;
+                        subIterator = statements.get(i).iterator();
+                        if (subIterator.hasNext()) {
+                            return true;
+                        }
                     }
+                    index = statements.size();
+                    return false;
+                }
+            }
+
+            @Override
+            public Statement<T> next() throws NoSuchElementException {
+                if (! hasNext())
+                    throw new NoSuchElementException();
+
                 return subIterator.next();
             }
-        }
+        };
     }
-
-//    public Iterator<Statement<T>> iterator() {
-//        return new Iterator<Statement<T>>() {
-//
-//            int index = 0;
-//            Iterator<Statement<T>> subIterator = statements.get(index++).iterator();
-//
-//            @Override
-//            public boolean hasNext() {
-//                return subIterator.hasNext() || index < statements.size();
-//            }
-//
-//            @Override
-//            public Statement<T> next() throws NoSuchElementException {
-//                if (! hasNext())
-//                    throw new NoSuchElementException();
-//
-//                if (subIterator.hasNext()) {
-//                    return subIterator.next();
-//                }
-//
-//                else {
-//                    subIterator = statements.get(index++).iterator();
-//                    while (! subIterator.hasNext()) {
-//                        subIterator = statements.get(index++).iterator();
-//                    }
-//                    return subIterator.next();
-//                }
-//
-//            }
-//        };
-//    }
 
     @Override
     public boolean isValidFunctionStatement() {
