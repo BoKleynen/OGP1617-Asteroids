@@ -10,13 +10,14 @@ import java.util.Collection;
 /**
  * @Invar   A bullet is associated with at most one world or one ship at once
  *          | getWorld() == null || getShip() == null
- * @Invar   A bullet associated with a ship, is associated with the same ship as its parent ship
- *          | if getShip() instanceof Ship
- *          |   then getShip() == getParentShip()
+ * @Invar   A bullet associated with a ship, has that ship as its parent ship.
+ *          | if getShip() instanceof Ship then
+ *          |   getShip() == getParentShip()
  * @Invar   A bullet will never collide with a wall more then the maximum amount of wall hits
  *          | getWallHits() <= getMaxWallHits()
  * @Invar   A terminated bullet is not associated with a world or a ship
- *          | if isTerminated() then !(hasShip() && hasWorld())
+ *          | if isTerminated() then 
+ *          |	!(hasShip() || hasWorld())
  *
  * @author  Bo Kleynen & Yrjo Koyen
  */
@@ -25,6 +26,8 @@ public class Bullet extends Entity {
 
 	/**
 	 * Creates a new bullet with all the given parameters that can sustain a maximum of 2 wall hits.
+	 * The velocity, position and radius are equal to respectively the given velocity, the given velocity
+	 * and the given radius.
 	 * 
 	 * @param position	The position at which to create the bullet
 	 * @param velocity	The current velocity of this bullet
@@ -36,6 +39,18 @@ public class Bullet extends Entity {
         this(position, velocity, getSpeedOfLight() ,radius,(char) 2);
     }
 
+    /**
+	 * Creates a new bullet with all the given parameters. The bullet can sustain a maximum amount of wall hits
+	 * equal to maxWallHits. The velocity, position and radius are equal to respectively the given velocity, 
+	 * the given velocity and the given radius.
+	 * 
+	 * @param position	The position at which to create the bullet.
+	 * @param velocity	The current velocity of this bullet.
+	 * @param radius	The current radius for this bullet.
+	 * @param maxWallHits	The maximum amount of times a bullet can bounce off a wall.
+	 * 
+	 * @Effect this(position, velocity, getSpeedOfLight() ,radius)
+	 */
     public Bullet(Vector position, Vector velocity, double radius, char maxWallHits) {
         this(position,velocity,getSpeedOfLight(),radius,maxWallHits);
     }
@@ -87,10 +102,10 @@ public class Bullet extends Entity {
 	 * 			| this.maxWallHits == 2
 	 * @Post	The initial amount of times this bullet has bounced off a wall will be equal to zero.
 	 * 			| this.wallHits == 0
-	 * @Post	The mass of this bullet is equal to the smallest allowed mass of a bullet with the give radius
+	 * @Post	The mass of this bullet is equal to the smallest allowed mass of a bullet with the given radius
 	 * 			| this.mass = getMinMass(radius, getMassDensity())
 	 * @Post	The smallest allowed mass density of this bullet is equal to getMassDensity().
-	 * 			| this.getMinMassDensity() = getMassDensity()
+	 * 			| this.getSmallestMassDensity() = getMassDensity()
 	 */
     public Bullet(Vector position, Vector velocity, double maxSpeed, double radius, char maxWallHits) {
 

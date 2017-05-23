@@ -13,7 +13,8 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar   An entities mass is greater then or equal to its minimal mass.
  *          | getMass() >= getMinMass(getRadius(), getSmallestMassDensity())
  * @Invar   A terminated entity does not belong to a world
- *          | if isTerminated() then hasWorld() == false
+ *          | if isTerminated() then 
+ *          |	hasWorld() == false
  * @Invar   An entities speed is less then or equal to the speed of light
  *          This means the magnitude of an entities velocity is less then or equal to the speed of light
  *          | getVelocity().getMagnitude() <= getSpeedOfLight()
