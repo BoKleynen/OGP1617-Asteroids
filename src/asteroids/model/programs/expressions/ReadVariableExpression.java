@@ -15,7 +15,7 @@ public class ReadVariableExpression extends Expression {
 
 	@Override
 	public Object getValue() {
-//		System.out.println("read var: " + name + " from parent: " + getStatement());
+		System.out.println("read var: " + name + " from parent: " + getStatement());
 		return getStatement().getParent().getVariable(name).getValue();
 	}
 

@@ -20,30 +20,24 @@ import java.util.Map;
  */
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
-    public CalledFunction(Function function, List<Expression> actualArgs, Statement callingStatement) throws CloneNotSupportedException{
+    public CalledFunction(Function function, List<Expression> actualArgs) throws CloneNotSupportedException{
         System.out.println("function call");
         for (int i = 0; i < actualArgs.size(); i++) {
             arguments.put("$" + (i+1), new ValueExpression<>(actualArgs.get(i).getValue()));
         }
         setParent(function.getParent());
         body = function.getBody().clone();
-        body.setParent(this);
-        this.callingStatement = callingStatement;
     }
-    
-
-    private Statement callingStatement;
 
     private Map<String, Expression> arguments = new HashMap<>();
 
     public Expression getParameter(String paramName) {
-    	Expression returnExpression = new ValueExpression<>(arguments.get(paramName).getValue());
-//    	assert(arguments.get(paramName).getStatement() != null);
-    	returnExpression.setStatement(arguments.get(paramName).getStatement());
-        return returnExpression;
+    	return new ValueExpression<>(arguments.get(paramName).getValue());
+
     }
 
     public Expression execute() {
+        body.setParent(this);
         try {
             Iterator<Statement<CalledFunction>> bodyIterator = body.iterator();
             while (bodyIterator.hasNext()) {
@@ -64,9 +58,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
         if (localVariables.containsKey(varName))
             return localVariables.get(varName);
         else {
-            Expression returnVal = new ValueExpression<>(getParent().getVariable(varName).getValue());
-            returnVal.setStatement(callingStatement);
-            return returnVal;
+            return new ValueExpression<>(getParent().getVariable(varName).getValue());
         }
     }
 
