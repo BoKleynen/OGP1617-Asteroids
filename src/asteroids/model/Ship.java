@@ -16,8 +16,6 @@ import java.util.List;
  *          | getVelocity().getMagnitude() <= getMaxSpeed() && getMaxSpeed() <= getSpeedOfLight
  * @Invar   The orientation of a ship is always a valid orientation.
  *          | Ship.canHaveAsOrientation(this.getOrientation)
- * @Invar	The radius of a ship is always greater the the smallest allowed radius.
- * 			| getRadius() >= getMinRadius()
  * 
  * @author  Bo Kleynen & Yrjo Koyen
  */
