@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import asteroids.model.programs.ProgramFactory;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,6 @@ import asteroids.model.Ship;
 import asteroids.model.World;
 import asteroids.part3.facade.IFacade;
 import asteroids.model.Program;
-import asteroids.model.programs.ProgramFactory;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.part3.programs.internal.ProgramParser;
 import asteroids.util.ModelException;
@@ -36,7 +36,7 @@ public class Part3TestFull {
 
   static int nbStudentsInTeam;
   IFacade facade;
-  IProgramFactory<?, ?, ?, Program> programFactory = new ProgramFactory();
+  IProgramFactory<?, ?, ?, Program> programFactory;
   World filledWorld;
   Ship ship1, ship2, ship3;
   Bullet bullet1;
@@ -51,6 +51,7 @@ public class Part3TestFull {
   @Before
   public void setUp() throws ModelException {
     facade = new asteroids.facade.Facade();
+    programFactory = (IProgramFactory<?, ?, ?, Program>) facade.createProgramFactory();
     nbStudentsInTeam = facade.getNbStudentsInTeam();
     filledWorld = facade.createWorld(2000, 2000);
     ship1 = facade.createShip(100, 120, 10, 5, 50, 0, 1.0E20);
@@ -1683,7 +1684,7 @@ public class Part3TestFull {
       assertEquals(1.5, facade.getShipOrientation(ship1), EPSILON);
       Object[] expecteds = { 0.4 };
       assertArrayEquals(expecteds, results.toArray());
-      score += 3;
+      score += 5;
     } catch (ModelException exc) {
       assertEquals(1.5, facade.getShipOrientation(ship1), EPSILON);
       score += 5;
@@ -1744,6 +1745,7 @@ public class Part3TestFull {
         Program program = ProgramParser.parseProgramFromString(code, programFactory);
         facade.loadProgramOnShip(ship1, program);
         facade.executeProgram(ship1, 0.3);
+        fail();
       } catch (ModelException exc) {
         score += 3;
       }

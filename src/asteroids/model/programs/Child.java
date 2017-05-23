@@ -3,7 +3,7 @@ package asteroids.model.programs;
 import asteroids.model.Ship;
 
 /**
- * Created by Bo on 13/05/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public interface Child<T extends Parent<T>> {
 

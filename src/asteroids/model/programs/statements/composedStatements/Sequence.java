@@ -11,7 +11,7 @@ import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class Sequence<T extends Parent<T>> extends Statement<T> {
 

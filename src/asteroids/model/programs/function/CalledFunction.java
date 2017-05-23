@@ -27,6 +27,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
         }
         setParent(function.getParent());
         body = function.getBody().clone();
+        body.setParent(this);
     }
 
     private Map<String, Expression> arguments = new HashMap<>();
@@ -37,7 +38,6 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
     }
 
     public Expression execute() {
-        body.setParent(this);
         try {
             Iterator<Statement<CalledFunction>> bodyIterator = body.iterator();
             while (bodyIterator.hasNext()) {
