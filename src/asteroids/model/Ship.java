@@ -16,8 +16,6 @@ import java.util.List;
  *          | getVelocity().getMagnitude() <= getMaxSpeed() && getMaxSpeed() <= getSpeedOfLight
  * @Invar   The orientation of a ship is always a valid orientation.
  *          | Ship.canHaveAsOrientation(this.getOrientation)
- * @Invar	The radius of a ship is always greater the the smallest allowed radius.
- * 			| getRadius() >= getMinRadius()
  * 
  * @author  Bo Kleynen & Yrjo Koyen
  */
@@ -26,16 +24,28 @@ public class Ship extends Entity {
     /**
      * Creates a new ship with default values.
      * 
-      * @Effect	Creates a new ship with default values. The velocity and position are equal
-     * 			to the zero vector, the orientation is equal to zero, the radius is equal 
-     * 			to the smallest possible radius and the maximum speed is equal to the speed
-     * 			of light.
-     * 			| this(new Vector(0, 0), new Vector(0, 0), 0, getMinRadius(), getSpeedOfLight())
+     * @Effect	Creates a new ship with default values. The position is equal to the vector [50, 50], the
+     * 			velocity is equal to the zero vector, the orientation is equal to zero, the radius is equal 
+     * 			to the smallest possible radius and the maximum speed is equal to the speed of light. The
+     * 			smallest allowed mass density is equal to zero and the mass is equal to 1.1 * Math.pow(10, 21).
+     * 			| this(new Vector(50, 50), getSpeedOfLight(), new Vector(0, 0), 0, getMinRadius(), 0, 1.1 * Math.pow(10, 21))
      */
     public Ship() {
     	this(new Vector(50, 50), getSpeedOfLight(), new Vector(0, 0), 0, getMinRadius(), 0, 1.1 * Math.pow(10, 21));
     }
 
+    /**
+     * Creates a new ship with the given position vector, the given velocity vector, the given orientation
+     * and the given radius.
+     * 
+     * @Pre     The orientation of this ship must be a valid orientation.
+     *          | canHaveAsOrientation(orientation)
+     * @Effect	Creates a new ship. The velocity is equal to the given velocity vector, the position is equal
+     * 			to the given position vector. The orientation is equal to the given orientation and the radius
+     * 			is equal for the given radius. The maximum speed of the ship is equal to the speed of light.
+     * 			The smallest allowed mass density is equal to zero and the mass is equal to 1.1 * Math.pow(10, 21).
+     * 			| this(position, getSpeedOfLight(), velocity, orientation, radius, 0,1.1 * 1e18);
+     */
     public Ship(Vector position, Vector velocity, double orientation, double radius) {
         this(position, getSpeedOfLight(), velocity, orientation,radius,0,1.1 * 1e18);
     }
@@ -43,7 +53,8 @@ public class Ship extends Entity {
     /**
      * Creates a new ship and initializes its position to the given position vector,
      * its velocity to the given velocity vector, its orientation to the given orientation
-     * and its radius to the given radius.
+     * and its radius to the given radius. The smallest allowed mass density will be initialized 
+     * to 
      * 
      * @Pre     The orientation of this ship must be a valid orientation.
      *          | canHaveAsOrientation(orientation)
@@ -299,18 +310,18 @@ public class Ship extends Entity {
     }
 
     /**
-     * Moves the ship for the specified amount of time, if this ships thruster(s) is (are) active, this ship will be
-     * accelerated for the specified amount of time.
+     * Moves the ship for the specified amount of time, if this ships thruster is active, this ship will also
+     * accelerate for the specified amount of time.
      *
      * @param 	time
      * 			The time to move in the direction of the velocity vector.
      * @Post    This ship has moved for the specified amount of time.
      *          | super.move(time)
-     * @Post    If this ships thruster(s) is (are) active this ship has accelerated for the specified amount of time.
+     * @Post    If this ships thruster is active, this ship has accelerated for the specified amount of time.
      *          | if thrusterOn() then
-     *          |   new.getVelocity() == this.accelerate(time)
+     *          |   (new this).getVelocity() == this.accelerate(time)
      * @Post    The bullets loaded onto this ship have moved with this ship.
-     *          | bullet.getPosition() == new.getPosition() for any bullet in new.getAllBullets()
+     *          | bullet.getPosition() == (new this).getPosition() for any bullet in new.getAllBullets()
      * @throws IllegalArgumentException
      *          If the specified time is smaller then zero.
      *          | time < 0
@@ -431,8 +442,10 @@ public class Ship extends Entity {
      *  
      */
     public void turn(double angle) {
-        double newOrientation = getOrientation() + angle;
-    	assert canHaveAsOrientation(newOrientation);
+        double newOrientation = (getOrientation() + angle);
+        assert canHaveAsOrientation(newOrientation);
+//    	assert(!Double.isNaN(angle) && !Double.isInfinite(angle));
+//    	double newOrientation = (getOrientation() + angle) % (2 * Math.PI);
 
         setOrientation(newOrientation >= 0 ? newOrientation : newOrientation + 2 * Math.PI);
     }
@@ -571,7 +584,6 @@ public class Ship extends Entity {
      * 
      * @Post	The bullet is no longer loaded on this ship.
      *          | new.getAllBullets().contains(this.getFirstBullet()) == false
-     * TODO : something with bullets spawning outside of the world
      */
     public void fireBullet() {				//Totally
         Bullet bullet = getFirstBullet();
@@ -618,8 +630,10 @@ public class Ship extends Entity {
                 ship.getVelocity().getY() - Jy/ship.getTotalMass());
     }
     
-    /** Terminates this ship. A terminated ship no longer belongs to a world and no longer has any bullets.
-     * 	All bullets currently in this ship will be terminated as well.
+    /** 
+     * Terminates this ship. A terminated ship no longer belongs to a world and no longer has any bullets.
+     * All bullets currently in this ship will be terminated as well. If this ship was in a world, it will
+     * be removed from that world.
      * 
      * @Post 	All bullets currently in this ship will be terminated.
      * 			| for bullet in this.getAllBullets()

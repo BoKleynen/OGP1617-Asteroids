@@ -13,20 +13,21 @@ public abstract class BinaryExpression<T, O> extends Expression<T> {
         this.rightOperand = rightOperand;
     }
 
-    private Expression leftOperand;
+    private Expression<O> leftOperand;
 
-    public Expression getLeftOperand() {
+    protected Expression<O> getLeftOperand() {
         return leftOperand;
     }
 
-    private Expression rightOperand;
+    private Expression<O> rightOperand;
 
-    public Expression getRightOperand() {
+    protected Expression<O> getRightOperand() {
         return rightOperand;
     }
 
     @Override
     public void setStatement(Statement statement) {
+        super.setStatement(statement);
         leftOperand.setStatement(statement);
         rightOperand.setStatement(statement);
     }

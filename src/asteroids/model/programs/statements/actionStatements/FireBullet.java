@@ -1,5 +1,7 @@
 package asteroids.model.programs.statements.actionStatements;
 
+import asteroids.model.Program;
+import asteroids.model.programs.statements.Statement;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 
 /**
@@ -9,12 +11,12 @@ public class FireBullet extends ActionStatement {
 
     @Override
     public void execute() {
-        try {
-            getParent().decrementTimeRemaining(getExecutionTime());
-            getParent().getShip().fireBullet();
-            executed = true;
-        } catch (NotEnoughTimeRemainingException e) {
-            getParent().pause();
-        }
+        getParent().decrementTimeRemaining(getExecutionTime());
+        getParent().getShip().fireBullet();
+    }
+
+    @Override
+    public Statement<Program> clone() throws CloneNotSupportedException {
+        return null;
     }
 }

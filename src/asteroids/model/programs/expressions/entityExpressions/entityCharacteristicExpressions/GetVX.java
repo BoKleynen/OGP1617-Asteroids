@@ -13,6 +13,13 @@ public class GetVX extends EntityCharacteristicExpression {
 
     @Override
     public Double getValue() {
-        return getEntity().getVelocity().getX();
+        return getEntity().getValue().getVelocity().getX();
+    }
+
+    @Override
+    public Expression<Double> clone() {
+        Expression<Double> clone = new GetVX(getEntity().clone());
+        clone.setStatement(getStatement());
+        return clone;
     }
 }

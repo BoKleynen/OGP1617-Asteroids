@@ -1,6 +1,7 @@
 package asteroids.model.programs.expressions.binaryExpressions.compareExpressions;
 
 import asteroids.model.programs.expressions.*;
+import asteroids.model.programs.statements.Statement;
 
 
 /**
@@ -14,6 +15,11 @@ public class LessThan extends CompareExpression<Double> {
 
     @Override
     public Boolean getValue() {
-        return (Double)getLeftOperand().getValue() < (Double)getRightOperand().getValue();
+        return getLeftOperand().getValue() < getRightOperand().getValue();
+    }
+
+    @Override
+    public Expression<Boolean> clone() {
+        return new LessThan(getLeftOperand().clone(), getRightOperand().clone());
     }
 }

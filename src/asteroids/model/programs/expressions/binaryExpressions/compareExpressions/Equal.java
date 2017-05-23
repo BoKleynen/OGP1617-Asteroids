@@ -14,4 +14,9 @@ public class Equal extends CompareExpression<Object> {
     public Boolean getValue() {
         return getLeftOperand().getValue() == getRightOperand().getValue();
     }
+
+    @Override
+    public Expression<Boolean> clone() {
+        return new Equal(getLeftOperand().clone(), getRightOperand().clone());
+    }
 }

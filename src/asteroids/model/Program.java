@@ -2,6 +2,7 @@ package asteroids.model;
 
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.util.exceptions.BreakException;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
@@ -14,9 +15,10 @@ import java.util.*;
  */
 public class Program implements Parent<Program> {
 
-	public Program(List<Function> functions, Statement main) {
+	public Program(List<Function> functions, Statement<Program> main) {
 		setFunctions(functions);
-		setMainStatement(main);
+		main.setParent(this);
+		mainIterator = main.iterator();
 	}
 
 	private List<Object> printedObjects = new ArrayList<>();
@@ -25,37 +27,40 @@ public class Program implements Parent<Program> {
 		printedObjects.add(object);
 	}
 
+	private Statement stashedStatement = null;
+
+	private Iterator<Statement<Program>> mainIterator;
+
 	public List<Object> execute(double time) {
 		incrementTimeRemaining(time);
 
-		if (getTimeRemaining() > 0.2 )
+		if (getTimeRemaining() >= 0.2) {
 			unPause();
-		
-		while (!isPaused) {
-			Statement next = getNextStatement();
-			
-			// If main statement is completed then break;
-			if (next == null)
-				break;
-			else
-				next.execute();
+
+			if (stashedStatement != null) {
+				try {
+					stashedStatement.execute();
+					stashedStatement = null;
+				} catch (NotEnoughTimeRemainingException ex) {
+					isPaused = true;
+				}
+			}
 		}
+
+		while (! isPaused && mainIterator.hasNext()) {
+			try {
+				stashedStatement = mainIterator.next();
+				stashedStatement.execute();
+			} catch (NotEnoughTimeRemainingException ex) {
+				isPaused = true;
+				break;
+			}
+		}
+
 		return isPaused ? null : printedObjects;
 	}
-	
-	private Statement getNextStatement() {
-		Statement nextStatement = main.next();
-		if ( nextStatement == null ) {
-			main.resetExecuted();
-			return null;
-		}
-		else
-			return nextStatement;
-	}
-	
-	public void pause() {
-		isPaused = true;
-	}
+
+	private boolean isPaused = false;
 	
 	public void unPause() {
 		isPaused = false;
@@ -74,25 +79,21 @@ public class Program implements Parent<Program> {
 		}
 	}
 
-	private Statement main;
-
 	private Map<String, Expression> globalVariables = new HashMap<>();
 
 	@Override
 	public Expression getVariable(String varName) {
+		if (!globalVariables.containsKey(varName))
+			throw new IllegalArgumentException("Variable " + varName + " is never assigned.");
+
 		return globalVariables.get(varName);
 	}
 
 	@Override
 	public void addVariable(String varName, Expression value) {
 		if (functions.containsKey(varName))
-			throw new IllegalArgumentException("functiona and variables can not hold the same name");
+			throw new IllegalArgumentException("function and variables can not hold the same name");
 		addVariableToMap(varName, value, globalVariables);
-	}
-
-	private void setMainStatement(Statement main) {
-		this.main = main;
-		main.setParent(this);
 	}
 
 	private Ship ship;
@@ -109,7 +110,7 @@ public class Program implements Parent<Program> {
 
 	private double timeRemaining = 0;
 
-	@Basic
+	@Override @Basic
 	public double getTimeRemaining() {
 		return timeRemaining;
 	}
@@ -118,7 +119,7 @@ public class Program implements Parent<Program> {
 		timeRemaining += time;
 	}
 
-	public void decrementTimeRemaining(double time) {
+	public void decrementTimeRemaining(double time) throws NotEnoughTimeRemainingException {
 		double newTime = timeRemaining - time;
 
 		if (newTime < 0)
@@ -127,5 +128,4 @@ public class Program implements Parent<Program> {
 		timeRemaining = newTime;
 	}
 
-	private boolean isPaused = false;
 }

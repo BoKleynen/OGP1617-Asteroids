@@ -2,21 +2,19 @@ package asteroids.model.programs.function;
 
 import asteroids.model.Program;
 import asteroids.model.programs.Child;
-import asteroids.model.programs.expressions.Expression;
-import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
-import asteroids.model.programs.statements.Sequence;
-import asteroids.model.programs.statements.Statement;
+import asteroids.model.programs.statements.*;
 import asteroids.model.programs.statements.actionStatements.ActionStatement;
-import asteroids.model.util.exceptions.ReturnException;
-
-import java.util.Map;
+import asteroids.model.programs.statements.composedStatements.If;
+import asteroids.model.programs.statements.composedStatements.Sequence;
+import asteroids.model.programs.statements.composedStatements.While;
+import asteroids.model.programs.statements.simpleStatements.Print;
 
 /**
  * @author  Bo Kleynen & Yrjo Koyen
  */
 public class Function implements Child<Program>{
 
-	public Function(String functionName, Statement body) {
+	public Function(String functionName, Statement<CalledFunction> body) {
 		this.functionName = functionName;
 		setBody(body);
 	}
@@ -27,16 +25,16 @@ public class Function implements Child<Program>{
 		return functionName;
 	}
 	
-	private void setBody(Statement body) {
-		if (! isValidStatement(body))
+	private void setBody(Statement<CalledFunction> body) {
+		if (! body.isValidFunctionStatement())
 			throw new IllegalArgumentException();
 
 		this.body = body;
 	}
 
-	private Statement body;
+	private Statement<CalledFunction> body;
 
-	public Statement getBody() {
+	public Statement<CalledFunction> getBody() {
 		return body;
 	}
 
@@ -50,19 +48,5 @@ public class Function implements Child<Program>{
 	@Override
 	public void setParent(Program parent) {
 		this.parent = parent;
-	}
-
-	public static boolean isValidStatement(Statement statement) {
-		if (statement instanceof Sequence) {
-			for (Statement s : ((Sequence) statement).getStatements()) {
-				if (! isValidStatement(s))
-					return false;
-			}
-
-			return true;
-		}
-
-		else
-			return !(statement instanceof ActionStatement);
 	}
 }

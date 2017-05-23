@@ -10,17 +10,19 @@ public class ReadVariableExpression extends Expression {
 	public ReadVariableExpression(String name) {
 		this.name = name;
 	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
+
 	private String name;
 
 	@Override
 	public Object getValue() {
+		System.out.println("read var: " + name + " from parent: " + getStatement());
 		return getStatement().getParent().getVariable(name).getValue();
 	}
-	
 
+	@Override
+	public Expression clone() {
+		Expression clone = new ReadVariableExpression(name);
+		clone.setStatement(getStatement());
+		return clone;
+	}
 }

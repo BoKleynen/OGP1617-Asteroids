@@ -15,6 +15,8 @@ import asteroids.model.programs.expressions.valueExpressions.*;
 import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.*;
 import asteroids.model.programs.statements.actionStatements.*;
+import asteroids.model.programs.statements.composedStatements.*;
+import asteroids.model.programs.statements.simpleStatements.*;
 import asteroids.part3.programs.IProgramFactory;
 import asteroids.part3.programs.SourceLocation;
 import asteroids.model.programs.expressions.Expression;
@@ -23,6 +25,10 @@ import asteroids.model.programs.expressions.Expression;
  * @author  Bo Kleynen & Yrjo Koyen
  */
 public class ProgramFactory implements IProgramFactory<Expression, Statement, Function, Program> {
+
+	public ProgramFactory() {
+
+	}
 
 	/**
 	 * Create a program from the given arguments.

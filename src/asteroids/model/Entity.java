@@ -11,11 +11,11 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar 	An entity always has a valid radius as its radius.
  * 			| canHaveAsRadius(getRadius())
  * @Invar   An entities mass is greater then or equal to its minimal mass.
- *          | getMass() >= getMinMass(getRadius(), getMinMassDensity())
+ *          | getMass() >= getMinMass(getRadius(), getSmallestMassDensity())
  * @Invar   A terminated entity does not belong to a world
  *          | if isTerminated() then hasWorld() == false
  * @Invar   An entities speed is less then or equal to the speed of light
- *          This is the magnitude of an entities velocity is less then or equal to the speed of light
+ *          This means the magnitude of an entities velocity is less then or equal to the speed of light
  *          | getVelocity().getMagnitude() <= getSpeedOfLight()
  */
 public abstract class Entity {
@@ -47,7 +47,7 @@ public abstract class Entity {
 	 * 			! canHaveAsRadius(radius, minRadius)
 	 * 
 	 * @Post	If the given position is a valid position for this entity, its position will
-	 * 			be equal to the given position.
+	 * 			be equal  the given position.
 	 * 			| if canHaveAsPosition(position) then
 	 * 			| this.getPosition() == position
 	 * @Post	If the given maximum speed does not exceed the speed of light, the maximum speed of this entity will be equal to the
@@ -56,7 +56,7 @@ public abstract class Entity {
 	 * @Post	The velocity of this entity is equal to the given velocity if it is a valid velocity for this entity. If the given
 	 * 			velocity would make this entity exceed its maximal speed, its velocity will be equal to a vector pointing in the
 	 * 			direction of velocity with a magnitude of getMaxSpeed().
-	 * 			| if velocity.getMagnitude() <= getMaxSpeed() then
+	 * 			| if velotocity.getMagnitude() <= getMaxSpeed() then
 	 * 			|	this.getVelocity() == velocity
 	 * 			| else
 	 * 			|	( (getVelocity().getMagnitude() == getMaxSpeed()) && (getVelocity.normailze().equals(velocity.normalize()))
@@ -82,6 +82,7 @@ public abstract class Entity {
         this.maxSpeed = maxSpeed <= getSpeedOfLight() ? maxSpeed : getSpeedOfLight();
         setVelocity(velocity);
         this.radius = radius;
+        this.minMassDensity = minMassDensity;
         setMass(mass, minMassDensity);
     }
 
@@ -187,6 +188,19 @@ public abstract class Entity {
     public static double getMinMass(double radius, double minMassDensity) {
         return 4.0/3.0 * Math.PI * Math.pow(radius, 3) * minMassDensity;
     }
+    
+    /**
+     * Returns the smallest allowed mass density for this entity.
+     * 
+     * @return 	The smallest allowed mass density for this entity.
+     * 			| result = this.minMassDensity()
+     */
+    @Basic
+    public double getSmallestMassDensity() {
+    	return minMassDensity;
+    }
+    
+    private double minMassDensity;
     
     /**
      * Returns true if this entity currently is in a world.

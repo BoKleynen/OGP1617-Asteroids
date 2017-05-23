@@ -1,6 +1,7 @@
 package asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions;
 
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetVX;
 
 /**
  * @author  Bo Kleynen & Yrjo Koyen
@@ -13,6 +14,11 @@ public class Multiplication extends BinaryArithmeticExpression {
 
     @Override
     public Double getValue() {
-        return (Double) getLeftOperand().getValue() * (Double) getRightOperand().getValue();
+        return getLeftOperand().getValue() * getRightOperand().getValue();
+    }
+
+    @Override
+    public Expression<Double> clone() {
+        return new Multiplication(getLeftOperand().clone(), getRightOperand().clone());
     }
 }

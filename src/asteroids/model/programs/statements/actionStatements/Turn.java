@@ -1,6 +1,8 @@
 package asteroids.model.programs.statements.actionStatements;
 
+import asteroids.model.Program;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.statements.Statement;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 
 /**
@@ -19,13 +21,12 @@ public class Turn extends ActionStatement {
 
     @Override
     public void execute() {
-        try {
-            getParent().decrementTimeRemaining(getExecutionTime());
-            getParent().getShip().turn(getAngle());
-            executed = true;
+        getParent().decrementTimeRemaining(getExecutionTime());
+        getParent().getShip().turn(getAngle());
+    }
 
-        } catch (NotEnoughTimeRemainingException e) {
-            getParent().pause();
-        }
+    @Override
+    public Statement<Program> clone()  {
+        return null;
     }
 }

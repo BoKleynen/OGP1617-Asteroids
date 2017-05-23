@@ -7,7 +7,7 @@ import be.kuleuven.cs.som.annotate.Raw;
 /**
  * @author  Bo Kleynen & Yrjo Koyen
  */
-public abstract class Expression <T> {
+public abstract class Expression <T> implements Cloneable {
 
     public abstract T getValue();
 
@@ -27,4 +27,7 @@ public abstract class Expression <T> {
     public void setStatement(Statement statement) {
         this.statement = statement;
     }
+
+    @Override
+    public abstract Expression<T> clone();
 }

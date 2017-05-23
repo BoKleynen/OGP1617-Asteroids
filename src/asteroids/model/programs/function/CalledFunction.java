@@ -7,9 +7,11 @@ import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.programs.statements.Statement;
+import asteroids.model.util.exceptions.BreakException;
 import asteroids.model.util.exceptions.ReturnException;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,42 +20,46 @@ import java.util.Map;
  */
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
-    public CalledFunction(Function function, List<Expression> actualArgs) {
-        body = function.getBody();
-        body.setParent(this);
-        setParent(function.getParent());
-
+    public CalledFunction(Function function, List<Expression> actualArgs) throws CloneNotSupportedException{
+        System.out.println("function call");
         for (int i = 0; i < actualArgs.size(); i++) {
-            arguments.put("$" + (i+1), actualArgs.get(i));
+            arguments.put("$" + (i+1), new ValueExpression<>(actualArgs.get(i).getValue()));
         }
+        setParent(function.getParent());
+        body = function.getBody().clone();
+        body.setParent(this);
     }
 
     private Map<String, Expression> arguments = new HashMap<>();
 
     public Expression getParameter(String paramName) {
-        return new ValueExpression<>(arguments.get(paramName).getValue());
+    	return new ValueExpression<>(arguments.get(paramName).getValue());
+
     }
 
     public Expression execute() {
         try {
-            body.execute();
+            Iterator<Statement<CalledFunction>> bodyIterator = body.iterator();
+            while (bodyIterator.hasNext()) {
+                bodyIterator.next().execute();
+            }
         } catch (ReturnException rt) {
             return rt.getExpression();
         }
-        return new ValueExpression<>(null);
+        throw new IllegalStateException("no return statement found");
     }
 
     private Map<String, Expression> localVariables = new HashMap<>();
 
-    private Statement body;
+    private Statement<CalledFunction> body;
 
     @Override
     public Expression getVariable(String varName) {
         if (localVariables.containsKey(varName))
             return localVariables.get(varName);
-
-        else
+        else {
             return new ValueExpression<>(getParent().getVariable(varName).getValue());
+        }
     }
 
     @Override
@@ -86,5 +92,10 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
     @Override
     public Ship getShip() {
         return getParent().getShip();
+    }
+
+    @Override
+    public double getTimeRemaining() {
+        return getParent().getTimeRemaining();
     }
 }

@@ -2,6 +2,7 @@ package asteroids.model.programs.expressions.binaryExpressions.arithmeticExpress
 
 import asteroids.model.programs.expressions.binaryExpressions.BinaryExpression;
 import asteroids.model.programs.expressions.Expression;
+import asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetVX;
 
 /**
  * @author  Bo Kleynen & Yrjo Koyen
@@ -14,6 +15,11 @@ public class Addition extends BinaryArithmeticExpression {
 
     @Override
     public Double getValue() {
-        return (Double) getLeftOperand().getValue() + (Double) getRightOperand().getValue();
+        return getLeftOperand().getValue() + getRightOperand().getValue();
+    }
+
+    @Override
+    public Expression<Double> clone() {
+        return new Addition(getLeftOperand().clone(), getRightOperand().clone());
     }
 }

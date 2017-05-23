@@ -12,4 +12,11 @@ public class SelfExpression extends EntityExpression<Ship> {
     public Ship getValue() {
         return getShip();
     }
+
+    @Override
+    public Expression<Ship> clone() {
+        Expression clone = new SelfExpression();
+        clone.setStatement(getStatement());
+        return clone;
+    }
 }
