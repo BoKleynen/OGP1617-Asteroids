@@ -28,19 +28,14 @@ public class While<T extends Parent<T>> extends Statement<T> {
     private Iterator<Statement<T>> bodyIterator = new Iterator<Statement<T>>() {
 
 		Iterator<Statement<T>> bodyIterator;
-		Statement<T> statement;
 
 		@Override
 		public boolean hasNext() {
 			try {
-				if (statement != null) {
-					return true;
-				} else if (bodyIterator != null && bodyIterator.hasNext()) {
-					statement = bodyIterator.next();
+				if (bodyIterator != null && bodyIterator.hasNext()) {
 					return true;
 				} else if (condition.getValue()) {
 					bodyIterator = body.iterator();
-					statement = bodyIterator.next();
 					return true;
 				} else {
 					return false;
@@ -54,9 +49,8 @@ public class While<T extends Parent<T>> extends Statement<T> {
 		public Statement<T> next() {
 			if (!hasNext())
 				throw new NoSuchElementException();
-			Statement<T> next = statement;
-			statement = null;
-			return next;
+
+			return bodyIterator.next();
 		}
 	};
 

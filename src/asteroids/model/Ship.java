@@ -212,17 +212,6 @@ public class Ship extends Entity {
     }
     
     private boolean thrusterOn;
-    
-    /**
-     * Returns the smallest allowed mass density for this entity.
-     * 
-     * @return 	The smallest allowed mass density for this entity.
-     * 			| result = this.minMassDensity()
-     */
-    @Basic
-    public static double getMinMassDensity() {
-    	return minMassDensity;
-    }
 
     /**
      * Checks whether or not this ships thrusters are enabled.
