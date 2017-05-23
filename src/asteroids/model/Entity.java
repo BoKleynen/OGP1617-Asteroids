@@ -11,7 +11,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar 	An entity always has a valid radius as its radius.
  * 			| canHaveAsRadius(getRadius())
  * @Invar   An entities mass is greater then or equal to its minimal mass.
- *          | getMass() >= getMinMass(getRadius(), getMinMassDensity())
+ *          | getMass() >= getMinMass(getRadius(), getSmallestMassDensity())
  * @Invar   A terminated entity does not belong to a world
  *          | if isTerminated() then hasWorld() == false
  * @Invar   An entities speed is less then or equal to the speed of light
@@ -196,7 +196,7 @@ public abstract class Entity {
      * 			| result = this.minMassDensity()
      */
     @Basic
-    public double getMinMassDensity() {
+    public double getSmallestMassDensity() {
     	return minMassDensity;
     }
     
