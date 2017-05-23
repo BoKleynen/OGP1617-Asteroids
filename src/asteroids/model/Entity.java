@@ -15,9 +15,11 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar   A terminated entity does not belong to a world
  *          | if isTerminated() then 
  *          |	hasWorld() == false
- * @Invar   An entities speed is less then or equal to the speed of light
- *          This means the magnitude of an entities velocity is less then or equal to the speed of light
- *          | getVelocity().getMagnitude() <= getSpeedOfLight()
+ * @Invar   An entities maximum speed is less then or equal to the speed of light
+ *          This means the magnitude of an entities maximum velocity is less then or equal to the speed of light.
+ *          | getMaxSpeed() <= getSpeedOfLight()
+ * @Invar	And entities velocity will never exceed its maximum speed.
+ * 			| getVelocity().getMagnitude() <= getMaxSpeed()
  */
 public abstract class Entity {
 
@@ -69,9 +71,6 @@ public abstract class Entity {
 	 * 			|	this.mass = getMinMass(getRadius(), minMassDensity)
 	 * 			| else
 	 * 			|	this.mass = mass
-	 * 
-	 * 
-	 * 
      */
     protected Entity(Vector position, double maxSpeed, Vector velocity, double minRadius, double radius, double minMassDensity, double mass)
             throws IllegalArgumentException {

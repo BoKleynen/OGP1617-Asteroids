@@ -7,23 +7,10 @@ import asteroids.model.util.vector.Vector;
 
 /**
  * A class of minor planets.
- * @Invar 	A minor planet is associated with at most one world at once.
- * 			| ((getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
- * @Invar 	A minor planet always has a valid position as its position in its current world.
- * 			| hasValidPositionInWorld(getWorld())
- * @Invar 	A minor planet always has a valid radius as its radius.
- * 			| canHaveAsRadius(getRadius())
- * @Invar   A minor planets mass is greater then or equal to its minimal mass.
- *          | getMass() >= getMinMass(getRadius(), getMinMassDensity())
- * @Invar   A terminated minor planet does not belong to a world
- *          | if isTerminated() then hasWorld() == false
- * @Invar   The maximum speed of each minor planet is less then or equal to the speed of light.
- *          This is the magnitude of an entities velocity is less then or equal to the speed of light.
- *          | getMaxSpeed() <= getSpeedOfLight()
- * @Invar   No minor planet will move faster than its maximum speed.
- *          | getVelocity().getMagnitude() <= getMaxSpeed();
- * @Invar   Each minor planets radius is greater then or equal to the minimal radius.
- *          | getRadius() >= getMinRadius
+ * 
+ * @Invar 	A minor planet always has a radius that is greater then the smallest allowed radius for
+ * 			minor planets.
+ * 			| getRadius() >= MinorPlanet.getMinRadius();
  *
  * @author Bo Kleynen & Yrjo Koyen
  */
