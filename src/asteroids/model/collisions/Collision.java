@@ -78,12 +78,12 @@ public abstract class Collision {
     }
 
     /**
-     * Returns the position at which this collision will occur.
+     * Calculates and returns the position at which this collision will occur.
      */
     public abstract Vector calculateCollisionPosition();
 
     /**
-     * Resolves this collision
+     * Resolves this collision.
      */
     public abstract void resolve(CollisionListener collisionListener);
 
@@ -92,7 +92,7 @@ public abstract class Collision {
     }
 
     /**
-     * invokes the collisionlistener against this collision.
+     * Invokes the collisionlistener against this collision.
      */
     public abstract void collisionListener(CollisionListener collisionListener);
 }

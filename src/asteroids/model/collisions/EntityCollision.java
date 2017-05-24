@@ -59,7 +59,7 @@ public class EntityCollision extends Collision {
     }
 
     /**
-     * Calculates where the two entities involved in this collision will collide.
+     * Calculates and returns the position where the two entities involved in this collision will collide.
      * 
      * @return | @see implementation
      */
@@ -74,7 +74,6 @@ public class EntityCollision extends Collision {
      * by that ship. If it was fired by that ship, it is instead reloaded to the ship. If both entities
      * are bullets, they both die.
      *
-     * TODO: Update the documentation
      *
      * @Post	If both involved entities are an instance of the Bullet class, both entities are destroyed.
      * 			| if ( getEntity1() instanceof Bullet && getEntity2() instanceof Bullet ) then
@@ -130,8 +129,9 @@ public class EntityCollision extends Collision {
     }
 
     /**
-     * @Effect  ...
-     *          | @see implementation
+     * Invokes the collisionlistener against this collision.
+     * 
+     * @Post	| @see implementation
      */
     @Override
     public void collisionListener(CollisionListener collisionListener) {

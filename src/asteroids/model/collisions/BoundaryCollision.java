@@ -47,8 +47,8 @@ public class BoundaryCollision extends Collision {
     }
     
     /**
-     * Calculates the position where this collision will happen based on the time until the collision and the
-     * entity's speed.
+     * Calculates and returns the position where this collision will happen based on the time until 
+     * the collision and the entity's current speed.
      * 
      * @return	| @see implementation.
      */
@@ -108,6 +108,8 @@ public class BoundaryCollision extends Collision {
     }
 
     /**
+     * Invokes the collisionlistener against this collision.
+     * 
      * @Effect  | @see implementation
      */
     @Override
