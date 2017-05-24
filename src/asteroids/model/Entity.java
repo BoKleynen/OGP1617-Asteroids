@@ -18,7 +18,7 @@ import be.kuleuven.cs.som.annotate.*;
  * @Invar   An entities maximum speed is less then or equal to the speed of light
  *          This means the magnitude of an entities maximum velocity is less then or equal to the speed of light.
  *          | getMaxSpeed() <= getSpeedOfLight()
- * @Invar	And entities velocity will never exceed its maximum speed.
+ * @Invar	An entities velocity will never exceed its maximum speed.
  * 			| getVelocity().getMagnitude() <= getMaxSpeed()
  */
 public abstract class Entity {
@@ -141,6 +141,12 @@ public abstract class Entity {
         return radius;
     }
 
+    /**
+     * Sets the radius of this entity to the given radius.
+     * 
+     * @Post	The new radius of this entity is equal to the given radius.
+     * 			| (new this).getRadius() = radius
+     */
     protected void setRadius(double newRadius) {
         radius = newRadius;
     }
