@@ -6,6 +6,9 @@ import asteroids.model.util.vector.Vector;
 
 /**
  * A class of planetoid entities.
+ * 
+ * @Invar   Each planetoid has a mass density equal to Planetoid.getMassDensity().
+ *          | getMass() / (4.0/3.0 * Math.PI * Math.pow(getRadius(), 3)) == getMassDensity()
  *
  * @author  Kleynen & Yrjo Koyen
  */
@@ -127,7 +130,6 @@ public class Planetoid extends MinorPlanet {
             throw new IllegalArgumentException();
 
         super.setRadius(newRadius);
-
     }
 
     private double totalTraveledDistance = 0;
