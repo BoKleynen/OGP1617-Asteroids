@@ -88,11 +88,16 @@ public class Planetoid extends MinorPlanet {
     }
 
     /**
-     * Moves this planetoid at its current velocity over a given time time.
+     * Moves the entity in the direction of its current velocity. The distance traveled is
+     * equal to the current velocity multiplied with the specified time it should travel in that direction.
+     * The total amount of distance traveled is also increased by the traveled distance.
      *
      * @param 	time
      * 			The time to move in the direction of the velocity vector.
      * @Effect  | super.move(time)
+     * @Post 	The total traveled distance is increased by the distance moved.
+     * 			| (new this).getTotalTraveledDistance() = this.getTotalTraveledDistance() +
+     * 			|	 getVelocity().getMagnitude() * time
      *
      */
     @Override
@@ -102,16 +107,22 @@ public class Planetoid extends MinorPlanet {
     }
 
     /**
-     * Sets the radius of this planetoid to the specified value.
+     * Sets the radius of this planetoid to the specified value., if that value is greater then the
+     * smallest allowed radius for a planetoid.
      *
-     * @param newRadius
-     *          The new radius for this planetoid
-     * @Post    | new.getRadius == newRadius
+     * @param 	newRadius
+     *          The new radius for this planetoid.
+     *          
+     * @Post    The radius of this planetoid is equal to the given radius if it os greater the the smallest
+     * 			allowed radius for a planetoid.
+     * 			| if newRadius >= getMinRadius() then
+     * 			|	new.getRadius == newRadius
+     * 
      * @throws IllegalArgumentException
      *          | if (newRadius < MinorPlanet.getMinRadius())
      */
-    @Override @Basic
-    public void setRadius(double newRadius) throws IllegalArgumentException {
+    @Basic
+    public void setPlanetoidRadius(double newRadius) throws IllegalArgumentException {
         if (newRadius < getMinRadius())
             throw new IllegalArgumentException();
 
@@ -148,7 +159,7 @@ public class Planetoid extends MinorPlanet {
     public void addTraveledDistance(double distance) {
         totalTraveledDistance += distance;
         try {
-            setRadius(getRadius() - distance * 1e-6);
+            setPlanetoidRadius(getRadius() - distance * 1e-6);
         } catch (IllegalArgumentException e) {
             die();
         }
@@ -175,7 +186,7 @@ public class Planetoid extends MinorPlanet {
     }
 
     /**
-     * Kills this planetoid, removing it from its world and marking it as terminated. If this planetoids is located
+     * Kills this planetoid, removing it from its world and marking it as terminated. If this planetoid is located
      * within a world and its radius is greater then or equal to the minimal split radius, it will split into 2
      * asteroids each with a radius equal to half the radius of this asteroid. Both asteroids are then placed into the world
      * of this planetoid at a random position along a circle with radius half the radius of this planetoid and centered
