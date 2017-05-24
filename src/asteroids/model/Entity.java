@@ -291,6 +291,15 @@ public abstract class Entity {
         position = newPosition;
     }
 
+    /**
+     * Sets the position of this entity to a new position with the given x- and y-coordinates
+     * 
+     * @param xpos	The x-coordinate of the new position
+     * @param ypos	The y-coordinate of the new position
+     * 
+     * @Post	This entity has a position with the given coordinates.
+     * 			| this.getPosition().getX() = xpos && this.getPosition().getY() = ypos
+     */
     public void setPosition(double xpos, double ypos) {
         setPosition(new Vector(xpos, ypos));
     }
@@ -386,6 +395,16 @@ public abstract class Entity {
         return overlapWithEntityInWorld(world, getPosition());
     }
 
+    /**
+     * Returns true if this entity overlaps any other entity in the given world.
+     * 
+     * @param world
+     * @param virtualPosition
+     * 
+     * @return	True if and only if this entity would overlap any other entity in the given world
+     * 			at its virtual position.
+     * 			| @see implementation.
+     */
     public boolean overlapWithEntityInWorld(World world, Vector virtualPosition) {
         for (Entity otherEntity : world.getAllEntities()) {
             if (overlap(otherEntity, virtualPosition))
@@ -471,6 +490,15 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Sets the velocity of this entity to a vector with the given x and y coordinates.
+     * 
+     * @param xVel
+     * @param yVel
+     * 
+     * @Post	This entities velocity vector  has the given x and y coordinates
+     * 			| getVelocity().getX() = xVel && getVelocity().getY() = yVel
+     */
     public void setVelocity(double xVel, double yVel) {
         setVelocity(new Vector(xVel, yVel));
     }
