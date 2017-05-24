@@ -205,7 +205,7 @@ public class Ship extends Entity {
     /**
      * Returns the minimal mass for this ship.
      *
-     * @return  ...
+     * @return  The minimal mass for this ship.
      *          | getMinMass(getRadius())
      */
     public double getMinMass() {
@@ -217,8 +217,8 @@ public class Ship extends Entity {
      *
      * @param radius
      *          The radius for which the minimal mass has to be calculated.
-     * @return  ...
-     *          | (4.0/ 3.0) * radius^3 * PI * Ship.getMinMassDensity()
+     * @return  The minimal mass for a ship with the given radius.
+     *          | result = (4.0/ 3.0) * radius^3 * PI * Ship.getMinMassDensity()
      */
     public static double getMinMass(double radius) {
     	return ( (4.0/3.0) * Math.pow(radius, 3) * Math.PI * Ship.getMinMassDensity() );
@@ -230,7 +230,7 @@ public class Ship extends Entity {
      * Checks whether or not this ships thrusters are enabled.
      *
      * @return  True if and only if the thruster(s) of this ship are active.
-     *          | this.thrusterOn
+     *          | result = this.thrusterOn
      */
     @Basic
     public boolean thrusterOn() {
@@ -239,7 +239,9 @@ public class Ship extends Entity {
 
     /**
      * Turns the thrusters of this ship on.
-     * @Post    | new.thrusterOn == true
+     * 
+     * @Post    The thrusters of this ship will be on.
+     * 			| new.thrusterOn == true
      */
     public void thrustOn() {
         thrusterOn = true;
@@ -247,7 +249,8 @@ public class Ship extends Entity {
 
     /**
      * Turns the thrusters of this ship off
-     * @Post    | new.thrusterOn == false
+     * @Post    The thrusters of this ship will be off.
+     * 			| new.thrusterOn == false
      */
     public void thrustOff() {
         thrusterOn = false;
@@ -258,8 +261,8 @@ public class Ship extends Entity {
     /**
      * Returns the amount of thrust this ships thrusters can generate.
      *
-     * @return  ...
-     *          | @see implementation
+     * @return  A number representing the amount of thrust this ships thrusters can generate.
+     *          | result = this.thrust
      */
     @Basic
     public double getThrust() {
@@ -271,8 +274,8 @@ public class Ship extends Entity {
      *
      * @param newThrust
      *          The value of the new thrust
-     * @Post    ...
-     *          | @see implementation
+     * @Post    The amount of thrust this ship can deliver is equal to the given value newThrust
+     *          | (new this).getThrust() = newThrust
      */
     @Basic
     public void setThrust(double newThrust) {
@@ -282,8 +285,9 @@ public class Ship extends Entity {
     /**
      * Returns the acceleration of this ship
      *
-     * @return  ...
-     *          | @see implementation
+     * @return  The amount of thrust this ship can deliver if its thrusters are on or zero if itsµ
+     * 			thrusters are off
+     *          |	result = thrusterOn ? getThrust() / getTotalMass() : 0;
      */
     public double getAcceleration() {
         return thrusterOn ? getThrust() / getTotalMass() : 0;
@@ -384,7 +388,7 @@ public class Ship extends Entity {
     /**
      * Return the direction this ship is currently facing. The returned vector is a unit vector.
      * 
-     * @return  ...
+     * @return  A vector of unity length pointing in the direction this ship is facing.
      *          | @see implementation
      */
     private Vector getDirection() {
@@ -444,9 +448,6 @@ public class Ship extends Entity {
     public void turn(double angle) {
         double newOrientation = (getOrientation() + angle);
         assert canHaveAsOrientation(newOrientation);
-//    	assert(!Double.isNaN(angle) && !Double.isInfinite(angle));
-//    	double newOrientation = (getOrientation() + angle) % (2 * Math.PI);
-
         setOrientation(newOrientation >= 0 ? newOrientation : newOrientation + 2 * Math.PI);
     }
 
@@ -487,6 +488,14 @@ public class Ship extends Entity {
 
     }
 
+    /**
+     * Loads the given bullets onto this ship.
+     *
+     * @param bullets	The bullets to be loaded onto this ship
+     * 
+     * @Effect	Each bullet from bullets will be loaded onto this ship.
+     * 			| @see implementation
+     */
     public void loadBullet(Bullet... bullets) {
         for (Bullet bullet : bullets) {
             loadBullet(bullet);
@@ -496,6 +505,10 @@ public class Ship extends Entity {
     /**
      * Loads the given amount of new bullets onto this ship.
      * @param amount
+     * 
+     * @Post	The amount of bullets on this ship has increased by the given amount.
+     * 			| (new this).getNbBullets() = this.getNbBullets() + amount
+     * 
      * @throws IllegalArgumentException
      *          If the amount of bullets is negative
      *          | amount < 0
@@ -517,7 +530,11 @@ public class Ship extends Entity {
     
     /**
      * Loads all the bullets in the given collection of bullets onto this ship.
-     * @param bulletList
+     * 
+     * @param bulletList	A list of bullets to be loaded on this ship.
+     * 
+     * @Effect	Each bullet from the list will be loaden on the ship.
+     * 			| @see implementation
      */
     public void loadBullet(Collection<Bullet> bulletList) {
     	for (Bullet bullet : bulletList) {
@@ -533,7 +550,11 @@ public class Ship extends Entity {
     /**
      * Removes the given bullet from the set of bullets currently loaded on this ship.
      * If the bullet is not loaded on this ship, nothing happens.
-     * @param bullet
+     * 
+     * @param bullet	The bullet to be removed from this ship if it is present on it.
+     * 
+     * @Post	This ship does not have the given bullet loaded.
+     * 			| ! this.getAllBullets().contains(bullet)
      */
     public void removeBullet(Bullet bullet) {
         if (bullet.getShip() != this)
@@ -545,7 +566,8 @@ public class Ship extends Entity {
     /**
      * Returns the amount of bullets currently loaded on this ship.
      * 
-     * @return
+     * @return 	The amount of bullets currently loaded on this ship.
+     * 			| result = bullets.size()
      */
     public int getNbBullets() {
     	return bullets.size();
@@ -554,7 +576,7 @@ public class Ship extends Entity {
     /**
      * Returns a HashSet containing all the bullets loaded on this ship.
      * 
-     * @return  ...
+     * @return  A HashSet containing all the bullets currently loaded on this ship.
      *          | @see implementation
      */
     public HashSet<Bullet> getAllBullets() {
@@ -564,6 +586,9 @@ public class Ship extends Entity {
     /**
      * Returns the first bullet that is loaded on this ship. If there are no bullets loaded,
      * returns null.
+     * 
+     * @return	The first bullet loaded on this ship.
+     * 			| getAllBullets().contains(result)
      */
     private Bullet getFirstBullet() {
     	if ( bullets.size() == 0 )
@@ -605,6 +630,14 @@ public class Ship extends Entity {
         }
 	}
 
+    
+    /**
+     * Resolves a collision between this ship and the given ship. The ships will bounce off each other
+     * and their velocities will change accordingly.
+     * 
+     * @Post	Both ships will have a different velocity after the collision.
+     * 			| @see implementation
+     */
 	public void resolveCollisionWithShip(Ship ship) {
         double sigma = getRadius() + ship.getRadius();
         double J =
@@ -659,21 +692,49 @@ public class Ship extends Entity {
 
     private Program program;
 
+    /**
+     * Returns the program loaded onto this ship.
+     * 
+     * @return	The program loaded onto this ship.
+     * 			| result = this.program
+     */
 	@Basic
 	public Program getProgram() {
 	    return program;
     }
 
+	/**
+	 * Loads the given program onto this ship.
+	 * 
+	 * @param program	The program to be loaded.
+	 * 
+	 * @Post	This ship will have the given program as its program.
+	 * 			| (new this).getProgram() = program && program.getShip() = (new this)
+	 */
     @Basic
     public void loadProgram(Program program) {
 	    program.setShip(this);
 	    this.program = program;
     }
 
+    /**
+     * Returns a list containng the results of the execution of the program.
+     * 
+     * @param time	The time to execute the program.
+     * 
+     * @return	A list containng the results of the execution of the program.
+     * 			| result = program.execute(time)
+     */
     public List<Object> executeProgram(double time) {
 	    return program.execute(time);
     }
 
+    /**
+     * Returns the string representation of this ship.
+     * 
+     * @return	The string representation of this ship.
+     * 			| @see implementation
+     */
     public String toString() {
 	    return getPosition().toString() + getVelocity().toString();
     }
