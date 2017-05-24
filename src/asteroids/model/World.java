@@ -15,6 +15,17 @@ import java.util.*;
  */
 public class World {
 
+	/**
+	 * Creates a new world with the given width and height.
+	 * 
+	 * @param width
+	 * @param height
+	 * 
+	 * @Post	If the given width is a valid width, then this world will have the given width as its width.
+	 * 			| @see implementation
+	 * @Post	If the given height is a valid height, then this world will have the given height as its height.
+	 * 			| @see implementation
+	 */
     public World(double width, double height) {
         if (width < 0)
             this.width = 0;
@@ -37,10 +48,27 @@ public class World {
 
     private boolean isTerminated = false;
 
+    /**
+     * Returns true if this world is in a terminated state.
+     * 
+     * @return	...
+     * 			| result = this.isTerminated
+     */
     public boolean isTerminated() {
         return isTerminated;
     }
 
+    /**
+     * Terminates this world. A terminated world can not contain any entities, they must be removed
+     * before a world can be terminated.
+     * 
+     * @Post	...
+     * 			| this.isTerminatd()
+     * 
+     * @throws	IllegalStateException
+     * 			...
+     * 			| ! entities.isEmpty()
+     */
     public void terminate() {
         if (! entities.isEmpty())
             throw new IllegalStateException("This world still contains entities");
@@ -148,6 +176,14 @@ public class World {
         entity.setWorld(this);
     }
 
+    
+    /**
+     * Adds all the given entities to this world.
+     * 
+     * @param entities	The entities to be added to this world.
+     * 
+     * @Effect	| @see implementation
+     */
     public void addEntity(Entity... entities) {
         for (Entity entity : entities) {
             addEntity(entity);
@@ -238,6 +274,11 @@ public class World {
         return minorPlanets;
     }
 
+    /**
+     * Returns a Set containing all planetoids in this world.
+     *
+     * @return | @see implementation
+     */
     public Set<Planetoid> getAllPlanetoids() {
         Set<Planetoid> planetoids = new HashSet<>();
 
@@ -249,6 +290,11 @@ public class World {
         return planetoids;
     }
 
+    /**
+     * Returns a Set containing all asteroids in this world.
+     *
+     * @return | @see implementation
+     */
     public Set<Asteroid> getAllAsteroids() {
         Set<Asteroid> asteroids = new HashSet<>();
 
@@ -319,6 +365,24 @@ public class World {
     }
 
 
+    /**
+     * Lets this world evolve for the given amount of time and with the given collisionListener.
+     * If the given time is a valid amount of time, all entities in this world will move until 
+     * a first collision occurs. If no collision occurs within the given amount of time, the world 
+     * is done evolving. If there is a collision, this collision is resolved and the world will 
+     * evolve further for the remaining amount of time.
+     * 
+     * @param time	The time to let this world evolve
+     * @param collisionListener
+     * 
+     * @Post	...
+     * 			| @see implementation
+     * 
+     * @Throws	IllegalArgumentException
+     * 			...
+     * 			| time < 0 || Double.isNaN(time)
+     * 			
+     */
     public void evolve(double time, CollisionListener collisionListener) {
         System.out.println(time);
         if (time < 0 || Double.isNaN(time))
@@ -360,6 +424,15 @@ public class World {
         terminate();
     }
 
+    
+    /**
+     * Returns the ship closest to the given ship.
+     * 
+     * @param ship
+     * 
+     * @return 	...
+     * 			| @see implementation
+     */
     public Ship getClosestShip(Ship ship) {
         Set<Ship> ships = getAllShips();
         ships.remove(ship);
