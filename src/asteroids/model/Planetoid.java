@@ -7,24 +7,6 @@ import asteroids.model.util.vector.Vector;
 /**
  * A class of planetoid entities.
  *
- * @Invar 	An asteroid is associated with at most one world at once.
- * 			| ((getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
- * @Invar 	An asteroid always has a valid position as its position in its current world.
- * 			| hasValidPositionInWorld(getWorld())
- * @Invar 	An asteroid always has a valid radius as its radius.
- * 			| canHaveAsRadius(getRadius())
- * @Invar   An asteroids mass is greater then or equal to its minimal mass.
- *          | getMass() >= getMinMass(getRadius(), getMinMassDensity())
- * @Invar   An terminated asteroid does not belong to a world
- *          | if isTerminated() then hasWorld() == false
- * @Invar   The maximum speed of each asteroid is less then or equal to the speed of light.
- *          This is the magnitude of an entities velocity is less then or equal to the speed of light.
- *          | getMaxSpeed() <= getSpeedOfLight()
- * @Invar   No planetoid will move faster than its maximum speed.
- *          | getVelocity().getMagnitude() <= getMaxSpeed();
- * @Invar   Each planetoids radius is greater then or equal to the minimal radius.
- *          | getRadius() >= getMinRadius
- *
  * @author  Kleynen & Yrjo Koyen
  */
 public class Planetoid extends MinorPlanet {
