@@ -200,6 +200,12 @@ public class Bullet extends Entity {
     	return parentShip;
     }
 
+    /**
+     * Returns true if this bullet has a parent ship.
+     * 
+     * @return 	...
+     * 			| result = ( getParentShip() != null)
+     */
     public boolean hasParentShip() {
         return getParentShip() != null;
     }
@@ -345,6 +351,19 @@ public class Bullet extends Entity {
         }
     }
 
+    /**
+     * Resolves a collision between this bullet and the given entity. If the entity is the parentShip of
+     * this bullet, the bullet is loaded onto that sip once again. Otherwise, both the entity and this
+     * bullet die.
+     * 
+     * @param entity	The entity to collide with.
+     * 
+     * @Post	...
+     * 			| if getParentShip() == entity) then
+     * 			|	(new this).isLoadedOntoShip() && (new this).getShip() = entity && (new this).getWorld() = null
+     * 			| else
+     * 			|	this.die() && entity.die()
+     */
     public void resolveCollisionWithEntity(Entity entity) {
         if (getParentShip() == entity) {
             getWorld().removeEntity(this);
@@ -357,6 +376,14 @@ public class Bullet extends Entity {
         }
     }
 
+    /**
+     * Returns true if this bullet lies within the given ship.
+     * 
+     * @param ship
+     * 
+     * @return	...
+     * 			| @see implementation
+     */
     public boolean liesWithinShip(Ship ship) {
         return getDistanceBetweenCenters(ship) <= ship.getRadius() - getRadius();
     }
