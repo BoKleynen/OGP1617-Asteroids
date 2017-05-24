@@ -21,6 +21,8 @@ public class Planetoid extends MinorPlanet {
      * @param position
      * @param velocity
      * @param radius
+     * 
+     * @Effect	| this(position, velocity, radius, 0)
      */
     public Planetoid(Vector position, Vector velocity, double radius) {
         this (position, velocity, radius, 0);
@@ -33,6 +35,7 @@ public class Planetoid extends MinorPlanet {
      * @param velocity
      * @param radius
      * @param totalTraveledDistance
+     * 
      * @Effect  | this(position, getSpeedOfLight(), velocity, radius, totalTraveledDistance)
      */
     public Planetoid(Vector position, Vector velocity, double radius, double totalTraveledDistance) {
@@ -71,7 +74,7 @@ public class Planetoid extends MinorPlanet {
     /**
      * Returns the mass density of a Planetoid
      *
-     * @return | Planetoid.massDensity
+     * @return | result = Planetoid.massDensity
      */
     @Basic @Immutable
     public static double getMassDensity() {
@@ -83,7 +86,7 @@ public class Planetoid extends MinorPlanet {
     /**
      * Returns the minimal radius a Planetoid must have on death to split into two asteroids.
      *
-     * @return | Planetoid.minSplitRadius
+     * @return | result = Planetoid.minSplitRadius
      */
     @Basic @Immutable
     public static double getMinSplitRadius() {

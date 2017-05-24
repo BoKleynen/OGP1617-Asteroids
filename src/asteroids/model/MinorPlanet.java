@@ -40,7 +40,7 @@ public abstract class MinorPlanet extends Entity {
     /**
      * Returns the minimal radius for a MinorPlanet.
      *
-     * @return  this.minRadius
+     * @return  | result = this.minRadius
      */
     @Basic @Immutable
     public static double getMinRadius() {
