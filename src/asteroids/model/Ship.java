@@ -733,7 +733,7 @@ public class Ship extends Entity {
      * 			| @see implementation
      */
     public String toString() {
-	    return getPosition().toString() + getVelocity().toString();
+	    return "Ship " + getPosition().toString() + getVelocity().toString();
     }
     
 }
