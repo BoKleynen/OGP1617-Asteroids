@@ -17,8 +17,6 @@ import static org.junit.Assert.*;
  *
  * @author Bo Kleynen and Yrjo Koyen
  *
- * TODO:	- Add tests for every method
- * TODO:	- Add documentation
  *
  */
 public class ShipTests {
@@ -114,20 +112,6 @@ public class ShipTests {
     	assertEquals(mutableTestShip1.getOrientation(), Math.PI*0.5, 0.0001);
     }
 
-    @Test
-    public void testTurn_NegativeAngle()
-    {
-    	mutableTestShip1.turn(-Math.PI);
-    	assertEquals(mutableTestShip1.getOrientation(), Math.PI, 0.0001);
-    }
-
-    @Test
-    public void testTurn_OverflowAngle() {
-    	mutableTestShip1.turn(4*Math.PI);
-
-    	assertEquals(mutableTestShip1.getOrientation(), 0, 0.0001);
-    }
-
     @Test(expected = AssertionError.class)
     public void testTurn_IllegalArgumentNaN() {
     	mutableTestShip1.turn(Double.NaN);
@@ -138,40 +122,16 @@ public class ShipTests {
     public void testTurn_IllegalArgumentInfinity() {
     	mutableTestShip1.turn(Double.POSITIVE_INFINITY);
     }
-
-    /**
-     * Test to see whether the first postcondition of getTimeToCollision holds true.
-     */
-    @Test
-    public void testGetTimeToCollision_postCondition1() {
-    	double t = collisionShip1.getTimeToCollision(collisionShip2);
-    	assertTrue ( (t > 0) && (t<Double.POSITIVE_INFINITY) );
-    	collisionShip1.move(t);
-    	collisionShip2.move(t);
-    	assertEquals(collisionShip1.getDistanceBetween(collisionShip2), 0, 0.0001);
-    }
     
     @Test
     public void testAccelerate() {
     	thrustShip.setThrust(thrustShip.getTotalMass()*10);
+    	thrustShip.thrustOn();
     	assertEquals(thrustShip.getOrientation(), 0, 0.001);
     	assertEquals(thrustShip.getAcceleration(), 10, 0.001);
     	assertEquals(thrustShip.getVelocity().getMagnitude(), 0, 0.001);
     	thrustShip.accelerate(10);
     	assertEquals(thrustShip.getVelocity().getMagnitude(), 100, 0.001);
-    }
-
-    @Test
-    public void testMove() {
-	    Vector u = new Vector(3,4);
-	    Vector v = new Vector(2,5);
-	    assertTrue(u.add(v.multiply(4)).getX() == 11);
-
-
-        Ship ship2 = new Ship(new Vector(100, 100), new Vector(30, -15), 0, 20);
-	    ship2.move(1);
-        assertTrue(130 == ship2.getPosition().getX());
-        assertTrue(85 == ship2.getPosition().getY());
     }
     
     @Test

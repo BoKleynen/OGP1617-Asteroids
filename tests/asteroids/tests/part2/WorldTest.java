@@ -3,6 +3,7 @@ import asteroids.model.Bullet;
 import asteroids.model.Ship;
 import asteroids.model.collisions.*;
 import asteroids.model.World;
+import asteroids.model.util.exceptions.OverlappingEntitiesException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -27,7 +28,7 @@ public class WorldTest {
 
     // Ship(Vector position, Vector velocity, double orientation, double radius, double mass)
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test (expected = OverlappingEntitiesException.class)
     public void testAddEntity() {
         World world = new World(5000, 5000);
 

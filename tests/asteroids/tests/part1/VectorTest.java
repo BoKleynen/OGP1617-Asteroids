@@ -55,8 +55,8 @@ public class VectorTest {
 
     @Test
     public final void testNormalize() {
-//        assertTrue(new Vector(0.6, 0.8).equals(v.normalize()));       // => fails due to java rounding errors
-
         assertTrue(1 == v.normalize().getMagnitude());
+        assertEquals(0.6, v.normalize().getX(), 0.0001);
+        assertEquals(0.8, v.normalize().getY(), 0.0001);
     }
 }

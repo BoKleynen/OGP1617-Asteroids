@@ -263,6 +263,7 @@ public class Bullet extends Entity {
     		throw new IllegalStateException("Bullet already loaded onto its parent ship");
 
     	this.ship = ship;
+    	this.parentShip = ship;
     }
     
     private char wallHits;
@@ -318,7 +319,8 @@ public class Bullet extends Entity {
                getShip().removeBullet(this);
            } catch (NullPointerException ex) {}
        }
-
+       
+       parentShip = null;
 	   isTerminated = true;
    }
 

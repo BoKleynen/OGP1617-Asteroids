@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import asteroids.model.Bullet;
 import asteroids.model.Ship;
 import asteroids.model.World;
+import asteroids.model.util.exceptions.EntityOutOfWorldException;
 import asteroids.model.util.vector.Vector;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +31,7 @@ public class BulletAssociationsTest {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
 		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount());
+		b.setPosition(s1.getPosition());
 		s1.loadBullet(b);
 		
 		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount() + 1);
@@ -42,11 +44,7 @@ public class BulletAssociationsTest {
 		assertFalse(s1.getAllBullets().contains(b));
 		
 		// Test adding multiple bullets at the same time
-		Collection<Bullet> coll = new HashSet<Bullet>();
-		for ( int i = 0; i < 10; i++ ) {
-			coll.add(new Bullet(new Vector(0, 0), new Vector(0, 0), 2));
-		}
-		s2.loadBullet(coll);
+		s2.loadBullet(10);
 		assertTrue(s2.getNbBullets() == Ship.getInitialBulletAmount() + 10);
 		
 		// Test loading multiple new bullets onto a ship.
@@ -54,7 +52,7 @@ public class BulletAssociationsTest {
 		assertTrue(s1.getNbBullets() == Ship.getInitialBulletAmount() + 100);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = IllegalStateException.class)
 	public void testAddBulletToShip_AddOneBulletTwice() {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
@@ -63,7 +61,7 @@ public class BulletAssociationsTest {
 		s1.loadBullet(b);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = IllegalStateException.class)
 	public void testAddBulletToShip_AddBulletToTwoShips() {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
@@ -72,7 +70,7 @@ public class BulletAssociationsTest {
 		s2.loadBullet(b);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EntityOutOfWorldException.class)
 	public void testAddBulletToShip_addBulletToWorlAndShip() {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		
@@ -81,7 +79,7 @@ public class BulletAssociationsTest {
 		s1.loadBullet(b);
 	}
 	
-	@Test
+	@Test (expected = IllegalStateException.class)
 	public void testBulletPositionInShip() {
 		Bullet b = new Bullet(new Vector(0, 0), new Vector(0, 0), 2);
 		

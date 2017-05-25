@@ -33,7 +33,7 @@ public class Facade implements asteroids.part3.facade.IFacade {
         try {
             return new Ship( new Vector(x, y), new Vector(xVelocity, yVelocity), orientation, radius, 0);
 
-        } catch (Error e) {
+        } catch (Throwable e) {
             throw new ModelException(e);
         }
     }

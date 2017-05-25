@@ -36,9 +36,9 @@ public class BulletTests {
 	
 	@Test
 	public void testGetParentShip() {
+		b1.setPosition(ship.getPosition());
 		ship.loadBullet(b1);
 		assertTrue(b1.getParentShip().equals(ship));
-		
 		ship.removeBullet(b1);
 		assertTrue(b1.getParentShip().equals(ship));
 		ship.loadBullet(b1);
@@ -47,6 +47,7 @@ public class BulletTests {
 	@Test
 	public void testGetShip() {
 		assertTrue(b1.getShip() == null);
+		b2.setPosition(ship.getPosition());
 		ship.loadBullet(b2);
 		assertTrue(b2.getShip().equals(ship));
 	}
@@ -67,6 +68,7 @@ public class BulletTests {
 	@Test
 	public void testTerminate() {
 		world.addEntity(b1);
+		b2.setPosition(ship.getPosition());
 		ship.loadBullet(b2);
 		assertTrue(b2.getShip().equals(ship));
 		assertTrue(b1.getWorld().equals(world));

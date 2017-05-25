@@ -13,10 +13,6 @@ import static org.junit.Assert.*;
  * A class containing tests for the class asteroids.model.Ship
  *
  * @author Bo Kleynen and Yrjo Koyen
- *
- * TODO:	- Add tests for every method
- * TODO:	- Add documentation
- *
  */
 public class ShipTest {
 
@@ -129,17 +125,23 @@ public class ShipTest {
     }
 
     @Test
-    public void testTurn_NegativeAngle()
-    {
-    	mutableTestShip1.turn(-Math.PI);
-    	assertEquals(mutableTestShip1.getOrientation(), Math.PI, 0.0001);
+    public void testTurn_NegativeAngle() {
+		try {
+			mutableTestShip1.turn(-Math.PI);
+			fail();
+		} catch (AssertionError e) {
+			assertEquals(0, mutableTestShip1.getOrientation(), 0.0001);
+		}
     }
 
     @Test
     public void testTurn_OverflowAngle() {
-    	mutableTestShip1.turn(4*Math.PI);
-
-    	assertEquals(mutableTestShip1.getOrientation(), 0, 0.0001);
+    	try {
+    		mutableTestShip1.turn(4*Math.PI);
+			fail();
+		} catch (AssertionError e) {
+    		assertEquals(0, mutableTestShip1.getOrientation(), 0.0001);
+		}
     }
 
     @Test(expected = AssertionError.class)
