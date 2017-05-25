@@ -7,7 +7,6 @@ import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.expressions.valueExpressions.ValueExpression;
 import asteroids.model.programs.statements.Statement;
-import asteroids.model.util.exceptions.BreakException;
 import asteroids.model.util.exceptions.ReturnException;
 
 import java.util.HashMap;
@@ -63,7 +62,7 @@ public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
     }
 
     @Override
-    public void addVariable(String varName, Expression value) {
+    public void addVariable(String varName, Object value) {
         addVariableToMap(varName, value, localVariables);
     }
 

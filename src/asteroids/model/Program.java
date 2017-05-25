@@ -2,7 +2,6 @@ package asteroids.model;
 
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
-import asteroids.model.util.exceptions.BreakException;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
@@ -90,7 +89,7 @@ public class Program implements Parent<Program> {
 	}
 
 	@Override
-	public void addVariable(String varName, Expression value) {
+	public void addVariable(String varName, Object value) {
 		if (functions.containsKey(varName))
 			throw new IllegalArgumentException("function and variables can not hold the same name");
 		addVariableToMap(varName, value, globalVariables);

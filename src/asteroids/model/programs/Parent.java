@@ -13,19 +13,19 @@ import java.util.Map;
 public interface Parent<T> {
     Expression getVariable(String varName);
 
-    void addVariable(String varName, Expression value);
+    void addVariable(String varName, Object value);
 
-    default void addVariableToMap(String varName, Expression value, Map<String, Expression> variables) throws IllegalArgumentException {
+    default void addVariableToMap(String varName, Object value, Map<String, Expression> variables) throws IllegalArgumentException {
         if (variables.containsKey(varName))
-            if (variables.get(varName).getValue().getClass() == value.getValue().getClass()) {
-                variables.put(varName, new ValueExpression<>(value.getValue()));
+            if (variables.get(varName).getValue().getClass() == value.getClass()) {
+                variables.put(varName, new ValueExpression<>(value));
             }
             else
                 throw new IllegalArgumentException("Expected type of " + varName +
                         " is: " + variables.get(varName).getValue().getClass() +
-                        " but received: " + value.getValue().getClass());
+                        " but received: " + value.getClass());
         else
-            variables.put(varName, new ValueExpression<>(value.getValue()));
+            variables.put(varName, new ValueExpression<>(value));
     }
 
     void addPrintedObject(Object value);

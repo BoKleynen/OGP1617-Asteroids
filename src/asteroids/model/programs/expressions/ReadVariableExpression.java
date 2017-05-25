@@ -13,7 +13,6 @@ public class ReadVariableExpression extends Expression {
 
 	@Override
 	public Object getValue() {
-		System.out.println("read var: " + name + " from parent: " + getStatement().getParent());
 		return getStatement().getParent().getVariable(name).getValue();
 	}
 
