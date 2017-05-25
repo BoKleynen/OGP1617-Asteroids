@@ -3,11 +3,6 @@ package asteroids.model.programs.function;
 import asteroids.model.Program;
 import asteroids.model.programs.Child;
 import asteroids.model.programs.statements.*;
-import asteroids.model.programs.statements.actionStatements.ActionStatement;
-import asteroids.model.programs.statements.composedStatements.If;
-import asteroids.model.programs.statements.composedStatements.Sequence;
-import asteroids.model.programs.statements.composedStatements.While;
-import asteroids.model.programs.statements.simpleStatements.Print;
 
 /**
  * @author  Bo Kleynen & Yrjo Koyen

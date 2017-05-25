@@ -13,7 +13,9 @@ import asteroids.model.util.vector.Vector;
 public class BoundaryCollision extends Collision {
 
 	/**
-	 * Creates a new collision with the edges of a world.
+	 * Creates a new standardised collision with the edges of a world.
+     * This collision is a default collision in which no entity is involved it should merely be used as a placeholder
+     * value for a otherwise null variable.
 	 * 
 	 * @Effect	this(null, Double.POSITIVE_INFINITY, new Vector(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY))
 	 */
@@ -24,6 +26,7 @@ public class BoundaryCollision extends Collision {
     /**
 	 * Creates a new collision where the specified entity collides with the edges of a world after the
 	 * given amount of time.
+     * The position at which this collision will take place is set to null.
 	 * 
 	 * @Effect	this(entity, timeToCollision, new Vector(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY))
 	 */
@@ -129,6 +132,8 @@ public class BoundaryCollision extends Collision {
      */
     @Override
     public String toString() {
-        return "Boundary collision (" + getEntity1() + ", Position: " + getCollisionPosition() + ", time: " + getTimeToCollision() + ")";
+        return "Boundary collision (" + getEntity1() +
+                ", Position: " + getCollisionPosition() +
+                ", time: " + getTimeToCollision() + ")";
     }
 }

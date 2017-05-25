@@ -3,6 +3,8 @@ package asteroids.model;
 import asteroids.model.util.vector.Vector;
 import be.kuleuven.cs.som.annotate.*;
 
+import java.util.Set;
+
 /**
  * @Invar 	An entity is associated with at most one world at once.
  * 			| ((getWorld() instanceof World) && (getWorld().getAllEntities().contains(this)) || getWorld() == null
@@ -406,7 +408,9 @@ public abstract class Entity {
      * 			| @see implementation.
      */
     public boolean overlapWithEntityInWorld(World world, Vector virtualPosition) {
-        for (Entity otherEntity : world.getAllEntities()) {
+        Set<Entity> entities = world.getAllEntities();
+        entities.remove(this);
+        for (Entity otherEntity : entities) {
             if (overlap(otherEntity, virtualPosition))
                 return true;
         }
@@ -555,10 +559,34 @@ public abstract class Entity {
         return overlap(other, getPosition(), other.getPosition());
     }
 
+    /**
+     * Returns a boolean to check if this entity overlaps with the specified other entity, as if this entity were at the
+     * specified virtual position.
+     *
+     * @param   other
+     *          The other entity that might overlap with this entity at the given position.
+     * @param   virtualPosThis
+     *          The virtual position at which this entity might overlap with the other entity.
+     * @return  True if and only if both entities overlap, given this entity were at the given virtual position.
+     *          | result == overlap(other, virtualPosThis, other.getPosition())
+     */
     public boolean overlap (Entity other, Vector virtualPosThis) {
         return overlap(other,virtualPosThis, other.getPosition());
     }
 
+    /**
+     * Returns a boolean to check if this entity overlaps with the specified other entity, is if this entity were at the
+     * position virtualPosThis and the other entity were at the position virtualPosOther.
+     *
+     * @param   other
+     *          The other entity that might overlap with this entity at the given positions.
+     * @param   virtualPosThis
+     *          The virtual position of this entity at which it might overlap with the other entity.
+     * @param   virtualPosOther
+     *          The virtual position of the other entity at which it might overlap with this entity.
+     * @return  True if and only if both entities overlap given they were at their respective positions.
+     *          | result == (virtualPosThis.getDistance(virtualPosOther) <= (getRadius() + other.getRadius()) * 0.99)
+     */
     public boolean overlap (Entity other, Vector virtualPosThis, Vector virtualPosOther) {
         return virtualPosThis.getDistance(virtualPosOther) <= (getRadius() + other.getRadius()) * 0.99;
     }

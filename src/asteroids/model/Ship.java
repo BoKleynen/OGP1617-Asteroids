@@ -594,10 +594,8 @@ public class Ship extends Entity {
     	if ( bullets.size() == 0 )
     		return null;
 
-    	for (Bullet bullet : bullets) {
-    		return bullet;
-		}
-    	return null;
+    	return bullets.stream().findFirst().get();
+
     }
     
     /**

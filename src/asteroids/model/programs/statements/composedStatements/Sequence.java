@@ -5,9 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import asteroids.model.Program;
 import asteroids.model.programs.Parent;
-import asteroids.model.programs.function.Function;
 import asteroids.model.programs.statements.Statement;
 
 /**
@@ -89,9 +87,6 @@ public class Sequence<T extends Parent<T>> extends Statement<T> {
         for (Statement<T> statement : this.statements) {
             statements.add(statement.clone());
         }
-
-        Statement<T> clone = new Sequence<>(statements);
-        clone.setParent(getParent());
-        return clone;
+        return new Sequence<>(statements);
     }
 }

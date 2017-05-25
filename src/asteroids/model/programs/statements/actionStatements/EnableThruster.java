@@ -5,7 +5,7 @@ import asteroids.model.programs.statements.Statement;
 import asteroids.model.util.exceptions.NotEnoughTimeRemainingException;
 
 /**
- * Created by Bo on 27/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  */
 public class EnableThruster extends ActionStatement {
 

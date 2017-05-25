@@ -8,7 +8,6 @@ import asteroids.model.util.vector.Vector;
 /**
  * A class of collisions
  *
- *
  * @author  Bo Kleynen & Yrjo Koyen
  */
 public abstract class Collision {
@@ -22,7 +21,7 @@ public abstract class Collision {
     private final Entity entity1;
 
     /**
-     * Returns the first entity involved in this Collision.
+     * Returns the entity involved in this Collision.
      *
      * @return	The first entity of this collision
      * 			| result == this.entity1
@@ -87,6 +86,9 @@ public abstract class Collision {
      */
     public abstract void resolve(CollisionListener collisionListener);
 
+    /**
+     * resolves this collision without invoking the collisionListener.
+     */
     public void resolve() {
         this.resolve(null);
     }

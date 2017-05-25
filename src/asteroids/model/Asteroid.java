@@ -52,7 +52,10 @@ public class Asteroid extends MinorPlanet {
      *
      * @param ship
      *          The ship this Asteroids collides with.
-     * @Post    | (new ship).isTerminated()
+     * @Post    The colliding ship is destroyed
+     *          | (new ship).isTerminated()
+     * @Post    This asteroid is unaffected
+     *          | new == this
      */
     public void resolveCollisionWithShip(Ship ship) {
         ship.die();

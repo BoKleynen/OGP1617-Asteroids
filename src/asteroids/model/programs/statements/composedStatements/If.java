@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  *
  * TODO: implement expressions so they can be converted to boolean types
  */
@@ -101,8 +101,6 @@ public class If<T extends Parent<T>> extends Statement<T> {
 
     @Override
     public Statement<T> clone() throws CloneNotSupportedException {
-        Statement<T> clone = new If<>(condition.clone(), ifBody.clone(), elseBody == null ? null : elseBody.clone());
-        clone.setParent(getParent());
-        return clone;
+        return new If<>(condition.clone(), ifBody.clone(), elseBody == null ? null : elseBody.clone());
     }
 }

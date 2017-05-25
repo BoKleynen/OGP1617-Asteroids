@@ -3,14 +3,13 @@ package asteroids.model.programs.statements.composedStatements;
 import asteroids.model.programs.Parent;
 import asteroids.model.programs.expressions.Expression;
 import asteroids.model.programs.statements.Statement;
-import asteroids.model.programs.statements.simpleStatements.Break;
 import asteroids.model.util.exceptions.BreakException;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Created by Bo on 28/04/2017.
+ * @author  Bo Kleynen & Yrjo Koyen
  *
  * TODO: implement expressions so they can be converted to boolean types
  */
@@ -56,8 +55,10 @@ public class While<T extends Parent<T>> extends Statement<T> {
 
 	@Override
 	public void execute() {
+		System.out.println("while");
 		condition.setStatement(this);
 		while (bodyIterator.hasNext()) {
+			System.out.println("while body " + this);
 			try {
 				bodyIterator.next().execute();
 			} catch (BreakException br) {
@@ -79,8 +80,6 @@ public class While<T extends Parent<T>> extends Statement<T> {
 
 	@Override
 	public Statement<T> clone() throws CloneNotSupportedException {
-		Statement<T> clone = new While<>(condition.clone(), body.clone());
-		clone.setParent(getParent());
-		return clone;
+		return new While<>(condition.clone(), body.clone());
 	}
 }
