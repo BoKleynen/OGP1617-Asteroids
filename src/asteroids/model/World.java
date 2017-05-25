@@ -384,7 +384,6 @@ public class World {
      * 			
      */
     public void evolve(double time, CollisionListener collisionListener) {
-        System.out.println(time);
         if (time < 0 || Double.isNaN(time))
             throw new IllegalArgumentException(Double.toString(time));
 
