@@ -20,7 +20,6 @@ import java.util.Map;
 public class CalledFunction implements Parent<CalledFunction>, Child<Program> {
 
     public CalledFunction(Function function, List<Expression> actualArgs) throws CloneNotSupportedException{
-        System.out.println("function call");
         for (int i = 0; i < actualArgs.size(); i++) {
             arguments.put("$" + (i+1), new ValueExpression<>(actualArgs.get(i).getValue()));
         }

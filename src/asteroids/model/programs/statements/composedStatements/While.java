@@ -55,10 +55,8 @@ public class While<T extends Parent<T>> extends Statement<T> {
 
 	@Override
 	public void execute() {
-		System.out.println(" entering while");
 		condition.setStatement(this);
 		while (bodyIterator.hasNext()) {
-			System.out.println("  executing while body " + this);
 			try {
 				bodyIterator.next().execute();
 			} catch (BreakException br) {
