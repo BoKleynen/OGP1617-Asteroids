@@ -79,7 +79,6 @@ public class BulletTests {
 		
 		assertTrue(b1.getShip() == null && b2.getShip() == null);
 		assertTrue(b1.getWorld() == null && b2.getWorld() == null);
-		assertTrue(b1.getParentShip() == null && b2.getParentShip() == null);
 	}
 	
 	

@@ -319,8 +319,7 @@ public class Bullet extends Entity {
                getShip().removeBullet(this);
            } catch (NullPointerException ex) {}
        }
-       
-       parentShip = null;
+
 	   isTerminated = true;
    }
 
