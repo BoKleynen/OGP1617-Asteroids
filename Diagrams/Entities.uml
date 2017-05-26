@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>asteroids.model.Asteroid</OriginalElement>
+  <nodes>
+    <node x="57.33703703703708" y="734.0">asteroids.model.Ship</node>
+    <node x="227.33703703703708" y="156.0">asteroids.model.collisions.BoundaryCollision</node>
+    <node x="432.3370370370371" y="811.0">asteroids.model.MinorPlanet</node>
+    <node x="82.33703703703708" y="246.0">asteroids.model.World</node>
+    <node x="4.883333333333354" y="989.0">asteroids.model.Bullet</node>
+    <node x="3.1666666666666856" y="145.0">asteroids.model.collisions.EntityCollision</node>
+    <node x="212.83703703703708" y="0.0">asteroids.model.collisions.Collision</node>
+    <node x="371.5870370370371" y="1055.0">asteroids.model.Asteroid</node>
+    <node x="404.8370370370371" y="1222.0">asteroids.model.Planetoid</node>
+    <node x="54.83703703703708" y="457.0">asteroids.model.Entity</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="asteroids.model.Ship" target="asteroids.model.Bullet">
+      <point x="0.0" y="102.5" />
+      <point x="234.83703703703708" y="964.0" />
+      <point x="217.6833333333333" y="964.0" />
+      <point x="60.799999999999955" y="-91.5" />
+    </edge>
+    <edge source="asteroids.model.World" target="asteroids.model.Entity">
+      <point x="0.0" y="80.5" />
+      <point x="232.33703703703708" y="432.0" />
+      <point x="234.83703703703708" y="432.0" />
+      <point x="0.0" y="-113.5" />
+    </edge>
+    <edge source="asteroids.model.Ship" target="asteroids.model.Entity">
+      <point x="0.0" y="-102.5" />
+      <point x="0.0" y="113.5" />
+    </edge>
+    <edge source="asteroids.model.Bullet" target="asteroids.model.collisions.EntityCollision">
+      <point x="-121.60000000000002" y="-91.5" />
+      <point x="35.28333333333333" y="964.0" />
+      <point x="26.0" y="964.0" />
+      <point x="26.0" y="221.0" />
+      <point x="28.333333333333343" y="221.0" />
+      <point x="-50.33333333333334" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.World" target="asteroids.model.collisions.BoundaryCollision">
+      <point x="75.0" y="-80.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.Asteroid" target="asteroids.model.MinorPlanet">
+      <point x="0.0" y="-25.5" />
+      <point x="467.5870370370371" y="964.0" />
+      <point x="476.5870370370371" y="964.0" />
+      <point x="-44.25" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.collisions.EntityCollision" target="asteroids.model.collisions.Collision">
+      <point x="0.0" y="-25.5" />
+      <point x="78.66666666666669" y="120.0" />
+      <point x="244.33703703703708" y="120.0" />
+      <point x="-63.0" y="47.5" />
+    </edge>
+    <edge source="asteroids.model.World" target="asteroids.model.collisions.EntityCollision">
+      <point x="-75.0" y="-80.5" />
+      <point x="157.33703703703708" y="221.0" />
+      <point x="129.00000000000003" y="221.0" />
+      <point x="50.33333333333334" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.Bullet" target="asteroids.model.Ship">
+      <point x="0.0" y="-91.5" />
+      <point x="156.88333333333335" y="964.0" />
+      <point x="116.50370370370376" y="964.0" />
+      <point x="-118.33333333333331" y="102.5" />
+    </edge>
+    <edge source="asteroids.model.collisions.Collision" target="asteroids.model.Entity">
+      <point x="63.00000000000001" y="47.5" />
+      <point x="370.3370370370371" y="120.0" />
+      <point x="397.8370370370371" y="120.0" />
+      <point x="397.8370370370371" y="432.0" />
+      <point x="378.8370370370371" y="432.0" />
+      <point x="144.0" y="-113.5" />
+    </edge>
+    <edge source="asteroids.model.collisions.EntityCollision" target="asteroids.model.Entity">
+      <point x="0.0" y="25.5" />
+      <point x="78.66666666666669" y="221.0" />
+      <point x="71.83703703703708" y="221.0" />
+      <point x="71.83703703703708" y="432.0" />
+      <point x="90.83703703703708" y="432.0" />
+      <point x="-144.0" y="-113.5" />
+    </edge>
+    <edge source="asteroids.model.Bullet" target="asteroids.model.Entity">
+      <point x="-60.80000000000007" y="-91.5" />
+      <point x="96.08333333333329" y="964.0" />
+      <point x="46.83703703703708" y="964.0" />
+      <point x="46.83703703703708" y="709.0" />
+      <point x="114.83703703703708" y="709.0" />
+      <point x="-120.0" y="113.5" />
+    </edge>
+    <edge source="asteroids.model.Planetoid" target="asteroids.model.Asteroid">
+      <point x="-58.0" y="-47.5" />
+      <point x="462.8370370370371" y="1197.0" />
+      <point x="467.5870370370371" y="1197.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.MinorPlanet" target="asteroids.model.Entity">
+      <point x="0.0" y="-25.5" />
+      <point x="520.8370370370371" y="709.0" />
+      <point x="354.8370370370371" y="709.0" />
+      <point x="120.0" y="113.5" />
+    </edge>
+    <edge source="asteroids.model.Entity" target="asteroids.model.World">
+      <point x="-72.0" y="-113.5" />
+      <point x="162.83703703703708" y="432.0" />
+      <point x="132.33703703703708" y="432.0" />
+      <point x="-100.0" y="80.5" />
+    </edge>
+    <edge source="asteroids.model.collisions.BoundaryCollision" target="asteroids.model.collisions.Collision">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="asteroids.model.Planetoid" target="asteroids.model.MinorPlanet">
+      <point x="58.0" y="-47.5" />
+      <point x="578.8370370370371" y="1197.0" />
+      <point x="574.0870370370371" y="1197.0" />
+      <point x="574.0870370370371" y="964.0" />
+      <point x="565.0870370370371" y="964.0" />
+      <point x="44.25" y="25.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5071054599850411" x="318.5" y="658.5000000000001" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

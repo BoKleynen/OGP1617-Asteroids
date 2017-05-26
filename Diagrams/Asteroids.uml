@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>asteroids.model.Asteroid</OriginalElement>
+  <nodes>
+    <node x="1821.5172078068842" y="1691.0">asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.BinaryArithmeticExpression</node>
+    <node x="2059.5172078068845" y="1691.0">asteroids.model.programs.expressions.entityExpressions.SelfExpression</node>
+    <node x="152.1993506640274" y="156.0">asteroids.model.collisions.BoundaryCollision</node>
+    <node x="216.0" y="1856.0">asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetRadius</node>
+    <node x="1945.2336884414574" y="1856.0">asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.Addition</node>
+    <node x="5010.88433777743" y="1680.0">asteroids.model.programs.statements.actionStatements.ActionStatement</node>
+    <node x="2600.572497448515" y="2127.0">asteroids.model.programs.ProgramFactory</node>
+    <node x="5170.483688441457" y="1856.0">asteroids.model.programs.statements.actionStatements.EnableThruster</node>
+    <node x="2218.5172078068845" y="1691.0">asteroids.model.programs.expressions.binaryExpressions.compareExpressions.CompareExpression</node>
+    <node x="3480.483688441457" y="1691.0">asteroids.model.programs.expressions.entityExpressions.MinorPlanetExpression</node>
+    <node x="862.2350649497416" y="950.0">asteroids.model.programs.expressions.valueExpressions.ValueExpression</node>
+    <node x="5332.483688441457" y="1856.0">asteroids.model.programs.statements.actionStatements.FireBullet</node>
+    <node x="3228.541548135799" y="156.0">java.lang.Cloneable</node>
+    <node x="4556.983688441457" y="939.0">asteroids.model.programs.statements.simpleStatements.Assignment</node>
+    <node x="1741.2672078068842" y="950.0">asteroids.model.programs.expressions.unaryExpressions.UnaryExpression</node>
+    <node x="5005.483688441457" y="1856.0">asteroids.model.programs.statements.actionStatements.DisableThruster</node>
+    <node x="3588.983688441457" y="950.0">asteroids.model.programs.expressions.ReadParameter</node>
+    <node x="752.9493506640274" y="1205.0">asteroids.model.programs.Parent</node>
+    <node x="2765.483688441457" y="1691.0">asteroids.model.programs.expressions.entityExpressions.AsteroidExpression</node>
+    <node x="157.1993506640274" y="256.0">asteroids.model.World</node>
+    <node x="2040.1678571428567" y="939.0">asteroids.model.programs.expressions.binaryExpressions.BinaryExpression</node>
+    <node x="2009.829048135799" y="615.0">asteroids.model.programs.expressions.Expression</node>
+    <node x="539.7232142857142" y="1382.0">asteroids.model.Program</node>
+    <node x="35.25" y="1437.0">asteroids.model.Planetoid</node>
+    <node x="5840.983688441457" y="626.0">asteroids.model.programs.statements.simpleStatements.Break</node>
+    <node x="310.25" y="1117.0">asteroids.model.Ship</node>
+    <node x="67.3243506640274" y="950.0">asteroids.model.MinorPlanet</node>
+    <node x="108.0" y="1856.0">asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetVX</node>
+    <node x="0.0" y="1856.0">asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetVY</node>
+    <node x="428.5326839973609" y="145.0">asteroids.model.collisions.EntityCollision</node>
+    <node x="2.0" y="1194.0">asteroids.model.Asteroid</node>
+    <node x="5554.983688441457" y="615.0">asteroids.model.programs.statements.composedStatements.Sequence</node>
+    <node x="1795.2336884414574" y="1856.0">asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.Multiplication</node>
+    <node x="3309.483688441457" y="1691.0">asteroids.model.programs.expressions.entityExpressions.BulletExpression</node>
+    <node x="136.25" y="1680.0">asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression</node>
+    <node x="347.0" y="1856.0">asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetY</node>
+    <node x="949.3303571428569" y="1647.0">asteroids.model.programs.function.CalledFunction</node>
+    <node x="1828.9178571428567" y="1205.0">asteroids.model.programs.expressions.unaryExpressions.logicalExpressions.Not</node>
+    <node x="545.4732142857142" y="1856.0">asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetX</node>
+    <node x="1186.4836884414574" y="1834.0">asteroids.model.programs.expressions.FunctionCall</node>
+    <node x="1077.9732142857142" y="1172.0">asteroids.model.programs.function.Function</node>
+    <node x="135.4493506640274" y="527.0">asteroids.model.Entity</node>
+    <node x="4005.983688441457" y="928.0">asteroids.model.programs.statements.composedStatements.While</node>
+    <node x="2432.983688441457" y="1845.0">asteroids.model.programs.statements.actionStatements.Turn</node>
+    <node x="2605.483688441457" y="1691.0">asteroids.model.programs.expressions.entityExpressions.AnyExpression</node>
+    <node x="3790.983688441457" y="950.0">asteroids.model.programs.expressions.ReadVariableExpression</node>
+    <node x="4911.483688441457" y="1856.0">asteroids.model.programs.statements.actionStatements.Skip</node>
+    <node x="4612.329048135799" y="311.0">asteroids.model.programs.statements.Statement</node>
+    <node x="4329.983688441457" y="950.0">asteroids.model.programs.statements.simpleStatements.Print</node>
+    <node x="1681.9836884414574" y="1856.0">asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.Negate</node>
+    <node x="1568.4836884414574" y="1691.0">asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.UnaryArithmeticExpression</node>
+    <node x="1422.4836884414574" y="1856.0">asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetDirection</node>
+    <node x="1587.9836884414574" y="1856.0">asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.Sqrt</node>
+    <node x="1159.7350649497416" y="156.0">asteroids.model.programs.Child</node>
+    <node x="2953.483688441457" y="1691.0">asteroids.model.programs.expressions.entityExpressions.ShipExpression</node>
+    <node x="2202.983688441457" y="1856.0">asteroids.model.programs.expressions.binaryExpressions.compareExpressions.Equal</node>
+    <node x="5361.983688441457" y="950.0">asteroids.model.programs.statements.simpleStatements.Return</node>
+    <node x="4738.983688441457" y="917.0">asteroids.model.programs.statements.composedStatements.If</node>
+    <node x="3116.483688441457" y="1691.0">asteroids.model.programs.expressions.entityExpressions.PlanetoidExpression</node>
+    <node x="386.4166666666665" y="884.0">asteroids.model.Bullet</node>
+    <node x="242.2665481357999" y="0.0">asteroids.model.collisions.Collision</node>
+    <node x="2304.983688441457" y="1856.0">asteroids.model.programs.expressions.binaryExpressions.compareExpressions.LessThan</node>
+    <node x="2942.829048135799" y="1470.0">asteroids.model.programs.expressions.entityExpressions.EntityExpression</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.composedStatements.While">
+      <point x="32.65789473684208" y="-14.5" />
+      <point x="2706.2303921853572" y="2007.0" />
+      <point x="4157.983688441457" y="2007.0" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.simpleStatements.Assignment">
+      <point x="40.34210526315792" y="-14.5" />
+      <point x="2713.914602711673" y="2027.0" />
+      <point x="4637.983688441457" y="2027.0" />
+      <point x="0.0" y="36.5" />
+    </edge>
+    <edge source="asteroids.model.Bullet" target="asteroids.model.collisions.EntityCollision">
+      <point x="76.0" y="-91.5" />
+      <point x="614.4166666666665" y="236.0" />
+      <point x="554.3660173306939" y="236.0" />
+      <point x="50.33333333333303" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression" target="asteroids.model.Entity">
+      <point x="-79.0" y="-25.5" />
+      <point x="175.75" y="1617.0" />
+      <point x="277.75" y="1617.0" />
+      <point x="277.75" y="864.0" />
+      <point x="270.4493506640274" y="864.0" />
+      <point x="-45.0" y="113.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.AnyExpression">
+      <point x="1.921052631578732" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.BulletExpression" target="asteroids.model.programs.expressions.entityExpressions.EntityExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="3384.983688441457" y="1617.0" />
+      <point x="3062.2576195643705" y="1617.0" />
+      <point x="43.428571428571445" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.simpleStatements.Return" target="asteroids.model.programs.expressions.Expression">
+      <point x="-43.0" y="-25.5" />
+      <point x="5404.983688441457" y="774.0" />
+      <point x="2201.904048135799" y="774.0" />
+      <point x="93.57499999999982" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.composedStatements.If" target="asteroids.model.programs.statements.Statement">
+      <point x="0.0" y="-58.5" />
+      <point x="4900.983688441457" y="864.0" />
+      <point x="4943.329048135799" y="864.0" />
+      <point x="4943.329048135799" y="497.0" />
+      <point x="4680.329048135799" y="497.0" />
+      <point x="8.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetRadius" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="271.5" y="1814.0" />
+      <point x="235.0" y="1814.0" />
+      <point x="-19.75" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.ReadParameter" target="asteroids.model.programs.expressions.Expression">
+      <point x="0.0" y="-25.5" />
+      <point x="3679.983688441457" y="834.0" />
+      <point x="2142.804048135799" y="834.0" />
+      <point x="34.47499999999991" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.MinorPlanetExpression" target="asteroids.model.programs.expressions.entityExpressions.EntityExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="3574.983688441457" y="1607.0" />
+      <point x="3083.971905278656" y="1607.0" />
+      <point x="65.14285714285711" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.Function" target="asteroids.model.programs.statements.Statement">
+      <point x="59.0" y="-47.5" />
+      <point x="1254.9732142857142" y="1092.0" />
+      <point x="1225.543333850085" y="1092.0" />
+      <point x="1225.543333850085" y="457.0" />
+      <point x="4624.329048135799" y="457.0" />
+      <point x="-48.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.Parent" target="asteroids.model.programs.expressions.valueExpressions.ValueExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="796.9493506640274" y="1092.0" />
+      <point x="887.2350649497416" y="1092.0" />
+      <point x="-50.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.Negate" target="asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.UnaryArithmeticExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="1727.9836884414574" y="1804.0" />
+      <point x="1730.4836884414574" y="1804.0" />
+      <point x="54.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetVX">
+      <point x="-67.2368421052629" y="-14.5" />
+      <point x="2606.3356553432523" y="2097.0" />
+      <point x="152.0" y="2097.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetVY">
+      <point x="-71.07894736842081" y="-14.5" />
+      <point x="2602.4935500800943" y="2107.0" />
+      <point x="44.0" y="2107.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.CalledFunction" target="asteroids.model.programs.statements.Statement">
+      <point x="100.85714285714312" y="-58.5" />
+      <point x="1226.6875" y="1617.0" />
+      <point x="1324.4732142857142" y="1617.0" />
+      <point x="1324.4732142857142" y="467.0" />
+      <point x="4632.329048135799" y="467.0" />
+      <point x="-40.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.World" target="asteroids.model.collisions.BoundaryCollision">
+      <point x="-75.0" y="-80.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.function.Function">
+      <point x="-36.5" y="-14.5" />
+      <point x="2637.072497448515" y="2017.0" />
+      <point x="1557.9836884414574" y="2017.0" />
+      <point x="1557.9836884414574" y="1362.0" />
+      <point x="1284.4732142857142" y="1362.0" />
+      <point x="88.5" y="47.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetDirection" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression">
+      <point x="-31.25" y="-14.5" />
+      <point x="1453.7336884414574" y="1784.0" />
+      <point x="353.5" y="1784.0" />
+      <point x="98.75" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.PlanetoidExpression">
+      <point x="13.447368421052488" y="-14.5" />
+      <point x="2687.0198658695676" y="1957.0" />
+      <point x="3202.983688441457" y="1957.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.Bullet" target="asteroids.model.Ship">
+      <point x="101.33333333333303" y="91.5" />
+      <point x="639.7499999999995" y="1092.0" />
+      <point x="620.875" y="1092.0" />
+      <point x="133.125" y="-102.5" />
+    </edge>
+    <edge source="asteroids.model.collisions.Collision" target="asteroids.model.Entity">
+      <point x="-63.0" y="47.5" />
+      <point x="273.7665481357999" y="115.0" />
+      <point x="141.6993506640274" y="115.0" />
+      <point x="141.6993506640274" y="507.0" />
+      <point x="171.4493506640274" y="507.0" />
+      <point x="-144.0" y="-113.5" />
+    </edge>
+    <edge source="asteroids.model.collisions.EntityCollision" target="asteroids.model.Entity">
+      <point x="0.0" y="25.5" />
+      <point x="504.0326839973609" y="236.0" />
+      <point x="523.6993506640274" y="236.0" />
+      <point x="523.6993506640274" y="507.0" />
+      <point x="459.4493506640274" y="507.0" />
+      <point x="144.0" y="-113.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.CalledFunction" target="asteroids.model.programs.Child">
+      <point x="0.0" y="-58.5" />
+      <point x="1125.8303571428569" y="1607.0" />
+      <point x="1067.4732142857142" y="1607.0" />
+      <point x="1067.4732142857142" y="236.0" />
+      <point x="1172.9017316164086" y="236.0" />
+      <point x="-26.33333333333303" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.binaryExpressions.compareExpressions.Equal" target="asteroids.model.programs.expressions.binaryExpressions.compareExpressions.CompareExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="2243.983688441457" y="1814.0" />
+      <point x="2261.2672078068845" y="1814.0" />
+      <point x="-42.75" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.EntityExpression" target="asteroids.model.programs.expressions.Expression">
+      <point x="0.0" y="-14.5" />
+      <point x="3018.829048135799" y="844.0" />
+      <point x="2132.954048135799" y="844.0" />
+      <point x="24.625" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.actionStatements.Skip">
+      <point x="48.026315789473756" y="-14.5" />
+      <point x="2721.598813237989" y="2047.0" />
+      <point x="4948.483688441457" y="2047.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetDirection">
+      <point x="-40.34210526315792" y="-14.5" />
+      <point x="2633.2303921853572" y="2027.0" />
+      <point x="1484.9836884414574" y="2027.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.ShipExpression">
+      <point x="9.60526315789457" y="-14.5" />
+      <point x="2683.1777606064097" y="1947.0" />
+      <point x="3024.983688441457" y="1947.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.actionStatements.Turn">
+      <point x="-1.921052631578732" y="-14.5" />
+      <point x="2671.6514448169364" y="1927.0" />
+      <point x="2548.983688441457" y="1927.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.SelfExpression" target="asteroids.model.programs.expressions.entityExpressions.EntityExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="2129.0172078068845" y="1607.0" />
+      <point x="2953.686190992942" y="1607.0" />
+      <point x="-65.14285714285711" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.composedStatements.Sequence" target="asteroids.model.programs.statements.Statement">
+      <point x="-66.5" y="-25.5" />
+      <point x="5621.483688441457" y="457.0" />
+      <point x="4712.329048135799" y="457.0" />
+      <point x="40.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.actionStatements.DisableThruster" target="asteroids.model.programs.statements.actionStatements.ActionStatement">
+      <point x="0.0" y="-14.5" />
+      <point x="5077.983688441457" y="1814.0" />
+      <point x="5112.38433777743" y="1814.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.simpleStatements.Assignment" target="asteroids.model.programs.expressions.Expression">
+      <point x="-40.5" y="-36.5" />
+      <point x="4597.483688441457" y="794.0" />
+      <point x="2182.204048135799" y="794.0" />
+      <point x="73.875" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.simpleStatements.Assignment" target="asteroids.model.programs.statements.Statement">
+      <point x="40.5" y="-36.5" />
+      <point x="4678.483688441457" y="507.0" />
+      <point x="4672.329048135799" y="507.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.valueExpressions.ValueExpression">
+      <point x="-48.026315789473756" y="-14.5" />
+      <point x="2625.5461816590414" y="2047.0" />
+      <point x="931.2232142857142" y="2047.0" />
+      <point x="931.2232142857142" y="1092.0" />
+      <point x="937.2350649497416" y="1092.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.Program" target="asteroids.model.programs.expressions.Expression">
+      <point x="0.0" y="-102.5" />
+      <point x="730.2232142857142" y="1362.0" />
+      <point x="741.1875" y="1362.0" />
+      <point x="741.1875" y="804.0" />
+      <point x="2034.454048135799" y="804.0" />
+      <point x="-73.875" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.ReadVariableExpression" target="asteroids.model.programs.expressions.Expression">
+      <point x="0.0" y="-25.5" />
+      <point x="3888.483688441457" y="824.0" />
+      <point x="2152.654048135799" y="824.0" />
+      <point x="44.32499999999982" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.unaryExpressions.logicalExpressions.Not">
+      <point x="-5.763157894736651" y="-14.5" />
+      <point x="2667.8093395537785" y="1937.0" />
+      <point x="2422.483688441457" y="1937.0" />
+      <point x="2422.483688441457" y="1362.0" />
+      <point x="1864.4178571428567" y="1362.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.composedStatements.If">
+      <point x="44.18421052631584" y="-14.5" />
+      <point x="2717.756707974831" y="2037.0" />
+      <point x="4900.983688441457" y="2037.0" />
+      <point x="0.0" y="58.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.ShipExpression" target="asteroids.model.programs.expressions.entityExpressions.EntityExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="3024.983688441457" y="1627.0" />
+      <point x="3018.829048135799" y="1627.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.unaryExpressions.UnaryExpression" target="asteroids.model.programs.expressions.Expression">
+      <point x="47.75" y="-25.5" />
+      <point x="1884.5172078068842" y="864.0" />
+      <point x="2093.554048135799" y="864.0" />
+      <point x="-14.775000000000091" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.World" target="asteroids.model.collisions.EntityCollision">
+      <point x="75.0" y="-80.5" />
+      <point x="382.1993506640274" y="236.0" />
+      <point x="453.69935066402786" y="236.0" />
+      <point x="-50.33333333333303" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.actionStatements.ActionStatement" target="asteroids.model.programs.statements.Statement">
+      <point x="0.0" y="-25.5" />
+      <point x="5112.38433777743" y="1362.0" />
+      <point x="5544.483688441457" y="1362.0" />
+      <point x="5544.483688441457" y="467.0" />
+      <point x="4704.329048135799" y="467.0" />
+      <point x="32.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetVY" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="44.0" y="1804.0" />
+      <point x="156.0" y="1804.0" />
+      <point x="-98.75" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.ReadParameter">
+      <point x="24.973684210526244" y="-14.5" />
+      <point x="2698.5461816590414" y="1987.0" />
+      <point x="3679.983688441457" y="1987.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.actionStatements.FireBullet" target="asteroids.model.programs.statements.actionStatements.ActionStatement">
+      <point x="0.0" y="-14.5" />
+      <point x="5384.983688441457" y="1804.0" />
+      <point x="5193.58433777743" y="1804.0" />
+      <point x="81.19999999999982" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.simpleStatements.Print">
+      <point x="36.5" y="-14.5" />
+      <point x="2710.072497448515" y="2017.0" />
+      <point x="4433.483688441457" y="2017.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.actionStatements.EnableThruster" target="asteroids.model.programs.statements.actionStatements.ActionStatement">
+      <point x="0.0" y="-14.5" />
+      <point x="5241.483688441457" y="1814.0" />
+      <point x="5152.9843377774305" y="1814.0" />
+      <point x="40.600000000000364" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetRadius">
+      <point x="-63.394736842104976" y="-14.5" />
+      <point x="2610.17776060641" y="2087.0" />
+      <point x="271.5" y="2087.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.Sqrt" target="asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.UnaryArithmeticExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="1624.9836884414574" y="1804.0" />
+      <point x="1622.4836884414574" y="1804.0" />
+      <point x="-54.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.CalledFunction" target="asteroids.model.Program">
+      <point x="-151.28571428571468" y="-58.5" />
+      <point x="974.5446428571422" y="1627.0" />
+      <point x="825.4732142857142" y="1627.0" />
+      <point x="95.25" y="102.5" />
+    </edge>
+    <edge source="asteroids.model.Program" target="asteroids.model.programs.function.Function">
+      <point x="108.85714285714312" y="-102.5" />
+      <point x="839.0803571428573" y="1352.0" />
+      <point x="1107.4732142857142" y="1352.0" />
+      <point x="-88.5" y="47.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.CalledFunction" target="asteroids.model.programs.expressions.valueExpressions.ValueExpression">
+      <point x="-50.42857142857156" y="-58.5" />
+      <point x="1075.4017857142853" y="1617.0" />
+      <point x="999.4850649497416" y="1617.0" />
+      <point x="999.4850649497416" y="1092.0" />
+      <point x="987.2350649497416" y="1092.0" />
+      <point x="50.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.composedStatements.If" target="asteroids.model.programs.expressions.Expression">
+      <point x="-108.0" y="-58.5" />
+      <point x="4792.983688441457" y="784.0" />
+      <point x="2192.054048135799" y="784.0" />
+      <point x="83.72499999999991" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.actionStatements.Turn" target="asteroids.model.programs.expressions.Expression">
+      <point x="-58.0" y="-25.5" />
+      <point x="2490.983688441457" y="854.0" />
+      <point x="2123.104048135799" y="854.0" />
+      <point x="14.775000000000091" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.Bullet" target="asteroids.model.Entity">
+      <point x="-76.0" y="-91.5" />
+      <point x="462.4166666666665" y="774.0" />
+      <point x="450.4493506640274" y="774.0" />
+      <point x="135.0" y="113.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.composedStatements.While" target="asteroids.model.programs.expressions.Expression">
+      <point x="-101.33333333333303" y="-47.5" />
+      <point x="4056.650355108124" y="814.0" />
+      <point x="2162.504048135799" y="814.0" />
+      <point x="54.17500000000018" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.Program">
+      <point x="-51.868421052631675" y="-14.5" />
+      <point x="2621.7040763958835" y="2057.0" />
+      <point x="634.9732142857142" y="2057.0" />
+      <point x="-95.25" y="102.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.actionStatements.Skip" target="asteroids.model.programs.statements.actionStatements.ActionStatement">
+      <point x="0.0" y="-14.5" />
+      <point x="4948.483688441457" y="1814.0" />
+      <point x="5071.78433777743" y="1814.0" />
+      <point x="-40.600000000000364" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.AsteroidExpression">
+      <point x="5.763157894736651" y="-14.5" />
+      <point x="2679.335655343252" y="1937.0" />
+      <point x="2849.483688441457" y="1937.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetDirection" target="asteroids.model.programs.expressions.entityExpressions.SelfExpression">
+      <point x="31.25" y="-14.5" />
+      <point x="1516.2336884414574" y="1814.0" />
+      <point x="2094.2672078068845" y="1814.0" />
+      <point x="-34.75" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.Program" target="asteroids.model.Ship">
+      <point x="-163.28571428571468" y="-102.5" />
+      <point x="566.9374999999995" y="1362.0" />
+      <point x="399.0" y="1362.0" />
+      <point x="-88.75" y="102.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.binaryExpressions.BinaryExpression" target="asteroids.model.programs.expressions.Expression">
+      <point x="64.75" y="-36.5" />
+      <point x="2234.4178571428565" y="864.0" />
+      <point x="2113.254048135799" y="864.0" />
+      <point x="4.925000000000182" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.simpleStatements.Return" target="asteroids.model.programs.statements.Statement">
+      <point x="43.0" y="-25.5" />
+      <point x="5490.983688441457" y="477.0" />
+      <point x="4696.329048135799" y="477.0" />
+      <point x="24.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.Addition" target="asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.BinaryArithmeticExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="1995.2336884414574" y="1804.0" />
+      <point x="1985.0172078068842" y="1804.0" />
+      <point x="54.5" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.collisions.EntityCollision" target="asteroids.model.collisions.Collision">
+      <point x="0.0" y="-25.5" />
+      <point x="504.0326839973609" y="125.0" />
+      <point x="399.7665481357999" y="125.0" />
+      <point x="63.0" y="47.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.Function" target="asteroids.model.programs.Child">
+      <point x="-59.0" y="-47.5" />
+      <point x="1136.9732142857142" y="1092.0" />
+      <point x="1199.2350649497416" y="1092.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.Program" target="asteroids.model.programs.Parent">
+      <point x="54.42857142857156" y="-102.5" />
+      <point x="784.6517857142858" y="1362.0" />
+      <point x="774.9493506640274" y="1362.0" />
+      <point x="-22.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetY" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="386.5" y="1804.0" />
+      <point x="274.5" y="1804.0" />
+      <point x="19.75" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.Planetoid" target="asteroids.model.Asteroid">
+      <point x="-58.0" y="-47.5" />
+      <point x="93.25" y="1362.0" />
+      <point x="98.0" y="1362.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.MinorPlanet" target="asteroids.model.Entity">
+      <point x="0.0" y="-25.5" />
+      <point x="155.8243506640274" y="864.0" />
+      <point x="180.4493506640274" y="864.0" />
+      <point x="-135.0" y="113.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.actionStatements.Turn" target="asteroids.model.programs.statements.actionStatements.ActionStatement">
+      <point x="58.0" y="-25.5" />
+      <point x="2606.983688441457" y="1804.0" />
+      <point x="5031.18433777743" y="1804.0" />
+      <point x="-81.19999999999982" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.UnaryArithmeticExpression" target="asteroids.model.programs.expressions.unaryExpressions.UnaryExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="1676.4836884414574" y="1092.0" />
+      <point x="1789.0172078068842" y="1092.0" />
+      <point x="-47.75" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.Addition">
+      <point x="-21.131578947368325" y="-14.5" />
+      <point x="2652.440918501147" y="1977.0" />
+      <point x="1995.2336884414574" y="1977.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.Planetoid" target="asteroids.model.MinorPlanet">
+      <point x="58.0" y="-47.5" />
+      <point x="209.25" y="1362.0" />
+      <point x="204.5" y="1362.0" />
+      <point x="204.5" y="1092.0" />
+      <point x="200.0743506640274" y="1092.0" />
+      <point x="44.25" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.Ship" target="asteroids.model.Bullet">
+      <point x="44.375" y="-102.5" />
+      <point x="532.125" y="1092.0" />
+      <point x="538.4166666666665" y="1092.0" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.binaryExpressions.compareExpressions.CompareExpression" target="asteroids.model.programs.expressions.binaryExpressions.BinaryExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="2304.0172078068845" y="1092.0" />
+      <point x="2234.4178571428565" y="1092.0" />
+      <point x="64.75" y="36.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.simpleStatements.Print" target="asteroids.model.programs.expressions.Expression">
+      <point x="-51.75" y="-25.5" />
+      <point x="4381.733688441457" y="804.0" />
+      <point x="2172.354048135799" y="804.0" />
+      <point x="64.02500000000009" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.Expression" target="java.lang.Cloneable">
+      <point x="-49.25" y="-25.5" />
+      <point x="2059.079048135799" y="236.0" />
+      <point x="3255.541548135799" y="236.0" />
+      <point x="-27.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.binaryExpressions.compareExpressions.LessThan" target="asteroids.model.programs.expressions.binaryExpressions.compareExpressions.CompareExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="2358.483688441457" y="1814.0" />
+      <point x="2346.7672078068845" y="1814.0" />
+      <point x="42.75" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.actionStatements.EnableThruster">
+      <point x="55.71052631578959" y="-14.5" />
+      <point x="2729.2830237643047" y="2067.0" />
+      <point x="5241.483688441457" y="2067.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetVX" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="152.0" y="1814.0" />
+      <point x="195.5" y="1814.0" />
+      <point x="-59.25" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetX" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="584.9732142857142" y="1794.0" />
+      <point x="314.0" y="1794.0" />
+      <point x="59.25" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.binaryExpressions.compareExpressions.LessThan">
+      <point x="-9.60526315789457" y="-14.5" />
+      <point x="2663.9672342906206" y="1947.0" />
+      <point x="2358.483688441457" y="1947.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.Sqrt">
+      <point x="-32.65789473684208" y="-14.5" />
+      <point x="2640.914602711673" y="2007.0" />
+      <point x="1624.9836884414574" y="2007.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.AsteroidExpression" target="asteroids.model.programs.expressions.entityExpressions.EntityExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="2849.483688441457" y="1627.0" />
+      <point x="2997.114762421513" y="1627.0" />
+      <point x="-21.71428571428578" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.unaryExpressions.arithmeticExpressions.Negate">
+      <point x="-28.815789473684163" y="-14.5" />
+      <point x="2644.756707974831" y="1997.0" />
+      <point x="1727.9836884414574" y="1997.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.simpleStatements.Return">
+      <point x="63.39473684210543" y="-14.5" />
+      <point x="2736.9672342906206" y="2087.0" />
+      <point x="5447.983688441457" y="2087.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.binaryExpressions.compareExpressions.Equal">
+      <point x="-13.447368421052488" y="-14.5" />
+      <point x="2660.1251290274627" y="1957.0" />
+      <point x="2243.983688441457" y="1957.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.BinaryArithmeticExpression" target="asteroids.model.programs.expressions.binaryExpressions.BinaryExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="1930.5172078068842" y="1092.0" />
+      <point x="2104.9178571428565" y="1092.0" />
+      <point x="-64.75" y="36.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.FunctionCall" target="asteroids.model.programs.function.CalledFunction">
+      <point x="-72.0" y="-36.5" />
+      <point x="1222.4836884414574" y="1814.0" />
+      <point x="1125.8303571428569" y="1814.0" />
+      <point x="0.0" y="58.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.actionStatements.FireBullet">
+      <point x="59.55263157894751" y="-14.5" />
+      <point x="2733.1251290274627" y="2077.0" />
+      <point x="5384.983688441457" y="2077.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.ReadVariableExpression">
+      <point x="28.815789473684163" y="-14.5" />
+      <point x="2702.3882869221993" y="1997.0" />
+      <point x="3888.483688441457" y="1997.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.World" target="asteroids.model.Entity">
+      <point x="0.0" y="80.5" />
+      <point x="307.1993506640274" y="507.0" />
+      <point x="315.4493506640274" y="507.0" />
+      <point x="0.0" y="-113.5" />
+    </edge>
+    <edge source="asteroids.model.Ship" target="asteroids.model.Entity">
+      <point x="-133.125" y="-102.5" />
+      <point x="354.625" y="1092.0" />
+      <point x="360.4493506640274" y="1092.0" />
+      <point x="45.0" y="113.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetY">
+      <point x="-59.55263157894751" y="-14.5" />
+      <point x="2614.0198658695676" y="2077.0" />
+      <point x="386.5" y="2077.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.GetX">
+      <point x="-55.71052631578959" y="-14.5" />
+      <point x="2617.8619711327256" y="2067.0" />
+      <point x="584.9732142857142" y="2067.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.Ship" target="asteroids.model.Program">
+      <point x="88.75" y="102.5" />
+      <point x="576.5" y="1362.0" />
+      <point x="621.3660714285711" y="1362.0" />
+      <point x="-108.85714285714312" y="-102.5" />
+    </edge>
+    <edge source="asteroids.model.Program" target="asteroids.model.programs.statements.Statement">
+      <point x="-54.42857142857156" y="-102.5" />
+      <point x="675.7946428571427" y="1362.0" />
+      <point x="700.9166666666665" y="1362.0" />
+      <point x="700.9166666666665" y="447.0" />
+      <point x="4616.329048135799" y="447.0" />
+      <point x="-56.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.Asteroid" target="asteroids.model.MinorPlanet">
+      <point x="0.0" y="-25.5" />
+      <point x="98.0" y="1092.0" />
+      <point x="111.5743506640274" y="1092.0" />
+      <point x="-44.25" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.BulletExpression">
+      <point x="17.289473684210407" y="-14.5" />
+      <point x="2690.8619711327256" y="1967.0" />
+      <point x="3384.983688441457" y="1967.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.actionStatements.DisableThruster">
+      <point x="51.868421052631675" y="-14.5" />
+      <point x="2725.440918501147" y="2057.0" />
+      <point x="5077.983688441457" y="2057.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.unaryExpressions.logicalExpressions.Not" target="asteroids.model.programs.expressions.unaryExpressions.UnaryExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="1864.4178571428567" y="1092.0" />
+      <point x="1884.5172078068842" y="1092.0" />
+      <point x="47.75" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.Expression" target="asteroids.model.programs.statements.Statement">
+      <point x="49.25" y="-25.5" />
+      <point x="2157.579048135799" y="477.0" />
+      <point x="4640.329048135799" y="477.0" />
+      <point x="-32.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.composedStatements.While" target="asteroids.model.programs.statements.Statement">
+      <point x="101.33333333333303" y="-47.5" />
+      <point x="4259.31702177479" y="864.0" />
+      <point x="4269.3345238095235" y="864.0" />
+      <point x="4269.3345238095235" y="497.0" />
+      <point x="4656.329048135799" y="497.0" />
+      <point x="-16.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.MinorPlanetExpression">
+      <point x="21.131578947368325" y="-14.5" />
+      <point x="2694.7040763958835" y="1977.0" />
+      <point x="3574.983688441457" y="1977.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.Function" target="asteroids.model.Program">
+      <point x="-29.5" y="47.5" />
+      <point x="1166.4732142857142" y="1362.0" />
+      <point x="893.5089285714289" y="1362.0" />
+      <point x="163.28571428571468" y="-102.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.valueExpressions.ValueExpression" target="asteroids.model.programs.expressions.Expression">
+      <point x="0.0" y="-25.5" />
+      <point x="937.2350649497416" y="814.0" />
+      <point x="2044.304048135799" y="814.0" />
+      <point x="-64.02500000000009" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.Statement" target="java.lang.Cloneable">
+      <point x="30.0" y="-25.5" />
+      <point x="4702.329048135799" y="216.0" />
+      <point x="3309.541548135799" y="216.0" />
+      <point x="27.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.collisions.BoundaryCollision" target="asteroids.model.collisions.Collision">
+      <point x="0.0" y="-14.5" />
+      <point x="232.1993506640274" y="125.0" />
+      <point x="336.7665481357999" y="125.0" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.entityExpressions.SelfExpression">
+      <point x="-17.289473684210407" y="-14.5" />
+      <point x="2656.2830237643047" y="1967.0" />
+      <point x="2163.7672078068845" y="1967.0" />
+      <point x="34.75" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.Multiplication" target="asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.BinaryArithmeticExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="1860.2336884414574" y="1804.0" />
+      <point x="1876.0172078068842" y="1804.0" />
+      <point x="-54.5" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.FunctionCall" target="asteroids.model.programs.expressions.Expression">
+      <point x="72.0" y="-36.5" />
+      <point x="1366.4836884414574" y="1814.0" />
+      <point x="1435.6307663488585" y="1814.0" />
+      <point x="1435.6307663488585" y="844.0" />
+      <point x="2073.854048135799" y="844.0" />
+      <point x="-34.47499999999991" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.simpleStatements.Break">
+      <point x="71.07894736842127" y="-14.5" />
+      <point x="2744.6514448169364" y="2107.0" />
+      <point x="5882.483688441457" y="2107.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.Statement" target="asteroids.model.programs.Child">
+      <point x="-30.0" y="-25.5" />
+      <point x="4642.329048135799" y="226.0" />
+      <point x="1225.5683982830747" y="226.0" />
+      <point x="26.33333333333303" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.PlanetoidExpression" target="asteroids.model.programs.expressions.entityExpressions.EntityExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="3202.983688441457" y="1627.0" />
+      <point x="3040.5433338500848" y="1627.0" />
+      <point x="21.714285714285666" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.FunctionCall">
+      <point x="-44.18421052631584" y="-14.5" />
+      <point x="2629.3882869221993" y="2037.0" />
+      <point x="1294.4836884414574" y="2037.0" />
+      <point x="0.0" y="36.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.CalledFunction" target="asteroids.model.programs.expressions.Expression">
+      <point x="151.28571428571468" y="-58.5" />
+      <point x="1277.1160714285716" y="1627.0" />
+      <point x="1357.3857142857141" y="1627.0" />
+      <point x="1357.3857142857141" y="824.0" />
+      <point x="2054.154048135799" y="824.0" />
+      <point x="-54.17500000000018" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.statements.composedStatements.Sequence">
+      <point x="67.23684210526335" y="-14.5" />
+      <point x="2740.8093395537785" y="2097.0" />
+      <point x="5687.983688441457" y="2097.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.ProgramFactory" target="asteroids.model.programs.expressions.binaryExpressions.arithmeticExpressions.Multiplication">
+      <point x="-24.973684210526244" y="-14.5" />
+      <point x="2648.598813237989" y="1987.0" />
+      <point x="1860.2336884414574" y="1987.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.Function" target="asteroids.model.programs.function.CalledFunction">
+      <point x="29.5" y="47.5" />
+      <point x="1225.4732142857142" y="1607.0" />
+      <point x="1176.2589285714284" y="1607.0" />
+      <point x="50.42857142857156" y="-58.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.AnyExpression" target="asteroids.model.programs.expressions.entityExpressions.EntityExpression">
+      <point x="0.0" y="-14.5" />
+      <point x="2675.483688441457" y="1617.0" />
+      <point x="2975.4004767072274" y="1617.0" />
+      <point x="-43.428571428571445" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.function.CalledFunction" target="asteroids.model.programs.Parent">
+      <point x="-100.85714285714312" y="-58.5" />
+      <point x="1024.9732142857138" y="1627.0" />
+      <point x="988.4850649497416" y="1627.0" />
+      <point x="988.4850649497416" y="1342.0" />
+      <point x="818.9493506640274" y="1342.0" />
+      <point x="22.0" y="14.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.simpleStatements.Break" target="asteroids.model.programs.statements.Statement">
+      <point x="0.0" y="-14.5" />
+      <point x="5882.483688441457" y="437.0" />
+      <point x="4728.329048135799" y="437.0" />
+      <point x="56.0" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.programs.expressions.entityExpressions.entityCharacteristicExpressions.EntityCharacteristicExpression" target="asteroids.model.programs.expressions.Expression">
+      <point x="79.0" y="-25.5" />
+      <point x="333.75" y="1627.0" />
+      <point x="299.75" y="1627.0" />
+      <point x="299.75" y="794.0" />
+      <point x="2024.604048135799" y="794.0" />
+      <point x="-83.72499999999991" y="25.5" />
+    </edge>
+    <edge source="asteroids.model.Entity" target="asteroids.model.World">
+      <point x="-72.0" y="-113.5" />
+      <point x="243.4493506640274" y="507.0" />
+      <point x="207.1993506640274" y="507.0" />
+      <point x="-100.0" y="80.5" />
+    </edge>
+    <edge source="asteroids.model.programs.statements.simpleStatements.Print" target="asteroids.model.programs.statements.Statement">
+      <point x="51.75" y="-25.5" />
+      <point x="4485.233688441457" y="507.0" />
+      <point x="4664.329048135799" y="507.0" />
+      <point x="-8.0" y="25.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.13809228978368115" x="2699.7467247206514" y="1179.885535515798" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
